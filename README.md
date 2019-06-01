@@ -1,2 +1,2 @@
-# LaravelSequel
-A powerfull database management tool for Laravel, comparable to Adminer and phpMyAdmin. Only with a Laravel-esque look.
+# LaravelSequel (TBA)
+![Hm...](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/alembic_2697.png)
