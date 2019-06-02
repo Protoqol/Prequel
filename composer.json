@@ -1,0 +1,21 @@
+{
+    "name": "protoqol/prequel",
+    "description": "A powerful database management tool for Laravel, comparable to Adminer and phpMyAdmin. Only with a Laravel-esque look.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Quinten Justus Schorsij",
+            "email": "qschorsij@outlook.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Protoqol\\Prequel\\PrequelServiceProvider"
+            ]
+        }
+    }
+}
