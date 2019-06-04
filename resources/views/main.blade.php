@@ -16,7 +16,7 @@
 <div id="sequel"></div>
 
 <script>
-    // Pass data to JavaScript
+    // Pass initial data to JavaScript
     window.Prequel             = {};
     window.Prequel.databases   = @json($initialDatabaseData);
     window.Prequel.env         = @json($env);

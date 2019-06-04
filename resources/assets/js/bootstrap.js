@@ -3,6 +3,7 @@ window.axios = require('axios/index');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['X-CSRF-TOKEN']     = document.head.querySelector('meta[name="csrf-token"]').content;
+window.axios.defaults.baseURL                            = `${window.location.href}/prequel-api`;
 
 /**
  *  Might do real-time database updating in the future. Let people F5 for now :^).

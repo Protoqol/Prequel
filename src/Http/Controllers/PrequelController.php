@@ -9,14 +9,15 @@
     class PrequelController extends Controller {
 
         public function index() {
-            return view('LaravelSequel::main', [
+            return view('Prequel::main', [
                 'env'                 => [
                     'database' => env('DB_DATABASE'),
                     'host'     => env('DB_HOST'),
                     'port'     => env('DB_PORT'),
+                    'user'     => env('DB_USERNAME'),
                 ],
                 'isConnected'         => (bool)DB::connection()->getDatabaseName(),
-                'initialDatabaseData' => (new DatabaseTraverser())->getAll(),
+                'initialDatabaseData' => app(DatabaseTraverser::class)->getAll(),
             ]);
         }
     }

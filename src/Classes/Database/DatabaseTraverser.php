@@ -3,7 +3,6 @@
 
     namespace Protoqol\Prequel\Classes\Database;
 
-    use Illuminate\Support\Arr;
     use Illuminate\Support\Facades\DB;
 
     class DatabaseTraverser {
@@ -28,7 +27,9 @@
          * @param string|null $databaseType
          */
         public function __construct(?string $databaseType = NULL) {
-            $this->DB_CONN    = $databaseType ?: config('database.default');
+            $this->DB_CONN = $databaseType
+                ?: config('database.default');
+
             $this->DB_QUERIES = new SequelMorpher($this->DB_CONN);
         }
 
@@ -39,20 +40,20 @@
          * @throws \Exception
          */
         public function getAll() :array {
-            $databases = $this->getAllDatabases();
-            $response  = [];
+            $collection = [];
 
-            foreach ($databases as $value) {
-                $response[$value] = $this->getAllTablesFromDatabase($value);
+            foreach ($this->getAllDatabases() as $value) {
+                $collection[$value['name']['pretty']] = [
+                    "official_name" => $value['name']['official'],
+                    "columns"       => $this->getAllTablesFromDatabase($value['name']['official']),
+                ];
             }
 
-            return $response;
+            return $collection;
         }
 
         /**
          * Get all tables from database $databaseName
-         *
-         * @TODO Escape input, it's very hard to inject anything here. But you can never be too sure.
          *
          * @param string $databaseName
          *
@@ -62,7 +63,7 @@
         public function getAllTablesFromDatabase(string $databaseName) :array {
             $tables = DB::select($this->DB_QUERIES->showTablesFrom($databaseName));
 
-            return $this->normaliser($tables);
+            return $this->normalise($tables);
         }
 
         /**
@@ -74,7 +75,7 @@
         public function getAllTables() :array {
             $tables = DB::select($this->DB_QUERIES->showTables());
 
-            return $this->normaliser($tables);
+            return $this->normalise($tables);
         }
 
         /**
@@ -86,26 +87,59 @@
         public function getAllDatabases() :array {
             $databases = DB::select($this->DB_QUERIES->showDatabases());
 
-            return $this->normaliser($databases);
+            return $this->normalise($databases);
         }
 
         /**
-         * Normalise query results
+         * Normalise query results; assumes a lot about the structure, which can cause problems later on.
+         * @TODO Make dumber
+         *
+         *  Assumed structure
+         *  -----------------
+         *  Array [
+         *    Object {
+         *       'String': Mixed (single value)
+         *  -----------------
          *
          * @param array $arr
          *
          * @return array
          */
-        public function normaliser(array $arr) {
+        public function normalise(array $arr) {
             $normalised = [];
 
             for ($i = 0; $i < count($arr); $i++) {
                 foreach ($arr[$i] as $key => $value) {
-                    $normalised[$i]['name'] = ((array)$value)[0];
+                    $normalised[$i]['name'] = [
+                        "official" => ((array)$value)[0],
+                        "pretty"   => $this->prettifyName(((array)$value)[0]),
+                    ];
                 }
             }
 
-            return Arr::flatten($normalised);
+            return $normalised;
         }
 
+        /**
+         * Prettify names: remove special characters; capitalise each word.
+         *
+         * @param string $name
+         *
+         * @return string
+         */
+        public function prettifyName(string $name) :string {
+            $words      = preg_split('/[!@#$%^&*(),.?":{}|<>_-]/', $name);
+            $prettyName = '';
+
+            for ($i = 0; $i < count($words); $i++) {
+                $prettyName .= ucfirst($words[$i]);
+
+                if ($i !== (count($words) - 1)) {
+                    $prettyName .= ' ';
+                    continue;
+                }
+            }
+
+            return $prettyName;
+        }
     }
