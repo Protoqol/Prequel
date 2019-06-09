@@ -7,6 +7,6 @@
          *
          * Defaults to true.
          */
-        'enabled' => env('LARASEQUEL_ENABLED', true),
+        'enabled' => env('PREQUEL_ENABLED', true),
 
     ];

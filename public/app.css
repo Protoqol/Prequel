@@ -7553,6 +7553,7 @@ video {
 
 * {
   font-family: Nunito, serif;
+  outline: none !important;
 }
 
 .no-drag {

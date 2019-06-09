@@ -9,23 +9,22 @@
     <link rel="shortcut icon" href="{{ asset('vendor/prequel/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('vendor/prequel/app.css') }}">
 
-    <title>{{ (config('app.name')) }} Prequel</title>
+    <title>Error in Prequel</title>
 </head>
 <body style="background-color: #edf1f3;">
 
 <div id="prequel"></div>
 
 <script>
-    // Pass initial data to JavaScript
     window.Prequel             = {};
     window.Prequel.error       = {
-        error: false,
-        detailed: '',
-        code: '',
+        error: true,
+        detailed: @json($error_detailed),
+        code: @json($http_code)
     };
-    window.Prequel.databases   = @json($initialDatabaseData);
+    window.Prequel.databases   = {};
     window.Prequel.env         = @json($env);
-    window.Prequel.isConnected = @json($isConnected);
+    window.Prequel.isConnected = {};
 </script>
 <script src="{{ asset('/vendor/prequel/app.js') }}"></script>
 </body>

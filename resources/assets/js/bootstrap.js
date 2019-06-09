@@ -6,6 +6,13 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN']     = document.head.querySe
 window.axios.defaults.baseURL                            = `${window.location.href}/prequel-api`;
 
 /**
+ * Capitalise first letter of word
+ */
+window.capitalise = function (str) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+/**
  *  Might do real-time database updating in the future. Let people F5 for now :^).
  *
  *  import Echo from 'laravel-echo'

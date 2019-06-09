@@ -11,11 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.disableNotifications()
-    .setResourceRoot('packages/protoqol/prequel')
+mix.setResourceRoot('packages/protoqol/prequel')
     .postCss('resources/assets/css/app.css', 'public', [
         require('tailwindcss'),
     ])
     .js('resources/assets/js/app.js', 'public')
-    .copy('public', '../../../public/vendor/prequel')
-    .browserSync('http://localhost');
+    .copy('public', '../../../public/vendor/prequel');

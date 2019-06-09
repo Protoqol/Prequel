@@ -21,8 +21,13 @@
              Route::prefix('prequel-api')->group(function () {
 
                  Route::prefix('database')->group(function () {
+
                      Route::get('{database}/{table}/columns/get', 'DatabaseActionController@getTableData');
+                     Route::get('{database}/{table}/count/get', 'DatabaseActionController@countTableRecords');
+
                  });
+
+
              });
 
          });
