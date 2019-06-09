@@ -1,63 +1,73 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Protoqol\Prequel\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
+/**
+ * Class DatabaseActionController
+ *
+ * @package Protoqol\Prequel\Http\Controllers
+ */
 class DatabaseActionController extends Controller
 {
 
     /**
      * Qualified table name; 'database.table'
      *
-     * @var string $table
+     * @var string $qualifiedName
      */
-    public $qualified_name;
+    public $qualifiedName;
 
     /**
      * Table name
      *
-     * @var string $table_name
+     * @var string $tableName
      */
-    public $table_name;
+    public $tableName;
 
     /**
      * Database name
      *
-     * @var string $database_name
+     * @var string $databaseName
      */
-    public $database_name;
+    public $databaseName;
 
     /**
      * DatabaseActionController's constructor
      */
     public function __construct()
     {
-        $this->table_name     = Route::current()->parameter('table');
-        $this->database_name  = Route::current()->parameter('database');
-        $this->qualified_name = $this->database_name . '.' . $this->table_name;
-
-        if (empty($this->qualified_name) || !isset($this->qualified_name)) {
+        if (empty($this->qualifiedName) || !isset($this->qualifiedName)) {
             response('Could not construct sensible table name', 500);
         }
+
+        $this->tableName     = Route::current()->parameter('table');
+        $this->databaseName  = Route::current()->parameter('database');
+        $this->qualifiedName = $this->databaseName.'.'.$this->tableName;
     }
 
     /**
      * Get table data, table structure and its qualified name
      *
-     * @TODO dynamic paginate count
-     *
+     * @TODO dynamic paginate count (be able to choose nr. of results in
+     *     frontend)
      * @return array
      */
-    public function getTableData(): array
+    public function getTableData() :array
     {
         return [
-            "table"     => $this->qualified_name,
-            "structure" => app(DatabaseTraverser::class)->getTableStructure($this->database_name, $this->table_name),
-            "data"      => DB::table($this->qualified_name)->paginate(100),
+            "table"     => $this->qualifiedName,
+            "structure" => app(DatabaseTraverser::class)->getTableStructure(
+                $this->databaseName,
+                $this->tableName
+            ),
+            "data"      => DB::table($this->qualifiedName)->paginate(100),
         ];
     }
 
@@ -66,13 +76,13 @@ class DatabaseActionController extends Controller
      *
      * @return array
      */
-    public function countTableRecords(): array
+    public function countTableRecords() :array
     {
-        $count = DB::table($this->qualified_name)
+        $count = DB::table($this->qualifiedName)
             ->count('id');
 
         return [
-            "table" => $this->qualified_name,
+            "table" => $this->qualifiedName,
             "count" => $count,
         ];
     }

@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Protoqol\Prequel\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controller;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**

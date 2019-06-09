@@ -4,20 +4,24 @@
         <!--   Header     -->
         <Header @enhanceReadability="readableNames = (!readableNames)"
                 :prequelError="prequelError.error"
+                :activeTable="activeTable"
                 @collapseSideBar="collapsed = (!collapsed)"></Header>
 
         <!--   Main     -->
         <div v-if="!prequelError.error" class="w-full flex justify-center">
             <div class="content flex">
                 <transition name="slide-fade" mode="in-out">
-                    <SideBar v-if="!collapsed" :class="collapsed ? 'hidden' : 'w-1/5'"
+                    <SideBar v-if="!collapsed"
+                             :class="collapsed ? 'hidden' : 'w-1/5'"
                              :readability="readableNames"
                              @tableSelect="getTableData($event)"></SideBar>
                 </transition>
                 <MainContent class="w-full"
-                             :readability="readableNames"
                              :class="setCorrectWidthForMainContent"
+                             :readability="readableNames"
                              :loading="tableDataLoading"
+                             :loadError="tableDataLoadError"
+                             :tableError="tableError"
                              :tableData="currentlySelectedTableData"></MainContent>
             </div>
         </div>
@@ -26,8 +30,8 @@
         <div v-if="prequelError.error">
             <h1 class="mt-10 text-center text-3xl text-bold text-red-500">Oops... {{ prequelError.detailed }}</h1>
             <h3 class="text-center text-lg text-normal text-black">
-                Tried with <span
-                    class="italic text-gray-800">{{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}</span>
+                Tried with
+                <span class="italic text-gray-800">{{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}</span>
             </h3>
         </div>
     </div>
@@ -56,13 +60,12 @@
                 },
                 tableDataLoading: false,
                 tableDataLoadError: false,
+                tableError: '',
                 collapsed: false,
                 readableNames: true,
                 sourcecode: '',
+                activeTable: '',
             };
-        },
-        created() {
-            this.setFirstTableInView();
         },
         methods: {
             /**
@@ -73,10 +76,11 @@
              * @returns {Promise<boolean>}
              */
             getTableData: async function (databaseTable, dynamic = true) {
-                if (!databaseTable) return false;
+                if (!databaseTable.target) return false;
 
-                let parsed = (dynamic ? databaseTable.title || databaseTable.value : databaseTable).split('.'),
-                    res    = {};
+                this.activeTable = databaseTable.target.innerText;
+                let parsed       = (dynamic ? databaseTable.target.title || databaseTable.target.value : databaseTable).split('.'),
+                    res          = {};
 
                 this.tableDataLoading = true;
 
@@ -84,6 +88,7 @@
                     res = await axios.get(`database/${parsed[0]}/${parsed[1]}/columns/get`);
                 } catch (err) {
                     this.tableDataLoadError = true;
+                    this.tableError         = err;
                 }
 
                 this.tableDataLoading           = false;
@@ -104,6 +109,8 @@
 
             /**
              * Figure out first table in first database and set as default view.
+             *
+             * No longer in use
              */
             setFirstTableInView: function () {
                 if (!this.prequelError.error) {
@@ -129,7 +136,7 @@
         Main content container
     */
     .content {
-        width: 95%;
+        width: 98%;
     }
 
     /**

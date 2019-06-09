@@ -1,55 +1,52 @@
 <template>
-    <table class="w-full overflow-auto bg-gray-200">
-        <thead class="border-b bg-gray-400 rounded-t">
-        <tr>
-            <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
-                title="Quick actions">
-                <font-awesome-icon icon="tools"/>
-            </th>
-            <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
-                v-for="struct in table.structure"
-                :title="struct.Field + ' - ' + struct.Type"
-                :type="struct.Type">
-                {{prettifyName(struct.Field)}}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-if="table.data.data.length > 0" v-for="row in table.data.data">
-            <td class="text-gray-700 text-sm text-center cursor-pointer hover:bg-gray-400" title="Inspect row">
-                <font-awesome-icon style="transform: rotate(90deg);" icon="search-plus"/>&nbsp;
-            </td>
-            <td class="text-sm text-center cursor-pointer hover:bg-gray-300"
-                :class="!item ? 'text-gray-500 italic' : 'text-gray-700 hover:underline'"
-                v-for="item in row"
-                :title="item ? item + ` (Length ${item.length})` : 'This item is empty'">
-                {{item ? cutString(item) : 'Nothing here'}}
-            </td>
-        </tr>
-        <tr v-else>
-            <td>This table does not have any data</td>
-        </tr>
-        </tbody>
-    </table>
+    <div>
+        <table class="w-full overflow-auto bg-gray-200">
+            <thead class="border-b bg-gray-400 rounded-t">
+            <tr>
+                <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
+                    title="Quick actions">
+                    <font-awesome-icon icon="tools"/>
+                </th>
+                <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
+                    v-for="struct in table.structure"
+                    :title="struct.Field + ' - ' + struct.Type"
+                    :type="struct.Type">
+                    {{readability ? prettifyName(struct.Field) : struct.Field}}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-if="table.data.data.length !== 0" v-for="row in table.data.data">
+                <td class="text-gray-700 max-w-8 w-8 text-sm text-center cursor-pointer hover:bg-gray-400"
+                    title="Inspect row">
+                    <font-awesome-icon style="transform: rotate(90deg);" icon="search-plus"/>&nbsp;
+                </td>
+                <td class="ellipsis px-4 text-sm max-w-64 w-64 text-center cursor-pointer hover:bg-gray-300"
+                    :class="!item ? 'text-gray-500 italic' : 'text-gray-700 hover:underline'"
+                    v-for="item in row"
+                    :title="item ? item + ` (Length ${item.length})` : 'This item is empty'">
+                    {{item ? item : 'Nothing here'}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h1 v-if="table.data.data.length === 0" class="mt-4 text-gray-700 w-full text-md text-center">
+            This table does not contain any data
+        </h1>
+    </div>
 </template>
 
 <script>
     export default {
-        name: "Table",
+        name: 'Table',
         props: ['table', 'readability'],
         methods: {
-            cutString: function (str) {
-                if (str.length >= 24) {
-                    return str.substring(0, 24) + '...';
-                }
-                return str;
-            },
-            prettifyName: function(str) {
-                if(!this.$props.readability){
+            prettifyName: function (str) {
+                if (!this.$props.readability) {
                     return str;
                 }
 
-                let words      = str.split(/[!@#$%^&*(),.?":{}|<>_-]/);
+                let words  = str.split(/[!@#$%^&*(),.?":{}|<>_-]/);
                 let pretty = '';
 
                 for (let i = 0; i < words.length; i++) {
@@ -62,11 +59,18 @@
                 }
 
                 return pretty;
-            }
-        }
-    }
+            },
+        },
+    };
 </script>
 
-<style scoped>
+<style>
+    .ellipsis {
+        width: 300px;
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 </style>

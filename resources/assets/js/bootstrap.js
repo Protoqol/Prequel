@@ -9,8 +9,8 @@ window.axios.defaults.baseURL                            = `${window.location.hr
  * Capitalise first letter of word
  */
 window.capitalise = function (str) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-}
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
 
 /**
  *  Might do real-time database updating in the future. Let people F5 for now :^).
