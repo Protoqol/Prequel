@@ -17,8 +17,8 @@
 </template>
 
 <script>
-  import Table       from '../Table/Table';
-  import TableStatus from '../Table/TableStatus';
+  import Table       from './Table/Table';
+  import TableStatus from './Table/TableStatus';
   import Welcome     from '../Elements/Welcome';
 
   export default {

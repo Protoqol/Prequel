@@ -16,33 +16,33 @@
 </template>
 
 <script>
-    // Component thanks to https://codepen.io/ktsn
-    export default {
-        name: 'Accordion',
-        props: ['theme'],
-        data() {
-            return {
-                show: false,
-            };
-        },
-        methods: {
-            toggle: function () {
-                this.show = !this.show;
-            },
-            beforeEnter: function (el) {
-                el.style.height = '0';
-            },
-            enter: function (el) {
-                el.style.height = el.scrollHeight + 'px';
-            },
-            beforeLeave: function (el) {
-                el.style.height = el.scrollHeight + 'px';
-            },
-            leave: function (el) {
-                el.style.height = '0';
-            },
-        },
-    };
+  // Component thanks to https://codepen.io/ktsn
+  export default {
+    name   : 'Accordion',
+    props  : ['theme'],
+    data() {
+      return {
+        show: false,
+      };
+    },
+    methods: {
+      toggle     : function() {
+        this.show = !this.show;
+      },
+      beforeEnter: function(el) {
+        el.style.height = '0';
+      },
+      enter      : function(el) {
+        el.style.height = el.scrollHeight + 'px';
+      },
+      beforeLeave: function(el) {
+        el.style.height = el.scrollHeight + 'px';
+      },
+      leave      : function(el) {
+        el.style.height = '0';
+      },
+    },
+  };
 </script>
 
 <style scoped>
@@ -52,7 +52,7 @@
     }
 
     .accordion .body-inner {
-        padding: 8px;
+        padding: 0 8px 8px;
         overflow-wrap: break-word;
     }
 </style>

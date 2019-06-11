@@ -4,20 +4,20 @@
             <div class="w-1/3">
                 <div class="flex flex-row">
                     <div class="mr-1 mt-1">
-                        <img class="no-drag"
-                             height="25"
-                             width="25"
+                        <img class="no-drag bg-white rounded-full"
+                             height="30"
+                             width="30"
                              alt="Protoqol Prequel"
                              src="/vendor/prequel/favicon.png">
                     </div>
-                    <h1 class="ml-1 text-2xl">
+                    <h1 class="text-2xl">
                         <span class="font-bold">Laravel</span>
                         Prequel
                         <a href="https://github.com/Protoqol/Prequel"
                            target="_blank"
                            title="Creator of Laravel Prequel"
                            class="not-italic text-xs font-light">
-                            by PROTOQOL
+                            PROTOQOL
                         </a>
                     </h1>
                 </div>

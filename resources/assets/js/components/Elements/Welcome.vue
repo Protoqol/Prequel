@@ -1,5 +1,8 @@
 <template>
     <div class="my-2">
+        <div class="w-full flex justify-center items-center">
+            <img class="no-drag" width="175" alt="Laravel Prequel" src="/vendor/prequel/favicon.png">
+        </div>
         <h1 class="text-center text-gray-900 font-semibold text-2xl">
             Welcome to Laravel Prequel!
         </h1>
@@ -17,7 +20,3 @@
     name: 'Welcome',
   };
 </script>
-
-<style scoped>
-
-</style>

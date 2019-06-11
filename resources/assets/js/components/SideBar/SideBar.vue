@@ -3,12 +3,12 @@
         <ul class="ml-2" v-for="database in databases">
             <Accordion theme="purple">
                 <div slot="header">
-                    <li class="border-b p-2 bg-indigo-300 rounded-l text-base text-gray-800 cursor-pointer hover:text-gray-700 text-left font-bold"
+                    <li class="border-b p-2 bg-indigo-500 rounded-l text-base text-white hover:text-gray-300 cursor-pointer text-left font-bold"
                         :title="`${database.official_name} (${database.tables.length} tables)`"
                         :value="database.official_name">
                         <font-awesome-icon icon="database"/>&nbsp;
                         {{ readability ? database.pretty_name : database.official_name }}
-                        <span class="text-xs font-normal text-gray-600">({{ database.tables.length }})</span>
+                        <span class="text-xs font-normal">({{ database.tables.length }})</span>
                     </li>
                 </div>
                 <li v-if="database.tables.length !== 0"
