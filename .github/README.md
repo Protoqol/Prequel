@@ -1,16 +1,15 @@
-<img width="100" src="https://raw.githubusercontent.com/Protoqol/Prequel/master/public/favicon.png?token=AMHFPMBNVO5YV4KUOLDFXJS4775HE">
+<img width="600" src="https://raw.githubusercontent.com/Protoqol/Prequel/master/.github/assets/prequelHeader.png?token=AMHFPMB7KSUNG2DEC43RQSS5AABBK">
 
-# Laravel Prequel
+Documentation can be found [here!](https://protoqol.github.io/Prequel/)
 
-Look [here](https://protoqol.github.io/Prequel/) for more!
-
-# TODO
-    - [x] Better graphics logo's etc.
-    - [ ] Routing, go to prequel/db/table to get table
-    - [ ] Testing
-    - [ ] Prefetch results based on primary key
-    - [ ] Suggestions for better performance/database health
-    - [ ] Pagination of columns
-    - [ ] Storing preferences about front-end in localStorage
-    - [ ] Smoother UI
-    - [ ] Animations (Animate.css)
+# To Do List
+ - [x] Better graphics logo's etc.
+ - [ ] Documentation
+ - [ ] Routing, go to prequel/database/table to get table directly in front-end
+ - [ ] Testing
+ - [ ] Prefetch results based on primary key
+ - [ ] Suggestions for better performance/database health
+ - [ ] Pagination of columns
+ - [ ] Storing preferences about front-end in localStorage
+ - [ ] Smoother UI
+ - [ ] Animations (Animate.css)
