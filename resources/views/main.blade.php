@@ -11,21 +11,21 @@
 
     <title>{{ (config('app.name')) }} Prequel</title>
 </head>
-<body style="background-color: #edf1f3;">
+<body class="overflow-x-auto overflow-y-scroll" style="background-color: #edf1f3;">
 
 <div id="prequel"></div>
 
 <script>
-    // Pass initial data to JavaScript
-    window.Prequel             = {};
-    window.Prequel.error       = {
-        error: false,
-        detailed: '',
-        code: '',
-    };
-    window.Prequel.databases   = @json($initialDatabaseData);
-    window.Prequel.env         = @json($env);
-    window.Prequel.isConnected = @json($isConnected);
+  // Pass initial data to JavaScript
+  window.Prequel             = {};
+  window.Prequel.error       = {
+    error   : false,
+    detailed: '',
+    code    : '',
+  };
+  window.Prequel.databases   = @json($initialDatabaseData);
+  window.Prequel.env         = @json($env);
+  window.Prequel.isConnected = @json($isConnected);
 </script>
 <script src="{{ asset('/vendor/prequel/app.js') }}"></script>
 </body>

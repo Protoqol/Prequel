@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace Protoqol\Prequel\Classes\Database;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * Class DatabaseTraverser
@@ -43,7 +45,8 @@ class DatabaseTraverser
     }
 
     /**
-     * Get all databases and their respective tables
+     * Build array of all databases and their respective tables and
+     * sort alphabetically.
      *
      * @return array
      * @throws \Exception
@@ -53,11 +56,12 @@ class DatabaseTraverser
         $collection = [];
 
         foreach ($this->getAllDatabases() as $value) {
-            $db_name                      = (object) $value['name'];
-            $collection[$db_name->pretty] = [
-                "official_name" => $db_name->official,
-                "pretty_name"   => $db_name->pretty,
-                "tables"        => $this->getTablesFromDB($db_name->official),
+            $databaseName = (object) $value['name'];
+
+            $collection[$databaseName->pretty] = [
+                "official_name" => $databaseName->official,
+                "pretty_name"   => $databaseName->pretty,
+                "tables"        => $this->getTablesFromDB($databaseName->official),
             ];
         }
 
@@ -67,7 +71,34 @@ class DatabaseTraverser
     }
 
     /**
-     * Get information for column
+     * Tries to find matching model for the given table.
+     *
+     * @param  string|null  $tableName
+     *
+     * @return Model|bool
+     */
+    public function getModel(?string $tableName)
+    {
+        $model = 'App\\'.Str::studly(Str::singular($tableName));
+        if (class_exists($model)) {
+            return new $model;
+        }
+
+        $model = 'App\\Models\\'.Str::studly(Str::singular($tableName));
+        if (class_exists($model)) {
+            return new $model;
+        }
+
+        $model = 'App\\Model\\'.Str::studly(Str::singular($tableName));
+        if (class_exists($model)) {
+            return new $model;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get information about a specific column
      *
      * @param  string  $database  Database name
      * @param  string  $table  Table name
@@ -98,8 +129,6 @@ class DatabaseTraverser
             ])
             ->get())->toArray();
 
-        // dd($result);
-
         return Arr::flatten((array) $result);
     }
 
@@ -114,7 +143,6 @@ class DatabaseTraverser
     public function getTableStructure(string $database, string $table) :array
     {
         $columns = DB::select("SHOW COLUMNS FROM `$database`.`$table`");
-        // dd($this->getColumnData($database, $table, (array)$columns[1]));
         return $columns;
     }
 
@@ -158,7 +186,8 @@ class DatabaseTraverser
 
     /**
      * Normalise query results; assumes a lot about the structure, which can
-     * potentially cause problems later on. Assumed structure
+     * potentially cause problems later on.
+     * Assumed structure:
      *  -----------------
      *  Array [
      *    Object {
@@ -175,11 +204,11 @@ class DatabaseTraverser
 
         for ($iterator = 0; $iterator < count($arr); $iterator++) {
             foreach ($arr[$iterator] as $value) {
-                $array_value = ((array) $value)[0];
+                $arrayValue = ((array) $value)[0];
 
                 $normalised[$iterator]['name'] = [
-                    "official" => $array_value,
-                    "pretty"   => $this->prettifyName($array_value),
+                    "official" => $arrayValue,
+                    "pretty"   => $this->prettifyName($arrayValue),
                 ];
             }
         }
@@ -196,18 +225,18 @@ class DatabaseTraverser
      */
     public function prettifyName(string $name) :string
     {
-        $words       = preg_split('/[!@#$%^&*(),.?":{}|<>_-]/', $name);
-        $pretty_name = '';
+        $words      = preg_split('/[!@#$%^&*(),.?":{}|<>_-]/', $name);
+        $prettyName = '';
 
         for ($iterator = 0; $iterator < count($words); $iterator++) {
-            $pretty_name .= ucfirst(strtolower($words[$iterator]));
+            $prettyName .= ucfirst(strtolower($words[$iterator]));
 
             if ($iterator !== (count($words) - 1)) {
-                $pretty_name .= ' ';
+                $prettyName .= ' ';
                 continue;
             }
         }
 
-        return $pretty_name;
+        return $prettyName;
     }
 }

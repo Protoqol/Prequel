@@ -1,12 +1,16 @@
-# Prequel (TBA)
-![Hm...](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/alembic_2697.png)
+<img width="100" src="https://raw.githubusercontent.com/Protoqol/Prequel/master/public/favicon.png?token=AMHFPMBNVO5YV4KUOLDFXJS4775HE">
+
+# Laravel Prequel
 
 Look [here](https://protoqol.github.io/Prequel/) for more!
 
 # TODO
-    - Suggestions for better performance/database health
-    - Pagination
-    - Storing preferences about front-end in localStorage
-    - Smoother UI
-    - Animations (Animate.css)
-    - DB watcher to check if database is running (like checking if website is still running)
+    - [x] Better graphics logo's etc.
+    - [ ] Routing, go to prequel/db/table to get table
+    - [ ] Testing
+    - [ ] Prefetch results based on primary key
+    - [ ] Suggestions for better performance/database health
+    - [ ] Pagination of columns
+    - [ ] Storing preferences about front-end in localStorage
+    - [ ] Smoother UI
+    - [ ] Animations (Animate.css)

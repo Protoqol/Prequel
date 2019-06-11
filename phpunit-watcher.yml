@@ -1,0 +1,11 @@
+watch:
+  directories:
+    - src
+    - tests
+  fileMask: '*.php'
+notifications:
+  passingTests: false
+  failingTests: true
+phpunit:
+  binaryPath: ./vendor/bin/phpunit
+
