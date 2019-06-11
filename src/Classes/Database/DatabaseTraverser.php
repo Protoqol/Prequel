@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace Protoqol\Prequel\Classes\Database;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * Class DatabaseTraverser
@@ -66,6 +68,33 @@ class DatabaseTraverser
         ksort($collection);
 
         return $collection;
+    }
+
+    /**
+     * Tries to find matching model for the given table.
+     *
+     * @param  string|null  $tableName
+     *
+     * @return Model|bool
+     */
+    public function getModel(?string $tableName)
+    {
+        $model = 'App\\'.Str::studly(Str::singular($tableName));
+        if (class_exists($model)) {
+            return new $model;
+        }
+
+        $model = 'App\\Models\\'.Str::studly(Str::singular($tableName));
+        if (class_exists($model)) {
+            return new $model;
+        }
+
+        $model = 'App\\Model\\'.Str::studly(Str::singular($tableName));
+        if (class_exists($model)) {
+            return new $model;
+        }
+
+        return false;
     }
 
     /**

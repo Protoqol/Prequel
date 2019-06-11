@@ -5,6 +5,7 @@ Look [here](https://protoqol.github.io/Prequel/) for more!
 
 # TODO
     - Testing
+    - Better graphics logo's etc.
     - Suggestions for better performance/database health
     - Pagination of columns
     - Storing preferences about front-end in localStorage

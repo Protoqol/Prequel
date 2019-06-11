@@ -23,10 +23,11 @@ class PrequelController extends Controller
     {
         return view('Prequel::main', [
             'env'                 => [
-                'database' => env('DB_DATABASE'),
-                'host'     => env('DB_HOST'),
-                'port'     => env('DB_PORT'),
-                'user'     => env('DB_USERNAME'),
+                'connection' => env('DB_CONNECTION'),
+                'database'   => env('DB_DATABASE'),
+                'host'       => env('DB_HOST'),
+                'port'       => env('DB_PORT'),
+                'user'       => env('DB_USERNAME'),
             ],
             'isConnected'         => (bool) DB::connection()->getDatabaseName(),
             'initialDatabaseData' => app(DatabaseTraverser::class)->getAll(),

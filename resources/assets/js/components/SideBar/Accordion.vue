@@ -29,12 +29,6 @@
             toggle: function () {
                 this.show = !this.show;
             },
-            // enter: function(el, done) {
-            //   $(el).slideDown(150, done);
-            // },
-            // leave: function(el, done) {
-            //   $(el).slideUp(150, done);
-            // },
             beforeEnter: function (el) {
                 el.style.height = '0';
             },
@@ -53,14 +47,12 @@
 
 <style scoped>
     .accordion .body {
-        /*   display: none; */
         overflow: hidden;
-        transition: 150ms ease-out;
+        transition: 500ms ease;
     }
 
     .accordion .body-inner {
         padding: 8px;
         overflow-wrap: break-word;
-        /*   white-space: pre-wrap; */
     }
 </style>

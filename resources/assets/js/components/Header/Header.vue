@@ -2,7 +2,6 @@
     <div class="flex flex-col justify-center items-center mt-6">
         <div class="flex w-4/5">
             <div class="w-1/3">
-                <!--    Logo and name        -->
                 <div class="flex flex-row">
                     <div class="mr-1 mt-1">
                         <img class="no-drag"
@@ -12,40 +11,39 @@
                              src="/vendor/prequel/favicon.png">
                     </div>
                     <h1 class="ml-1 text-2xl">
-                        <span class="font-bold">Laravel</span> Prequel
+                        <span class="font-bold">Laravel</span>
+                        Prequel
                         <a href="https://github.com/Protoqol/Prequel"
                            target="_blank"
                            title="Creator of Laravel Prequel"
                            class="not-italic text-xs font-light">
-                            by
-                            PROTOQOL
+                            by PROTOQOL
                         </a>
                     </h1>
                 </div>
-
-                <!--     Database information       -->
-                <div v-if="!prequelError">
-                    <p class="ml-2 mt-1 self-center flex flex-row items-center">
-            <span title="Active database connection"
-                  class="mr-1 tracking-wide"
-                  :class="connected ? 'text-gray-700' : 'text-red-400'">
-              {{user}}@{{host}}:{{port}}/{{database}}
-              <i v-if="!connected"
-                 class="text-red-400">
-                  Could not connect to database!
-              </i>
-            </span>
+                <div v-if="!error.error">
+                    <p title="Current connection"
+                       class="ml-2 mt-1 self-center flex flex-row items-center mr-1 tracking-wide text-gray-700">
+                        {{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
                     </p>
                 </div>
             </div>
-            <div class="w-1/3 flex justify-center items-end">
-                <h1 v-if="activeTable" class="text-lg font-semibold">
-                    <span class="font-normal text-sm">Table</span>
-                    {{activeTable}}
+            <div class="w-1/3 flex flex-col justify-center items-center">
+                <h1 v-if="activeTable" class="text-lg flex flex-row justify-center items-center font-semibold">
+                    <span class="font-normal text-sm mr-2">Table</span>
+                    <span v-if="!tableLoading">{{activeTable}}</span>
+                    <img v-else width="20" height="20" src="/vendor/prequel/loader.gif"
+                         alt="Loading table data...">
                 </h1>
+                <input v-if="activeTable"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                       id="quickfind" name="quickfind" type="text"
+                       placeholder="Quickly search this table..."
+                       :disabled="loading"
+                       @keyup="inputHandler($event)">
             </div>
 
-            <div v-if="!prequelError" class="w-1/3 flex flex-row justify-end items-center">
+            <div v-if="!error.error" class="w-1/3 flex flex-row justify-end items-center">
                 <!--     Enhance readability button          -->
                 <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
                         :class="readability ? 'readability-enabled' : 'readability-disabled'"
@@ -72,36 +70,62 @@
 </template>
 
 <script>
-    export default {
-        name: 'Header',
-        props: ['prequelError', 'activeTable'],
-        data() {
-            return {
-                database: window.Prequel.env.database,
-                host: window.Prequel.env.host,
-                port: window.Prequel.env.port,
-                connected: window.Prequel.isConnected,
-                user: window.Prequel.env.user,
-                sideBarStatusText: 'Collapse',
-                showSideBar: true,
-                readability: true,
-            };
-        },
-        methods: {
-            sideBarButtonHandler: function () {
-                this.showSideBar       = !this.showSideBar;
-                this.sideBarStatusText = this.showSideBar ? 'Collapse' : 'Expand';
-                this.$emit('collapseSideBar');
-            },
-            readabilityButtonHandler: function () {
-                this.readability = !this.readability;
-                this.$emit('enhanceReadability');
-            },
-            configHandler: function () {
-                // TODO store button states in localStorage
-            },
-        },
-    };
+  import _ from 'lodash';
+
+  export default {
+    name   : 'Header',
+    props  : ['error', 'activeTable', 'env', 'loading', 'tableLoading'],
+    data() {
+      return {
+        timeBeforeQuickFindMs: 750,
+        sideBarStatusText    : 'Collapse',
+        showSideBar          : true,
+        readability          : true,
+        self                 : this, // Needed for debounce
+      };
+    },
+    methods: {
+      /**
+       * Handles quick find input.
+       *
+       * Debounce default time is 550!
+       */
+      searchInTable: _.debounce(function(event) {
+        this.$emit('quickFind', event);
+      }, 550),
+
+      inputHandler        : function(event) {
+        this.$emit('shouldBeLoading');
+        this.searchInTable(event);
+      },
+      /**
+       * Handles collapse button action
+       * Emits event to collapse/expand sidebar.
+       */
+      sideBarButtonHandler: function() {
+        this.showSideBar       = !this.showSideBar;
+        this.sideBarStatusText = this.showSideBar ? 'Collapse' : 'Expand';
+        this.$emit('collapseSideBar');
+      },
+
+      /**
+       * Handles readability button actions.
+       * Emits event to change readability globally.
+       */
+      readabilityButtonHandler: function() {
+        this.readability = !this.readability;
+        this.$emit('enhanceReadability');
+      },
+
+      /**
+       * Handles config changes.
+       * Holds data like readability or side bar preferences in localStorage
+       */
+      configHandler: function() {
+        // TODO store button states in localStorage or something similair
+      },
+    },
+  };
 </script>
 
 

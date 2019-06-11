@@ -37,38 +37,31 @@
 </template>
 
 <script>
+  import Accordion from './Accordion';
 
-    import Accordion from './Accordion';
-
-    export default {
-        name: 'SideBar',
-        components: {Accordion},
-        props: ['readability', 'tableData'],
-        data() {
-            return {
-                databases: window.Prequel.databases,
-            };
-        },
-        methods: {
-            /**
-             * Create readable object from database and table
-             *
-             * @param db
-             * @param table
-             * @returns {{database: *, table: *}}
-             */
-            shortList: function (db, table) {
-                return {
-                    'database': db,
-                    'table': table,
-                };
-            },
-        },
-    };
+  export default {
+    name      : 'SideBar',
+    components: {Accordion},
+    props     : ['readability', 'tableData'],
+    data() {
+      return {
+        databases: window.Prequel.databases,
+      };
+    },
+    methods   : {
+      /**
+       * Create readable object from database and table
+       *
+       * @param db
+       * @param table
+       * @returns {{database: *, table: *}}
+       */
+      shortList: function(db, table) {
+        return {
+          'database': db,
+          'table'   : table,
+        };
+      },
+    },
+  };
 </script>
-
-<style lang="scss">
-    .table-name-animation {
-        transition: .5s ease;
-    }
-</style>
