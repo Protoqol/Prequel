@@ -1,4 +1,4 @@
-<img width="600" src="https://raw.githubusercontent.com/Protoqol/Prequel/master/.github/assets/prequelHeader.png?token=AMHFPMB7KSUNG2DEC43RQSS5AABBK">
+<img width="600" src="https://raw.githubusercontent.com/Protoqol/Prequel/master/.github/assets/prequelHeader.png?token=AMHFPMC55WYV5CA4TV3KM2S5BFA2S">
 
 Documentation can be found [here!](https://protoqol.github.io/Prequel/)
 
