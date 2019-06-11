@@ -1,4 +1,4 @@
-<img width="100" src="https://raw.githubusercontent.com/Protoqol/Prequel/master/public/favicon.png?token=AMHFPMA32IS2UN4UIRWXR5S4777EA">
+![Laravel Prequel](.github/assets/prequelHeader.png)
 
 # Laravel Prequel
 
