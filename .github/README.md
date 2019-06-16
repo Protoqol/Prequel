@@ -1,6 +1,9 @@
-![Laravel Prequel](./assets/prequelHeader.png)
+![Laravel Prequel](./assets/prequel.png)
 
 # Laravel Prequel
+
+<img src="./assets/prequel_screenshot.png" width="700">
+
 
 Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for more!
 
