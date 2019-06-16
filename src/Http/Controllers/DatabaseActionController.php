@@ -44,16 +44,9 @@ class DatabaseActionController extends Controller
     /**
      * Holds model for given table if one exists.
      *
-     * @var Model $model ;
+     * @var Model $model
      */
     public $model;
-
-    /**
-     * Holds query for quick find action
-     *
-     * @var string
-     */
-    public $query;
 
     /**
      * DatabaseActionController's constructor
@@ -67,9 +60,8 @@ class DatabaseActionController extends Controller
         $this->tableName     = Route::current()->parameter('table');
         $this->databaseName  = Route::current()->parameter('database');
         $this->qualifiedName = $this->databaseName.'.'.$this->tableName;
-        $this->model
-                             = app(DatabaseTraverser::class)->getModel($this->tableName);
-        $this->query         = request()->get('query');
+        $this->model         = app(DatabaseTraverser::class)
+            ->getModel($this->tableName);
     }
 
     /**
@@ -79,9 +71,10 @@ class DatabaseActionController extends Controller
      */
     public function getTableData()
     {
-        if ($this->query) {
-            return $this->findInTable();
-        }
+        $tableData = $this->model
+            ? $this->model->paginate(100)
+            : DB::table($this->qualifiedName)->paginate(100);
+
 
         return [
             "table"     => $this->qualifiedName,
@@ -89,7 +82,7 @@ class DatabaseActionController extends Controller
                 $this->databaseName,
                 $this->tableName
             ),
-            "data"      => DB::table($this->qualifiedName)->paginate(100),
+            "data"      => $tableData,
         ];
     }
 
@@ -110,41 +103,43 @@ class DatabaseActionController extends Controller
     }
 
     /**
-     * Find given input in table
+     * Try to find input in each column in table.
      *
-     * @TODO prefetch if possible with ID
+     * @TODO Prefetch if possible with ID
+     * @TODO Clean up, this is nowhere near production ready
      * @return mixed
      */
     public function findInTable()
     {
-        // God... This is one ugly function... @TODO clean up this mess
-        $whereRawQuery
-            = "SELECT * FROM `$this->databaseName`.`$this->tableName` WHERE ";
+        return response('Unfinished feature', 501);
 
-        $tableStructure = app(DatabaseTraverser::class)
-            ->getTableStructure($this->databaseName, $this->tableName);
-
-        $length   = count($tableStructure);
-        $currentI = 0;
-
-        foreach ($tableStructure as $struct) {
-            $currentI++;
-            $whereQuery[] = [$struct->Field, '=', 1];
-
-            if ($currentI === 1) {
-                $whereRawQuery .= '(';
-            }
-
-            $whereRawQuery .= "`$struct->Field` LIKE '%$this->query%'";
-
-            if ($length !== $currentI) {
-                $whereRawQuery .= ' OR ';
-            } else {
-                $whereRawQuery .= ');';
-            }
-        }
-
-
-        return DB::select(DB::raw((string) $whereRawQuery));
+//        $whereRawQuery
+//            = "SELECT * FROM `$this->databaseName`.`$this->tableName` WHERE ";
+//
+//        $tableStructure = app(DatabaseTraverser::class)
+//            ->getTableStructure($this->databaseName, $this->tableName);
+//
+//        $length   = count($tableStructure);
+//        $currentI = 0;
+//
+//        foreach ($tableStructure as $struct) {
+//            $currentI++;
+//            $whereQuery[] = [$struct->Field, '=', 1];
+//
+//            if ($currentI === 1) {
+//                $whereRawQuery .= '(';
+//            }
+//
+//            $whereRawQuery .= "`$struct->Field` LIKE '%$this->query%'";
+//
+//            if ($length !== $currentI) {
+//                $whereRawQuery .= ' OR ';
+//            } else {
+//                $whereRawQuery .= ');';
+//            }
+//        }
+//
+//
+//        return DB::select(DB::raw((string) $whereRawQuery));
     }
 }

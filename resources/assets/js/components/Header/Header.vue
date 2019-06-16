@@ -1,12 +1,14 @@
 <template>
     <div class="flex flex-col justify-center items-center mt-6">
         <div class="flex w-4/5">
+
+            <!--    Laravel prequel title, logo and current database connection    -->
             <div class="w-1/3">
                 <div class="flex flex-row">
                     <div class="mr-1 mt-1">
-                        <img class="no-drag bg-white rounded-full"
-                             height="30"
-                             width="30"
+                        <img class="no-drag"
+                             height="32rem"
+                             width="32rem"
                              alt="Protoqol Prequel"
                              src="/vendor/prequel/favicon.png">
                     </div>
@@ -28,6 +30,8 @@
                     </p>
                 </div>
             </div>
+
+            <!--     Table actions and information     -->
             <div class="w-1/3 flex flex-col justify-center items-center">
                 <h1 v-if="activeTable" class="text-lg flex flex-row justify-center items-center font-semibold">
                     <span class="font-normal text-sm mr-2">Table</span>
@@ -35,16 +39,18 @@
                     <img v-else width="20" height="20" src="/vendor/prequel/loader.gif"
                          alt="Loading table data...">
                 </h1>
-                <input v-if="activeTable"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                       id="quickfind" name="quickfind" type="text"
-                       placeholder="Quickly search this table..."
-                       :disabled="loading"
-                       @keyup="inputHandler($event)">
+                <label>
+                    <input v-if="activeTable"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                           type="text"
+                           placeholder="Quickly search this table..."
+                           :disabled="loading"
+                           @keyup="inputHandler($event)">
+                </label>
             </div>
 
+            <!--    Buttons    -->
             <div v-if="!error.error" class="w-1/3 flex flex-row justify-end items-center">
-                <!--     Enhance readability button          -->
                 <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
                         :class="readability ? 'readability-enabled' : 'readability-disabled'"
                         :title="`Enhance readability (${readability ? 'Enabled' : 'Disabled'})`"
@@ -52,7 +58,6 @@
                     <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
                 </button>
 
-                <!--     Expand/collapse sidebar button      -->
                 <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
                         :class="showSideBar ? 'sidebar-enabled' : 'sidebar-disabled'"
                         :title="`${sideBarStatusText} side bar`"

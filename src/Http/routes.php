@@ -18,10 +18,20 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
          */
         Route::prefix('prequel-api')->group(function () {
             Route::prefix('database')->group(function () {
+
+                // Get data from table, data includes structure, actual data and table name.
                 Route::get(
-                    '{database}/{table}/columns/get',
+                    '{database}/{table}/data/get',
                     'DatabaseActionController@getTableData'
                 );
+
+                // Find data with given input
+                Route::get(
+                    '',
+                    'DatabaseActionController@findInTable'
+                );
+
+                // Get count of total records in table
                 Route::get(
                     '{database}/{table}/count/get',
                     'DatabaseActionController@countTableRecords'
