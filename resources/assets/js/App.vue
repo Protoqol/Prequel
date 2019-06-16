@@ -17,6 +17,7 @@
                     <SideBar v-if="!view.collapsed"
                              :class="view.collapsed ? 'hidden' : 'w-1/5'"
                              :readability="view.readability"
+                             :table-data="prequel.data"
                              @tableSelect="getTableData($event)"></SideBar>
                 </transition>
                 <MainContent class="w-full"
@@ -66,6 +67,7 @@
           structure        : [],
           data             : {},
           currentActiveName: '',
+          currentTablePage : 1,
           loading          : false,
           tableLoading     : false,
           error            : {
@@ -75,7 +77,7 @@
         },
 
         /**
-         * Holds data about view preferences like collapsed sidebar and better readability.
+         * Holds data about view options.
          */
         view: {
           collapsed   : false,
@@ -115,7 +117,9 @@
         this.table.table             = table[1];
 
         try {
-          result = await axios.get(`database/${this.table.database}/${this.table.table}/columns/get`);
+          result = await axios.get(
+              `database/${this.table.database}/${this.table.table}/data/get?page=${this.table.currentTablePage}`,
+          );
         }
         catch (err) {
           error = err;
@@ -169,7 +173,7 @@
         this.table.loading = true;
 
         try {
-          result = await axios.get(`database/${this.table.database}/${this.table.table}/columns/get?query=${query}`);
+          result = await axios.get(`database/${this.table.database}/${this.table.table}/query/${query}/get`);
         }
         catch (err) {
           error = err;
