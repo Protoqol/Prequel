@@ -1,4 +1,4 @@
-<img width="100" src="https://raw.githubusercontent.com/Protoqol/Prequel/master/public/favicon.png?token=AMHFPMBNVO5YV4KUOLDFXJS4775HE">
+![Laravel Prequel](./assets/prequelHeader.png)
 
 # Laravel Prequel
 
@@ -14,3 +14,4 @@ Look [here](https://protoqol.github.io/Prequel/) for more!
     - [ ] Storing preferences about front-end in localStorage
     - [ ] Smoother UI
     - [ ] Animations (Animate.css)
+
