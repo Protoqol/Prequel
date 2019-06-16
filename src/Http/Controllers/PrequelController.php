@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Protoqol\Prequel\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controller;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
@@ -23,10 +23,11 @@ class PrequelController extends Controller
     {
         return view('Prequel::main', [
             'env'                 => [
-                'database' => env('DB_DATABASE'),
-                'host'     => env('DB_HOST'),
-                'port'     => env('DB_PORT'),
-                'user'     => env('DB_USERNAME'),
+                'connection' => env('DB_CONNECTION'),
+                'database'   => env('DB_DATABASE'),
+                'host'       => env('DB_HOST'),
+                'port'       => env('DB_PORT'),
+                'user'       => env('DB_USERNAME'),
             ],
             'isConnected'         => (bool) DB::connection()->getDatabaseName(),
             'initialDatabaseData' => app(DatabaseTraverser::class)->getAll(),

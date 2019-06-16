@@ -1,12 +1,21 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Protoqol\Prequel\PrequelServiceProvider
  */
+
 namespace Protoqol\Prequel;
 
 use Illuminate\Support\ServiceProvider;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
+/**
+ * Class PrequelServiceProvider
+ *
+ * @package Protoqol\Prequel
+ */
 class PrequelServiceProvider extends ServiceProvider
 {
 
@@ -18,19 +27,16 @@ class PrequelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Make controller
         $this->app->make('Protoqol\Prequel\Http\Controllers\PrequelController');
 
-        // DatabaseTraverser singleton
         $this->app->singleton(
             DatabaseTraverser::class,
-            function ($app) {
+            function () {
                 return new DatabaseTraverser();
             }
         );
 
-        // Load views
-        $this->loadViewsFrom(dirname(__DIR__) . '/resources/views', 'Prequel');
+        $this->loadViewsFrom(dirname(__DIR__).'/resources/views', 'Prequel');
     }
 
     /**
@@ -41,23 +47,21 @@ class PrequelServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        // Load routes
-        $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
+        $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
 
-        // Publish config
-        $this->publishes(
-            [
-                dirname(__DIR__) . '/config/prequel.php' => config_path('prequel.php'),
-            ]
+        $this->publishes([
+            dirname(__DIR__)
+            .'/config/prequel.php' => config_path('prequel.php'),
+        ]);
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__).'/config/prequel.php',
+            'prequel'
         );
 
-        // Merge config if already exists
-        $this->mergeConfigFrom(dirname(__DIR__) . '/config/prequel.php', 'prequel');
-
-        // Publish assets, app.js - app.cs - favicon.png - mix-manifest.json
         $this->publishes(
             [
-                dirname(__DIR__) . '/public' => public_path('vendor/prequel'),
+                dirname(__DIR__).'/public' => public_path('vendor/prequel'),
             ],
             'prequel-assets'
         );

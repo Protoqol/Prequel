@@ -1,135 +1,231 @@
 <template>
     <div v-cloak>
 
-        <!--   Header     -->
-        <Header @enhanceReadability="readableNames = (!readableNames)"
-                :prequelError="prequelError.error"
-                @collapseSideBar="collapsed = (!collapsed)"></Header>
+        <Header :error="prequel.errorDetailed"
+                :activeTable="table.currentActiveName"
+                :env="prequel.env"
+                :loading="table.loading"
+                :tableLoading="table.tableLoading"
+                @quickFind="quickFind($event)"
+                @shouldBeLoading="table.loading = true"
+                @enhanceReadability="view.readability = (!view.readability)"
+                @collapseSideBar="view.collapsed = (!view.collapsed)"></Header>
 
-        <!--   Main     -->
-        <div v-if="!prequelError.error" class="w-full flex justify-center">
+        <div v-if="!prequel.error" class="w-full flex justify-center">
             <div class="content flex">
                 <transition name="slide-fade" mode="in-out">
-                    <SideBar v-if="!collapsed" :class="collapsed ? 'hidden' : 'w-1/5'"
-                             :readability="readableNames"
+                    <SideBar v-if="!view.collapsed"
+                             :class="view.collapsed ? 'hidden' : 'w-1/5'"
+                             :readability="view.readability"
+                             :table-data="prequel.data"
                              @tableSelect="getTableData($event)"></SideBar>
                 </transition>
                 <MainContent class="w-full"
-                             :readability="readableNames"
-                             :class="setCorrectWidthForMainContent"
-                             :loading="tableDataLoading"
-                             :tableData="currentlySelectedTableData"></MainContent>
+                             :class="view.collapsed ? 'w-full' : 'w-4/5'"
+                             :readability="view.readability"
+                             :loading="table.loading"
+                             :welcome-shown="view.welcomeShown"
+                             :table-load-error="table.error.loadError"
+                             :table-error-detailed="table.error.loadErrorMessage"
+                             :data="table.data"
+                             :structure="table.structure"></MainContent>
             </div>
         </div>
 
-        <!--    Error    -->
-        <div v-if="prequelError.error">
-            <h1 class="mt-10 text-center text-3xl text-bold text-red-500">Oops... {{ prequelError.detailed }}</h1>
-            <h3 class="text-center text-lg text-normal text-black">
-                Tried with <span
-                    class="italic text-gray-800">{{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}</span>
-            </h3>
-        </div>
+        <PrequelError v-if="prequel.error" :error-detailed="prequel.errorDetailed" :env="prequel.env"></PrequelError>
     </div>
 </template>
 
 <script>
-    import Header from './components/Header';
-    import SideBar from './components/SideBar';
-    import MainContent from './components/MainContent';
-    import axios from 'axios';
+  import Header       from './components/Header/Header';
+  import SideBar      from './components/SideBar/SideBar';
+  import MainContent  from './components/MainContent/MainContent';
+  import axios        from 'axios';
+  import PrequelError from './components/Elements/PrequelError';
 
-    export default {
-        name: 'App',
-        components: {MainContent, SideBar, Header},
-        data() {
-            return {
-                prequelError: window.Prequel.error,
-                databases: window.Prequel.databases,
-                currentlySelectedTableData: {},
-                env: {
-                    database: window.Prequel.env.database,
-                    host: window.Prequel.env.host,
-                    port: window.Prequel.env.port,
-                    connected: window.Prequel.isConnected,
-                    user: window.Prequel.env.user,
-                },
-                tableDataLoading: false,
-                tableDataLoadError: false,
-                collapsed: false,
-                readableNames: true,
-                sourcecode: '',
-            };
+  export default {
+    name      : 'App',
+    components: {PrequelError, MainContent, SideBar, Header},
+    data() {
+      return {
+        /**
+         * Holds data dat comes directly from Prequel.
+         */
+        prequel: {
+          error        : window.Prequel.error.error,
+          errorDetailed: window.Prequel.error,
+          data         : window.Prequel.databases,
+          env          : window.Prequel.env,
         },
-        created() {
-            this.setFirstTableInView();
+
+        /**
+         * Holds data about current table.
+         */
+        table: {
+          database         : '',
+          table            : '',
+          structure        : [],
+          data             : {},
+          currentActiveName: '',
+          currentTablePage : 1,
+          loading          : false,
+          tableLoading     : false,
+          error            : {
+            loadError       : false,
+            loadErrorMessage: '',
+          },
         },
-        methods: {
-            /**
-             * Asynchronously get table data.
-             *
-             * @param databaseTable Should be formatted as `database.table`.
-             * @param dynamic Dynamically figure out databaseTable or use databaseTable as is.
-             * @returns {Promise<boolean>}
-             */
-            getTableData: async function (databaseTable, dynamic = true) {
-                if (!databaseTable) return false;
 
-                let parsed = (dynamic ? databaseTable.title || databaseTable.value : databaseTable).split('.'),
-                    res    = {};
-
-                this.tableDataLoading = true;
-
-                try {
-                    res = await axios.get(`database/${parsed[0]}/${parsed[1]}/columns/get`);
-                } catch (err) {
-                    this.tableDataLoadError = true;
-                }
-
-                this.tableDataLoading           = false;
-                this.currentlySelectedTableData = res.data;
-                return (res.status === 200);
-            },
-
-            /**
-             * Set width when side bar is collapsed
-             *
-             * @param collapsed
-             */
-            setCorrectWidthForMainContent: function (collapsed) {
-                setTimeout(function () {
-                    return collapsed ? 'w-full' : 'w-4/5';
-                }, 200);
-            },
-
-            /**
-             * Figure out first table in first database and set as default view.
-             */
-            setFirstTableInView: function () {
-                if (!this.prequelError.error) {
-                    for (let prop in this.databases) {
-                        if (this.databases.hasOwnProperty(prop)) {
-                            let table = this.databases[prop];
-                            this.getTableData(`${table.official_name}.${table.tables[0].name.official}`, false);
-                            break;
-                        }
-                    }
-                }
-            },
+        /**
+         * Holds data about view options.
+         */
+        view: {
+          collapsed   : false,
+          readability : true,
+          welcomeShown: false,
         },
-    };
+      };
+    },
+    methods   : {
+
+      /**
+       * Asynchronously get table data.
+       *
+       * @param databaseTable Should be formatted as `database.table`.
+       * @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable as is.
+       * @returns {Promise<boolean>}
+       */
+      getTableData: async function(databaseTable, dynamicLoad = true) {
+        if (!databaseTable.target) {
+          return false;
+        }
+
+        this.resetTableView();
+
+        let loadWasSuccess = false,
+            result         = {},
+            error          = {},
+            table          = (dynamicLoad
+                              ? databaseTable.target.title || databaseTable.target.value
+                              : databaseTable).split('.');
+
+        this.table.currentActiveName = dynamicLoad ? databaseTable.target.title : databaseTable;
+        this.table.loading           = true;
+        this.table.tableLoading      = true;
+        this.view.welcomeShown       = true;
+        this.table.database          = table[0];
+        this.table.table             = table[1];
+
+        try {
+          result = await axios.get(
+              `database/${this.table.database}/${this.table.table}/data/get?page=${this.table.currentTablePage}`,
+          );
+        }
+        catch (err) {
+          error = err;
+        }
+        finally {
+          this.table.loading      = false;
+          this.table.tableLoading = false;
+
+          if (typeof result === 'object' && result.data) {
+            loadWasSuccess             = true;
+            this.table.data            = result.data.data.data; // IKR!
+            this.table.structure       = result.data.structure;
+            this.table.error.loadError = false;
+          }
+
+          if (typeof error === 'object' && error.response) {
+            loadWasSuccess                    = false;
+            this.table.data                   = {};
+            this.table.structure              = [];
+            this.table.error.loadError        = true;
+            this.table.error.loadErrorMessage = error.response.data.message;
+          }
+        }
+        return loadWasSuccess;
+      },
+
+      /**
+       * Resets table data to default values.
+       */
+      resetTableView: function() {
+        this.table.loading                = true;
+        this.table.current                = {};
+        this.table.error.loadError        = false;
+        this.table.error.loadErrorMessage = '';
+      },
+
+      /**
+       * Reacts to event emitted by Quick Find input in <Header>
+       *
+       * Only looks through currently active table.
+       */
+      quickFind: async function(event) {
+        if (!event.target.value) {
+          return false;
+        }
+
+        let result = {},
+            error  = {},
+            query  = event.target.value;
+
+        this.table.loading = true;
+
+        try {
+          result = await axios.get(`database/${this.table.database}/${this.table.table}/query/${query}/get`);
+        }
+        catch (err) {
+          error = err;
+        }
+        finally {
+          this.table.loading = false;
+          this.table.data    = result.data;
+        }
+
+        return !!this.table.data;
+      },
+    },
+  };
 </script>
 
 <style lang="scss">
+
+    /**
+        Disable outline
+    */
     :focus {
         outline: 0;
+    }
+
+    /**
+        Scrollbar style
+    */
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+        transition: .2s ease;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        background-color: #f5f5f5;
+        transition: .2s ease;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: rgba(73, 125, 189, 0.5);
+        transition: .2s ease;
     }
 
     /**
         Main content container
     */
     .content {
-        width: 95%;
+        width: 98%;
     }
 
     /**

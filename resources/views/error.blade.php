@@ -16,15 +16,16 @@
 <div id="prequel"></div>
 
 <script>
-    window.Prequel             = {};
-    window.Prequel.error       = {
-        error: true,
-        detailed: @json($error_detailed),
-        code: @json($http_code)
-    };
-    window.Prequel.databases   = {};
-    window.Prequel.env         = @json($env);
-    window.Prequel.isConnected = {};
+  // Pass initial data to JavaScript
+  window.Prequel             = {};
+  window.Prequel.error       = {
+    error   : true,
+    detailed: @json($error_detailed),
+    code    : @json($http_code)
+  };
+  window.Prequel.databases   = {};
+  window.Prequel.env         = @json($env);
+  window.Prequel.isConnected = {};
 </script>
 <script src="{{ asset('/vendor/prequel/app.js') }}"></script>
 </body>
