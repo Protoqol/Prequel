@@ -2,7 +2,7 @@
 
 # Laravel Prequel
 
-Look [here](https://protoqol.github.io/Prequel/) for more!
+Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for more!
 
 # TODO
     - [x] Better graphics logo's etc.
