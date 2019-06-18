@@ -18,3 +18,4 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
     - [ ] Smoother UI
     - [ ] Multiple database connections 
     - [ ] Animations (Animate.css)
+
