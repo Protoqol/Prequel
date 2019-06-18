@@ -22,10 +22,12 @@
                     <font-awesome-icon style="transform: rotate(90deg);" icon="search-plus"/>&nbsp;
                 </td>
                 <td class="ellipsis px-4 text-sm max-w-64 w-64 text-center cursor-pointer hover:bg-gray-300"
+                    :id="item ? item : ENUM.PREQUEL_UNDEFINED"
                     :class="!item ? 'text-gray-500 italic' : 'text-gray-700 hover:underline'"
                     :title="item ? item + ` (Length ${(item + '').length})` : 'This item is empty'"
-                    v-for="item in row"
-                    @contextmenu.prevent="dataModifier($event)">
+                    :contenteditable="false"
+                    @contextmenu.prevent="dataModifier($event)"
+                    v-for="item in row">
                     {{item ? item : 'Nothing here'}}
                 </td>
             </tr>
@@ -41,20 +43,56 @@
   export default {
     name : 'Table',
     props: ['structure', 'data', 'readability'],
+    data() {
+      return {
 
-    mounted() {
-      console.log('Was mounted');
+        /**
+         * Holds data about table view
+         */
+        view: {
+          params: new URLSearchParams(window.location.search),
+          cell  : {
+            selected: {},
+            editing : false,
+          },
+        },
+
+        /**
+         * Enumerator
+         */
+        ENUM: {
+          PREQUEL_UNDEFINED: 'PREQUEL_UNDEFINED',
+        },
+      };
     },
 
     methods: {
+
       /**
        * At right click, open contextmenu to edit data.
-       * @param ev
+       * @param ev $event
        */
       dataModifier: function(ev) {
-        console.log(ev.target);
+        if (ev.target.id === this.ENUM.PREQUEL_UNDEFINED) {
+          return true;
+        }
+
+        this.view.cell.selected = ev.target;
+        this.view.cell.editing  = true;
+
+        ev.target.contentEditable = true;
+        ev.target.classList.remove('ellipsis', 'hover:underline', 'hover:bg-gray-300');
+        ev.target.classList.add('bg-white', 'border', 'cursor-text');
+
+        return true;
       },
 
+      /**
+       * Prettify table column names.
+       *
+       * @param str
+       * @returns {string|string|*}
+       */
       prettifyName: function(str) {
         if (!this.$props.readability) {
           return str;
@@ -70,10 +108,8 @@
             pretty += ' ';
           }
         }
-
         return pretty;
       },
-
     },
   };
 </script>

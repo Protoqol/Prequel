@@ -17,5 +17,7 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
     - [ ] Storing preferences about front-end in localStorage
     - [ ] Smoother UI
     - [ ] Multiple database connections 
+    - [ ] Database health check graph
     - [ ] Animations (Animate.css)
+    - [ ] Polyfills
 

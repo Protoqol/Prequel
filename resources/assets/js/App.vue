@@ -1,6 +1,13 @@
 <template>
+    <!--
+        Order of attributes:
+             1. Vue operators
+             2. Native attributes (id, class etc.)
+             3. Vue bindings
+             4. Vue events
+             5. Vue loops
+        -->
     <div v-cloak>
-
         <Header :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
                 :env="prequel.env"
@@ -9,7 +16,7 @@
                 @quickFind="quickFind($event)"
                 @shouldBeLoading="table.loading = true"
                 @enhanceReadability="view.readability = (!view.readability)"
-                @collapseSideBar="view.collapsed = (!view.collapsed)"></Header>
+                @collapseSideBar="view.collapsed = (!view.collapsed)"/>
 
         <div v-if="!prequel.error" class="w-full flex justify-center">
             <div class="content flex">
@@ -18,7 +25,7 @@
                              :class="view.collapsed ? 'hidden' : 'w-1/5'"
                              :readability="view.readability"
                              :table-data="prequel.data"
-                             @tableSelect="getTableData($event)"></SideBar>
+                             @tableSelect="getTableData($event)"/>
                 </transition>
                 <MainContent :class="view.collapsed ? 'w-full' : 'w-4/5'"
                              :readability="view.readability"
@@ -27,13 +34,13 @@
                              :table-load-error="table.error.loadError"
                              :table-error-detailed="table.error.loadErrorMessage"
                              :data="table.data"
-                             :structure="table.structure"></MainContent>
+                             :structure="table.structure"/>
             </div>
         </div>
 
         <PrequelError v-if="prequel.error"
                       :error-detailed="prequel.errorDetailed"
-                      :env="prequel.env"></PrequelError>
+                      :env="prequel.env"/>
     </div>
 </template>
 
@@ -91,18 +98,36 @@
           collapsed   : false,
           readability : true,
           welcomeShown: false,
-          url         : new URLSearchParams(window.location.search),
+          params      : new URLSearchParams(window.location.search),
         },
       };
     },
 
     created() {
-      if (this.view.url.get('database') && this.view.url.get('table')) {
-        this.getTableData(`${this.view.url.get('database')}.${this.view.url.get('table')}`, false);
+      if (this.view.params.get('database') && this.view.params.get('table')) {
+        this.getTableData(`${this.view.params.get('database')}.${this.view.params.get('table')}`, false);
       }
     },
 
+    mounted() {
+      console.log('mounted');
+    },
+
     methods: {
+
+      /**
+       * Update url query parameters to match current database and table.
+       */
+      updateUrl: function() {
+
+        this.view.params.set('database', this.table.database);
+        this.view.params.set('table', this.table.table);
+
+        let baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
+        let url     = baseUrl + '?' + this.view.params.toString();
+
+        window.history.pushState({path: url}, '', url);
+      },
 
       /**
        * Asynchronously get table data.
@@ -149,6 +174,7 @@
             this.table.data            = result.data.data.data;
             this.table.structure       = result.data.structure;
             this.table.error.loadError = false;
+            this.updateUrl();
           }
 
           if (typeof error === 'object' && error.response) {
