@@ -25,7 +25,6 @@
   };
   window.Prequel.databases   = {};
   window.Prequel.env         = @json($env);
-  window.Prequel.isConnected = {};
 </script>
 <script src="{{ asset('/vendor/prequel/app.js') }}"></script>
 </body>

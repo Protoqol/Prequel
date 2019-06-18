@@ -31,11 +31,11 @@ class Authorised
                 'error_detailed' => $this->configurationCheck()->detailed,
                 'http_code'      => 403,
                 'env'            => [
-                    'connection' => env('DB_CONNECTION'),
-                    'database'   => env('DB_DATABASE'),
-                    'host'       => env('DB_HOST'),
-                    'port'       => env('DB_PORT'),
-                    'user'       => env('DB_USERNAME'),
+                    'connection' => 'protected',
+                    'database'   => 'protected',
+                    'host'       => 'protected',
+                    'port'       => 'protected',
+                    'user'       => 'protected',
                 ],
             ]);
         }
@@ -45,11 +45,11 @@ class Authorised
                 'error_detailed' => $this->databaseConnectionCheck()->detailed,
                 'http_code'      => 503,
                 'env'            => [
-                    'connection' => env('DB_CONNECTION'),
-                    'database'   => env('DB_DATABASE'),
-                    'host'       => env('DB_HOST'),
-                    'port'       => env('DB_PORT'),
-                    'user'       => env('DB_USERNAME'),
+                    'connection' => config('app.default'),
+                    'database'   => config('app.mysql.database'),
+                    'host'       => config('app.mysql.host'),
+                    'port'       => config('app.mysql.port'),
+                    'user'       => config('app.mysql.user'),
                 ],
             ]);
         }
@@ -89,8 +89,8 @@ class Authorised
     private function configurationCheck()
     {
         return (object) [
-            'enabled'  => (!config('prequel.enabled')
-                || config('app.env') !== 'production'),
+            'enabled'  => (config('prequel.enabled')
+                && config('app.env') !== 'production'),
             'detailed' => 'Prequel has been disabled.',
         ];
     }

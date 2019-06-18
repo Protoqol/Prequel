@@ -11382,6 +11382,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -11402,9 +11403,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
        */
       prequel: {
         error: window.Prequel.error.error,
+        // Object
         errorDetailed: window.Prequel.error,
+        // String
         data: window.Prequel.databases,
-        env: window.Prequel.env
+        // Object
+        env: window.Prequel.env // Object
+
       },
 
       /**
@@ -11431,9 +11436,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       view: {
         collapsed: false,
         readability: true,
-        welcomeShown: false
+        welcomeShown: false,
+        url: new URLSearchParams(window.location.search)
       }
     };
+  },
+  created: function created() {
+    if (this.view.url.get('database') && this.view.url.get('table')) {
+      this.getTableData("".concat(this.view.url.get('database'), ".").concat(this.view.url.get('table')), false);
+    }
   },
   methods: {
     /**
@@ -11459,7 +11470,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 dynamicLoad = _args.length > 1 && _args[1] !== undefined ? _args[1] : true;
 
-                if (databaseTable.target) {
+                if (!(!databaseTable.target && dynamicLoad)) {
                   _context.next = 3;
                   break;
                 }
@@ -11496,8 +11507,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (_typeof(result) === 'object' && result.data) {
                   loadWasSuccess = true;
-                  this.table.data = result.data.data.data; // IKR!
-
+                  this.table.data = result.data.data.data;
                   this.table.structure = result.data.structure;
                   this.table.error.loadError = false;
                 }
@@ -11641,6 +11651,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PrequelError',
   props: ['errorDetailed', 'env'],
@@ -11652,9 +11666,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    errorSuggestion: function errorSuggestion(env) {
-      var suggestionCollection = [],
-          userPort = parseInt(env.port);
+    errorSuggestion: function errorSuggestion() {
+      var suggestionCollection = [];
+      var userPort = parseInt(this.$props.env.port);
 
       if (userPort !== this.standards.port) {
         suggestionCollection.push("You're using an irregular port number, usually the port is 3306 (Yours is: ".concat(userPort, ")"));
@@ -11951,10 +11965,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Table',
   props: ['structure', 'data', 'readability'],
+  mounted: function mounted() {
+    console.log('Was mounted');
+  },
   methods: {
+    /**
+     * At right click, open contextmenu to edit data.
+     * @param ev
+     */
+    dataModifier: function dataModifier(ev) {
+      console.log(ev.target);
+    },
     prettifyName: function prettifyName(str) {
       if (!this.$props.readability) {
         return str;
@@ -12204,7 +12229,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "/**\n    Disable outline\n*/\n:focus {\n  outline: 0;\n}\n\n/**\n    Scrollbar style\n*/\n::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);\n  background-color: #F5F5F5;\n  border-radius: 10px;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar {\n  width: 5px;\n  height: 5px;\n  background-color: #f5f5f5;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background: rgba(73, 125, 189, 0.5);\n  transition: 0.2s ease;\n}\n\n/**\n    Main content container\n*/\n.content {\n  width: 98%;\n}\n\n/**\n    Side bar transition\n */\n.slide-fade-enter-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}", ""]);
+exports.push([module.i, "/**\n    Disable outline\n*/\n:focus {\n  outline: 0;\n}\n\n/**\n    Scrollbar style\n*/\n::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);\n  background-color: #F5F5F5;\n  border-radius: 10px;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar {\n  width: 5px;\n  height: 10px;\n  background-color: #f5f5f5;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background: rgba(73, 125, 189, 0.5);\n  transition: 0.2s ease;\n}\n\n/**\n    Main content container\n*/\n.content {\n  width: 98%;\n}\n\n/**\n    Side bar transition\n */\n.slide-fade-enter-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}", ""]);
 
 // exports
 
@@ -55858,7 +55883,6 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("MainContent", {
-                  staticClass: "w-full",
                   class: _vm.view.collapsed ? "w-full" : "w-4/5",
                   attrs: {
                     readability: _vm.view.readability,
@@ -55947,32 +55971,46 @@ var render = function() {
                   "\n            "
               ),
               _c("br"),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-gray-700 text-sm" }, [
+                _vm._v("connection://user@host:port/database")
+              ]),
+              _vm._v(" "),
+              _c("br"),
               _c("br"),
               _vm._v(" "),
               _c(
-                "h4",
-                {
-                  staticClass:
-                    "text-center uppercase text-lg text-normal text-gray-900"
-                },
+                "div",
+                { staticClass: "bg-white rounded p-2 mt-2" },
                 [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errorSuggestion().length) +
-                      " suggestion(s) found\n            "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.errorSuggestion(_vm.env), function(error) {
-                return _c("code", [
-                  _vm._v(
-                    "\n                - " + _vm._s(error) + "\n            "
-                  )
-                ])
-              })
-            ],
-            2
+                  _c(
+                    "h4",
+                    {
+                      staticClass:
+                        "text-center uppercase text-lg text-normal text-gray-900"
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.errorSuggestion().length) +
+                          " suggestion(s) found\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.errorSuggestion(), function(error) {
+                    return _c("code", [
+                      _vm._v(
+                        "\n                    - " +
+                          _vm._s(error) +
+                          "\n                "
+                      )
+                    ])
+                  })
+                ],
+                2
+              )
+            ]
           )
         ])
       : _vm._e()
@@ -56426,6 +56464,12 @@ var render = function() {
                           title: item
                             ? item + " (Length " + (item + "").length + ")"
                             : "This item is empty"
+                        },
+                        on: {
+                          contextmenu: function($event) {
+                            $event.preventDefault()
+                            return _vm.dataModifier($event)
+                          }
                         }
                       },
                       [
@@ -56446,7 +56490,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm.data.length === 0
+    !_vm.data
       ? _c(
           "h1",
           { staticClass: "my-4 text-gray-700 w-full text-md text-center" },
@@ -69148,7 +69192,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.axios = __webpack_require__(/*! axios/index */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content;
-window.axios.defaults.baseURL = "".concat(window.location.href, "/prequel-api");
+window.axios.defaults.baseURL = "".concat(window.location.origin, "/prequel/prequel-api");
 /**
  * Fontawesome
  */

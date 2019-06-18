@@ -12,13 +12,17 @@
             </h3>
             <code class="block w-full text-gray-800 text-center">
                 {{env.connection}}://{{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
+                <br>
+                <span class="text-gray-700 text-sm">connection://user@host:port/database</span>
                 <br><br>
-                <h4 class="text-center uppercase text-lg text-normal text-gray-900">
-                    {{errorSuggestion().length}} suggestion(s) found
-                </h4>
-                <code v-for="error in errorSuggestion(env)">
-                    - {{error}}
-                </code>
+                <div class="bg-white rounded p-2 mt-2">
+                    <h4 class="text-center uppercase text-lg text-normal text-gray-900">
+                        {{errorSuggestion().length}} suggestion(s) found
+                    </h4>
+                    <code v-for="error in errorSuggestion()">
+                        - {{error}}
+                    </code>
+                </div>
             </code>
         </div>
     </div>
@@ -36,9 +40,9 @@
       };
     },
     methods: {
-      errorSuggestion: function(env) {
-        let suggestionCollection = [],
-            userPort             = parseInt(env.port);
+      errorSuggestion: function() {
+        let suggestionCollection = [];
+        let userPort             = parseInt(this.$props.env.port);
 
         if (userPort !== this.standards.port) {
           suggestionCollection.push(

@@ -23,14 +23,15 @@
                 </td>
                 <td class="ellipsis px-4 text-sm max-w-64 w-64 text-center cursor-pointer hover:bg-gray-300"
                     :class="!item ? 'text-gray-500 italic' : 'text-gray-700 hover:underline'"
+                    :title="item ? item + ` (Length ${(item + '').length})` : 'This item is empty'"
                     v-for="item in row"
-                    :title="item ? item + ` (Length ${(item + '').length})` : 'This item is empty'">
+                    @contextmenu.prevent="dataModifier($event)">
                     {{item ? item : 'Nothing here'}}
                 </td>
             </tr>
             </tbody>
         </table>
-        <h1 v-if="data.length === 0" class="my-4 text-gray-700 w-full text-md text-center">
+        <h1 v-if="!data" class="my-4 text-gray-700 w-full text-md text-center">
             This table does not contain any data
         </h1>
     </div>
@@ -38,9 +39,22 @@
 
 <script>
   export default {
-    name   : 'Table',
-    props  : ['structure', 'data', 'readability'],
+    name : 'Table',
+    props: ['structure', 'data', 'readability'],
+
+    mounted() {
+      console.log('Was mounted');
+    },
+
     methods: {
+      /**
+       * At right click, open contextmenu to edit data.
+       * @param ev
+       */
+      dataModifier: function(ev) {
+        console.log(ev.target);
+      },
+
       prettifyName: function(str) {
         if (!this.$props.readability) {
           return str;
@@ -59,6 +73,7 @@
 
         return pretty;
       },
+
     },
   };
 </script>

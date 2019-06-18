@@ -16,4 +16,5 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
     - [ ] Pagination of columns
     - [ ] Storing preferences about front-end in localStorage
     - [ ] Smoother UI
+    - [ ] Multiple database connections 
     - [ ] Animations (Animate.css)

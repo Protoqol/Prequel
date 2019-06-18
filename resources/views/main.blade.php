@@ -18,14 +18,13 @@
 <script>
   // Pass initial data to JavaScript
   window.Prequel             = {};
+  window.Prequel.env         = @json($env);
   window.Prequel.error       = {
     error   : false,
     detailed: '',
     code    : '',
   };
   window.Prequel.databases   = @json($initialDatabaseData);
-  window.Prequel.env         = @json($env);
-  window.Prequel.isConnected = @json($isConnected);
 </script>
 <script src="{{ asset('/vendor/prequel/app.js') }}"></script>
 </body>

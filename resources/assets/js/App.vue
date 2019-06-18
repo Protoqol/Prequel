@@ -20,8 +20,7 @@
                              :table-data="prequel.data"
                              @tableSelect="getTableData($event)"></SideBar>
                 </transition>
-                <MainContent class="w-full"
-                             :class="view.collapsed ? 'w-full' : 'w-4/5'"
+                <MainContent :class="view.collapsed ? 'w-full' : 'w-4/5'"
                              :readability="view.readability"
                              :loading="table.loading"
                              :welcome-shown="view.welcomeShown"
@@ -32,7 +31,9 @@
             </div>
         </div>
 
-        <PrequelError v-if="prequel.error" :error-detailed="prequel.errorDetailed" :env="prequel.env"></PrequelError>
+        <PrequelError v-if="prequel.error"
+                      :error-detailed="prequel.errorDetailed"
+                      :env="prequel.env"></PrequelError>
     </div>
 </template>
 
@@ -45,17 +46,24 @@
 
   export default {
     name      : 'App',
-    components: {PrequelError, MainContent, SideBar, Header},
+    components: {
+      PrequelError,
+      MainContent,
+      SideBar,
+      Header,
+    },
+
     data() {
       return {
+
         /**
          * Holds data dat comes directly from Prequel.
          */
         prequel: {
-          error        : window.Prequel.error.error,
-          errorDetailed: window.Prequel.error,
-          data         : window.Prequel.databases,
-          env          : window.Prequel.env,
+          error        : window.Prequel.error.error, // Object
+          errorDetailed: window.Prequel.error,       // String
+          data         : window.Prequel.databases,   // Object
+          env          : window.Prequel.env,         // Object
         },
 
         /**
@@ -83,10 +91,18 @@
           collapsed   : false,
           readability : true,
           welcomeShown: false,
+          url         : new URLSearchParams(window.location.search),
         },
       };
     },
-    methods   : {
+
+    created() {
+      if (this.view.url.get('database') && this.view.url.get('table')) {
+        this.getTableData(`${this.view.url.get('database')}.${this.view.url.get('table')}`, false);
+      }
+    },
+
+    methods: {
 
       /**
        * Asynchronously get table data.
@@ -96,7 +112,7 @@
        * @returns {Promise<boolean>}
        */
       getTableData: async function(databaseTable, dynamicLoad = true) {
-        if (!databaseTable.target) {
+        if (!databaseTable.target && dynamicLoad) {
           return false;
         }
 
@@ -130,7 +146,7 @@
 
           if (typeof result === 'object' && result.data) {
             loadWasSuccess             = true;
-            this.table.data            = result.data.data.data; // IKR!
+            this.table.data            = result.data.data.data;
             this.table.structure       = result.data.structure;
             this.table.error.loadError = false;
           }
@@ -185,6 +201,7 @@
 
         return !!this.table.data;
       },
+
     },
   };
 </script>
@@ -210,7 +227,7 @@
 
     ::-webkit-scrollbar {
         width: 5px;
-        height: 5px;
+        height: 10px;
         background-color: #f5f5f5;
         transition: .2s ease;
     }

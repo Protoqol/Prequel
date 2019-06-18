@@ -6,18 +6,17 @@ namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
-use Symfony\Component\VarDumper\Cloner\Data;
+use Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest;
 
 /**
  * Class DatabaseActionController
  *
  * @package Protoqol\Prequel\Http\Controllers
  */
-class DatabaseActionController extends Controller
+class DatabaseController extends Controller
 {
 
     /**
@@ -50,18 +49,15 @@ class DatabaseActionController extends Controller
 
     /**
      * DatabaseActionController's constructor
+     *
+     * @param  \Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest  $request
      */
-    public function __construct()
+    public function __construct(PrequelDatabaseRequest $request)
     {
-        if (empty($this->qualifiedName) || !isset($this->qualifiedName)) {
-            response('Could not construct sensible table name', 500);
-        }
-
-        $this->tableName     = Route::current()->parameter('table');
-        $this->databaseName  = Route::current()->parameter('database');
-        $this->qualifiedName = $this->databaseName.'.'.$this->tableName;
-        $this->model         = app(DatabaseTraverser::class)
-            ->getModel($this->tableName);
+        $this->tableName     = $request->table;
+        $this->databaseName  = $request->database;
+        $this->qualifiedName = $request->qualifiedName;
+        $this->model         = $request->model;
     }
 
     /**
@@ -74,7 +70,6 @@ class DatabaseActionController extends Controller
         $tableData = $this->model
             ? $this->model->paginate(100)
             : DB::table($this->qualifiedName)->paginate(100);
-
 
         return [
             "table"     => $this->qualifiedName,
