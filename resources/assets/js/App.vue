@@ -1,12 +1,12 @@
 <template>
     <!--
-        Order of attributes:
+        Order of element attributes:
              1. Vue operators
              2. Native attributes (id, class etc.)
              3. Vue bindings
              4. Vue events
              5. Vue loops
-        -->
+    -->
     <div v-cloak>
         <Header :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
@@ -20,6 +20,7 @@
 
         <div v-if="!prequel.error" class="w-full flex justify-center">
             <div class="content flex">
+
                 <transition name="slide-fade" mode="in-out">
                     <SideBar v-if="!view.collapsed"
                              :class="view.collapsed ? 'hidden' : 'w-1/5'"
@@ -27,9 +28,9 @@
                              :table-data="prequel.data"
                              @tableSelect="getTableData($event)"/>
                 </transition>
+
                 <MainContent class="overflow-x-scroll"
-                             :style="view.collapsed ? 'max-width: 100%;' : 'max-width: 80%;'"
-                             :class="view.collapsed ? 'w-full' : 'w-4/5'"
+                             :class="view.collapsed ? 'main-content-collapsed' : 'main-content-expanded'"
                              :readability="view.readability"
                              :loading="table.loading"
                              :welcome-shown="view.welcomeShown"
@@ -234,10 +235,23 @@
       },
 
     },
+
   };
 </script>
 
 <style lang="scss">
+
+    .main-content-collapsed {
+        width: 100%;
+        max-width: 100%;
+        transition: 2s ease;
+    }
+
+    .main-content-expanded {
+        width: 81%;
+        max-width: 81%;
+        transition: 2s ease;
+    }
 
     /**
         Disable outline

@@ -12,7 +12,7 @@
                     :title="struct.Field + ' - ' + struct.Type"
                     :type="struct.Type"
                     v-for="struct in structure">
-                    {{readability ? prettifyName(struct.Field) : struct.Field}}
+                    {{readability ? enhanceReadability(struct.Field) : struct.Field}}
                     <br>
                     <p class="text-xs font-light text-gray-700 -mt-1">{{struct.Type}}</p>
                 </th>
@@ -27,9 +27,11 @@
                 <td class="ellipsis px-4 text-sm max-w-64 w-64 text-center cursor-pointer hover:bg-gray-300"
                     :id="item ? item : ENUM.PREQUEL_UNDEFINED"
                     :class="!item ? 'text-gray-500 italic' : 'text-gray-700 hover:underline'"
-                    :title="item ? item + ` (Length ${(item + '').length})` : 'This item is empty'"
+                    :title="(item ? item + ` (Length ${(item + '').length})` : 'This item is empty') + '\nLeft click to see\nRight click to edit'"
                     :contenteditable="false"
                     @contextmenu.prevent="dataModifier($event)"
+                    @click="seeCompleteData($event)"
+                    @focusout="resetFocus($event)"
                     v-for="item in row">
                     {{item ? item : 'Nothing here'}}
                 </td>
@@ -57,8 +59,9 @@
         view: {
           params: new URLSearchParams(window.location.search),
           cell  : {
-            selected: {},
-            editing : false,
+            selected : {},
+            editing  : false,
+            saveEvent: {},
           },
         },
 
@@ -73,65 +76,85 @@
 
     methods: {
 
+      seeCompleteData: function(ev) {
+        if (ev.target.classList.contains('ellipsis') && ev.target.contentEditable === 'false') {
+          ev.target.classList.remove('ellipsis');
+        }
+        else if (ev.target.contentEditable === 'false') {
+          ev.target.classList.add('ellipsis');
+        }
+      },
+
+      resetFocus: function(ev) {
+        ev.target.classList.remove('bg-white', 'border', 'cursor-text');
+        ev.target.classList.add('ellipsis', 'hover:underline', 'hover:bg-gray-300');
+        ev.target.contentEditable = false;
+        this.view.cell.selected   = {};
+      },
+
+      /**
+       * Save data @focusout
+       */
+      saveModifiedData: function() {
+        this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
+        this.view.cell.selected.classList.add('ellipsis', 'hover:underline', 'hover:bg-gray-300');
+        this.view.cell.selected.contentEditable = false;
+        this.view.cell.selected                 = {};
+      },
+
       /**
        * At right click, open contextmenu to edit data.
        * @param ev $event
        */
       dataModifier: function(ev) {
-        if (ev.target.id === this.ENUM.PREQUEL_UNDEFINED) {
-          return true;
-        }
-
-        if (this.view.cell.selected.length) {
-          this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
-          this.view.cell.selected.classList.add('ellipsis', 'hover:underline', 'hover:bg-gray-300');
-          this.view.cell.selected.contentEditable = false;
-          this.view.cell.selected                 = {};
-        }
-
         this.view.cell.selected = ev.target;
         this.view.cell.editing  = true;
 
         this.view.cell.selected.contentEditable = true;
         this.view.cell.selected.classList.remove('ellipsis', 'hover:underline', 'hover:bg-gray-300');
         this.view.cell.selected.classList.add('bg-white', 'border', 'cursor-text');
-
-        return true;
+        this.view.cell.selected.focus();
       },
 
       /**
-       * Prettify table column names.
+       * Enhance readability for column names.
        *
        * @param str
-       * @returns {string|string|*}
+       * @returns {string}
        */
-      prettifyName: function(str) {
+      enhanceReadability: function(str) {
         if (!this.$props.readability) {
           return str;
         }
 
-        let words  = str.split(/[!@#$%^&*(),.?":{}|<>_-]/);
-        let pretty = '';
+        let words    = str.split(/[!@#$%^&*(),.?":{}|<>_-]/);
+        let readable = '';
 
         for (let i = 0; i < words.length; i++) {
-          pretty += capitalise(words[i]);
+          readable += capitalise(words[i]);
 
           if (i !== (words.length - 1)) {
-            pretty += ' ';
+            readable += ' ';
           }
         }
-        return pretty;
+
+        return readable;
       },
     },
   };
 </script>
 
-<style>
+<style scoped>
+    * {
+        transition: all .5s ease;
+    }
+
     .ellipsis {
-        width: 300px;
-        max-width: 300px;
+        width: 250px;
+        max-width: 250px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        transition: all .5s ease;
     }
 </style>
