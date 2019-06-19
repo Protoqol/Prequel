@@ -27,7 +27,9 @@
                              :table-data="prequel.data"
                              @tableSelect="getTableData($event)"/>
                 </transition>
-                <MainContent :class="view.collapsed ? 'w-full' : 'w-4/5'"
+                <MainContent class="overflow-x-scroll"
+                             :style="view.collapsed ? 'max-width: 100%;' : 'max-width: 80%;'"
+                             :class="view.collapsed ? 'w-full' : 'w-4/5'"
                              :readability="view.readability"
                              :loading="table.loading"
                              :welcome-shown="view.welcomeShown"
@@ -104,19 +106,22 @@
     },
 
     created() {
-      if (this.view.params.get('database') && this.view.params.get('table')) {
-        this.getTableData(`${this.view.params.get('database')}.${this.view.params.get('table')}`, false);
-      }
-    },
-
-    mounted() {
-      console.log('mounted');
+      this.checkUrlParameters();
     },
 
     methods: {
 
       /**
-       * Update url query parameters to match current database and table.
+       * Checks if database and table query parameters were found, and tries to select a table based on those parameters.
+       */
+      checkUrlParameters: function() {
+        if (this.view.params.has('database') && this.view.params.has('table')) {
+          this.getTableData(`${this.view.params.get('database')}.${this.view.params.get('table')}`, false);
+        }
+      },
+
+      /**
+       * Update url query parameters to match current database and table, only updates when table was loaded.
        */
       updateUrl: function() {
 

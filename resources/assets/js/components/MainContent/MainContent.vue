@@ -10,8 +10,9 @@
                      :table-error-detailed="tableErrorDetailed"
                      :table-load-error="tableLoadError"></TableStatus>
 
-        <Table v-if="!loading && !tableLoadError && Object.keys(data).length !== 0"
+        <Table v-if="!loading && !tableLoadError"
                :data="data"
+               :readability="readability"
                :structure="structure"></Table>
     </div>
 </template>
@@ -24,6 +25,6 @@
   export default {
     name      : 'MainContent',
     components: {Welcome, TableStatus, Table},
-    props     : ['structure', 'data', 'loading', 'tableLoadError', 'tableErrorDetailed', 'welcomeShown'],
+    props     : ['structure', 'data', 'readability', 'loading', 'tableLoadError', 'tableErrorDetailed', 'welcomeShown'],
   };
 </script>

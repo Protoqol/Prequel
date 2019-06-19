@@ -15,7 +15,7 @@
                     <h1 class="text-2xl">
                         <span class="font-bold">Laravel</span>
                         Prequel
-                        <a href="https://github.com/Protoqol/Prequel"
+                        <a href="https://github.com/Protoqol"
                            target="_blank"
                            title="Creator of Laravel Prequel"
                            class="not-italic text-xs font-light">

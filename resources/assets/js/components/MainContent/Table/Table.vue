@@ -1,17 +1,20 @@
 <template>
     <div>
-        <table class="w-full overflow-auto bg-gray-200">
+        <table v-if="data.length !== 0" class="w-full overflow-auto bg-gray-200">
             <thead class="border-b bg-gray-400 rounded-t">
             <tr>
                 <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
                     title="Quick actions">
                     <font-awesome-icon icon="tools"/>
                 </th>
-                <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
-                    v-for="struct in structure"
+                <th class="border p-2 whitespace-no-wrap text-sm  text-center cursor-pointer hover:bg-gray-300"
+                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
                     :title="struct.Field + ' - ' + struct.Type"
-                    :type="struct.Type">
+                    :type="struct.Type"
+                    v-for="struct in structure">
                     {{readability ? prettifyName(struct.Field) : struct.Field}}
+                    <br>
+                    <p class="text-xs font-light text-gray-700 -mt-1">{{struct.Type}}</p>
                 </th>
             </tr>
             </thead>
@@ -33,16 +36,18 @@
             </tr>
             </tbody>
         </table>
-        <h1 v-if="!data" class="my-4 text-gray-700 w-full text-md text-center">
-            This table does not contain any data
-        </h1>
+        <TableEmpty v-if="data.length === 0" :structure="structure"/>
     </div>
 </template>
 
 <script>
+  import TableEmpty from './TableEmpty';
+
   export default {
-    name : 'Table',
-    props: ['structure', 'data', 'readability'],
+    name      : 'Table',
+    components: {TableEmpty},
+    props     : ['structure', 'data', 'readability'],
+
     data() {
       return {
 
@@ -77,12 +82,19 @@
           return true;
         }
 
+        if (this.view.cell.selected.length) {
+          this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
+          this.view.cell.selected.classList.add('ellipsis', 'hover:underline', 'hover:bg-gray-300');
+          this.view.cell.selected.contentEditable = false;
+          this.view.cell.selected                 = {};
+        }
+
         this.view.cell.selected = ev.target;
         this.view.cell.editing  = true;
 
-        ev.target.contentEditable = true;
-        ev.target.classList.remove('ellipsis', 'hover:underline', 'hover:bg-gray-300');
-        ev.target.classList.add('bg-white', 'border', 'cursor-text');
+        this.view.cell.selected.contentEditable = true;
+        this.view.cell.selected.classList.remove('ellipsis', 'hover:underline', 'hover:bg-gray-300');
+        this.view.cell.selected.classList.add('bg-white', 'border', 'cursor-text');
 
         return true;
       },
