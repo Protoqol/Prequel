@@ -10,7 +10,7 @@
                      :table-error-detailed="tableErrorDetailed"
                      :table-load-error="tableLoadError"></TableStatus>
 
-        <Table v-if="!loading && !tableLoadError"
+        <Table v-if="!loading && !tableLoadError && welcomeShown"
                :data="data"
                :readability="readability"
                :structure="structure"></Table>

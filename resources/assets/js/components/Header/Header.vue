@@ -34,18 +34,38 @@
             <!--     Table actions and information     -->
             <div class="w-1/3 flex flex-col justify-center items-center">
                 <h1 v-if="activeTable" class="text-lg flex flex-row justify-center items-center font-semibold">
-                    <span class="font-normal text-sm mr-2">Table</span>
-                    <span v-if="!tableLoading">{{activeTable}}</span>
+                    <span v-if="!tableLoading" class="font-thin">{{activeTable}}</span>
                     <img v-else width="20" height="20" src="/vendor/prequel/loader.gif"
                          alt="Loading table data...">
                 </h1>
-                <label>
-                    <input v-if="activeTable"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                <label class="flex flex-row">
+                    <input list="columnList"
+                           class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                            type="text"
-                           placeholder="Quickly search this table..."
-                           :disabled="loading"
-                           @keyup="inputHandler($event)">
+                           name="column"
+                           v-model="input.column"
+                           placeholder="Column..."
+                           :disabled="loading">
+                    <datalist id="columnList">
+                        <option v-for="struct in tableStructure" :value="struct.Field"></option>
+                    </datalist>
+                    <span class="m-2 font-bold text-lg">=</span>
+
+                    <!-- Add pattern based on column select -->
+                    <input v-if="activeTable"
+                           class="shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                           type="text"
+                           name="value"
+                           placeholder="Value..."
+                           v-model="input.value"
+                           @keyup.enter="inputHandler()"
+                           :disabled="loading">
+
+                    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 mr-2 border border-gray-400 rounded shadow"
+                            :title="`Retrieve row where ${input.column} equals ${input.value}`"
+                            @click="inputHandler()">
+                        Get
+                    </button>
                 </label>
             </div>
 
@@ -75,37 +95,36 @@
 </template>
 
 <script>
-  import _ from 'lodash';
 
   export default {
     name   : 'Header',
-    props  : ['error', 'activeTable', 'env', 'loading', 'tableLoading'],
+    props  : ['error', 'activeTable', 'env', 'loading', 'tableLoading', 'tableStructure'],
     data() {
       return {
         timeBeforeQuickFindMs: 750,
         sideBarStatusText    : 'Collapse',
         showSideBar          : true,
         readability          : true,
-        self                 : this, // Needed for debounce
+        input                : {
+          column: '',
+          value : '',
+        },
       };
     },
     methods: {
-      /**
-       * Handles quick find input.
-       *
-       * Debounce default time is 550!
-       */
-      searchInTable: _.debounce(function(event) {
-        this.$emit('quickFind', event);
-      }, 550),
 
-      inputHandler        : function(event) {
-        this.$emit('shouldBeLoading');
-        this.searchInTable(event);
-      },
       /**
-       * Handles collapse button action
-       * Emits event to collapse/expand sidebar.
+       | Handle input when searching for data inside a table
+       */
+      inputHandler: function(event) {
+        if (this.input.column && this.input.value) {
+          this.$emit('shouldBeLoading');
+        }
+      },
+
+      /**
+       | Handles collapse button action
+       | Emits event to collapse/expand sidebar.
        */
       sideBarButtonHandler: function() {
         this.showSideBar       = !this.showSideBar;
@@ -114,8 +133,8 @@
       },
 
       /**
-       * Handles readability button actions.
-       * Emits event to change readability globally.
+       | Handles readability button actions.
+       | Emits event to change readability globally.
        */
       readabilityButtonHandler: function() {
         this.readability = !this.readability;
@@ -123,8 +142,8 @@
       },
 
       /**
-       * Handles config changes.
-       * Holds data like readability or side bar preferences in localStorage
+       | Handles config changes.
+       | Holds data like readability or side bar preferences in localStorage
        */
       configHandler: function() {
         // TODO store button states in localStorage or something similair

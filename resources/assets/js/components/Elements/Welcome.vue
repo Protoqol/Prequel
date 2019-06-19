@@ -12,7 +12,7 @@
                class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded-full mx-1">
                 Docs
             </a>
-            <a href="https://github.com/Protoqol/Prequel/issues/new"
+            <a href="https://github.com/Protoqol/Prequel/issues/new?assignees=&labels=bug&template=bug-report.md&title=%5BBUG%5D"
                target="_blank"
                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full mx-1">
                 Bug report

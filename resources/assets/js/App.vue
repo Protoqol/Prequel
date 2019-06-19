@@ -10,6 +10,7 @@
     <div v-cloak>
         <Header :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
+                :tableStructure="table.structure"
                 :env="prequel.env"
                 :loading="table.loading"
                 :tableLoading="table.tableLoading"
@@ -26,6 +27,7 @@
                              :class="view.collapsed ? 'hidden' : 'w-1/5'"
                              :readability="view.readability"
                              :table-data="prequel.data"
+                             @searchingForTable="searchForTable($event)"
                              @tableSelect="getTableData($event)"/>
                 </transition>
 
@@ -111,6 +113,13 @@
     },
 
     methods: {
+
+      /**
+       * Search for a table in de side menu
+       */
+      searchForTable: function(e) {
+        console.log(e);
+      },
 
       /**
        * Checks if database and table query parameters were found, and tries to select a table based on those parameters.

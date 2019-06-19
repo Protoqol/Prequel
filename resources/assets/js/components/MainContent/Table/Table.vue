@@ -26,7 +26,7 @@
                 </td>
                 <td class="ellipsis px-4 text-sm max-w-64 w-64 text-center cursor-pointer hover:bg-gray-300"
                     :id="item ? item : ENUM.PREQUEL_UNDEFINED"
-                    :class="!item ? 'text-gray-500 italic' : 'text-gray-700 hover:underline'"
+                    :class="!item ? 'text-gray-500 italic' : 'text-gray-700'"
                     :title="(item ? item + ` (Length ${(item + '').length})` : 'This item is empty') + '\nLeft click to see\nRight click to edit'"
                     :contenteditable="false"
                     @contextmenu.prevent="dataModifier($event)"
@@ -87,7 +87,7 @@
 
       resetFocus: function(ev) {
         ev.target.classList.remove('bg-white', 'border', 'cursor-text');
-        ev.target.classList.add('ellipsis', 'hover:underline', 'hover:bg-gray-300');
+        ev.target.classList.add('ellipsis', 'hover:bg-gray-300');
         ev.target.contentEditable = false;
         this.view.cell.selected   = {};
       },
@@ -97,7 +97,7 @@
        */
       saveModifiedData: function() {
         this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
-        this.view.cell.selected.classList.add('ellipsis', 'hover:underline', 'hover:bg-gray-300');
+        this.view.cell.selected.classList.add('ellipsis', 'hover:bg-gray-300');
         this.view.cell.selected.contentEditable = false;
         this.view.cell.selected                 = {};
       },
@@ -131,7 +131,7 @@
         let readable = '';
 
         for (let i = 0; i < words.length; i++) {
-          readable += capitalise(words[i]);
+          readable += capitalise(words[i].toLowerCase());
 
           if (i !== (words.length - 1)) {
             readable += ' ';

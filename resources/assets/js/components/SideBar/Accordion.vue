@@ -1,5 +1,5 @@
 <template>
-    <div class="accordion" v-bind:class="theme">
+    <div class="accordion">
         <div class="header" @click="toggle">
             <slot name="header">HINT</slot>
         </div>

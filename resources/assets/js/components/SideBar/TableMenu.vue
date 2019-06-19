@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="ml-2" v-for="database in tableData">
-            <Accordion theme="purple">
+            <Accordion>
                 <div slot="header">
                     <li class="border-b p-2 rounded-l text-gray-700 cursor-pointer text-left"
                         :title="`${database.official_name} (${database.tables.length} tables)`"

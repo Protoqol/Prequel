@@ -26,7 +26,7 @@ class PrequelController extends Controller
                 'database'   => config('database.connections.mysql.database'),
                 'host'       => config('database.connections.mysql.host'),
                 'port'       => config('database.connections.mysql.port'),
-                'user'       => config('database.connections.mysql.user'),
+                'user'       => config('database.connections.mysql.username'),
             ],
             'initialDatabaseData' => app(DatabaseTraverser::class)->getAll(),
         ]);
