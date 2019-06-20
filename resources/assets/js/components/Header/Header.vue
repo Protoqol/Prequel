@@ -38,14 +38,16 @@
                     <img v-else width="20" height="20" src="/vendor/prequel/loader.gif"
                          alt="Loading table data...">
                 </h1>
-                <label class="flex flex-row">
+                <label v-if="activeTable" class="flex flex-row">
                     <input list="columnList"
                            class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                            type="text"
                            name="column"
+                           autocomplete="off"
                            v-model="input.column"
                            placeholder="Column..."
                            :disabled="loading">
+
                     <datalist id="columnList">
                         <option v-for="struct in tableStructure" :value="struct.Field"></option>
                     </datalist>
@@ -79,6 +81,13 @@
                 </button>
 
                 <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+                        title="Set Dark Mode (Not available yet)"
+                        :class="darkMode ? 'dark-mode-enabled' : 'dark-mode-disabled'"
+                        @click="darkMode = (!darkMode)">
+                    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
+                </button>
+
+                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
                         :class="showSideBar ? 'sidebar-enabled' : 'sidebar-disabled'"
                         :title="`${sideBarStatusText} side bar`"
                         @click="sideBarButtonHandler">
@@ -105,6 +114,7 @@
         sideBarStatusText    : 'Collapse',
         showSideBar          : true,
         readability          : true,
+        darkMode             : false,
         input                : {
           column: '',
           value : '',
@@ -156,6 +166,28 @@
 <style lang="scss">
     .divider-bottom {
         border-bottom: 1px solid #d5dfe9;
+    }
+
+    .dark-mode-enabled {
+        color: #fff;
+        background-color: #667eea;
+        transition: 0.5s ease;
+
+        &:hover {
+            background-color: rgba(105, 144, 255, 0.7);
+            transition: 0.5s ease;
+        }
+    }
+
+    .dark-mode-disabled {
+        color: #2d3748;
+        background-color: transparent;
+        transition: 0.5s ease;
+
+        &:hover {
+            background-color: #667eea;
+            transition: 0.5s ease;
+        }
     }
 
     .readability-enabled {

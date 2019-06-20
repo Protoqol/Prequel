@@ -1,6 +1,6 @@
 <template>
     <div class="accordion">
-        <div class="header" @click="toggle">
+        <div class="header" :title="status" @click="toggle">
             <slot name="header">HINT</slot>
         </div>
         <transition name="accordion"
@@ -22,12 +22,14 @@
     props  : ['theme'],
     data() {
       return {
-        show: false,
+        show  : false,
+        status: 'CLOSED',
       };
     },
     methods: {
       toggle     : function() {
-        this.show = !this.show;
+        this.show   = !this.show;
+        this.status = this.show ? 'OPEN' : 'CLOSED';
       },
       beforeEnter: function(el) {
         el.style.height = '0';

@@ -1,5 +1,7 @@
 window._ = require('lodash');
 
+window.v = window.vividLog;
+
 /**
  * Axios
  */
@@ -15,6 +17,7 @@ window.axios.defaults.baseURL                            = `${window.location.or
 import Vue               from 'vue';
 import {library}         from '@fortawesome/fontawesome-svg-core';
 import {
+  faAdjust,
   faAsterisk,
   faChevronCircleUp,
   faDatabase,
@@ -26,7 +29,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 library.add(faDatabase, faTable, faChevronCircleUp, faSearchPlus, faTools,
-    faGlasses, faAsterisk);
+    faGlasses, faAsterisk, faAdjust);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

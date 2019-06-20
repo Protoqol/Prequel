@@ -8,7 +8,8 @@
              5. Vue loops
     -->
     <div v-cloak>
-        <Header :error="prequel.errorDetailed"
+        <Header ref="headerRef"
+                :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
                 :tableStructure="table.structure"
                 :env="prequel.env"
@@ -17,7 +18,7 @@
                 @quickFind="quickFind($event)"
                 @shouldBeLoading="table.loading = true"
                 @enhanceReadability="view.readability = (!view.readability)"
-                @collapseSideBar="view.collapsed = (!view.collapsed)"/>
+                @collapseSideBar="sideBarCollapseHandler"/>
 
         <div v-if="!prequel.error" class="w-full flex justify-center">
             <div class="content flex">
@@ -97,25 +98,74 @@
         },
 
         /**
-         * Holds data about view options.
+         * Holds data about the view/UI.
          */
         view: {
           collapsed   : false,
           readability : true,
           welcomeShown: false,
           params      : new URLSearchParams(window.location.search),
+          menu        : {
+            active_header_class: 'text-indigo-600',
+            active_item_class  : 'text-indigo-400',
+          },
         },
       };
     },
 
-    created() {
+    mounted() {
       this.checkUrlParameters();
     },
 
     methods: {
 
       /**
-       * Search for a table in de side menu
+       * Handles actions when sidebar collapses or expands.
+       */
+      sideBarCollapseHandler: function() {
+        this.view.collapsed = (!this.view.collapsed);
+        if (!this.view.collapsed) {
+          window.setTimeout(this.setActiveTable, 1000);
+        }
+      },
+
+      /**
+       * Open active table in menu, and set it to active. Purely an UI/UX addition.
+       */
+      setActiveTable: function() {
+        if (this.view.params.has('database') && this.view.params.has('table')) {
+          // Menu header with database name
+          let databaseEl = document.querySelector(`li[value=${this.view.params.get('database')}]`);
+
+          // Menu item with table name
+          let tableEl = document.querySelector(`li[value=${this.view.params.get('table')}]`);
+
+          // All 'li' elements
+          let menuItemElements = document.getElementsByTagName('li');
+
+          // Pretty costly operation, @TODO Refactor
+          for (let menuElement of menuItemElements) {
+            if (menuElement && menuElement.classList.contains(this.view.menu.active_item_class)) {
+              menuElement.classList.remove(this.view.menu.active_item_class);
+            }
+
+            if (menuElement && menuElement.classList.contains(this.view.menu.active_header_class)) {
+              menuElement.classList.remove(this.view.menu.active_header_class);
+            }
+          }
+
+          // Only click if not already open as this causes it to be closed again.
+          if (databaseEl.parentElement.parentElement.title === 'CLOSED') {
+            databaseEl.click();
+          }
+
+          databaseEl.classList.add(this.view.menu.active_header_class);
+          tableEl.classList.add(this.view.menu.active_item_class);
+        }
+      },
+
+      /**
+       * Search for a table in de side menu @TODO
        */
       searchForTable: function(e) {
         console.log(e);
@@ -127,6 +177,7 @@
       checkUrlParameters: function() {
         if (this.view.params.has('database') && this.view.params.has('table')) {
           this.getTableData(`${this.view.params.get('database')}.${this.view.params.get('table')}`, false);
+          this.setActiveTable();
         }
       },
 
@@ -142,13 +193,14 @@
         let url     = baseUrl + '?' + this.view.params.toString();
 
         window.history.pushState({path: url}, '', url);
+        this.setActiveTable();
       },
 
       /**
        * Asynchronously get table data.
        *
        * @param databaseTable Should be formatted as `database.table`.
-       * @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable as is.
+       * @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
        * @returns {Promise<boolean>}
        */
       getTableData: async function(databaseTable, dynamicLoad = true) {
@@ -161,9 +213,7 @@
         let loadWasSuccess = false,
             result         = {},
             error          = {},
-            table          = (dynamicLoad
-                              ? databaseTable.target.title || databaseTable.target.value
-                              : databaseTable).split('.');
+            table          = (dynamicLoad ? databaseTable.target.title : databaseTable).split('.');
 
         this.table.currentActiveName = dynamicLoad ? databaseTable.target.title : databaseTable;
         this.table.loading           = true;
@@ -253,13 +303,13 @@
     .main-content-collapsed {
         width: 100%;
         max-width: 100%;
-        transition: 2s ease;
+        transition: 1s ease;
     }
 
     .main-content-expanded {
         width: 81%;
         max-width: 81%;
-        transition: 2s ease;
+        transition: 1s ease;
     }
 
     /**

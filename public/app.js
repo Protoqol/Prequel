@@ -11395,6 +11395,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -11443,22 +11444,90 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
 
       /**
-       * Holds data about view options.
+       * Holds data about the view/UI.
        */
       view: {
         collapsed: false,
         readability: true,
         welcomeShown: false,
-        params: new URLSearchParams(window.location.search)
+        params: new URLSearchParams(window.location.search),
+        menu: {
+          active_header_class: 'text-indigo-600',
+          active_item_class: 'text-indigo-400'
+        }
       }
     };
   },
-  created: function created() {
+  mounted: function mounted() {
     this.checkUrlParameters();
   },
   methods: {
     /**
-     * Search for a table in de side menu
+     * Handles actions when sidebar collapses or expands.
+     */
+    sideBarCollapseHandler: function sideBarCollapseHandler() {
+      this.view.collapsed = !this.view.collapsed;
+
+      if (!this.view.collapsed) {
+        window.setTimeout(this.setActiveTable, 1000);
+      }
+    },
+
+    /**
+     * Open active table in menu, and set it to active. Purely an UI/UX addition.
+     */
+    setActiveTable: function setActiveTable() {
+      if (this.view.params.has('database') && this.view.params.has('table')) {
+        // Menu header with database name
+        var databaseEl = document.querySelector("li[value=".concat(this.view.params.get('database'), "]")); // Menu item with table name
+
+        var tableEl = document.querySelector("li[value=".concat(this.view.params.get('table'), "]")); // All 'li' elements
+
+        var menuItemElements = document.getElementsByTagName('li'); // Pretty costly operation, @TODO Refactor
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = menuItemElements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var menuElement = _step.value;
+
+            if (menuElement && menuElement.classList.contains(this.view.menu.active_item_class)) {
+              menuElement.classList.remove(this.view.menu.active_item_class);
+            }
+
+            if (menuElement && menuElement.classList.contains(this.view.menu.active_header_class)) {
+              menuElement.classList.remove(this.view.menu.active_header_class);
+            }
+          } // Only click if not already open as this causes it to be closed again.
+
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        if (databaseEl.parentElement.parentElement.title === 'CLOSED') {
+          databaseEl.click();
+        }
+
+        databaseEl.classList.add(this.view.menu.active_header_class);
+        tableEl.classList.add(this.view.menu.active_item_class);
+      }
+    },
+
+    /**
+     * Search for a table in de side menu @TODO
      */
     searchForTable: function searchForTable(e) {
       console.log(e);
@@ -11470,6 +11539,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     checkUrlParameters: function checkUrlParameters() {
       if (this.view.params.has('database') && this.view.params.has('table')) {
         this.getTableData("".concat(this.view.params.get('database'), ".").concat(this.view.params.get('table')), false);
+        this.setActiveTable();
       }
     },
 
@@ -11484,13 +11554,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       window.history.pushState({
         path: url
       }, '', url);
+      this.setActiveTable();
     },
 
     /**
      * Asynchronously get table data.
      *
      * @param databaseTable Should be formatted as `database.table`.
-     * @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable as is.
+     * @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
      * @returns {Promise<boolean>}
      */
     getTableData: function () {
@@ -11518,7 +11589,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 this.resetTableView();
-                loadWasSuccess = false, result = {}, error = {}, table = (dynamicLoad ? databaseTable.target.title || databaseTable.target.value : databaseTable).split('.');
+                loadWasSuccess = false, result = {}, error = {}, table = (dynamicLoad ? databaseTable.target.title : databaseTable).split('.');
                 this.table.currentActiveName = dynamicLoad ? databaseTable.target.title : databaseTable;
                 this.table.loading = true;
                 this.table.tableLoading = true;
@@ -11873,6 +11944,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Header',
   props: ['error', 'activeTable', 'env', 'loading', 'tableLoading', 'tableStructure'],
@@ -11882,6 +11962,7 @@ __webpack_require__.r(__webpack_exports__);
       sideBarStatusText: 'Collapse',
       showSideBar: true,
       readability: true,
+      darkMode: false,
       input: {
         column: '',
         value: ''
@@ -12239,12 +12320,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ['theme'],
   data: function data() {
     return {
-      show: false
+      show: false,
+      status: 'CLOSED'
     };
   },
   methods: {
     toggle: function toggle() {
       this.show = !this.show;
+      this.status = this.show ? 'OPEN' : 'CLOSED';
     },
     beforeEnter: function beforeEnter(el) {
       el.style.height = '0';
@@ -12358,6 +12441,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'TableMenu',
@@ -12381,7 +12470,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".main-content-collapsed {\n  width: 100%;\n  max-width: 100%;\n  transition: 2s ease;\n}\n.main-content-expanded {\n  width: 81%;\n  max-width: 81%;\n  transition: 2s ease;\n}\n\n/**\n    Disable outline\n*/\n:focus {\n  outline: 0;\n}\n\n/**\n    Scrollbar style\n*/\n::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);\n  background-color: #F5F5F5;\n  border-radius: 10px;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar {\n  width: 5px;\n  height: 10px;\n  background-color: #f5f5f5;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background: rgba(73, 125, 189, 0.5);\n  transition: 0.2s ease;\n}\n\n/**\n    Main content container\n*/\n.content {\n  width: 98%;\n}\n\n/**\n    Side bar transition\n */\n.slide-fade-enter-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}", ""]);
+exports.push([module.i, ".main-content-collapsed {\n  width: 100%;\n  max-width: 100%;\n  transition: 1s ease;\n}\n.main-content-expanded {\n  width: 81%;\n  max-width: 81%;\n  transition: 1s ease;\n}\n\n/**\n    Disable outline\n*/\n:focus {\n  outline: 0;\n}\n\n/**\n    Scrollbar style\n*/\n::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);\n  background-color: #F5F5F5;\n  border-radius: 10px;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar {\n  width: 5px;\n  height: 10px;\n  background-color: #f5f5f5;\n  transition: 0.2s ease;\n}\n::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background: rgba(73, 125, 189, 0.5);\n  transition: 0.2s ease;\n}\n\n/**\n    Main content container\n*/\n.content {\n  width: 98%;\n}\n\n/**\n    Side bar transition\n */\n.slide-fade-enter-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}", ""]);
 
 // exports
 
@@ -12400,7 +12489,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".divider-bottom {\n  border-bottom: 1px solid #d5dfe9;\n}\n.readability-enabled {\n  color: #fff;\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.readability-enabled:hover {\n  background-color: rgba(105, 144, 255, 0.7);\n  transition: 0.5s ease;\n}\n.readability-disabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.readability-disabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.sidebar-enabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.sidebar-enabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.sidebar-disabled {\n  background-color: #667eea;\n  color: #fff;\n  transition: 0.5s ease;\n}\n.sidebar-disabled:hover {\n  background-color: rgba(105, 144, 255, 0.7);\n  transition: 0.5s ease;\n}\n.chevron-point-left {\n  -webkit-transform: rotate(270deg);\n          transform: rotate(270deg);\n  transition: 0.5s ease;\n}\n.chevron-point-right {\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  transition: 0.5s ease;\n}", ""]);
+exports.push([module.i, ".divider-bottom {\n  border-bottom: 1px solid #d5dfe9;\n}\n.dark-mode-enabled {\n  color: #fff;\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.dark-mode-enabled:hover {\n  background-color: rgba(105, 144, 255, 0.7);\n  transition: 0.5s ease;\n}\n.dark-mode-disabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.dark-mode-disabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.readability-enabled {\n  color: #fff;\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.readability-enabled:hover {\n  background-color: rgba(105, 144, 255, 0.7);\n  transition: 0.5s ease;\n}\n.readability-disabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.readability-disabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.sidebar-enabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.sidebar-enabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.sidebar-disabled {\n  background-color: #667eea;\n  color: #fff;\n  transition: 0.5s ease;\n}\n.sidebar-disabled:hover {\n  background-color: rgba(105, 144, 255, 0.7);\n  transition: 0.5s ease;\n}\n.chevron-point-left {\n  -webkit-transform: rotate(270deg);\n          transform: rotate(270deg);\n  transition: 0.5s ease;\n}\n.chevron-point-right {\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  transition: 0.5s ease;\n}", ""]);
 
 // exports
 
@@ -56032,6 +56121,7 @@ var render = function() {
     {},
     [
       _c("Header", {
+        ref: "headerRef",
         attrs: {
           error: _vm.prequel.errorDetailed,
           activeTable: _vm.table.currentActiveName,
@@ -56050,9 +56140,7 @@ var render = function() {
           enhanceReadability: function($event) {
             _vm.view.readability = !_vm.view.readability
           },
-          collapseSideBar: function($event) {
-            _vm.view.collapsed = !_vm.view.collapsed
-          }
+          collapseSideBar: _vm.sideBarCollapseHandler
         }
       }),
       _vm._v(" "),
@@ -56401,115 +56489,118 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _c("label", { staticClass: "flex flex-row" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.input.column,
-                    expression: "input.column"
-                  }
-                ],
-                staticClass:
-                  "shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
-                attrs: {
-                  list: "columnList",
-                  type: "text",
-                  name: "column",
-                  placeholder: "Column...",
-                  disabled: _vm.loading
-                },
-                domProps: { value: _vm.input.column },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.input, "column", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "datalist",
-                { attrs: { id: "columnList" } },
-                _vm._l(_vm.tableStructure, function(struct) {
-                  return _c("option", { domProps: { value: struct.Field } })
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c("span", { staticClass: "m-2 font-bold text-lg" }, [
-                _vm._v("=")
-              ]),
-              _vm._v(" "),
-              _vm.activeTable
-                ? _c("input", {
+            _vm.activeTable
+              ? _c("label", { staticClass: "flex flex-row" }, [
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.input.value,
-                        expression: "input.value"
+                        value: _vm.input.column,
+                        expression: "input.column"
                       }
                     ],
                     staticClass:
-                      "shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
+                      "shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
                     attrs: {
+                      list: "columnList",
                       type: "text",
-                      name: "value",
-                      placeholder: "Value...",
+                      name: "column",
+                      autocomplete: "off",
+                      placeholder: "Column...",
                       disabled: _vm.loading
                     },
-                    domProps: { value: _vm.input.value },
+                    domProps: { value: _vm.input.column },
                     on: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.inputHandler()
-                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.input, "value", $event.target.value)
+                        _vm.$set(_vm.input, "column", $event.target.value)
                       }
                     }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 mr-2 border border-gray-400 rounded shadow",
-                  attrs: {
-                    title:
-                      "Retrieve row where " +
-                      _vm.input.column +
-                      " equals " +
-                      _vm.input.value
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.inputHandler()
-                    }
-                  }
-                },
-                [_vm._v("\n                    Get\n                ")]
-              )
-            ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "datalist",
+                    { attrs: { id: "columnList" } },
+                    _vm._l(_vm.tableStructure, function(struct) {
+                      return _c("option", { domProps: { value: struct.Field } })
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "m-2 font-bold text-lg" }, [
+                    _vm._v("=")
+                  ]),
+                  _vm._v(" "),
+                  _vm.activeTable
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.input.value,
+                            expression: "input.value"
+                          }
+                        ],
+                        staticClass:
+                          "shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
+                        attrs: {
+                          type: "text",
+                          name: "value",
+                          placeholder: "Value...",
+                          disabled: _vm.loading
+                        },
+                        domProps: { value: _vm.input.value },
+                        on: {
+                          keyup: function($event) {
+                            if (
+                              !$event.type.indexOf("key") &&
+                              _vm._k(
+                                $event.keyCode,
+                                "enter",
+                                13,
+                                $event.key,
+                                "Enter"
+                              )
+                            ) {
+                              return null
+                            }
+                            return _vm.inputHandler()
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.input, "value", $event.target.value)
+                          }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 mr-2 border border-gray-400 rounded shadow",
+                      attrs: {
+                        title:
+                          "Retrieve row where " +
+                          _vm.input.column +
+                          " equals " +
+                          _vm.input.value
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.inputHandler()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    Get\n                ")]
+                  )
+                ])
+              : _vm._e()
           ]
         ),
         _vm._v(" "),
@@ -56538,6 +56629,31 @@ var render = function() {
                     _c("font-awesome-icon", {
                       staticClass: "ml-1",
                       attrs: { icon: "glasses" }
+                    }),
+                    _vm._v(" \n            ")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow",
+                    class: _vm.darkMode
+                      ? "dark-mode-enabled"
+                      : "dark-mode-disabled",
+                    attrs: { title: "Set Dark Mode (Not available yet)" },
+                    on: {
+                      click: function($event) {
+                        _vm.darkMode = !_vm.darkMode
+                      }
+                    }
+                  },
+                  [
+                    _c("font-awesome-icon", {
+                      staticClass: "ml-1",
+                      attrs: { icon: "adjust" }
                     }),
                     _vm._v(" \n            ")
                   ],
@@ -56996,7 +57112,11 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "header", on: { click: _vm.toggle } },
+        {
+          staticClass: "header",
+          attrs: { title: _vm.status },
+          on: { click: _vm.toggle }
+        },
         [_vm._t("header", [_vm._v("HINT")])],
         2
       ),
@@ -57158,15 +57278,18 @@ var render = function() {
                     }
                   },
                   [
-                    _c("font-awesome-icon", { attrs: { icon: "database" } }),
+                    _c("font-awesome-icon", {
+                      staticClass: "mr-1",
+                      attrs: { icon: "database" }
+                    }),
                     _vm._v(
-                      " \n                    " +
+                      "\n\n                    " +
                         _vm._s(
                           _vm.readability
                             ? database.pretty_name
                             : database.official_name
                         ) +
-                        "\n                    "
+                        "\n\n                    "
                     ),
                     _c("span", { staticClass: "text-xs font-normal" }, [
                       _vm._v(
@@ -57186,12 +57309,11 @@ var render = function() {
                       "li",
                       {
                         staticClass:
-                          "border-b pl-2 flex flex-row items-center justify-start cursor-pointer hover:text-blue-400 text-sm text-gray-600 text-left",
+                          "border-b pl-2 flex flex-row items-center justify-start cursor-pointer hover:text-indigo-500 text-sm text-gray-600 text-left",
                         attrs: {
                           title:
                             database.official_name + "." + table.name.official,
-                          value:
-                            database.official_name + "." + table.name.official
+                          value: table.name.official
                         },
                         on: {
                           click: function($event) {
@@ -69568,6 +69690,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! highlight.js/lib/languages/sql */ "./node_modules/highlight.js/lib/languages/sql.js");
 /* harmony import */ var highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_6__);
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+window.v = window.vividLog;
 /**
  * Axios
  */
@@ -69584,7 +69707,7 @@ window.axios.defaults.baseURL = "".concat(window.location.origin, "/prequel/preq
 
 
 
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faDatabase"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faTable"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faChevronCircleUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSearchPlus"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faTools"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faGlasses"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faAsterisk"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faDatabase"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faTable"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faChevronCircleUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSearchPlus"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faTools"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faGlasses"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faAsterisk"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faAdjust"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"]);
 /**
  * Highlight.js
