@@ -14,9 +14,9 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [x] [FEATURE] Better graphics logo's etc.
 - [x] [FEATURE] Routing, you can now go to ?database=my_database&table=my_table to select my_table.
 - [x] [FEATURE] Keep track of currently selected table in accordion menu. With active color.
+- [x] [FEATURE] Search for table in menu search bar.
 
 **Doing - <small>priority from highest to lowest</small>**
-- [ ] [FEATURE] Search for table in menu search bar.
 - [ ] [REFACTOR] Better searching in tables.
 
 **Scheduled - <small>sorted by type</small>**
