@@ -54,7 +54,7 @@ class DatabaseTraverser
     public function getAll() :array
     {
         $collection               = [];
-        $flattenedTableCollection = [];
+        $flatTableCollection = [];
 
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
@@ -66,8 +66,10 @@ class DatabaseTraverser
             ];
 
             foreach ($collection[$databaseName->pretty]['tables'] as $table) {
-                $name = $databaseName->official.'.'.$table['name']['official'];
-                array_push($flattenedTableCollection, $name);
+                $tableName = $databaseName->official.'.'
+                    .$table['name']['official'];
+
+                array_push($flatTableCollection, $tableName);
             }
 
         }
@@ -75,8 +77,8 @@ class DatabaseTraverser
         ksort($collection);
 
         return [
-            'collection'               => $collection,
-            'flatTableCollection' => $flattenedTableCollection,
+            'collection'          => $collection,
+            'flatTableCollection' => $flatTableCollection,
         ];
     }
 
