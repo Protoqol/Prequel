@@ -41,7 +41,7 @@ class DatabaseTraverser
         $this->databaseConn = $databaseType
             ?: config('database.default');
 
-        $this->databaseQueries = new SequelMorpher($this->databaseConn);
+        $this->databaseQueries = new SequelAdapter($this->databaseConn);
     }
 
     /**
@@ -53,7 +53,8 @@ class DatabaseTraverser
      */
     public function getAll() :array
     {
-        $collection = [];
+        $collection               = [];
+        $flattenedTableCollection = [];
 
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
@@ -63,11 +64,20 @@ class DatabaseTraverser
                 "pretty_name"   => $databaseName->pretty,
                 "tables"        => $this->getTablesFromDB($databaseName->official),
             ];
+
+            foreach ($collection[$databaseName->pretty]['tables'] as $table) {
+                $name = $databaseName->official.'.'.$table['name']['official'];
+                array_push($flattenedTableCollection, $name);
+            }
+
         }
 
         ksort($collection);
 
-        return $collection;
+        return [
+            'collection'               => $collection,
+            'flatTableCollection' => $flattenedTableCollection,
+        ];
     }
 
     /**

@@ -19,14 +19,15 @@
 
 <script>
   // Pass initial data to JavaScript
-  window.Prequel             = {};
-  window.Prequel.env         = @json($env);
-  window.Prequel.error       = {
+  window.Prequel       = {};
+  window.Prequel.env   = @json($env);
+  window.Prequel.error = {
     error   : false,
     detailed: '',
     code    : '',
   };
-  window.Prequel.databases   = @json($initialDatabaseData);
+  window.Prequel.data  = @json($data['collection']);
+  window.Prequel.flat  = @json($data['flatTableCollection']);
 </script>
 <script src="{{ asset('/vendor/prequel/app.js') }}"></script>
 </body>

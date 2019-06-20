@@ -20,15 +20,20 @@ class PrequelController extends Controller
      */
     public function index()
     {
+        $databaseData = (object) app(DatabaseTraverser::class)->getAll();
+
         return view('Prequel::main', [
-            'env'                 => [
+            'env'  => [
                 'connection' => config('database.default'),
                 'database'   => config('database.connections.mysql.database'),
                 'host'       => config('database.connections.mysql.host'),
                 'port'       => config('database.connections.mysql.port'),
                 'user'       => config('database.connections.mysql.username'),
             ],
-            'initialDatabaseData' => app(DatabaseTraverser::class)->getAll(),
+            'data' => [
+                'collection'          => $databaseData->collection,
+                'flatTableCollection' => $databaseData->flatTableCollection,
+            ],
         ]);
     }
 }

@@ -34,13 +34,16 @@
             <!--     Table actions and information     -->
             <div class="w-1/3 flex flex-col justify-center items-center">
                 <h1 v-if="activeTable" class="text-lg flex flex-row justify-center items-center font-semibold">
-                    <span v-if="!tableLoading" class="font-thin">{{activeTable}}</span>
-                    <img v-else width="20" height="20" src="/vendor/prequel/loader.gif"
+                    <span v-if="!tableLoading"
+                          class="text-gray-600 font-thin">
+                        {{activeTable}}
+                    </span>
+                    <img v-else class="mb-1" width="20" height="20" src="/vendor/prequel/loader.gif"
                          alt="Loading table data...">
                 </h1>
                 <label v-if="activeTable" class="flex flex-row">
                     <input list="columnList"
-                           class="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                           class="bg-white shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                            type="text"
                            name="column"
                            autocomplete="off"
@@ -55,17 +58,17 @@
 
                     <!-- Add pattern based on column select -->
                     <input v-if="activeTable"
-                           class="shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                           class="bg-white shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                            type="text"
                            name="value"
                            placeholder="Value..."
                            v-model="input.value"
-                           @keyup.enter="inputHandler()"
+                           @keyup.enter="searchHandler"
                            :disabled="loading">
 
                     <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 mr-2 border border-gray-400 rounded shadow"
-                            :title="`Retrieve row where ${input.column} equals ${input.value}`"
-                            @click="inputHandler()">
+                            title="Get value for selected column"
+                            @click="searchHandler">
                         Get
                     </button>
                 </label>
@@ -82,8 +85,8 @@
 
                 <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
                         title="Set Dark Mode (Not available yet)"
-                        :class="darkMode ? 'dark-mode-enabled' : 'dark-mode-disabled'"
-                        @click="darkMode = (!darkMode)">
+                        :class="view.darkMode ? 'dark-mode-enabled' : 'dark-mode-disabled'"
+                        @click="view.darkMode = (!view.darkMode)">
                     <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
                 </button>
 
@@ -114,8 +117,12 @@
         sideBarStatusText    : 'Collapse',
         showSideBar          : true,
         readability          : true,
-        darkMode             : false,
-        input                : {
+
+        view: {
+          darkMode: false,
+        },
+
+        input: {
           column: '',
           value : '',
         },
@@ -126,7 +133,7 @@
       /**
        | Handle input when searching for data inside a table
        */
-      inputHandler: function(event) {
+      searchHandler: function() {
         if (this.input.column && this.input.value) {
           this.$emit('shouldBeLoading');
         }

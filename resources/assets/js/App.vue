@@ -15,7 +15,7 @@
                 :env="prequel.env"
                 :loading="table.loading"
                 :tableLoading="table.tableLoading"
-                @quickFind="quickFind($event)"
+                @quickFind="searchInTable($event)"
                 @shouldBeLoading="table.loading = true"
                 @enhanceReadability="view.readability = (!view.readability)"
                 @collapseSideBar="sideBarCollapseHandler"/>
@@ -28,6 +28,7 @@
                              :class="view.collapsed ? 'hidden' : 'w-1/5'"
                              :readability="view.readability"
                              :table-data="prequel.data"
+                             :table-flat="prequel.flat"
                              @searchingForTable="searchForTable($event)"
                              @tableSelect="getTableData($event)"/>
                 </transition>
@@ -44,9 +45,7 @@
             </div>
         </div>
 
-        <PrequelError v-if="prequel.error"
-                      :error-detailed="prequel.errorDetailed"
-                      :env="prequel.env"/>
+        <PrequelError v-if="prequel.error" :error-detailed="prequel.errorDetailed" :env="prequel.env"/>
     </div>
 </template>
 
@@ -75,8 +74,9 @@
         prequel: {
           error        : window.Prequel.error.error, // Object
           errorDetailed: window.Prequel.error,       // String
-          data         : window.Prequel.databases,   // Object
+          data         : window.Prequel.data,        // Object
           env          : window.Prequel.env,         // Object
+          flat         : window.Prequel.flat,                         // Array
         },
 
         /**
@@ -120,12 +120,14 @@
     methods: {
 
       /**
-       * Handles actions when sidebar collapses or expands.
+       * Handle actions when sidebar collapses or expands.
        */
       sideBarCollapseHandler: function() {
+        let secsBeforeAction = 1000;
+
         this.view.collapsed = (!this.view.collapsed);
         if (!this.view.collapsed) {
-          window.setTimeout(this.setActiveTable, 1000);
+          window.setTimeout(this.setActiveTable, secsBeforeAction);
         }
       },
 
@@ -168,11 +170,11 @@
        * Search for a table in de side menu @TODO
        */
       searchForTable: function(e) {
-        console.log(e);
+        this.getTableData(e.target.value, false);
       },
 
       /**
-       * Checks if database and table query parameters were found, and tries to select a table based on those parameters.
+       * Check if database and table query parameters were found, and tries to select a table based on those parameters.
        */
       checkUrlParameters: function() {
         if (this.view.params.has('database') && this.view.params.has('table')) {
@@ -254,7 +256,7 @@
       },
 
       /**
-       * Resets table data to default values.
+       * Reset table data to default values.
        */
       resetTableView: function() {
         this.table.loading                = true;
@@ -264,18 +266,18 @@
       },
 
       /**
-       * Reacts to event emitted by Quick Find input in <Header>
+       * React to event emitted by Quick Find input in <Header>
        *
        * Only looks through currently active table.
        */
-      quickFind: async function(event) {
-        if (!event.target.value) {
+      searchInTable: async function(e) {
+        if (!e.target.value) {
           return false;
         }
 
         let result = {},
             error  = {},
-            query  = event.target.value;
+            query  = e.target.value;
 
         this.table.loading = true;
 

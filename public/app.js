@@ -11395,7 +11395,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -11419,9 +11418,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // Object
         errorDetailed: window.Prequel.error,
         // String
-        data: window.Prequel.databases,
+        data: window.Prequel.data,
         // Object
-        env: window.Prequel.env // Object
+        env: window.Prequel.env,
+        // Object
+        flat: window.Prequel.flat // Array
 
       },
 
@@ -11463,13 +11464,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     /**
-     * Handles actions when sidebar collapses or expands.
+     * Handle actions when sidebar collapses or expands.
      */
     sideBarCollapseHandler: function sideBarCollapseHandler() {
+      var secsBeforeAction = 1000;
       this.view.collapsed = !this.view.collapsed;
 
       if (!this.view.collapsed) {
-        window.setTimeout(this.setActiveTable, 1000);
+        window.setTimeout(this.setActiveTable, secsBeforeAction);
       }
     },
 
@@ -11530,11 +11532,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * Search for a table in de side menu @TODO
      */
     searchForTable: function searchForTable(e) {
-      console.log(e);
+      this.getTableData(e.target.value, false);
     },
 
     /**
-     * Checks if database and table query parameters were found, and tries to select a table based on those parameters.
+     * Check if database and table query parameters were found, and tries to select a table based on those parameters.
      */
     checkUrlParameters: function checkUrlParameters() {
       if (this.view.params.has('database') && this.view.params.has('table')) {
@@ -11652,7 +11654,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
 
     /**
-     * Resets table data to default values.
+     * Reset table data to default values.
      */
     resetTableView: function resetTableView() {
       this.table.loading = true;
@@ -11662,20 +11664,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
-     * Reacts to event emitted by Quick Find input in <Header>
+     * React to event emitted by Quick Find input in <Header>
      *
      * Only looks through currently active table.
      */
-    quickFind: function () {
-      var _quickFind = _asyncToGenerator(
+    searchInTable: function () {
+      var _searchInTable = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
         var result, error, query;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (event.target.value) {
+                if (e.target.value) {
                   _context2.next = 2;
                   break;
                 }
@@ -11683,7 +11685,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 2:
-                result = {}, error = {}, query = event.target.value;
+                result = {}, error = {}, query = e.target.value;
                 this.table.loading = true;
                 _context2.prev = 4;
                 _context2.next = 7;
@@ -11716,11 +11718,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, this, [[4, 10, 13, 17]]);
       }));
 
-      function quickFind(_x2) {
-        return _quickFind.apply(this, arguments);
+      function searchInTable(_x2) {
+        return _searchInTable.apply(this, arguments);
       }
 
-      return quickFind;
+      return searchInTable;
     }()
   }
 });
@@ -11953,6 +11955,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Header',
   props: ['error', 'activeTable', 'env', 'loading', 'tableLoading', 'tableStructure'],
@@ -11962,7 +11967,9 @@ __webpack_require__.r(__webpack_exports__);
       sideBarStatusText: 'Collapse',
       showSideBar: true,
       readability: true,
-      darkMode: false,
+      view: {
+        darkMode: false
+      },
       input: {
         column: '',
         value: ''
@@ -11973,7 +11980,7 @@ __webpack_require__.r(__webpack_exports__);
     /**
      | Handle input when searching for data inside a table
      */
-    inputHandler: function inputHandler(event) {
+    searchHandler: function searchHandler() {
       if (this.input.column && this.input.value) {
         this.$emit('shouldBeLoading');
       }
@@ -12378,6 +12385,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12386,7 +12394,7 @@ __webpack_require__.r(__webpack_exports__);
     TableMenu: _TableMenu__WEBPACK_IMPORTED_MODULE_1__["default"],
     Accordion: _Accordion__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['readability', 'tableData']
+  props: ['readability', 'tableData', 'tableFlat']
 });
 
 /***/ }),
@@ -56132,7 +56140,7 @@ var render = function() {
         },
         on: {
           quickFind: function($event) {
-            return _vm.quickFind($event)
+            return _vm.searchInTable($event)
           },
           shouldBeLoading: function($event) {
             _vm.table.loading = true
@@ -56159,7 +56167,8 @@ var render = function() {
                           class: _vm.view.collapsed ? "hidden" : "w-1/5",
                           attrs: {
                             readability: _vm.view.readability,
-                            "table-data": _vm.prequel.data
+                            "table-data": _vm.prequel.data,
+                            "table-flat": _vm.prequel.flat
                           },
                           on: {
                             searchingForTable: function($event) {
@@ -56474,10 +56483,15 @@ var render = function() {
                   },
                   [
                     !_vm.tableLoading
-                      ? _c("span", { staticClass: "font-thin" }, [
-                          _vm._v(_vm._s(_vm.activeTable))
+                      ? _c("span", { staticClass: "text-gray-600 font-thin" }, [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.activeTable) +
+                              "\n                "
+                          )
                         ])
                       : _c("img", {
+                          staticClass: "mb-1",
                           attrs: {
                             width: "20",
                             height: "20",
@@ -56501,7 +56515,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
+                      "bg-white shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
                     attrs: {
                       list: "columnList",
                       type: "text",
@@ -56545,7 +56559,7 @@ var render = function() {
                           }
                         ],
                         staticClass:
-                          "shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
+                          "bg-white shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none",
                         attrs: {
                           type: "text",
                           name: "value",
@@ -56567,7 +56581,7 @@ var render = function() {
                             ) {
                               return null
                             }
-                            return _vm.inputHandler()
+                            return _vm.searchHandler($event)
                           },
                           input: function($event) {
                             if ($event.target.composing) {
@@ -56584,18 +56598,8 @@ var render = function() {
                     {
                       staticClass:
                         "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 mr-2 border border-gray-400 rounded shadow",
-                      attrs: {
-                        title:
-                          "Retrieve row where " +
-                          _vm.input.column +
-                          " equals " +
-                          _vm.input.value
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.inputHandler()
-                        }
-                      }
+                      attrs: { title: "Get value for selected column" },
+                      on: { click: _vm.searchHandler }
                     },
                     [_vm._v("\n                    Get\n                ")]
                   )
@@ -56640,13 +56644,13 @@ var render = function() {
                   {
                     staticClass:
                       "mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow",
-                    class: _vm.darkMode
+                    class: _vm.view.darkMode
                       ? "dark-mode-enabled"
                       : "dark-mode-disabled",
                     attrs: { title: "Set Dark Mode (Not available yet)" },
                     on: {
                       click: function($event) {
-                        _vm.darkMode = !_vm.darkMode
+                        _vm.view.darkMode = !_vm.view.darkMode
                       }
                     }
                   },
@@ -57186,15 +57190,22 @@ var render = function() {
       _c("label", [
         _c("input", {
           staticClass:
-            "ml-2 appearance-none border w-full rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none",
+            "bg-white ml-2 appearance-none border w-full rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none",
           staticStyle: { width: "97%" },
           attrs: {
             type: "text",
             list: "tableSearch",
+            autocomplete: "on",
             placeholder: "Look for table..."
           },
           on: {
             keyup: function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
               return _vm.$emit("searchingForTable", $event)
             }
           }
@@ -57203,16 +57214,8 @@ var render = function() {
         _c(
           "datalist",
           { attrs: { id: "tableSearch" } },
-          _vm._l(_vm.tableData, function(database) {
-            return _c("option", {
-              domProps: {
-                value:
-                  database.official_name +
-                  " (" +
-                  database.tables.length +
-                  " tables)"
-              }
-            })
+          _vm._l(_vm.tableFlat, function(table) {
+            return _c("option", { domProps: { value: table } })
           }),
           0
         )

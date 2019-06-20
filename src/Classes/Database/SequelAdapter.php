@@ -7,11 +7,11 @@ use Exception;
 
 /**
  * Get queries based on chosen SQL driver.
- * Class SequelMorpher
+ * Class SequelAdapter
  *
  * @package Protoqol\LaravelSequel\Classes\Database
  */
-class SequelMorpher
+class SequelAdapter
 {
 
     /**
@@ -22,7 +22,7 @@ class SequelMorpher
     private $databaseType;
 
     /**
-     * SequelMorpher constructor.
+     * SequelAdapter constructor.
      *
      * @param  string  $databaseType
      */
