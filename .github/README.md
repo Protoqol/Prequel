@@ -12,9 +12,9 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [x] [FIX] "This table is empty" message not showing up.
 - [x] [FEATURE] Better graphics logo's etc.
 - [x] [FEATURE] Routing, you can now go to ?database=my_database&table=my_table to select my_table.
+- [x] [FEATURE] Keep track of currently selected table in accordion menu. With active color.
 
 **Doing - <small>in order of priority highest to lowest</small>**
-- [x] [FEATURE] Keep track of currently selected table in accordion menu. With active color.
 - [ ] [FEATURE] Search for table in menu.
 - [ ] [FEATURE] Better searching in tables.
 
