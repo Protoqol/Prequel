@@ -49,4 +49,4 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [ ] [REFACTOR] Better code readability.
 
 **Suggested**
-- [ ] [SUGGESTION] When searching in table prefetch results based on primary key.
+- [ ] [SUGGESTION] ...
