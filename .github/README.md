@@ -12,14 +12,14 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 
 **Done**
 - [x] [FIX] "This table is empty" message not showing up.
+- [x] [FIX] Reset searchInTable inputs after table change.
+- [x] [FIX] Hardcoded asset paths.
 - [x] [FEATURE] Better logo.
 - [x] [FEATURE] Routing, you can now go to ?database=my_database&table=my_table to select my_table.
 - [x] [FEATURE] Keep track of currently selected table in accordion menu. With active color.
 - [x] [FEATURE] Search for table in menu search bar.
 - [x] [FEATURE] When clicked on table column, auto-select that column to be searched in.
 - [x] [REFACTOR] Better searching in tables.
-- [x] [FIX] Reset searchInTable inputs after table change.
-- [x] [FIX] Hardcoded asset paths.
 
 **Doing - <small>priority from highest to lowest</small>**
 - [ ] [REFACTOR] Refactor inline css classes to sass @apply tags.
