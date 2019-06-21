@@ -21,20 +21,20 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
 
                 // Get data from table, data includes structure, actual data and table name.
                 Route::get(
-                    '{database}/{table}/data/get',
+                    'get/{database}/{table}',
                     'DatabaseController@getTableData'
-                );
-
-                // Find data with given input
-                Route::get(
-                    '',
-                    'DatabaseController@findInTable'
                 );
 
                 // Get count of total records in table
                 Route::get(
-                    '{database}/{table}/count/get',
+                    'count/{database}/{table}',
                     'DatabaseController@countTableRecords'
+                );
+
+                // Find data with given input
+                Route::get(
+                    'find/{database}/{table}/{column}/{type}/{value}',
+                    'DatabaseController@findInTable'
                 );
             });
         });

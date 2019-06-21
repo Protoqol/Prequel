@@ -106,35 +106,23 @@ class DatabaseController extends Controller
      */
     public function findInTable()
     {
-        return response('Unfinished feature', 501);
+        $column = Route::current()->parameter('column');
+        $value  = Route::current()->parameter('value');
+        $queryType   = Route::current()->parameter('type');
 
-//        $whereRawQuery
-//            = "SELECT * FROM `$this->databaseName`.`$this->tableName` WHERE ";
-//
-//        $tableStructure = app(DatabaseTraverser::class)
-//            ->getTableStructure($this->databaseName, $this->tableName);
-//
-//        $length   = count($tableStructure);
-//        $currentI = 0;
-//
-//        foreach ($tableStructure as $struct) {
-//            $currentI++;
-//            $whereQuery[] = [$struct->Field, '=', 1];
-//
-//            if ($currentI === 1) {
-//                $whereRawQuery .= '(';
-//            }
-//
-//            $whereRawQuery .= "`$struct->Field` LIKE '%$this->query%'";
-//
-//            if ($length !== $currentI) {
-//                $whereRawQuery .= ' OR ';
-//            } else {
-//                $whereRawQuery .= ');';
-//            }
-//        }
-//
-//
-//        return DB::select(DB::raw((string) $whereRawQuery));
+        if ($queryType === 'LIKE') {
+            return $this->model
+                ? $this->model->where($column, 'LIKE', '%'.$value.'%')
+                    ->paginate(100)
+                : DB::table($this->qualifiedName)
+                    ->where($column, 'LIKE', '%'.$value.'%')
+                    ->paginate(100);
+        }
+
+        return $this->model
+            ? $this->model->where($column, $queryType, $value)
+                ->paginate(100)
+            : DB::table($this->qualifiedName)
+                ->where($column, $queryType, $value)->paginate(100);
     }
 }

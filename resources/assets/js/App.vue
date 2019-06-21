@@ -8,14 +8,15 @@
              5. Vue loops
     -->
     <div v-cloak>
-        <Header ref="headerRef"
-                :error="prequel.errorDetailed"
+        <Header :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
                 :tableStructure="table.structure"
                 :env="prequel.env"
                 :loading="table.loading"
                 :tableLoading="table.tableLoading"
-                @quickFind="searchInTable($event)"
+                :searchColumn="table.search.column"
+                @searchInTable="searchInTable($event)"
+                @resetSearchInTable="checkUrlParameters"
                 @shouldBeLoading="table.loading = true"
                 @enhanceReadability="view.readability = (!view.readability)"
                 @collapseSideBar="sideBarCollapseHandler"/>
@@ -41,7 +42,8 @@
                              :table-load-error="table.error.loadError"
                              :table-error-detailed="table.error.loadErrorMessage"
                              :data="table.data"
-                             :structure="table.structure"/>
+                             :structure="table.structure"
+                             @columnSelect="columnSelect($event)"/>
             </div>
         </div>
 
@@ -69,18 +71,29 @@
       return {
 
         /**
-         * Holds data dat comes directly from Prequel.
+         |---------------------------------------------
+         | Holds data that comes directly from Prequel.
+         |---------------------------------------------
          */
         prequel: {
           error        : window.Prequel.error.error, // Object
           errorDetailed: window.Prequel.error,       // String
           data         : window.Prequel.data,        // Object
           env          : window.Prequel.env,         // Object
-          flat         : window.Prequel.flat,                         // Array
+          flat         : window.Prequel.flat,        // Array
+          api          : {
+            database: '',
+          },
+          asset        : {
+            logo  : '/vendor/prequel/favicon.png',
+            loader: '/vendor/prequel/loader.gif',
+          },
         },
 
         /**
-         * Holds data about current table.
+         |---------------------------------------------
+         | Holds data about current table.
+         |---------------------------------------------
          */
         table: {
           database         : '',
@@ -91,6 +104,9 @@
           currentTablePage : 1,
           loading          : false,
           tableLoading     : false,
+          search           : {
+            column: '',
+          },
           error            : {
             loadError       : false,
             loadErrorMessage: '',
@@ -98,7 +114,9 @@
         },
 
         /**
-         * Holds data about the view/UI.
+         |---------------------------------------------
+         | Holds data about the view/UI.
+         |---------------------------------------------
          */
         view: {
           collapsed   : false,
@@ -120,7 +138,14 @@
     methods: {
 
       /**
-       * Handle actions when sidebar collapses or expands.
+       | Handles column name click event.
+       */
+      columnSelect: function(e) {
+        this.table.search.column = e.target.id;
+      },
+
+      /**
+       | Handle actions when sidebar collapses or expands.
        */
       sideBarCollapseHandler: function() {
         let secsBeforeAction = 1000;
@@ -132,7 +157,7 @@
       },
 
       /**
-       * Open active table in menu, and set it to active. Purely an UI/UX addition.
+       | Open active table in menu, and set it to active. Purely an UI/UX addition.
        */
       setActiveTable: function() {
         if (this.view.params.has('database') && this.view.params.has('table')) {
@@ -167,14 +192,14 @@
       },
 
       /**
-       * Search for a table in de side menu @TODO
+       | Search for a table in de side menu @TODO
        */
       searchForTable: function(e) {
         this.getTableData(e.target.value, false);
       },
 
       /**
-       * Check if database and table query parameters were found, and tries to select a table based on those parameters.
+       | Check if database and table query parameters were found, and tries to select a table based on those parameters.
        */
       checkUrlParameters: function() {
         if (this.view.params.has('database') && this.view.params.has('table')) {
@@ -184,7 +209,7 @@
       },
 
       /**
-       * Update url query parameters to match current database and table, only updates when table was loaded.
+       | Update url query parameters to match current database and table, only updates when table was loaded.
        */
       updateUrl: function() {
 
@@ -199,11 +224,11 @@
       },
 
       /**
-       * Asynchronously get table data.
-       *
-       * @param databaseTable Should be formatted as `database.table`.
-       * @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
-       * @returns {Promise<boolean>}
+       | Asynchronously get table data.
+       |
+       | @param databaseTable Should be formatted as `database.table`.
+       | @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
+       | @returns {Promise<boolean>}
        */
       getTableData: async function(databaseTable, dynamicLoad = true) {
         if (!databaseTable.target && dynamicLoad) {
@@ -226,8 +251,7 @@
 
         try {
           result = await axios.get(
-              `database/${this.table.database}/${this.table.table}/data/get?page=${this.table.currentTablePage}`,
-          );
+              `/database/get/${table[0]}/${table[1]}?page=${this.table.currentTablePage}`);
         }
         catch (err) {
           error = err;
@@ -256,7 +280,7 @@
       },
 
       /**
-       * Reset table data to default values.
+       | Reset table data to default values.
        */
       resetTableView: function() {
         this.table.loading                = true;
@@ -266,30 +290,30 @@
       },
 
       /**
-       * React to event emitted by Quick Find input in <Header>
-       *
-       * Only looks through currently active table.
+       | React to event emitted by Quick Find input in <Header>
+       |
+       | Only looks through currently active table.
        */
-      searchInTable: async function(e) {
-        if (!e.target.value) {
+      searchInTable: async function({column, value, queryType}) {
+        if (!column && !value) {
           return false;
         }
 
         let result = {},
-            error  = {},
-            query  = e.target.value;
+            error  = {};
 
         this.table.loading = true;
 
         try {
-          result = await axios.get(`database/${this.table.database}/${this.table.table}/query/${query}/get`);
+          result = await axios.get(
+              `/database/find/${this.table.database}/${this.table.table}/${column}/${value}/${queryType}`);
         }
         catch (err) {
           error = err;
         }
         finally {
           this.table.loading = false;
-          this.table.data    = result.data;
+          this.table.data    = result.data.data;
         }
 
         return !!this.table.data;
@@ -301,6 +325,10 @@
 </script>
 
 <style lang="scss">
+
+    * {
+        transition: .2s ease;
+    }
 
     .main-content-collapsed {
         width: 100%;

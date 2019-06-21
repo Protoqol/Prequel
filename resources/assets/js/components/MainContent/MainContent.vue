@@ -2,18 +2,19 @@
     <div class="block h-full bg-white rounded shadow">
 
         <div v-if="!welcomeShown">
-            <Welcome></Welcome>
+            <Welcome/>
         </div>
 
         <TableStatus v-if="loading || tableLoadError"
                      :loading="loading"
                      :table-error-detailed="tableErrorDetailed"
-                     :table-load-error="tableLoadError"></TableStatus>
+                     :table-load-error="tableLoadError"/>
 
         <Table v-if="!loading && !tableLoadError && welcomeShown"
                :data="data"
                :readability="readability"
-               :structure="structure"></Table>
+               :structure="structure"
+               @columnSelect="$emit('columnSelect', $event)"/>
     </div>
 </template>
 

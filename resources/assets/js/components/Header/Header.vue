@@ -1,97 +1,86 @@
 <template>
-    <div class="flex flex-col justify-center items-center mt-6">
-        <div class="flex w-4/5">
-
-            <!--    Laravel prequel title, logo and current database connection    -->
-            <div class="w-1/3">
-                <div class="flex flex-row">
-                    <div class="mr-1 mt-1">
-                        <img class="no-drag"
-                             height="32rem"
-                             width="32rem"
-                             alt="Protoqol Prequel"
-                             src="/vendor/prequel/favicon.png">
+    <div class="header-container">
+        <div class="header-flexbox">
+            <div class="header-left">
+                <div class="header-left-logo">
+                    <div class="header-left-logo-image">
+                        <img width="32rem" height="32rem" alt="Protoqol Prequel" :src="$root.prequel.asset.logo">
                     </div>
-                    <h1 class="text-2xl">
-                        <span class="font-bold">Laravel</span>
-                        Prequel
+                    <h1 class="header-left-logo-text">
+                        <span>Laravel</span> Prequel
                         <a href="https://github.com/Protoqol"
                            target="_blank"
-                           title="Creator of Laravel Prequel"
-                           class="not-italic text-xs font-light">
+                           title="Creator of Laravel Prequel">
                             PROTOQOL
                         </a>
                     </h1>
                 </div>
-                <div v-if="!error.error">
-                    <p title="Current connection"
-                       class="ml-2 mt-1 self-center flex flex-row items-center mr-1 tracking-wide text-gray-700">
+                <div class="header-left-connection">
+                    <p title="Current connection">
                         {{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
                     </p>
                 </div>
             </div>
 
-            <!--     Table actions and information     -->
-            <div class="w-1/3 flex flex-col justify-center items-center">
-                <h1 v-if="activeTable" class="text-lg flex flex-row justify-center items-center font-semibold">
-                    <span v-if="!tableLoading"
-                          class="text-gray-600 font-thin">
+            <div v-if="!error.error" class="header-middle">
+                <h1 v-if="activeTable">
+                    <span v-if="!tableLoading" id="header-table-message">
+                        <font-awesome-icon class="fa" icon="table"/>
                         {{activeTable}}
                     </span>
-                    <img v-else class="mb-1" width="20" height="20" src="/vendor/prequel/loader.gif"
-                         alt="Loading table data...">
+                    <img v-else width="20" height="20" :src="$root.prequel.asset.loader" alt="Loading table data...">
                 </h1>
-                <label v-if="activeTable" class="flex flex-row">
-                    <input list="columnList"
-                           class="bg-white shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                           type="text"
-                           name="column"
-                           autocomplete="off"
-                           v-model="input.column"
-                           placeholder="Column..."
-                           :disabled="loading">
 
+                <label v-if="activeTable">
+
+                    <input class="search-column-input" list="columnList" type="text" name="column" autocomplete="off"
+                           placeholder="Column..." v-model="input.column" :disabled="loading">
                     <datalist id="columnList">
                         <option v-for="struct in tableStructure" :value="struct.Field"></option>
                     </datalist>
-                    <span class="m-2 font-bold text-lg">=</span>
 
-                    <!-- Add pattern based on column select -->
-                    <input v-if="activeTable"
-                           class="bg-white shadow appearance-none border rounded w-3/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                           type="text"
-                           name="value"
-                           placeholder="Value..."
+                    <select class="search-type-input"
+                            name="queryType"
+                            v-model="input.queryType">
+                        <option>=</option>
+                        <option>!=</option>
+                        <option>LIKE</option>
+                    </select>
+
+                    <input class="search-value-input" name="value" placeholder="Value..."
+                           :type="'text'"
+                           :disabled="loading"
                            v-model="input.value"
                            @keyup.enter="searchHandler"
-                           :disabled="loading">
+                           @keyup.esc="resetInputs">
 
-                    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 mr-2 border border-gray-400 rounded shadow"
-                            title="Get value for selected column"
+                    <button class="search-get-button" title="Run query (ENTER)"
                             @click="searchHandler">
                         Get
+                    </button>
+                    <button class="search-reset-button" title="Reset query (ESC)"
+                            @click="resetHandler">
+                        Reset
                     </button>
                 </label>
             </div>
 
-            <!--    Buttons    -->
-            <div v-if="!error.error" class="w-1/3 flex flex-row justify-end items-center">
-                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
-                        :class="readability ? 'readability-enabled' : 'readability-disabled'"
+            <div v-if="!error.error" class="header-right">
+                <button :class="readability ? 'readability-button-enabled' : 'readability-button-disabled'"
                         :title="`Enhance readability (${readability ? 'Enabled' : 'Disabled'})`"
                         @click="readabilityButtonHandler">
                     <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
                 </button>
 
-                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
-                        title="Set Dark Mode (Not available yet)"
-                        :class="view.darkMode ? 'dark-mode-enabled' : 'dark-mode-disabled'"
-                        @click="view.darkMode = (!view.darkMode)">
-                    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
-                </button>
+                <!--                 Dark Mode Button -->
+                <!--                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"-->
+                <!--                        title="Set Dark Mode (Not available yet)"-->
+                <!--                        :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"-->
+                <!--                        @click="view.darkMode = (!view.darkMode)">-->
+                <!--                    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;-->
+                <!--                </button>-->
 
-                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
-                        :class="showSideBar ? 'sidebar-enabled' : 'sidebar-disabled'"
+                <button :class="showSideBar ? 'sidebar-button-enabled' : 'sidebar-button-disabled'"
                         :title="`${sideBarStatusText} side bar`"
                         @click="sideBarButtonHandler">
                     <font-awesome-icon class="ml-1"
@@ -100,43 +89,106 @@
                 </button>
             </div>
         </div>
-
-        <!--    Divider    -->
-        <span class="block my-4 w-4/5 divider-bottom"></span>
+        <span class="header-bottom"></span>
     </div>
 </template>
 
 <script>
 
   export default {
-    name   : 'Header',
-    props  : ['error', 'activeTable', 'env', 'loading', 'tableLoading', 'tableStructure'],
+    name : 'Header',
+    props: ['error', 'activeTable', 'env', 'loading', 'tableLoading', 'tableStructure', 'searchColumn'],
+
     data() {
       return {
-        timeBeforeQuickFindMs: 750,
-        sideBarStatusText    : 'Collapse',
-        showSideBar          : true,
-        readability          : true,
+        sideBarStatusText: 'Collapse',
+        showSideBar      : true,
+        readability      : true,
 
         view: {
           darkMode: false,
         },
 
         input: {
-          column: '',
-          value : '',
+          availableColumns: [],
+          column          : '',
+          value           : '',
+          queryType       : '=',
         },
       };
     },
+
+    watch: {
+      searchColumn: function(newVal) {
+        this.input.column = newVal;
+      },
+
+      tableStructure: function(newVal) {
+        this.input.availableColumns = newVal;
+      },
+
+      activeTable: function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.input.column    = '';
+          this.input.value     = '';
+          this.input.queryType = '=';
+        }
+      },
+    },
+
     methods: {
+
+      /**
+       | Reset input fields
+       */
+      resetInputs: function() {
+        this.input.column    = '';
+        this.input.value     = '';
+        this.input.queryType = '=';
+      },
+
+      /**
+       | Reset query
+       */
+      resetHandler: function() {
+        this.$emit('resetSearchInTable');
+        this.resetInputs();
+      },
 
       /**
        | Handle input when searching for data inside a table
        */
       searchHandler: function() {
-        if (this.input.column && this.input.value) {
-          this.$emit('shouldBeLoading');
+        let columnInputEl = document.querySelector('input[name=column]');
+        let valueInputEl  = document.querySelector('input[name=value]');
+
+        if (this.input.column.length === 0) {
+          columnInputEl.classList.add('border-red-500');
+
+          setTimeout(function() {
+            columnInputEl.classList.remove('border-red-500');
+          }, 750);
         }
+
+        if (this.input.value.length === 0) {
+          valueInputEl.classList.add('border-red-500');
+
+          setTimeout(function() {
+            valueInputEl.classList.remove('border-red-500');
+          }, 750);
+        }
+
+        if (this.input.value.length > 0 && this.input.column.length > 0) {
+          this.$emit('shouldBeLoading');
+          this.$emit('searchInTable', {
+            column   : this.input.column,
+            value    : this.input.value,
+            queryType: this.input.queryType,
+          });
+          return true;
+        }
+
+        return false;
       },
 
       /**
@@ -163,7 +215,7 @@
        | Holds data like readability or side bar preferences in localStorage
        */
       configHandler: function() {
-        // TODO store button states in localStorage or something similair
+        // TODO store button states in localStorage
       },
     },
   };
@@ -171,83 +223,306 @@
 
 
 <style lang="scss">
-    .divider-bottom {
-        border-bottom: 1px solid #d5dfe9;
-    }
+    /**
+        Header - Container
+    */
+    .header-container {
+        @apply flex;
+        @apply flex-col;
+        @apply justify-center;
+        @apply items-center;
+        @apply mt-6;
 
-    .dark-mode-enabled {
-        color: #fff;
-        background-color: #667eea;
-        transition: 0.5s ease;
+        .header-flexbox {
+            @apply flex;
+            @apply w-5/6;
 
-        &:hover {
-            background-color: rgba(105, 144, 255, 0.7);
-            transition: 0.5s ease;
+            /**
+                Header - Left - Logo, Connection information
+            */
+            .header-left {
+                @apply w-1/4;
+
+                .header-left-logo {
+                    @apply flex;
+                    @apply flex-row;
+
+                    .header-left-logo-image {
+                        @apply mr-1;
+                        @apply mt-1;
+
+                        img {
+                            user-select: none;
+                            -moz-user-select: none;
+                            -webkit-user-drag: none;
+                            -webkit-user-select: none;
+                            -ms-user-select: none;
+                        }
+                    }
+
+                    .header-left-logo-text {
+                        @apply text-2xl;
+
+                        span {
+                            @apply font-bold;
+                        }
+
+                        a {
+                            @apply not-italic;
+                            @apply text-xs;
+                            @apply font-light;
+                        }
+                    }
+                }
+
+                .header-left-connection {
+                    @apply ml-2;
+                    @apply mt-1;
+                    @apply self-center;
+                    @apply flex ;
+                    @apply flex-row;
+                    @apply items-center;
+                    @apply mr-1 ;
+                    @apply tracking-wide;
+                    @apply text-gray-700;
+                }
+            }
+
+            /**
+                Header - Middle - Search in table inputs
+            */
+            .header-middle {
+                @apply w-2/4;
+                @apply flex;
+                @apply flex-col;
+                @apply justify-center;
+                @apply items-center;
+
+                h1 {
+                    @apply text-lg;
+                    @apply flex;
+                    @apply flex-row;
+                    @apply justify-center;
+                    @apply items-center;
+                    @apply font-semibold;
+
+                    span {
+                        @apply text-gray-600;
+                        @apply font-thin;
+                    }
+
+                    img {
+                        @apply mb-1;
+                    }
+
+                    .fa {
+                        @apply mr-1;
+                        &:hover {
+                            @apply text-gray-700;
+                        }
+                    }
+                }
+
+                label {
+                    @apply flex;
+                    @apply flex-row;
+
+                    .search-column-input {
+                        @apply bg-white;
+                        @apply shadow;
+                        @apply appearance-none;
+                        @apply border;
+                        @apply rounded;
+                        @apply w-1/3;
+                        @apply py-2;
+                        @apply px-3;
+                        @apply text-gray-700;
+                        @apply leading-tight;
+
+                        &:focus {
+                            @apply outline-none;
+                        }
+                    }
+
+                    .search-type-input {
+                        @apply m-2;
+                        @apply bg-transparent;
+                        @apply font-bold ;
+                        @apply text-lg;
+                    }
+
+                    .search-value-input {
+                        @apply bg-white;
+                        @apply shadow;
+                        @apply appearance-none;
+                        @apply border;
+                        @apply rounded;
+                        @apply w-3/5;
+                        @apply py-2;
+                        @apply px-3 ;
+                        @apply text-gray-700;
+                        @apply leading-tight;
+
+                        &:focus {
+                            @apply outline-none;
+                        }
+                    }
+
+                    .search-get-button {
+                        @apply bg-indigo-500;
+                        @apply mx-1;
+                        @apply text-white;
+                        @apply font-semibold;
+                        @apply py-1;
+                        @apply px-3;
+                        @apply rounded;
+                        @apply shadow;
+
+                        &:hover {
+                            @apply bg-indigo-400;
+                        }
+
+                        &:active {
+                            @apply bg-indigo-300;
+                        }
+                    }
+
+                    .search-reset-button {
+                        @apply bg-indigo-300;
+                        @apply text-white;
+                        @apply font-semibold;
+                        @apply py-1;
+                        @apply px-2;
+                        @apply rounded;
+                        @apply shadow;
+
+                        &:hover {
+                            @apply bg-indigo-200;
+                        }
+
+                        &:active {
+                            @apply bg-indigo-100;
+                        }
+                    }
+                }
+            }
+
+            /**
+                Header - Right - Configuration buttons
+             */
+            .header-right {
+                @apply w-1/4;
+                @apply flex;
+                @apply flex-row;
+                @apply justify-end;
+                @apply items-center;
+
+                button {
+                    @apply mr-4;
+                    @apply flex;
+                    @apply justify-center;
+                    @apply items-center;
+                    @apply h-10;
+                    @apply w-10;
+                    @apply rounded;
+                    @apply shadow;
+
+                    &:hover {
+                        @apply bg-indigo-100;
+                    }
+
+                    &:active {
+                        @apply bg-indigo-200;
+                    }
+                }
+
+                .dark-mode-button-enabled {
+                    color: #fff;
+                    background-color: #667eea;
+                    transition: 0.5s ease;
+
+                    &:hover {
+                        background-color: rgba(105, 144, 255, 0.7);
+                        transition: 0.5s ease;
+                    }
+                }
+
+                .dark-mode-button-disabled {
+                    color: #2d3748;
+                    background-color: transparent;
+                    transition: 0.5s ease;
+
+                    &:hover {
+                        background-color: #667eea;
+                        transition: 0.5s ease;
+                    }
+                }
+
+                .readability-button-enabled {
+                    color: #fff;
+                    background-color: #667eea;
+                    transition: 0.5s ease;
+
+                    &:hover {
+                        background-color: rgba(105, 144, 255, 0.7);
+                        transition: 0.5s ease;
+                    }
+                }
+
+                .readability-button-disabled {
+                    color: #2d3748;
+                    background-color: transparent;
+                    transition: 0.5s ease;
+
+                    &:hover {
+                        background-color: #667eea;
+                        transition: 0.5s ease;
+                    }
+                }
+
+                .sidebar-button-enabled {
+                    color: #2d3748;
+                    background-color: transparent;
+                    transition: 0.5s ease;
+
+                    &:hover {
+                        background-color: #667eea;
+                        transition: 0.5s ease;
+                    }
+                }
+
+                .sidebar-button-disabled {
+                    background-color: #667eea;
+                    color: #fff;
+                    transition: 0.5s ease;
+
+                    &:hover {
+                        background-color: rgba(105, 144, 255, 0.7);
+                        transition: 0.5s ease;
+                    }
+                }
+
+                .chevron-point-left {
+                    transform: rotate(270deg);
+                    transition: 0.5s ease;
+                }
+
+                .chevron-point-right {
+                    transform: rotate(90deg);
+                    transition: 0.5s ease;
+                }
+            }
+        }
+
+        /**
+            Header - Bottom - Divider
+        */
+        .header-bottom {
+            @apply block;
+            @apply my-4;
+            @apply w-5/6;
+            border-bottom: 1px solid #d5dfe9;
         }
     }
 
-    .dark-mode-disabled {
-        color: #2d3748;
-        background-color: transparent;
-        transition: 0.5s ease;
-
-        &:hover {
-            background-color: #667eea;
-            transition: 0.5s ease;
-        }
-    }
-
-    .readability-enabled {
-        color: #fff;
-        background-color: #667eea;
-        transition: 0.5s ease;
-
-        &:hover {
-            background-color: rgba(105, 144, 255, 0.7);
-            transition: 0.5s ease;
-        }
-    }
-
-    .readability-disabled {
-        color: #2d3748;
-        background-color: transparent;
-        transition: 0.5s ease;
-
-        &:hover {
-            background-color: #667eea;
-            transition: 0.5s ease;
-        }
-    }
-
-    .sidebar-enabled {
-        color: #2d3748;
-        background-color: transparent;
-        transition: 0.5s ease;
-
-        &:hover {
-            background-color: #667eea;
-            transition: 0.5s ease;
-        }
-    }
-
-    .sidebar-disabled {
-        background-color: #667eea;
-        color: #fff;
-        transition: 0.5s ease;
-
-        &:hover {
-            background-color: rgba(105, 144, 255, 0.7);
-            transition: 0.5s ease;
-        }
-    }
-
-    .chevron-point-left {
-        transform: rotate(270deg);
-        transition: 0.5s ease;
-    }
-
-    .chevron-point-right {
-        transform: rotate(90deg);
-        transition: 0.5s ease;
-    }
 </style>

@@ -2,7 +2,7 @@
     <div class="w-full flex justify-center">
 
         <div v-if="loading && !tableLoadError" class="flex flex-row items-center justify-center my-12 w-full">
-            <img class="loader-color-fix" width="20" height="20" src="/vendor/prequel/loader.gif"
+            <img class="loader-color-fix" width="20" height="20" :src="$root.prequel.asset.loader"
                  alt="Loading table data...">
             <p class="ml-2 text-gray-500">
                 Loading table data...

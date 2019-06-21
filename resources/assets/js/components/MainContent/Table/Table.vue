@@ -1,22 +1,25 @@
 <template>
     <div>
-        <table v-if="data.length !== 0" class="w-full overflow-auto bg-gray-200">
-            <thead class="border-b bg-gray-400 rounded-t">
-            <tr>
-                <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
-                    title="Quick actions">
-                    <font-awesome-icon icon="tools"/>
-                </th>
-                <th class="border p-2 whitespace-no-wrap text-sm  text-center cursor-pointer hover:bg-gray-300"
-                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
-                    :title="struct.Field + ' - ' + struct.Type"
-                    :type="struct.Type"
-                    v-for="struct in structure">
-                    {{readability ? enhanceReadability(struct.Field) : struct.Field}}
-                    <br>
-                    <p class="text-xs font-light text-gray-700 -mt-1">{{struct.Type}}</p>
-                </th>
-            </tr>
+        <table v-if="data.length !== 0" class="w-full rounded overflow-auto bg-gray-200">
+            <thead class="border-b rounded bg-gray-400">
+                <tr>
+                    <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
+                        title="Quick actions">
+                        <font-awesome-icon icon="tools"/>
+                    </th>
+                    <th class="border p-1 whitespace-no-wrap text-sm mx-10 text-center cursor-pointer hover:bg-gray-300"
+                        :id="struct.Field"
+                        :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
+                        :title="struct.Field + ' - ' + struct.Type"
+                        :type="struct.Type"
+                        @click="$emit('columnSelect', $event)"
+                        v-for="struct in structure">
+                        {{readability ? enhanceReadability(struct.Field) : struct.Field}}
+                        <br>
+                        <p class="text-xs font-light text-gray-700 -mt-1" @click.prevent>
+                            {{struct.Type}}</p>
+                    </th>
+                </tr>
             </thead>
             <tbody>
             <tr v-if="data" v-for="row in data">
@@ -94,6 +97,8 @@
 
       /**
        * Save data @focusout
+       *
+       * @TODO
        */
       saveModifiedData: function() {
         this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
@@ -145,10 +150,6 @@
 </script>
 
 <style scoped>
-    * {
-        transition: all .5s ease;
-    }
-
     .ellipsis {
         width: 250px;
         max-width: 250px;

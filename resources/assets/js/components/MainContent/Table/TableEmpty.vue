@@ -1,6 +1,6 @@
 <template>
     <h1 class="my-4 text-gray-700 w-full text-md text-center">
-        This table does not contain any data
+        This query did not yield any result
     </h1>
 </template>
 
