@@ -3,6 +3,7 @@ source
 /vendor
 /.idea
 composer.lock
+package-lock.json
 npm-debug.log
 yarn-error.log
 .phpunit.result.cache
