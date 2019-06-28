@@ -9,7 +9,7 @@ return [
     |
     | Manually disable/enable Prequel, if in production Prequel will always
     | be disabled. Reason being that nobody should ever be able to directly look
-    | inside your database (obviously).
+    | inside your database besides you or your dev team (obviously).
     |
     */
     'enabled' => env('PREQUEL_ENABLED', true),

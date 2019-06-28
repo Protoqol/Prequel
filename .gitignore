@@ -1,3 +1,9 @@
-node_modules
-vendor
 source
+/node_modules
+/vendor
+/.idea
+composer.lock
+npm-debug.log
+yarn-error.log
+.phpunit.result.cache
+mix-manifest.json
