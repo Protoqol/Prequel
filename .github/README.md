@@ -20,10 +20,10 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [x] [FEATURE] Search for table in menu search bar.
 - [x] [FEATURE] When clicked on table column, auto-select that column to be searched in.
 - [x] [REFACTOR] Better searching in tables.
+- [x] [REFACTOR] Refactor inline css classes to sass @apply tags.
 
 **Doing - <small>priority from highest to lowest</small>**
 - [ ] [FEATURE] Storing preferences about front-end in localStorage.
-- [ ] [REFACTOR] Refactor inline css classes to sass @apply tags.
 
 **Next**
 - [ ] [FIX] Set up testing.
