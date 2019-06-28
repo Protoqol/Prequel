@@ -1,22 +1,22 @@
 <template>
     <!--    @TODO Better error resolving/suggestions -->
-    <div>
-        <h1 class="mt-10 text-center text-3xl text-bold text-red-500">
+    <div class="prequel-error">
+        <h1>
             Oops... {{ errorDetailed.detailed }}
         </h1>
 
         <!--   This if condition is horrible, I know that @TODO     -->
         <div v-if="errorDetailed.detailed !== 'Prequel has been disabled.'">
-            <h3 class="text-center text-lg text-normal text-gray-900">
+            <h3>
                 Tried connecting through
             </h3>
-            <code class="block w-full text-gray-800 text-center">
+            <code class="code-block">
                 {{env.connection}}://{{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
                 <br>
-                <span class="text-gray-700 text-sm">connection://user@host:port/database</span>
+                <span>connection://user@host:port/database</span>
                 <br><br>
-                <div class="bg-white rounded p-2 mt-2">
-                    <h4 class="text-center uppercase text-lg text-normal text-gray-900">
+                <div class="suggestions">
+                    <h4>
                         {{errorSuggestion().length}} suggestion(s) found
                     </h4>
                     <code v-for="error in errorSuggestion()">
@@ -59,6 +59,45 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss">
+    .prequel-error {
+        h1 {
+            @apply mt-10;
+            @apply text-3xl;
+            @apply text-center;
+            @apply text-red-500;
+        }
 
+        h3 {
+            @apply text-center;
+            @apply text-lg;
+            @apply text-gray-900;
+        }
+
+        .code-block {
+            @apply block;
+            @apply w-full;
+            @apply text-gray-800;
+            @apply text-center;
+
+            span {
+                @apply text-gray-700;
+                @apply text-sm;
+            }
+
+            .suggestions {
+                @apply bg-white;
+                @apply rounded;
+                @apply p-2;
+                @apply mt-2;
+
+                h4 {
+                    @apply text-center;
+                    @apply uppercase;
+                    @apply text-lg;
+                    @apply text-gray-900;
+                }
+            }
+        }
+    }
 </style>

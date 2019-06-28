@@ -1,5 +1,5 @@
 <template>
-    <div class="block h-full bg-white rounded shadow">
+    <div class="main-content-wrapper">
 
         <div v-if="!welcomeShown">
             <Welcome/>
@@ -29,3 +29,13 @@
     props     : ['structure', 'data', 'readability', 'loading', 'tableLoadError', 'tableErrorDetailed', 'welcomeShown'],
   };
 </script>
+
+<style lang="scss">
+    .main-content-wrapper {
+        @apply block;
+        @apply h-full;
+        @apply bg-white;
+        @apply rounded;
+        @apply shadow;
+    }
+</style>

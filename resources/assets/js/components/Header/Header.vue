@@ -4,7 +4,8 @@
             <div class="header-left">
                 <div class="header-left-logo">
                     <div class="header-left-logo-image">
-                        <img width="32rem" height="32rem" alt="Protoqol Prequel" :src="$root.prequel.asset.logo">
+                        <img width="32rem" height="32rem" alt="Protoqol Prequel"
+                             :src="$root.prequel.asset.logo">
                     </div>
                     <h1 class="header-left-logo-text">
                         <span>Laravel</span> Prequel
@@ -39,14 +40,13 @@
                         <option v-for="struct in tableStructure" :value="struct.Field"></option>
                     </datalist>
 
-                    <select class="search-type-input"
-                            name="queryType"
-                            v-model="input.queryType">
+                    <select class="search-type-input" name="queryType" v-model="input.queryType">
                         <option>=</option>
                         <option>!=</option>
                         <option>LIKE</option>
                     </select>
 
+                    <!-- Type should be based on selected column     -->
                     <input class="search-value-input" name="value" placeholder="Value..."
                            :type="'text'"
                            :disabled="loading"
@@ -54,12 +54,10 @@
                            @keyup.enter="searchHandler"
                            @keyup.esc="resetInputs">
 
-                    <button class="search-get-button" title="Run query (ENTER)"
-                            @click="searchHandler">
+                    <button class="search-get-button" title="Run query (ENTER)" @click="searchHandler">
                         Get
                     </button>
-                    <button class="search-reset-button" title="Reset query (ESC)"
-                            @click="resetHandler">
+                    <button class="search-reset-button" title="Reset query (ESC)" @click="resetHandler">
                         Reset
                     </button>
                 </label>
@@ -72,13 +70,13 @@
                     <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
                 </button>
 
-                <!--                 Dark Mode Button -->
-                <!--                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"-->
-                <!--                        title="Set Dark Mode (Not available yet)"-->
-                <!--                        :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"-->
-                <!--                        @click="view.darkMode = (!view.darkMode)">-->
-                <!--                    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;-->
-                <!--                </button>-->
+                <!-- Dark Mode Button -->
+                <!-- <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow" -->
+                <!--    title="Set Dark Mode (Not available yet)"                                                                            -->
+                <!--    :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"                                    -->
+                <!--    @click="view.darkMode = (!view.darkMode)">                                                                           -->
+                <!--    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;                                                                -->
+                <!-- </button>                                                                                                               -->
 
                 <button :class="showSideBar ? 'sidebar-button-enabled' : 'sidebar-button-disabled'"
                         :title="`${sideBarStatusText} side bar`"
@@ -102,7 +100,7 @@
     data() {
       return {
         sideBarStatusText: 'Collapse',
-        showSideBar      : true,
+        showSideBar      : false,
         readability      : true,
 
         view: {
@@ -215,7 +213,7 @@
        | Holds data like readability or side bar preferences in localStorage
        */
       configHandler: function() {
-        // TODO store button states in localStorage
+        localStorage.setItem('');
       },
     },
   };

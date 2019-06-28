@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ul class="ml-2" v-for="database in tableData">
+        <ul class="menu-ul" v-for="database in tableData">
             <Accordion>
                 <div slot="header">
                     <li class="border-b p-2 rounded-l text-gray-700 cursor-pointer text-left"
@@ -29,14 +29,14 @@
                     <font-awesome-icon class="mr-2 hover:text-gray-700" icon="table"
                                        :title="`${database.official_name}.${table.name.official}`"/>
 
-                    <span class="table-name-animation break-words hover:text-blue-400"
+                    <span class="table-name-animation break-words"
                           style="max-width: 80%;"
                           :title="database.official_name + '.' + table.name.official">
                                 {{ readability ? table.name.pretty : table.name.official }}
                     </span>
                 </li>
                 <li v-if="database.tables.length === 0"
-                    class="border-b pl-2 flex flex-row items-center justify-start text-sm text-gray-600 text-left">
+                    class="menu-li-no-content">
                     This database does not contain any data
                 </li>
             </Accordion>
@@ -54,10 +54,26 @@
   };
 </script>
 
-<style scoped>
-    li {
-        font-family: Nunito, sans-serif !important;
-        font-size: .95rem !important;
-        font-weight: 400 !important;
+<style lang="scss" scoped>
+    .menu-ul {
+        @apply ml-2;
+
+        li {
+            font-family: Nunito, sans-serif !important;
+            font-size: .95rem !important;
+            font-weight: 400 !important;
+        }
+
+        .menu-li-no-content {
+            @apply border-b;
+            @apply pl-2;
+            @apply flex;
+            @apply flex-row;
+            @apply items-center;
+            @apply justify-start;
+            @apply text-sm;
+            @apply text-gray-600;
+            @apply text-left;
+        }
     }
 </style>

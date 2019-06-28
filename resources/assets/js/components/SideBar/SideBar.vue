@@ -1,8 +1,7 @@
 <template>
-    <div style="min-width: 15%; width: 17%;" class="inline-block">
+    <div class="sidebar-wrapper">
         <label>
-            <input class="bg-white ml-2 appearance-none border w-full rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                   style="width: 97%;"
+            <input class="table-search-input"
                    type="text"
                    list="tableSearch"
                    autocomplete="on"
@@ -30,3 +29,30 @@
     props     : ['readability', 'tableData', 'tableFlat'],
   };
 </script>
+
+<style lang="scss">
+    .sidebar-wrapper {
+        @apply inline-block;
+        min-width: 15%;
+        width: 17%;
+
+        .table-search-input {
+            @apply bg-white;
+            @apply ml-2;
+            @apply appearance-none;
+            @apply border;
+            @apply w-full;
+            @apply rounded;
+            @apply py-2;
+            @apply px-3;
+            @apply text-gray-700;
+            @apply leading-tight;
+            width: 97%;
+
+            &:focus {
+                @apply outline-none;
+            }
+        }
+
+    }
+</style>

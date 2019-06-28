@@ -1,33 +1,32 @@
 <template>
-    <div>
-        <table v-if="data.length !== 0" class="w-full rounded overflow-auto bg-gray-200">
-            <thead class="border-b rounded bg-gray-400">
-                <tr>
-                    <th class="border p-2 text-sm text-gray-800 text-center cursor-pointer hover:bg-gray-300 hover:border"
-                        title="Quick actions">
-                        <font-awesome-icon icon="tools"/>
-                    </th>
-                    <th class="border p-1 whitespace-no-wrap text-sm mx-10 text-center cursor-pointer hover:bg-gray-300"
-                        :id="struct.Field"
-                        :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
-                        :title="struct.Field + ' - ' + struct.Type"
-                        :type="struct.Type"
-                        @click="$emit('columnSelect', $event)"
-                        v-for="struct in structure">
-                        {{readability ? enhanceReadability(struct.Field) : struct.Field}}
-                        <br>
-                        <p class="text-xs font-light text-gray-700 -mt-1" @click.prevent>
-                            {{struct.Type}}</p>
-                    </th>
-                </tr>
+    <div class="table-wrapper">
+        <table v-if="data.length !== 0">
+            <thead>
+            <tr>
+                <th class="table-th-actions"
+                    title="Quick actions">
+                    <font-awesome-icon icon="tools"/>
+                </th>
+                <th class="table-th"
+                    :id="struct.Field"
+                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
+                    :title="struct.Field + ' - ' + struct.Type"
+                    :type="struct.Type"
+                    @click="$emit('columnSelect', $event)"
+                    v-for="struct in structure">
+                    {{readability ? enhanceReadability(struct.Field) : struct.Field}}
+                    <br>
+                    <p class="text-xs font-light text-gray-700 -mt-1" @click.prevent>
+                        {{struct.Type}}</p>
+                </th>
+            </tr>
             </thead>
             <tbody>
             <tr v-if="data" v-for="row in data">
-                <td class="text-gray-700 max-w-8 w-8 text-sm text-center cursor-pointer hover:bg-gray-400"
-                    title="Inspect row">
+                <td class="table-td-actions" title="Inspect row">
                     <font-awesome-icon style="transform: rotate(90deg);" icon="search-plus"/>&nbsp;
                 </td>
-                <td class="ellipsis px-4 text-sm max-w-64 w-64 text-center cursor-pointer hover:bg-gray-300"
+                <td class="ellipsis table-td"
                     :id="item ? item : ENUM.PREQUEL_UNDEFINED"
                     :class="!item ? 'text-gray-500 italic' : 'text-gray-700'"
                     :title="(item ? item + ` (Length ${(item + '').length})` : 'This item is empty') + '\nLeft click to see\nRight click to edit'"
@@ -149,7 +148,7 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss">
     .ellipsis {
         width: 250px;
         max-width: 250px;
@@ -157,5 +156,74 @@
         overflow: hidden;
         text-overflow: ellipsis;
         transition: all .5s ease;
+    }
+
+    .table-wrapper {
+        table {
+            @apply w-full;
+            @apply rounded;
+            @apply overflow-auto;
+            @apply bg-gray-200;
+
+            thead {
+                @apply border-b;
+                @apply rounded;
+                @apply bg-gray-400;
+
+                .table-th {
+                    @apply border;
+                    @apply p-1;
+                    @apply whitespace-no-wrap;
+                    @apply text-sm;
+                    @apply mx-10;
+                    @apply text-center;
+                    @apply cursor-pointer;
+
+                    &:hover {
+                        @apply bg-gray-300;
+                    }
+                }
+
+
+                .table-th-actions {
+                    @apply border;
+                    @apply p-2;
+                    @apply text-sm;
+                    @apply text-gray-800;
+                    @apply text-center;
+                    @apply cursor-pointer;
+
+                    &:hover {
+                        @apply bg-gray-300;
+                        @apply border;
+                    }
+                }
+
+            }
+
+            .table-td {
+                @apply px-4;
+                @apply text-sm;
+                @apply text-center;
+                @apply cursor-pointer;
+
+                &:hover {
+                    @apply bg-gray-300;
+                }
+            }
+
+            .table-td-actions {
+                @apply text-gray-700;
+                @apply w-8;
+                @apply text-sm;
+                @apply text-center;
+                @apply cursor-pointer;
+
+                &:hover {
+                    @apply bg-gray-400;
+                }
+            }
+        }
+
     }
 </style>

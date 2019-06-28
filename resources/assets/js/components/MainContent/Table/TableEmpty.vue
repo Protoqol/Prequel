@@ -1,7 +1,9 @@
 <template>
-    <h1 class="my-4 text-gray-700 w-full text-md text-center">
-        This query did not yield any result
-    </h1>
+    <div class="empty-table-wrapper">
+        <h1>
+            This query did not yield any result
+        </h1>
+    </div>
 </template>
 
 <script>
@@ -11,6 +13,13 @@
   };
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    .empty-table-wrapper {
+        h1 {
+            @apply my-4;
+            @apply text-gray-700;
+            @apply w-full;
+            @apply text-center;
+        }
+    }
 </style>

@@ -21,8 +21,8 @@
                 @enhanceReadability="view.readability = (!view.readability)"
                 @collapseSideBar="sideBarCollapseHandler"/>
 
-        <div v-if="!prequel.error" class="w-full flex justify-center">
-            <div class="content flex">
+        <div v-if="!prequel.error" class="main-content">
+            <div class="wrapper">
 
                 <transition name="slide-fade" mode="in-out">
                     <SideBar v-if="!view.collapsed"
@@ -34,7 +34,7 @@
                              @tableSelect="getTableData($event)"/>
                 </transition>
 
-                <MainContent class="overflow-x-scroll"
+                <MainContent class="table-wrapper"
                              :class="view.collapsed ? 'main-content-collapsed' : 'main-content-expanded'"
                              :readability="view.readability"
                              :loading="table.loading"
@@ -192,7 +192,7 @@
       },
 
       /**
-       | Search for a table in de side menu @TODO
+       | Search for a table in de side menu
        */
       searchForTable: function(e) {
         this.getTableData(e.target.value, false);
@@ -220,6 +220,7 @@
         let url     = baseUrl + '?' + this.view.params.toString();
 
         window.history.pushState({path: url}, '', url);
+
         this.setActiveTable();
       },
 
@@ -274,6 +275,7 @@
             this.table.structure              = [];
             this.table.error.loadError        = true;
             this.table.error.loadErrorMessage = error.response.data.message;
+            this.updateUrl();
           }
         }
         return loadWasSuccess;
@@ -327,70 +329,78 @@
 <style lang="scss">
 
     * {
-        transition: .2s ease;
+        transition: .150ms ease;
+
+        /**
+            Disable outline
+        */
+        :focus {
+            outline: 0;
+        }
+
+        /**
+            Scrollbar style
+        */
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+            transition: .2s ease;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 10px;
+            background-color: #f5f5f5;
+            transition: .2s ease;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: rgba(73, 125, 189, 0.5);
+            transition: .2s ease;
+        }
+
+        /**
+            Side bar transition
+         */
+        .slide-fade-enter-active {
+            transition: all .2s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .2s ease;
+        }
+
+        .slide-fade-enter, .slide-fade-leave-to {
+            opacity: 0;
+        }
     }
 
-    .main-content-collapsed {
-        width: 100%;
-        max-width: 100%;
-        transition: 1s ease;
-    }
+    .main-content {
+        @apply w-full;
+        @apply flex;
+        @apply justify-center;
 
-    .main-content-expanded {
-        width: 81%;
-        max-width: 81%;
-        transition: 1s ease;
-    }
+        .wrapper {
+            @apply flex;
+            width: 98%;
 
-    /**
-        Disable outline
-    */
-    :focus {
-        outline: 0;
-    }
+            .table-wrapper {
+                @apply overflow-x-scroll;
+            }
+        }
 
-    /**
-        Scrollbar style
-    */
-    ::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        background-color: #F5F5F5;
-        border-radius: 10px;
-        transition: .2s ease;
-    }
+        .main-content-collapsed {
+            width: 100%;
+            max-width: 100%;
+            transition: 1s ease;
+        }
 
-    ::-webkit-scrollbar {
-        width: 5px;
-        height: 10px;
-        background-color: #f5f5f5;
-        transition: .2s ease;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background: rgba(73, 125, 189, 0.5);
-        transition: .2s ease;
-    }
-
-    /**
-        Main content container
-    */
-    .content {
-        width: 98%;
-    }
-
-    /**
-        Side bar transition
-     */
-    .slide-fade-enter-active {
-        transition: all .2s ease;
-    }
-
-    .slide-fade-leave-active {
-        transition: all .2s ease;
-    }
-
-    .slide-fade-enter, .slide-fade-leave-to {
-        opacity: 0;
+        .main-content-expanded {
+            width: 81%;
+            max-width: 81%;
+            transition: 1s ease;
+        }
     }
 </style>

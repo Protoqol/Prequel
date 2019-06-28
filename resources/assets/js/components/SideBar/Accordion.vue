@@ -47,7 +47,7 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss">
     .accordion .body {
         overflow: hidden;
         transition: 500ms ease;
