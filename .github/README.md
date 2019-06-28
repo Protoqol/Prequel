@@ -23,7 +23,8 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [x] [REFACTOR] Refactor inline css classes to sass @apply tags.
 
 **Doing - <small>priority from highest to lowest</small>**
-- [ ] [FEATURE] Storing preferences about front-end in localStorage.
+- [ ] [FEATURE] Pagination of data.
+- [ ] [FEATURE] Storing preferences about front-end preferences in localStorage.
 
 **Next**
 - [ ] [FIX] Set up testing.
@@ -44,7 +45,6 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [ ] [FEATURE] Hide table/database from view.
 - [ ] [FEATURE] Multiple tabs for multiple tables.
 - [ ] [FEATURE] Suggestions for better performance/database health with graph.
-- [ ] [FEATURE] Pagination of data.
 - [ ] [FEATURE] Support multiple database connections. 
 - [ ] [FEATURE] Responsiveness. 
 - [ ] [REFACTOR] Try to remove/combine some attributes as the HTML is becoming unreadable.
