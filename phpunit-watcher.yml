@@ -8,4 +8,4 @@ notifications:
   failingTests: true
 phpunit:
   binaryPath: ./vendor/bin/phpunit
-
+ 

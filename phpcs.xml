@@ -8,4 +8,5 @@
     <exclude-pattern>database/</exclude-pattern>
     <exclude-pattern>storage/</exclude-pattern>
     <exclude-pattern>node_modules/</exclude-pattern>
+    <exclude-pattern>sources</exclude-pattern>
 </ruleset>
