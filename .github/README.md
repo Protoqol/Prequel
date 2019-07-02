@@ -19,9 +19,9 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [x] [FEATURE] Keep track of currently selected table in accordion menu. With active color.
 - [x] [FEATURE] Search for table in menu search bar.
 - [x] [FEATURE] When clicked on table column, auto-select that column to be searched in.
+- [x] [FEATURE] Pagination of data.
 - [x] [REFACTOR] Better searching in tables.
 - [x] [REFACTOR] Refactor inline css classes to sass @apply tags.
-- [x] [FEATURE] Pagination of data.
 
 
 **Doing - <small>priority from highest to lowest</small>**
