@@ -45,7 +45,7 @@
             @apply cursor-pointer;
 
             &:hover {
-                @apply bg-blue-100;
+                @apply text-gray-500;
             }
         }
 
@@ -61,9 +61,14 @@
             @apply bg-gray-300;
             @apply text-gray-800;
             @apply font-bold;
+            @apply shadow;
 
             &:hover {
                 @apply bg-blue-200;
+            }
+
+            &:active {
+                @apply shadow-none;
             }
         }
     }

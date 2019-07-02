@@ -19,12 +19,15 @@
                 @searchInTable="searchInTable($event)"
                 @resetSearchInTable="checkUrlParameters"
                 @shouldBeLoading="table.loading = true"
-                @enhanceReadability="view.readability = (!view.readability)"
+                @enhanceReadability="readabilityEnhancer"
                 @collapseSideBar="sideBarCollapseHandler"/>
 
-        <Paginator :currentPage="table.pagination.currentPage"
+        <Paginator v-if="table.currentActiveName.length !== 0"
+                   :currentPage="table.pagination.currentPage"
                    :numberOfPages="table.pagination.numberOfPages"
                    @pageChange="changePage($event)"/>
+
+        <div v-else class="block w-1 h-2 my-4"></div>
 
         <div v-if="!prequel.error" class="main-content">
             <div class="wrapper">
@@ -142,11 +145,35 @@
     },
 
     mounted() {
+      this.configHandler();
       this.checkUrlParameters();
     },
 
     methods: {
 
+      /**
+       | Handles config changes.
+       | Holds data like readability or side bar preferences in localStorage
+       */
+      configHandler: function() {
+        if (window.localStorage.getItem('readability')) {
+          this.view.readability = (window.localStorage.getItem('readability') === 'true');
+        }
+        else {
+          window.localStorage.setItem('readability', 'true');
+        }
+
+        if (window.localStorage.getItem('showSidebar')) {
+          this.view.collapsed = (window.localStorage.getItem('showSidebar') === 'false');
+        }
+        else {
+          window.localStorage.setItem('showSidebar', 'false');
+        }
+      },
+
+      /**
+       * Change page on paginator change.
+       */
       changePage: function(e) {
         this.table.pagination.currentPage = e;
         this.updateUrl();
@@ -160,11 +187,18 @@
         this.table.search.column = e.target.id;
       },
 
+      readabilityEnhancer: function() {
+        this.view.readability = (!this.view.readability);
+        window.localStorage.setItem('readability', (!this.view.readability) + '');
+      },
+
       /**
        | Handle actions when sidebar collapses or expands.
        */
       sideBarCollapseHandler: function() {
         let secsBeforeAction = 1000;
+
+        window.localStorage.setItem('showSidebar', (!this.view.collapsed) + '');
 
         this.view.collapsed = (!this.view.collapsed);
         if (!this.view.collapsed) {

@@ -103,7 +103,8 @@
       'tableLoading',
       'tableStructure',
       'searchColumn',
-      'numberOfPages'],
+      'numberOfPages',
+    ],
 
     data() {
       return {
@@ -122,6 +123,10 @@
           queryType       : '=',
         },
       };
+    },
+
+    mounted() {
+      this.configHandler();
     },
 
     watch: {
@@ -143,6 +148,26 @@
     },
 
     methods: {
+
+      /**
+       | Handles config changes.
+       | Holds data like readability or side bar preferences in localStorage
+       */
+      configHandler: function() {
+        if (window.localStorage.getItem('readability')) {
+          this.readability = (window.localStorage.getItem('readability') === 'true');
+        }
+        else {
+          window.localStorage.setItem('readability', 'true');
+        }
+
+        if (window.localStorage.getItem('showSidebar')) {
+          this.showSideBar = (window.localStorage.getItem('showSidebar') === 'false');
+        }
+        else {
+          window.localStorage.setItem('showSidebar', 'false');
+        }
+      },
 
       /**
        | Reset input fields
@@ -214,14 +239,6 @@
       readabilityButtonHandler: function() {
         this.readability = !this.readability;
         this.$emit('enhanceReadability');
-      },
-
-      /**
-       | Handles config changes.
-       | Holds data like readability or side bar preferences in localStorage
-       */
-      configHandler: function() {
-        localStorage.setItem('');
       },
     },
   };
