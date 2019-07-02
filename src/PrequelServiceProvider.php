@@ -52,18 +52,17 @@ class PrequelServiceProvider extends ServiceProvider
         $this->publishes([
             dirname(__DIR__)
             .'/config/prequel.php' => config_path('prequel.php'),
-        ]);
+        ],
+	'config');
 
         $this->mergeConfigFrom(
             dirname(__DIR__).'/config/prequel.php',
             'prequel'
         );
 
-        $this->publishes(
-            [
+        $this->publishes([
                 dirname(__DIR__).'/public' => public_path('vendor/prequel'),
             ],
-            'prequel-assets'
-        );
+        'public');
     }
 }
