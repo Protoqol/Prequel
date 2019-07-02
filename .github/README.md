@@ -21,9 +21,10 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [x] [FEATURE] When clicked on table column, auto-select that column to be searched in.
 - [x] [REFACTOR] Better searching in tables.
 - [x] [REFACTOR] Refactor inline css classes to sass @apply tags.
+- [x] [FEATURE] Pagination of data.
+
 
 **Doing - <small>priority from highest to lowest</small>**
-- [ ] [FEATURE] Pagination of data.
 - [ ] [FEATURE] Storing preferences about front-end preferences in localStorage.
 
 **Next**
@@ -37,6 +38,7 @@ Look <a href="https://protoqol.github.io/Prequel/" target="_blank">here</a> for 
 - [ ] [FIX] Better SRP enforcement, not because it matters, but because the code is getting messy.
 - [ ] [FIX] More descriptive 'This query did not yield any result' message.
 - [ ] [FIX] Resolve @TODO's.
+- [ ] [FIX] Add credits for code used.
 - [ ] [FEATURE] Type check searchInTable value to allow for better search results.
 - [ ] [FEATURE] SELECT (fields) query and only show those columns.
 - [ ] [FEATURE] Show a pseudo SQL query when searchingInTable.

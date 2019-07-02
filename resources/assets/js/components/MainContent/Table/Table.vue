@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-if="data" v-for="row in data">
+            <tr v-if="data" class="table-row" v-for="row in data">
                 <td class="table-td-actions" title="Inspect row">
                     <font-awesome-icon style="transform: rotate(90deg);" icon="search-plus"/>&nbsp;
                 </td>
@@ -162,7 +162,6 @@
         table {
             @apply w-full;
             @apply rounded;
-            @apply overflow-auto;
             @apply bg-gray-200;
 
             thead {
@@ -199,6 +198,14 @@
                     }
                 }
 
+            }
+
+            .table-row:nth-child(odd) {
+                @apply bg-gray-100;
+            }
+
+            .table-row:nth-child(even) {
+                @apply bg-gray-200;
             }
 
             .table-td {

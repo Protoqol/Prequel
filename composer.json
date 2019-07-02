@@ -10,7 +10,9 @@
     }
   ],
   "minimum-stability": "beta",
-  "require": {},
+  "require": {
+    "laravel/framework": "^5.7"
+  },
   "extra": {
     "laravel": {
       "providers": [

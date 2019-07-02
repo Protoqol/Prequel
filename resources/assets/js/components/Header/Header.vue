@@ -27,7 +27,7 @@
                 <h1 v-if="activeTable">
                     <span v-if="!tableLoading" id="header-table-message">
                         <font-awesome-icon class="fa" icon="table"/>
-                        {{activeTable}}
+                        {{activeTable}} <small>({{ numberOfPages }} records)</small>
                     </span>
                     <img v-else width="20" height="20" :src="$root.prequel.asset.loader" alt="Loading table data...">
                 </h1>
@@ -95,7 +95,15 @@
 
   export default {
     name : 'Header',
-    props: ['error', 'activeTable', 'env', 'loading', 'tableLoading', 'tableStructure', 'searchColumn'],
+    props: [
+      'error',
+      'activeTable',
+      'env',
+      'loading',
+      'tableLoading',
+      'tableStructure',
+      'searchColumn',
+      'numberOfPages'],
 
     data() {
       return {
@@ -229,7 +237,7 @@
         @apply flex-col;
         @apply justify-center;
         @apply items-center;
-        @apply mt-6;
+        @apply mt-5;
 
         .header-flexbox {
             @apply flex;
@@ -517,7 +525,7 @@
         */
         .header-bottom {
             @apply block;
-            @apply my-4;
+            @apply mt-4;
             @apply w-5/6;
             border-bottom: 1px solid #d5dfe9;
         }

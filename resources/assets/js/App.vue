@@ -15,15 +15,19 @@
                 :loading="table.loading"
                 :tableLoading="table.tableLoading"
                 :searchColumn="table.search.column"
+                :numberOfPages="table.numberOfRecords"
                 @searchInTable="searchInTable($event)"
                 @resetSearchInTable="checkUrlParameters"
                 @shouldBeLoading="table.loading = true"
                 @enhanceReadability="view.readability = (!view.readability)"
                 @collapseSideBar="sideBarCollapseHandler"/>
 
+        <Paginator :currentPage="table.pagination.currentPage"
+                   :numberOfPages="table.pagination.numberOfPages"
+                   @pageChange="changePage($event)"/>
+
         <div v-if="!prequel.error" class="main-content">
             <div class="wrapper">
-
                 <transition name="slide-fade" mode="in-out">
                     <SideBar v-if="!view.collapsed"
                              :class="view.collapsed ? 'hidden' : 'w-1/5'"
@@ -57,10 +61,12 @@
   import MainContent  from './components/MainContent/MainContent';
   import axios        from 'axios';
   import PrequelError from './components/Elements/PrequelError';
+  import Paginator    from './components/MainContent/Paginator';
 
   export default {
     name      : 'App',
     components: {
+      Paginator,
       PrequelError,
       MainContent,
       SideBar,
@@ -101,7 +107,11 @@
           structure        : [],
           data             : {},
           currentActiveName: '',
-          currentTablePage : 1,
+          numberOfRecords  : 1,
+          pagination       : {
+            currentPage  : 1,
+            numberOfPages: 1,
+          },
           loading          : false,
           tableLoading     : false,
           search           : {
@@ -136,6 +146,12 @@
     },
 
     methods: {
+
+      changePage: function(e) {
+        this.table.pagination.currentPage = e;
+        this.updateUrl();
+        this.getTableData(`${this.table.database}.${this.table.table}`, false);
+      },
 
       /**
        | Handles column name click event.
@@ -203,6 +219,10 @@
        */
       checkUrlParameters: function() {
         if (this.view.params.has('database') && this.view.params.has('table')) {
+          if (this.view.params.has('page')) {
+            this.table.pagination.currentPage = this.view.params.get('page');
+          }
+
           this.getTableData(`${this.view.params.get('database')}.${this.view.params.get('table')}`, false);
           this.setActiveTable();
         }
@@ -212,16 +232,18 @@
        | Update url query parameters to match current database and table, only updates when table was loaded.
        */
       updateUrl: function() {
-
         this.view.params.set('database', this.table.database);
         this.view.params.set('table', this.table.table);
+        this.view.params.set('page', this.table.pagination.currentPage);
 
         let baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
         let url     = baseUrl + '?' + this.view.params.toString();
 
         window.history.pushState({path: url}, '', url);
 
-        this.setActiveTable();
+        if (!this.view.collapsed) {
+          this.setActiveTable();
+        }
       },
 
       /**
@@ -231,7 +253,7 @@
        | @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
        | @returns {Promise<boolean>}
        */
-      getTableData: async function(databaseTable, dynamicLoad = true) {
+      getTableData: async function(databaseTable = `${this.table.database}.${this.table.table}`, dynamicLoad = true) {
         if (!databaseTable.target && dynamicLoad) {
           return false;
         }
@@ -243,6 +265,13 @@
             error          = {},
             table          = (dynamicLoad ? databaseTable.target.title : databaseTable).split('.');
 
+        if (this.table.table !== table[1]) {
+          this.table.pagination.numberOfPages = 1;
+          this.table.pagination.currentPage   = this.view.params.has('page')
+                                                ? this.view.params.get('page')
+                                                : 1;
+        }
+
         this.table.currentActiveName = dynamicLoad ? databaseTable.target.title : databaseTable;
         this.table.loading           = true;
         this.table.tableLoading      = true;
@@ -252,7 +281,7 @@
 
         try {
           result = await axios.get(
-              `/database/get/${table[0]}/${table[1]}?page=${this.table.currentTablePage}`);
+              `/database/get/${table[0]}/${table[1]}?page=${this.table.pagination.currentPage}`);
         }
         catch (err) {
           error = err;
@@ -262,10 +291,13 @@
           this.table.tableLoading = false;
 
           if (typeof result === 'object' && result.data) {
-            loadWasSuccess             = true;
-            this.table.data            = result.data.data.data;
-            this.table.structure       = result.data.structure;
-            this.table.error.loadError = false;
+            loadWasSuccess                      = true;
+            this.table.data                     = result.data.data.data;
+            this.table.pagination.numberOfPages = result.data.data.last_page;
+            this.table.pagination.currentPage   = result.data.data.current_page;
+            this.table.numberOfRecords          = result.data.data.total;
+            this.table.structure                = result.data.structure;
+            this.table.error.loadError          = false;
             this.updateUrl();
           }
 
