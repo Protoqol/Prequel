@@ -1,6 +1,10 @@
 ![Laravel Prequel](./assets/prequel.png)
 
 # Laravel Prequel 0.5.0-beta #
+[![Latest Stable Version](https://poser.pugx.org/protoqol/prequel/v/stable)](https://packagist.org/packages/protoqol/prequel)
+[![Downloads](https://poser.pugx.org/protoqol/prequel/downloads)](https://packagist.org/packages/protoqol/prequel)
+[![License](https://poser.pugx.org/protoqol/prequel/license)](https://packagist.org/packages/protoqol/prequel)
+
 #### Clear and concise database management ####
 
 <img src="./assets/prequel_screenshot.png" width="700">
