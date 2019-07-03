@@ -126,7 +126,8 @@
     },
 
     mounted() {
-      this.configHandler();
+      // This is not working as intended. @TODO
+      // this.configHandler();
     },
 
     watch: {

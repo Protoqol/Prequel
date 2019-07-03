@@ -145,7 +145,6 @@
     },
 
     mounted() {
-      this.configHandler();
       this.checkUrlParameters();
     },
 
