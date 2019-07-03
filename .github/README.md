@@ -18,7 +18,7 @@ But note that a beta release is still a beta release and is not a stable release
 Luckily, Prequel has taken precautions, Prequel automatically disables itself in a production environment as people looking directly into your database is - let's just say - not ideal.
 
 
-#### Installation (the beta release way) ####
+## Installation (the beta release way) ##
 ###### To install follow the instructions below.
 ```bash
 $ composer require protoqol/prequel
@@ -31,9 +31,9 @@ $ php artisan vendor:publish --tag=public
 
 #### Docs coming soon! ####
 
-#### Credits ####
+## Credits ##
 - [Quinten Schorsij](https://github.com/QuintenJustus)
 
-#### License ####
+## License ##
 
 The MIT License (MIT). Please see [License File](.github/LICENSE.md) for more information.
