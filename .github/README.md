@@ -4,7 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/protoqol/prequel/v/stable)](https://packagist.org/packages/protoqol/prequel)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/protoqol/prequel.svg?style=flat)](https://packagist.org/packages/protoqol/prequel)
-![@Protoqol1](https://img.shields.io/twitter/follow/Protoqol1.svg?label=%40Protoqol1&style=social)
+![@Protoqol_XYZ](https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social)
 
 #### What is Laravel Prequel exactly? ####
 Laravel Prequel is meant to be a database management tool to replace the need for separate standalone database tools like phpMyAdmin, Sequel Pro or MySQL Workbench. With its (hopefully) clear and concise UI, Prequel is to be a modern and lightweight database browser/tool ready for the web of the future. Prequel's design is purposefully based on that of [Laravel Telescope](https://github.com/laravel/telescope) because (web-)developers today have enough to learn and master already, so let's help eachother out and make sure to not add anything virtually useless to that huge pile of knowledge. 
