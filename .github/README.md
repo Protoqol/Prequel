@@ -2,6 +2,7 @@
 
 # Laravel Prequel 0.5.0-beta #
 [![Latest Stable Version](https://poser.pugx.org/protoqol/prequel/v/stable)](https://packagist.org/packages/protoqol/prequel)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master)
 [![Downloads](https://poser.pugx.org/protoqol/prequel/downloads)](https://packagist.org/packages/protoqol/prequel)
 [![License](https://poser.pugx.org/protoqol/prequel/license)](https://packagist.org/packages/protoqol/prequel)
 
