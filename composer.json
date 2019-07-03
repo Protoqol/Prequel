@@ -1,6 +1,6 @@
 {
   "name": "protoqol/prequel",
-  "description": "A powerful database management tool for Laravel, comparable to phpMyAdmin or Adminer. Only with a Laravel-esque look.",
+  "description": "Clear and concise database management.",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -11,6 +11,7 @@
   ],
   "minimum-stability": "beta",
   "require": {
+    "php": "^7.0",
     "laravel/framework": "^5.7"
   },
   "extra": {
