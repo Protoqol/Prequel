@@ -125,11 +125,6 @@
       };
     },
 
-    mounted() {
-      // This is not working as intended. @TODO
-      // this.configHandler();
-    },
-
     watch: {
       searchColumn: function(newVal) {
         this.input.column = newVal;
@@ -151,6 +146,7 @@
     methods: {
 
       /**
+       | This is not working as intended. @TODO
        | Handles config changes.
        | Holds data like readability or side bar preferences in localStorage
        */
