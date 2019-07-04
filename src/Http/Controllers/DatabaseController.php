@@ -67,10 +67,16 @@ class DatabaseController extends Controller
      */
     public function getTableData()
     {
-        $tableData = $this->model
-            ? $this->model->paginate(100)
-            : DB::table($this->qualifiedName)->paginate(100);
+        if ($this->model
+            && $this->databaseName
+            === config('database.connections.mysql.database')
+        ) {
+            $tableData = $this->model->paginate(100);
+        } else {
+            $tableData = DB::table($this->qualifiedName)->paginate(100);
+        }
 
+//        dd($tableData);
         return [
             "table"     => $this->qualifiedName,
             "structure" => app(DatabaseTraverser::class)->getTableStructure(
@@ -106,9 +112,9 @@ class DatabaseController extends Controller
      */
     public function findInTable()
     {
-        $column = Route::current()->parameter('column');
-        $value  = Route::current()->parameter('value');
-        $queryType   = Route::current()->parameter('type');
+        $column    = Route::current()->parameter('column');
+        $value     = Route::current()->parameter('value');
+        $queryType = Route::current()->parameter('type');
 
         if ($queryType === 'LIKE') {
             return $this->model

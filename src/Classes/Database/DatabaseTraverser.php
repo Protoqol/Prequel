@@ -53,7 +53,7 @@ class DatabaseTraverser
      */
     public function getAll() :array
     {
-        $collection               = [];
+        $collection          = [];
         $flatTableCollection = [];
 
         foreach ($this->getAllDatabases() as $value) {
