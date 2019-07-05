@@ -1,7 +1,6 @@
 ![Laravel Prequel](./assets/prequel.png)
 
 # Laravel Prequel 0.5.0-beta #
-[![Latest Stable Version](https://poser.pugx.org/protoqol/prequel/v/stable)](https://packagist.org/packages/protoqol/prequel)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/protoqol/prequel.svg?style=flat)](https://packagist.org/packages/protoqol/prequel)
 ![@Protoqol_XYZ](https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social)
