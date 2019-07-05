@@ -21,10 +21,7 @@
     }
   },
   "require-dev": {
-    "spatie/phpunit-watcher": "^1.8",
-    "phpunit/phpunit": "^8",
     "orchestra/testbench": "^3.8",
-    "phpmd/phpmd": "^2.6"
   },
   "autoload": {
     "psr-4": {
