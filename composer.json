@@ -21,7 +21,7 @@
     }
   },
   "require-dev": {
-    "orchestra/testbench": "^3.8",
+    "orchestra/testbench": "^3.8"
   },
   "autoload": {
     "psr-4": {
