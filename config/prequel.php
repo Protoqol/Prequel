@@ -45,10 +45,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Prequel Database Ignored
+    | Prequel Ignore Database
     |--------------------------------------------------------------------------
     |
-    | Databases that will be ignored during DB discoverinf
+    | Databases that will be ignored during DB discovering
     |
     */
     'ignoreDB' => [
