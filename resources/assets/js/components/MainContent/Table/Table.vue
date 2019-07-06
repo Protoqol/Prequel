@@ -1,5 +1,5 @@
 <template>
-    <div class="table-wrapper" id="top-horizontal-scroll">
+    <div id="top-horizontal-scroll" class="table-wrapper">
         <table v-if="data.length !== 0">
             <thead>
             <tr>
