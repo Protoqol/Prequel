@@ -32,6 +32,15 @@ class DatabaseTraverser
     private $databaseQueries;
 
     /**
+     * List of DBs that will be ignored
+     *
+     * @var array $ignore
+     */
+    private $ignore = [
+        '#mysql50#lost+found'
+    ];
+    
+    /**
      * DatabaseTraverser constructor.
      *
      * @param  string|null  $databaseType  Type of database see $_databaseConn
@@ -59,19 +68,20 @@ class DatabaseTraverser
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
 
-            $collection[$databaseName->pretty] = [
-                "official_name" => $databaseName->official,
-                "pretty_name"   => $databaseName->pretty,
-                "tables"        => $this->getTablesFromDB($databaseName->official),
-            ];
-
-            foreach ($collection[$databaseName->pretty]['tables'] as $table) {
-                $tableName = $databaseName->official.'.'
-                    .$table['name']['official'];
-
-                array_push($flatTableCollection, $tableName);
+            if (array_search($databaseName->official, $this->ignore) === false) {
+                $collection[$databaseName->pretty] = [
+                    "official_name" => $databaseName->official,
+                    "pretty_name"   => $databaseName->pretty,
+                    "tables"        => $this->getTablesFromDB($databaseName->official),
+                ];
+    
+                foreach ($collection[$databaseName->pretty]['tables'] as $table) {
+                    $tableName = $databaseName->official.'.'
+                        .$table['name']['official'];
+    
+                    array_push($flatTableCollection, $tableName);
+                }
             }
-
         }
 
         ksort($collection);
