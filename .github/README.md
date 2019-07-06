@@ -31,7 +31,7 @@ $ php artisan vendor:publish --tag=public
 
 ## Contributing
 
-See [Contributing](.github/CONTRIBUTING.md) to see how you can contribute to Prequel! 
+See [Contributing](CONTRIBUTING.md) to see how you can contribute to Prequel! 
 
 
 ## Contributors
