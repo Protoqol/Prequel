@@ -30,15 +30,6 @@ class DatabaseTraverser
      * @var $databaseQueries
      */
     private $databaseQueries;
-
-    /**
-     * List of DBs that will be ignored
-     *
-     * @var array $ignore
-     */
-    private $ignore = [
-        '#mysql50#lost+found'
-    ];
     
     /**
      * DatabaseTraverser constructor.
@@ -68,7 +59,7 @@ class DatabaseTraverser
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
 
-            if (array_search($databaseName->official, $this->ignore) === false) {
+            if (array_search($databaseName->official, config('prequel.ignoreDB')) === false) {
                 $collection[$databaseName->pretty] = [
                     "official_name" => $databaseName->official,
                     "pretty_name"   => $databaseName->pretty,

@@ -42,4 +42,16 @@ return [
         'USERNAME'   => env('DB_USERNAME', 'homestead'),
         'PASSWORD'   => env('DB_PASSWORD', 'secret'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prequel Database Ignored
+    |--------------------------------------------------------------------------
+    |
+    | Databases that will be ignored during DB discoverinf
+    |
+    */
+    'ignoreDB' => [
+        '#mysql50#lost+found'
+    ],
 ];
