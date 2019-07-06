@@ -1,3 +1,5 @@
+![Laravel Prequel](./assets/prequel.png)
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
