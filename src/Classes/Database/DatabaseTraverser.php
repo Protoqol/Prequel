@@ -30,7 +30,7 @@ class DatabaseTraverser
      * @var $databaseQueries
      */
     private $databaseQueries;
-
+    
     /**
      * DatabaseTraverser constructor.
      *
@@ -59,19 +59,20 @@ class DatabaseTraverser
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
 
-            $collection[$databaseName->pretty] = [
-                "official_name" => $databaseName->official,
-                "pretty_name"   => $databaseName->pretty,
-                "tables"        => $this->getTablesFromDB($databaseName->official),
-            ];
-
-            foreach ($collection[$databaseName->pretty]['tables'] as $table) {
-                $tableName = $databaseName->official.'.'
-                    .$table['name']['official'];
-
-                array_push($flatTableCollection, $tableName);
+            if (array_search($databaseName->official, config('prequel.ignoreDB')) === false) {
+                $collection[$databaseName->pretty] = [
+                    "official_name" => $databaseName->official,
+                    "pretty_name"   => $databaseName->pretty,
+                    "tables"        => $this->getTablesFromDB($databaseName->official),
+                ];
+    
+                foreach ($collection[$databaseName->pretty]['tables'] as $table) {
+                    $tableName = $databaseName->official.'.'
+                        .$table['name']['official'];
+    
+                    array_push($flatTableCollection, $tableName);
+                }
             }
-
         }
 
         ksort($collection);
