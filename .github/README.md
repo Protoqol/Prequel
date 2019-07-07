@@ -1,6 +1,6 @@
 ![Laravel Prequel](./assets/prequel.png)
 
-# Laravel Prequel 0.5.0-beta
+# Laravel Prequel 0.6.2-beta
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/protoqol/prequel.svg?style=flat)](https://packagist.org/packages/protoqol/prequel)
 ![@Protoqol_XYZ](https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social)
@@ -12,7 +12,7 @@ Laravel Prequel is meant to be a database management tool to replace the need fo
 > Clear and concise database management
 
 #### Laravel Prequel (Beta)
-Laravel Prequel has entered v0.5.0-beta, that means I deemed it ready enough to be tested by the public.
+Laravel Prequel has entered/surpassed v0.5.0-beta, that means I deemed it ready enough to be tested by the public.
 But note that a beta release is still a beta release and is not a stable release so it is definitely not recommended to be used in production environments. 
 
 Luckily, Prequel has taken precautions, Prequel automatically disables itself in a production environment as people looking directly into your database is - let's just say - not ideal.
