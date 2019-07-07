@@ -63,10 +63,10 @@ return [
     |
     */
     'ignored' => [
-        // 'information_schema' => [ '*' ],
-        // 'sys' => [ '*' ],
-        // 'performance_schema' => [ '*' ] ,
-        // 'mysql'               => [ '*' ],
-        '#mysql50#lost+found' => [ '*' ]
+        // 'information_schema'  => ['*'],
+        // 'sys'                 => ['*'],
+        // 'performance_schema'  => ['*'],
+        // 'mysql'               => ['*'],
+        '#mysql50#lost+found' => ['*'],
     ],
 ];
