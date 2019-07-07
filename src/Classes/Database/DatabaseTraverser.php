@@ -59,22 +59,26 @@ class DatabaseTraverser
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
 
-            if (array_search($databaseName->official, config('prequel.ignored.databases')) === false) {
-                $collection[$databaseName->pretty] = [
-                    "official_name" => $databaseName->official,
-                    "pretty_name"   => $databaseName->pretty,
-                    "tables"        => $this->getTablesFromDB($databaseName->official),
-                ];
+            if (array_key_exists($databaseName->official, config('prequel.ignored'))) {
+                if (config('prequel.ignored.' . $databaseName->official)[0] === '*') {
+                    continue;
+                }
+            }
+
+            $collection[$databaseName->pretty] = [
+                "official_name" => $databaseName->official,
+                "pretty_name"   => $databaseName->pretty,
+                "tables"        => $this->getTablesFromDB($databaseName->official),
+            ];
     
-                foreach ($collection[$databaseName->pretty]['tables'] as $key => $table) {
-                    $tables_to_ignore = config('prequel.ignored.tables.'.$databaseName->official) ?? [];
-                    if (array_search($table['name']['official'], $tables_to_ignore) === false) {
-                        $tableName = $databaseName->official.'.'
-                        .$table['name']['official'];
-                        array_push($flatTableCollection, $tableName);
-                    } else {
-                        unset($collection[$databaseName->pretty]['tables'][$key]);
-                    }
+            foreach ($collection[$databaseName->pretty]['tables'] as $key => $table) {
+                $tables_to_ignore = config('prequel.ignored.'.$databaseName->official) ?? [];
+                if (array_search($table['name']['official'], $tables_to_ignore) === false) {
+                    $tableName = $databaseName->official.'.'
+                    .$table['name']['official'];
+                    array_push($flatTableCollection, $tableName);
+                } else {
+                    unset($collection[$databaseName->pretty]['tables'][$key]);
                 }
             }
         }
