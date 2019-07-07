@@ -3,7 +3,7 @@
 ## Contribution guidelines
 
 - When contributing to this repository, please first discuss the change you wish to make via an issue!
-- See [Pull Request Template](./github/pull_request_template.md) to see what your pull request should look like.
+- See [Pull Request Template](./pull_request_template.md) to see what your pull request should look like.
 - Use concise commit messages, e.g. `[FIX] Fixed x not doing b`.
 - Use the [PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).
 - When you have made changes to .vue files, run `$ npm run prod` to create a new build.
@@ -28,4 +28,4 @@
 5. Create a new branch with a descriptive name, no master branch!
 6. When making changes to the front-end (.vue files), run `$ npm run watch` to create a hot-reloading server where you can see your changes live. 
 7. When done with your feature/fix and you have made changes to any .vue file, run `$ npm run prod` to create a final build. 
-8. You're ready to create a pull request! See [Pull Request Template](./github/pull_request_template.md) for information.
+8. You're ready to create a pull request! See [Pull Request Template](./pull_request_template.md) for information.
