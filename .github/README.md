@@ -17,6 +17,7 @@ But note that a beta release is still a beta release and is not a stable release
 
 Luckily, Prequel has taken precautions, Prequel automatically disables itself in a production environment as people looking directly into your database is - let's just say - not ideal.
 
+The beta currently supports `mysql` and `pgsql`.
 
 ## Installation (the beta release way)
 ###### To install follow the instructions below.
