@@ -59,18 +59,22 @@ class DatabaseTraverser
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
 
-            if (array_search($databaseName->official, config('prequel.ignoreDB')) === false) {
+            if (array_search($databaseName->official, config('prequel.ignored.databases')) === false) {
                 $collection[$databaseName->pretty] = [
                     "official_name" => $databaseName->official,
                     "pretty_name"   => $databaseName->pretty,
                     "tables"        => $this->getTablesFromDB($databaseName->official),
                 ];
     
-                foreach ($collection[$databaseName->pretty]['tables'] as $table) {
-                    $tableName = $databaseName->official.'.'
+                foreach ($collection[$databaseName->pretty]['tables'] as $key => $table) {
+                    $tables_to_ignore = config('prequel.ignored.tables.'.$databaseName->official) ?? [];
+                    if (array_search($table['name']['official'], $tables_to_ignore) === false) {
+                        $tableName = $databaseName->official.'.'
                         .$table['name']['official'];
-    
-                    array_push($flatTableCollection, $tableName);
+                        array_push($flatTableCollection, $tableName);
+                    } else {
+                        unset($collection[$databaseName->pretty]['tables'][$key]);
+                    }
                 }
             }
         }

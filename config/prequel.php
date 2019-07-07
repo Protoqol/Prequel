@@ -45,13 +45,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Prequel Ignore Database
+    | Prequel ignored databases and tables
     |--------------------------------------------------------------------------
     |
-    | Databases that will be ignored during DB discovering
+    | Databases and tables that will be ignored during database discovery
     |
     */
-    'ignoreDB' => [
-        '#mysql50#lost+found'
+    'ignored' => [
+        'databases' => [
+            // Ignored databases
+            // 'information_schema',
+            // 'sys',
+            // 'performance_schema',
+            // 'mysql',
+            '#mysql50#lost+found',
+        ],
+        'tables' => [
+            // 'database' => ['table']
+        ]
     ],
 ];
