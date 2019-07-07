@@ -68,5 +68,6 @@ return [
         // 'performance_schema'  => ['*'],
         // 'mysql'               => ['*'],
         '#mysql50#lost+found' => ['*'],
+        'bookeep' => ['empty_table']
     ],
 ];

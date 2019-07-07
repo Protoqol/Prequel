@@ -12665,7 +12665,23 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Accordion: _Accordion__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['tableData', 'readability']
+  props: ['tableData', 'readability'],
+  methods: {
+    /**
+     * Get number of tables
+     * @param db
+     * @returns {number|*}
+     */
+    getNoTables: function getNoTables(db) {
+      // Array is countable, and should therefore work with `.length`
+      if (!isNaN(db.tables.length)) {
+        return db.tables.length;
+      } // If `.length` did not work we can safely assume it's an object.
+
+
+      return Object.keys(db.tables).length;
+    }
+  }
 });
 
 /***/ }),
@@ -58576,7 +58592,7 @@ var render = function() {
                     _c("span", { staticClass: "text-xs font-normal" }, [
                       _vm._v(
                         "\n                        (" +
-                          _vm._s(database.tables.length) +
+                          _vm._s(_vm.getNoTables(database)) +
                           ")\n                    "
                       )
                     ])
