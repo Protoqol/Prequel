@@ -45,13 +45,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Prequel Database Ignored
+    | Prequel ignored databases and tables
     |--------------------------------------------------------------------------
     |
-    | Databases that will be ignored during DB discoverinf
+    | Databases and tables that will be ignored during database discovery
+    |
+    | Example to ignore 'foo_database.users' and 'foo_database.password_resets':
+    |
+    |  'foo_database' => [
+    |         'users',
+    |         'password_resets'
+    |  ]
+    |
+    | Example to ignore the entire database using a wildcard
+    |
+    | 'foo_database' => [ '*' ]
     |
     */
-    'ignoreDB' => [
-        '#mysql50#lost+found'
+    'ignored' => [
+        // 'information_schema' => [ '*' ],
+        // 'sys' => [ '*' ],
+        // 'performance_schema' => [ '*' ] ,
+        // 'mysql'               => [ '*' ],
+        '#mysql50#lost+found' => [ '*' ]
     ],
 ];
