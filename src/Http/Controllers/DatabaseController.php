@@ -127,7 +127,7 @@ class DatabaseController extends Controller
 
         return $this->model
             ? $this->model->where($column, $queryType, $value)
-                ->paginate(100)
+                ->paginate(config('prequel.paginate-per-page'))
             : DB::table($this->qualifiedName)
                 ->where($column, $queryType, $value)->paginate(config('prequel.paginate-per-page'));
     }
