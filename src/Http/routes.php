@@ -26,6 +26,7 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
                 );
 
                 // Get count of total records in table
+                // Note: Unused as of yet.
                 Route::get(
                     'count/{database}/{table}',
                     'DatabaseController@countTableRecords'

@@ -73,7 +73,8 @@ class DatabaseController extends Controller
         ) {
             $tableData = $this->model->paginate(config('prequel.pagination'));
         } else {
-            $tableData = DB::table($this->qualifiedName)->paginate(config('prequel.pagination'));
+            $tableData = DB::table($this->qualifiedName)
+                ->paginate(config('prequel.pagination'));
         }
 
         return [
@@ -103,30 +104,24 @@ class DatabaseController extends Controller
     }
 
     /**
-     * Try to find input in each column in table.
+     * Find given value in given column with given operator.
      *
      * @TODO Clean up, this is nowhere near production ready
      * @return mixed
      */
     public function findInTable()
     {
-        $column    = Route::current()->parameter('column');
-        $value     = Route::current()->parameter('value');
-        $queryType = Route::current()->parameter('type');
+        $column    = (string)Route::current()->parameter('column');
+        $value     = (string)Route::current()->parameter('value');
+        $queryType = (string)Route::current()->parameter('type');
 
-        if ($queryType === 'LIKE') {
-            return $this->model
-                ? $this->model->where($column, 'LIKE', '%'.$value.'%')
-                    ->paginate(config('prequel.pagination'))
-                : DB::table($this->qualifiedName)
-                    ->where($column, 'LIKE', '%'.$value.'%')
-                    ->paginate(config('prequel.pagination'));
-        }
+        $value = ($queryType === 'LIKE') ? '%'.$value.'%' : $value;
 
         return $this->model
             ? $this->model->where($column, $queryType, $value)
                 ->paginate(config('prequel.pagination'))
             : DB::table($this->qualifiedName)
-                ->where($column, $queryType, $value)->paginate(config('prequel.pagination'));
+                ->where($column, $queryType, $value)
+                ->paginate(config('prequel.pagination'));
     }
 }

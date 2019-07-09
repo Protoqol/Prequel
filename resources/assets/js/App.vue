@@ -186,6 +186,9 @@
         this.table.search.column = e.target.id;
       },
 
+      /**
+       | Enhance/disable readability
+       */
       readabilityEnhancer: function() {
         this.view.readability = (!this.view.readability);
         window.localStorage.setItem('readability', (!this.view.readability) + '');
@@ -207,6 +210,7 @@
 
       /**
        | Open active table in menu, and set it to active. Purely an UI/UX addition.
+       | @TODO When tables with same name exist in different databases, resolve to get correct one.
        */
       setActiveTable: function() {
         if (this.view.params.has('database') && this.view.params.has('table')) {
@@ -373,7 +377,7 @@
 
         try {
           result = await axios.get(
-              `/database/find/${this.table.database}/${this.table.table}/${column}/${value}/${queryType}`);
+              `/database/find/${this.table.database}/${this.table.table}/${column}/${queryType}/${value}`);
         }
         catch (err) {
           error = err;
