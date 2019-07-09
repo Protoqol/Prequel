@@ -3,9 +3,9 @@
   
 # Laravel Prequel 0.6.2-beta  
 <p align="center">
-	<a href="https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master">
-			<img src="https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?		b=master"/>	
-	</a>
+    <a href="https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master">
+	<img src="https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?=master"/>	
+    </a>
     <a href="https://github.com/protoqol/prequel/graphs/contributors" alt="Contributors">
         <img src="https://img.shields.io/github/contributors/protoqol/prequel.svg" />
      </a>
