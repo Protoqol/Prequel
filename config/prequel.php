@@ -12,7 +12,7 @@ return [
     | inside your database besides you or your dev team (obviously).
     |
     */
-    'enabled' => env('PREQUEL_ENABLED', true),
+    'enabled'    => env('PREQUEL_ENABLED', true),
 
 
     /*
@@ -24,7 +24,7 @@ return [
     | Prequel API routes.
     |
     */
-    'path'    => 'prequel',
+    'path'       => 'prequel',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | Database configuration.
     |
     */
-    'DB'      => [
+    'DB'         => [
         'CONNECTION' => env('DB_CONNECTION', 'mysql'),
         'HOST'       => env('DB_HOST', '127.0.0.1'),
         'PORT'       => env('DB_PORT', '3306'),
@@ -62,7 +62,7 @@ return [
     | 'foo_database' => [ '*' ]
     |
     */
-    'ignored' => [
+    'ignored'    => [
         // 'information_schema'  => ['*'],
         // 'sys'                 => ['*'],
         // 'performance_schema'  => ['*'],

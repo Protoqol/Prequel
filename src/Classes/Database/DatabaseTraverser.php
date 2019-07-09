@@ -30,7 +30,7 @@ class DatabaseTraverser
      * @var $databaseQueries
      */
     private $databaseQueries;
-    
+
     /**
      * DatabaseTraverser constructor.
      *
@@ -59,8 +59,12 @@ class DatabaseTraverser
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object) $value['name'];
 
-            if (array_key_exists($databaseName->official, config('prequel.ignored'))) {
-                if (config('prequel.ignored.' . $databaseName->official)[0] === '*') {
+            if (array_key_exists($databaseName->official,
+                config('prequel.ignored'))
+            ) {
+                if (config('prequel.ignored.'.$databaseName->official)[0]
+                    === '*'
+                ) {
                     continue;
                 }
             }
@@ -70,12 +74,17 @@ class DatabaseTraverser
                 "pretty_name"   => $databaseName->pretty,
                 "tables"        => $this->getTablesFromDB($databaseName->official),
             ];
-    
-            foreach ($collection[$databaseName->pretty]['tables'] as $key => $table) {
-                $tables_to_ignore = config('prequel.ignored.'.$databaseName->official) ?? [];
-                if (array_search($table['name']['official'], $tables_to_ignore) === false) {
+
+            foreach (
+                $collection[$databaseName->pretty]['tables'] as $key => $table
+            ) {
+                $tablesToIgnore = config('prequel.ignored.'
+                        .$databaseName->official) ?? [];
+                if (!array_search($table['name']['official'],
+                    $tablesToIgnore)
+                ) {
                     $tableName = $databaseName->official.'.'
-                    .$table['name']['official'];
+                        .$table['name']['official'];
                     array_push($flatTableCollection, $tableName);
                 } else {
                     unset($collection[$databaseName->pretty]['tables'][$key]);
@@ -100,6 +109,10 @@ class DatabaseTraverser
      */
     public function getModel(?string $tableName)
     {
+        if (!$tableName) {
+            return false;
+        }
+
         $model = 'App\\'.Str::studly(Str::singular($tableName));
         if (class_exists($model)) {
             return new $model;
