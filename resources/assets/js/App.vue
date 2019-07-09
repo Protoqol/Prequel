@@ -15,7 +15,7 @@
                 :loading="table.loading"
                 :tableLoading="table.tableLoading"
                 :searchColumn="table.search.column"
-                :numberOfPages="table.numberOfRecords"
+                :numberOfRecords="table.numberOfRecords"
                 @searchInTable="searchInTable($event)"
                 @resetSearchInTable="checkUrlParameters"
                 @shouldBeLoading="table.loading = true"

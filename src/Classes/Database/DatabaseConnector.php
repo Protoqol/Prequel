@@ -30,8 +30,8 @@ class DatabaseConnector
     private function getPdo()
     {
         $dsn  = $this->constructDsn();
-        $user = config('prequel.DB.USERNAME');
-        $pass = config('prequel.DB.PASSWORD');
+        $user = config('prequel.database.username');
+        $pass = config('prequel.database.password');
 
         return new PDO($dsn, $user, $pass);
     }
@@ -41,10 +41,11 @@ class DatabaseConnector
      */
     private function constructDsn()
     {
-        $connection   = config('prequel.DB.CONNECTION');
-        $databaseName = config('prequel.DB.DATABASE');
-        $host         = config('prequel.DB.HOST');
+        $connection = config('prequel.database.connection');
+        $database   = config('prequel.database.database');
+        $host       = config('prequel.database.host');
+        $port       = (int)config('prequel.database.port');
 
-        return $connection.':dbname='.$databaseName.';host='.$host;
+        return $connection.':dbname='.$database.';host='.$host.';port='.$port;
     }
 }
