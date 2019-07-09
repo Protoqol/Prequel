@@ -69,4 +69,15 @@ return [
         // 'mysql'               => ['*'],
         '#mysql50#lost+found' => ['*'],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prequel pagination per page
+    |--------------------------------------------------------------------------
+    |
+    | When Prequel retrieves paginated information, this is the number of
+    | records that will be in each page.
+    |
+    */
+    'pagination' => 100,
 ];
