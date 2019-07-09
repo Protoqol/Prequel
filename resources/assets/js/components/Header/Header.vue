@@ -32,7 +32,7 @@
                 <h1 v-if="activeTable">
                     <span v-if="!tableLoading" id="header-table-message">
                         <font-awesome-icon class="fa" icon="table"/>
-                        {{activeTable}} <small>({{ numberOfPages }} records)</small>
+                        {{ activeTable }} <small>({{ numberOfRecords }} records)</small>
                     </span>
                     <img v-else width="20" height="20" :src="$root.prequel.asset.loader" alt="Loading table data...">
                 </h1>
@@ -108,7 +108,7 @@
       'tableLoading',
       'tableStructure',
       'searchColumn',
-      'numberOfPages',
+      'numberOfRecords',
     ],
 
     data() {

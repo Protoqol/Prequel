@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
