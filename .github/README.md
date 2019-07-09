@@ -86,7 +86,7 @@ That configuration file looks something like this.
 */
 'DB' => [  
   'CONNECTION' => env('DB_CONNECTION', 'mysql'),  
-  'HOST' 	   => env('DB_HOST', '127.0.0.1'),  
+  'HOST'       => env('DB_HOST', '127.0.0.1'),  
   'PORT'       => env('DB_PORT', '3306'),  
   'DATABASE'   => env('DB_DATABASE', 'homestead'),  
   'USERNAME'   => env('DB_USERNAME', 'homestead'),  
