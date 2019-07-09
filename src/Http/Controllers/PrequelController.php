@@ -25,10 +25,10 @@ class PrequelController extends Controller
         return view('Prequel::main', [
             'env'  => [
                 'connection' => config('database.default'),
-                'database'   => config('database.connections.mysql.database'),
-                'host'       => config('database.connections.mysql.host'),
-                'port'       => config('database.connections.mysql.port'),
-                'user'       => config('database.connections.mysql.username'),
+                'database'   => config('prequel.DB.CONNECTION'),
+                'host'       => config('prequel.DB.HOST'),
+                'port'       => config('prequel.DB.PORT'),
+                'user'       => config('prequel.DB.USERNAME'),
             ],
             'data' => [
                 'collection'          => $databaseData->collection,

@@ -18,7 +18,12 @@
                 </div>
                 <div class="header-left-connection">
                     <p title="Current connection">
-                        {{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
+                        <span :title="'User: ' + env.user" v-html="lenCheck(env.user)"></span>@<span
+                            :title="'Host: ' + env.host"
+                            v-html="lenCheck(env.host)"></span>:<span
+                            :title="'Port: ' + env.port" v-html="lenCheck(env.port)"></span>/<span
+                            :title="'Database: ' + env.database"
+                            v-html="lenCheck(env.database)"></span>
                     </p>
                 </div>
             </div>
@@ -144,6 +149,17 @@
     },
 
     methods: {
+
+      /**
+       | Check length and cut down if too long.
+       */
+      lenCheck: function(val) {
+        val = val + '';
+        if (val.length > 7) {
+          return val.substr(0, 7) + '...';
+        }
+        return val;
+      },
 
       /**
        | This is not working as intended. @TODO
