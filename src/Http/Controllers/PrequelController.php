@@ -24,8 +24,8 @@ class PrequelController extends Controller
 
         return view('Prequel::main', [
             'env'  => [
-                'connection' => config('database.default'),
-                'database'   => config('prequel.DB.CONNECTION'),
+                'connection' => config('prequel.DB.CONNECTION'),
+                'database'   => config('prequel.DB.DATABASE'),
                 'host'       => config('prequel.DB.HOST'),
                 'port'       => config('prequel.DB.PORT'),
                 'user'       => config('prequel.DB.USERNAME'),

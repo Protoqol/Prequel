@@ -45,11 +45,11 @@ class Authorised
                 'error_detailed' => $this->databaseConnectionCheck()->detailed,
                 'http_code'      => 503,
                 'env'            => [
-                    'connection' => config('app.default'),
-                    'database'   => config('app.mysql.database'),
-                    'host'       => config('app.mysql.host'),
-                    'port'       => config('app.mysql.port'),
-                    'user'       => config('app.mysql.user'),
+                    'connection' => config('prequel.DB.CONNECTION'),
+                    'database'   => config('prequel.DB.DATABASE'),
+                    'host'       => config('prequel.DB.HOST'),
+                    'port'       => config('prequel.DB.PORT'),
+                    'user'       => config('prequel.DB.USERNAME'),
                 ],
             ]);
         }
