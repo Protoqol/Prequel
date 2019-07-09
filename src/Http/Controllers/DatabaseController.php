@@ -76,7 +76,6 @@ class DatabaseController extends Controller
             $tableData = DB::table($this->qualifiedName)->paginate(config('prequel.pagination'));
         }
 
-//        dd($tableData);
         return [
             "table"     => $this->qualifiedName,
             "structure" => app(DatabaseTraverser::class)->getTableStructure(
@@ -106,7 +105,6 @@ class DatabaseController extends Controller
     /**
      * Try to find input in each column in table.
      *
-     * @TODO Prefetch if possible with ID
      * @TODO Clean up, this is nowhere near production ready
      * @return mixed
      */
