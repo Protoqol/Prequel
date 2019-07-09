@@ -47,7 +47,7 @@ class DatabaseTraverser
     public function __construct(?string $databaseType = null)
     {
         $this->databaseConn    = $databaseType
-            ?: config('prequel.DB.CONNECTION');
+            ?: config('prequel.database.connection');
         $this->databaseQueries = new SequelAdapter($this->databaseConn);
         $this->connection      = (new DatabaseConnector())->getConnection();
     }

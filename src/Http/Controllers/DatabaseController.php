@@ -89,6 +89,7 @@ class DatabaseController extends Controller
 
     /**
      * Get count of rows in table
+     * Not yet used.
      *
      * @return array
      */

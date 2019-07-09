@@ -50,6 +50,7 @@ $ php artisan vendor:publish --tag=public
 ## Configuration
 You might have noticed that, while publishing a config file appeared under `config/prequel.php`. 
 That configuration file looks something like this.
+> Note that you can define `PREQUEL_ENABLED` in your .env file.
 ```php
 [  
 
@@ -70,7 +71,7 @@ That configuration file looks something like this.
     | Prequel Path : string
     |--------------------------------------------------------------------------  
     |  
-    | The path where Prequel will be residing. Note that this does not affect  
+    | The path where Prequel will be residing. Note that this does not affect 
     | Prequel API routes.  
     |  
     */
@@ -84,13 +85,13 @@ That configuration file looks something like this.
     | This enables you to fully configure your database-connection for Prequel.
     |  
     */
-    'DB' => [  
-      'CONNECTION' => env('DB_CONNECTION', 'mysql'),  
-      'HOST'       => env('DB_HOST', '127.0.0.1'),  
-      'PORT'       => env('DB_PORT', '3306'),  
-      'DATABASE'   => env('DB_DATABASE', 'homestead'),  
-      'USERNAME'   => env('DB_USERNAME', 'homestead'),  
-      'PASSWORD'   => env('DB_PASSWORD', 'secret'),  
+    'database' => [  
+      'connection' => env('DB_CONNECTION', 'mysql'),  
+      'host'       => env('DB_HOST', '127.0.0.1'),  
+      'port'       => env('DB_PORT', '3306'),  
+      'database'   => env('DB_DATABASE', 'homestead'),  
+      'username'   => env('DB_USERNAME', 'homestead'),  
+      'password'   => env('DB_PASSWORD', 'secret'),  
      ],  
      
     /*  
@@ -120,7 +121,6 @@ That configuration file looks something like this.
     |
     */
     'pagination' => 100,
-
 ];
 ```
   

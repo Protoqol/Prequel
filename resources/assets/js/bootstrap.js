@@ -1,3 +1,5 @@
+import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
+
 window._ = require('lodash');
 
 window.v = window.vividLog;
@@ -14,8 +16,8 @@ window.axios.defaults.baseURL                            = `${window.location.or
 /**
  * Fontawesome
  */
-import Vue               from 'vue';
-import {library}         from '@fortawesome/fontawesome-svg-core';
+import Vue                     from 'vue';
+import {library}               from '@fortawesome/fontawesome-svg-core';
 import {
   faAdjust,
   faAsterisk,
@@ -29,7 +31,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 library.add(faDatabase, faTable, faChevronCircleUp, faSearchPlus, faTools,
-    faGlasses, faAsterisk, faAdjust);
+    faGlasses, faAsterisk, faAdjust, faExclamationTriangle);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

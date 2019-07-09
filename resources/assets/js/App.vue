@@ -22,7 +22,7 @@
                 @enhanceReadability="readabilityEnhancer"
                 @collapseSideBar="sideBarCollapseHandler"/>
 
-        <Paginator v-if="table.currentActiveName.length !== 0"
+        <Paginator v-if="table.currentActiveName.length !== 0 && !prequel.error"
                    :currentPage="table.pagination.currentPage"
                    :numberOfPages="table.pagination.numberOfPages"
                    @pageChange="changePage($event)"/>
@@ -145,7 +145,9 @@
     },
 
     mounted() {
-      this.checkUrlParameters();
+      if (!this.prequel.error) {
+        this.checkUrlParameters();
+      }
     },
 
     methods: {

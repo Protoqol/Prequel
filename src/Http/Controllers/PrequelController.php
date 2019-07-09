@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
@@ -21,15 +20,15 @@ class PrequelController extends Controller
      */
     public function index()
     {
-        $databaseData = (object) app(DatabaseTraverser::class)->getAll();
+        $databaseData = (object)app(DatabaseTraverser::class)->getAll();
 
         return view('Prequel::main', [
             'env'  => [
-                'connection' => config('prequel.DB.CONNECTION'),
-                'database'   => config('prequel.DB.DATABASE'),
-                'host'       => config('prequel.DB.HOST'),
-                'port'       => config('prequel.DB.PORT'),
-                'user'       => config('prequel.DB.USERNAME'),
+                'connection' => config('prequel.database.connection'),
+                'database'   => config('prequel.database.database'),
+                'host'       => config('prequel.database.host'),
+                'port'       => config('prequel.database.port'),
+                'user'       => config('prequel.database.username'),
             ],
             'data' => [
                 'collection'          => $databaseData->collection,
