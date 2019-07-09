@@ -80,5 +80,5 @@ return [
     | records that will be in each page.
     |
     */
-    'paginate-per-page' => 100,
+    'pagination' => 100,
 ];

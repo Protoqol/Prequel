@@ -71,9 +71,9 @@ class DatabaseController extends Controller
             && $this->databaseName
             === config('database.connections.mysql.database')
         ) {
-            $tableData = $this->model->paginate(config('prequel.paginate-per-page'));
+            $tableData = $this->model->paginate(config('prequel.pagination'));
         } else {
-            $tableData = DB::table($this->qualifiedName)->paginate(config('prequel.paginate-per-page'));
+            $tableData = DB::table($this->qualifiedName)->paginate(config('prequel.pagination'));
         }
 
 //        dd($tableData);
@@ -119,16 +119,16 @@ class DatabaseController extends Controller
         if ($queryType === 'LIKE') {
             return $this->model
                 ? $this->model->where($column, 'LIKE', '%'.$value.'%')
-                    ->paginate(config('prequel.paginate-per-page'))
+                    ->paginate(config('prequel.pagination'))
                 : DB::table($this->qualifiedName)
                     ->where($column, 'LIKE', '%'.$value.'%')
-                    ->paginate(config('prequel.paginate-per-page'));
+                    ->paginate(config('prequel.pagination'));
         }
 
         return $this->model
             ? $this->model->where($column, $queryType, $value)
-                ->paginate(config('prequel.paginate-per-page'))
+                ->paginate(config('prequel.pagination'))
             : DB::table($this->qualifiedName)
-                ->where($column, $queryType, $value)->paginate(config('prequel.paginate-per-page'));
+                ->where($column, $queryType, $value)->paginate(config('prequel.pagination'));
     }
 }
