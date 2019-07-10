@@ -2,20 +2,11 @@
 
 declare(strict_types = 1);
 
-/**
- * Protoqol\Prequel\PrequelServiceProvider
- */
-
 namespace Protoqol\Prequel;
 
 use Illuminate\Support\ServiceProvider;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
-/**
- * Class PrequelServiceProvider
- *
- * @package Protoqol\Prequel
- */
 class PrequelServiceProvider extends ServiceProvider
 {
 
@@ -23,20 +14,17 @@ class PrequelServiceProvider extends ServiceProvider
      * Register services.
      *
      * @return void
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function register()
     {
-        $this->app->make('Protoqol\Prequel\Http\Controllers\PrequelController');
+        $this->app->singleton(DatabaseTraverser::class, function () {
+            return new DatabaseTraverser();
+        });
 
-        $this->app->singleton(
-            DatabaseTraverser::class,
-            function () {
-                return new DatabaseTraverser();
-            }
+        $this->mergeConfigFrom(
+            dirname(__DIR__).'/config/prequel.php',
+            'prequel'
         );
-
-        $this->loadViewsFrom(dirname(__DIR__).'/resources/views', 'Prequel');
     }
 
     /**
@@ -46,23 +34,16 @@ class PrequelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(dirname(__DIR__).'/resources/views', 'Prequel');
 
         $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
 
         $this->publishes([
-            dirname(__DIR__)
-            .'/config/prequel.php' => config_path('prequel.php'),
-        ],
-	'config');
-
-        $this->mergeConfigFrom(
-            dirname(__DIR__).'/config/prequel.php',
-            'prequel'
-        );
+            dirname(__DIR__).'/config/prequel.php' => config_path('prequel.php'),
+        ], 'config');
 
         $this->publishes([
-                dirname(__DIR__).'/public' => public_path('vendor/prequel'),
-            ],
-        'public');
+            dirname(__DIR__).'/public' => public_path('vendor/prequel'),
+        ], 'public');
     }
 }

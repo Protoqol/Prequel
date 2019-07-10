@@ -1,5 +1,5 @@
 <template>
-    <div class="table-wrapper">
+    <div id="top-horizontal-scroll" class="table-wrapper">
         <table v-if="data.length !== 0">
             <thead>
             <tr>
@@ -149,6 +149,10 @@
 </script>
 
 <style lang="scss">
+    #top-horizontal-scroll {
+        transform: rotateX(180deg);
+    }
+
     .ellipsis {
         width: 250px;
         max-width: 250px;
@@ -230,6 +234,7 @@
                     @apply bg-gray-400;
                 }
             }
+            transform: rotateX(180deg);
         }
 
     }

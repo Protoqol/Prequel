@@ -15,6 +15,8 @@
 
 <style lang="scss">
     .empty-table-wrapper {
+        transform: rotateX(180deg);
+
         h1 {
             @apply my-4;
             @apply text-gray-700;

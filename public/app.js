@@ -12805,7 +12805,23 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Accordion: _Accordion__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['tableData', 'readability']
+  props: ['tableData', 'readability'],
+  methods: {
+    /**
+     * Get number of tables
+     * @param db
+     * @returns {number|*}
+     */
+    getNoTables: function getNoTables(db) {
+      // Array is countable, and should therefore work with `.length`
+      if (!isNaN(db.tables.length)) {
+        return db.tables.length;
+      } // If `.length` did not work we can safely assume it's an object.
+
+
+      return Object.keys(db.tables).length;
+    }
+  }
 });
 
 /***/ }),
@@ -12936,7 +12952,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".ellipsis {\n  width: 250px;\n  max-width: 250px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  transition: all 0.5s ease;\n}\n.table-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  background-color: #edf2f7;\n}\n.table-wrapper table thead {\n  border-bottom-width: 1px;\n  border-radius: 0.25rem;\n  background-color: #cbd5e0;\n}\n.table-wrapper table thead .table-th {\n  border-width: 1px;\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th:hover {\n  background-color: #e2e8f0;\n}\n.table-wrapper table thead .table-th-actions {\n  border-width: 1px;\n  padding: 0.5rem;\n  font-size: 0.875rem;\n  color: #2d3748;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th-actions:hover {\n  background-color: #e2e8f0;\n  border-width: 1px;\n}\n.table-wrapper table .table-row:nth-child(odd) {\n  background-color: #f7fafc;\n}\n.table-wrapper table .table-row:nth-child(even) {\n  background-color: #edf2f7;\n}\n.table-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table .table-td:hover {\n  background-color: #e2e8f0;\n}\n.table-wrapper table .table-td-actions {\n  color: #4a5568;\n  width: 2rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table .table-td-actions:hover {\n  background-color: #cbd5e0;\n}", ""]);
+exports.push([module.i, "#top-horizontal-scroll {\n  transform: rotateX(180deg);\n}\n.ellipsis {\n  width: 250px;\n  max-width: 250px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  transition: all 0.5s ease;\n}\n.table-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  background-color: #edf2f7;\n  transform: rotateX(180deg);\n}\n.table-wrapper table thead {\n  border-bottom-width: 1px;\n  border-radius: 0.25rem;\n  background-color: #cbd5e0;\n}\n.table-wrapper table thead .table-th {\n  border-width: 1px;\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th:hover {\n  background-color: #e2e8f0;\n}\n.table-wrapper table thead .table-th-actions {\n  border-width: 1px;\n  padding: 0.5rem;\n  font-size: 0.875rem;\n  color: #2d3748;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th-actions:hover {\n  background-color: #e2e8f0;\n  border-width: 1px;\n}\n.table-wrapper table .table-row:nth-child(odd) {\n  background-color: #f7fafc;\n}\n.table-wrapper table .table-row:nth-child(even) {\n  background-color: #edf2f7;\n}\n.table-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table .table-td:hover {\n  background-color: #e2e8f0;\n}\n.table-wrapper table .table-td-actions {\n  color: #4a5568;\n  width: 2rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table .table-td-actions:hover {\n  background-color: #cbd5e0;\n}", ""]);
 
 // exports
 
@@ -12955,7 +12971,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".empty-table-wrapper h1 {\n  margin-top: 1rem;\n  margin-bottom: 1rem;\n  color: #4a5568;\n  width: 100%;\n  text-align: center;\n}", ""]);
+exports.push([module.i, ".empty-table-wrapper {\n  transform: rotateX(180deg);\n}\n.empty-table-wrapper h1 {\n  margin-top: 1rem;\n  margin-bottom: 1rem;\n  color: #4a5568;\n  width: 100%;\n  text-align: center;\n}", ""]);
 
 // exports
 
@@ -58254,7 +58270,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "table-wrapper" },
+    { staticClass: "table-wrapper", attrs: { id: "top-horizontal-scroll" } },
     [
       _vm.data.length !== 0
         ? _c("table", [
@@ -58735,7 +58751,7 @@ var render = function() {
                     _c("span", { staticClass: "text-xs font-normal" }, [
                       _vm._v(
                         "\n                        (" +
-                          _vm._s(database.tables.length) +
+                          _vm._s(_vm.getNoTables(database)) +
                           ")\n                    "
                       )
                     ])

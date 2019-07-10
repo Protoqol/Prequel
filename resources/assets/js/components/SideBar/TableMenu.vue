@@ -12,7 +12,7 @@
                         {{ readability ? database.pretty_name : database.official_name }}
 
                         <span class="text-xs font-normal">
-                            ({{ database.tables.length }})
+                            ({{ getNoTables(database) }})
                         </span>
                     </li>
                 </div>
@@ -51,6 +51,24 @@
     name      : 'TableMenu',
     components: {Accordion},
     props     : ['tableData', 'readability'],
+
+    methods: {
+
+      /**
+       * Get number of tables
+       * @param db
+       * @returns {number|*}
+       */
+      getNoTables: function(db) {
+        // Array is countable, and should therefore work with `.length`
+        if (!isNaN(db.tables.length)) {
+          return db.tables.length;
+        }
+
+        // If `.length` did not work we can safely assume it's an object.
+        return Object.keys(db.tables).length;
+      },
+    },
   };
 </script>
 
