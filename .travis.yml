@@ -9,11 +9,16 @@ env:
   - LARAVEL_VERSION=5.5.*
   - LARAVEL_VERSION=5.6.*
   - LARAVEL_VERSION=5.7.*
+  - LARAVEL_VERSION=5.8.*
 matrix:
   fast_finish: true
   exclude:
     - php: '7.0'
       env: LARAVEL_VERSION=5.6.*
+    - php: '7.0'
+      env: LARAVEL_VERSION=5.7.*;
+    - php: '7.0'
+      env: LARAVEL_VERSION=5.8.*
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
