@@ -67,8 +67,10 @@ class DatabaseTraverser
         foreach ($this->getAllDatabases() as $value) {
             $databaseName = (object)$value['name'];
 
-            if (array_key_exists($databaseName->official,
-                config('prequel.ignored'))) {
+            if (array_key_exists(
+                $databaseName->official,
+                config('prequel.ignored')
+            )) {
                 if (config('prequel.ignored.'.$databaseName->official)[0]
                     === '*') {
                     continue;
@@ -86,7 +88,6 @@ class DatabaseTraverser
             ) {
                 $tablesToIgnore = config('prequel.ignored.'
                         .$databaseName->official) ?? [];
-
                 if (!array_search(
                     $table['name']['official'],
                     $tablesToIgnore
