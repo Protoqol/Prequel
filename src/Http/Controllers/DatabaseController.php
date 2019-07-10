@@ -50,9 +50,9 @@ class DatabaseController extends Controller
     /**
      * DatabaseActionController's constructor
      *
-     * @param  \Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest  $request
+     * @param  \Illuminate\Http\Request|\Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest  $request
      */
-    public function __construct(PrequelDatabaseRequest $request)
+    public function __construct($request)
     {
         $this->tableName     = $request->table;
         $this->databaseName  = $request->database;
