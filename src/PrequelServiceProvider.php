@@ -6,7 +6,13 @@ namespace Protoqol\Prequel;
 
 use Illuminate\Support\ServiceProvider;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
+use Protoqol\Prequel\Commands;
 
+/**
+ * Class PrequelServiceProvider
+ *
+ * @package Protoqol\Prequel
+ */
 class PrequelServiceProvider extends ServiceProvider
 {
 
@@ -39,11 +45,17 @@ class PrequelServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
 
         $this->publishes([
-            dirname(__DIR__).'/config/prequel.php' => config_path('prequel.php'),
-        ], 'config');
+            dirname(__DIR__)
+            .'/config/prequel.php' => config_path('prequel.php'),
+        ], 'prequel-config');
 
         $this->publishes([
             dirname(__DIR__).'/public' => public_path('vendor/prequel'),
-        ], 'public');
+        ], 'prequel-assets');
+
+        $this->commands([
+            Commands\UpdateCommand::class,
+            Commands\InstallCommand::class,
+        ]);
     }
 }

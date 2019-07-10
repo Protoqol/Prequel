@@ -1,25 +1,25 @@
 
 ![Laravel Prequel](./assets/prequel.png)  
   
-# Laravel Prequel 0.6.2-beta  
+# Laravel Prequel x.x.x-beta tbd
 <p align="center">
     <a href="https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master">
-	<img src="https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?=master"/>	
+	    <img src="https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?=master"/>	
     </a>
     <a href="https://github.com/protoqol/prequel/graphs/contributors" alt="Contributors">
         <img src="https://img.shields.io/github/contributors/protoqol/prequel.svg" />
-     </a>
+    </a>
     <a href="https://github.com/badges/shields/pulse" alt="Activity">
         <img src="https://img.shields.io/github/commit-activity/m/badges/shields.svg" />
     </a>
     <a href="https://discord.gg/vZpwDVU">
         <img src="https://img.shields.io/discord/598160569660342327.svg?logo=discord"
             alt="chat on Discord">
-     </a>
+    </a>
     <a href="https://twitter.com/intent/follow?screen_name=Protoqol_XYZ">
         <img src="https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social"
             alt="follow on Twitter">
-      </a>
+    </a>
 </p>
 
 #### What is Laravel Prequel exactly?  
@@ -36,12 +36,11 @@ Luckily, Prequel has taken precautions, Prequel automatically disables itself in
   
 The beta only supports `MySQL` for now. But support for `PostgreSQL` is coming soon!
   
-## Installation (the beta release way)  
+## Installation
 ###### To install follow the instructions below.  
 ```bash  
 $ composer require protoqol/prequel  
-$ php artisan vendor:publish --tag=config  
-$ php artisan vendor:publish --tag=public  
+$ php artisan prequel:install
 ```  
 ###### When installation and publishing is done navigate to `/prequel` in your browser to see Prequel in action!  
   
