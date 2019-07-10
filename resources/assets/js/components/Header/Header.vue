@@ -73,7 +73,7 @@
                 <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
                         title="Set Dark Mode (Not available yet)"
                         :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
-                        @click="view.darkMode = (!view.darkMode)">
+                        @click="darkModeButtonHandler">
                     <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
                 </button>
 
@@ -124,6 +124,11 @@
       };
     },
 
+    created() {
+      this.view.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false;
+      this.changeTheme();
+    },
+
     watch: {
       searchColumn: function(newVal) {
         this.input.column = newVal;
@@ -163,6 +168,8 @@
         else {
           window.localStorage.setItem('showSidebar', 'false');
         }
+
+        // add theme button handler code here potentially 
       },
 
       /**
@@ -236,6 +243,24 @@
         this.readability = !this.readability;
         this.$emit('enhanceReadability');
       },
+
+      /**
+       | Handles dark mode button actions.
+       | Emits event to change theme globally.
+       */
+      darkModeButtonHandler: function() {
+        this.view.darkMode = !this.view.darkMode;
+        localStorage.setItem('dark-mode', JSON.stringify(this.view.darkMode));
+        this.changeTheme();
+      },
+
+      changeTheme: function() {
+          if(this.view.darkMode) {
+              document.body.className += ' ' + 'theme-dark';
+          } else {
+              document.body.classList.remove("theme-dark");
+          }
+      }
     },
   };
 </script>

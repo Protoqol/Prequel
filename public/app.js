@@ -12203,6 +12203,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  created: function created() {
+    this.view.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false;
+    this.changeTheme();
+  },
   watch: {
     searchColumn: function searchColumn(newVal) {
       this.input.column = newVal;
@@ -12235,7 +12239,8 @@ __webpack_require__.r(__webpack_exports__);
         this.showSideBar = window.localStorage.getItem('showSidebar') === 'false';
       } else {
         window.localStorage.setItem('showSidebar', 'false');
-      }
+      } // add theme button handler code here potentially 
+
     },
 
     /**
@@ -12306,6 +12311,23 @@ __webpack_require__.r(__webpack_exports__);
     readabilityButtonHandler: function readabilityButtonHandler() {
       this.readability = !this.readability;
       this.$emit('enhanceReadability');
+    },
+
+    /**
+     | Handles dark mode button actions.
+     | Emits event to change theme globally.
+     */
+    darkModeButtonHandler: function darkModeButtonHandler() {
+      this.view.darkMode = !this.view.darkMode;
+      localStorage.setItem('dark-mode', JSON.stringify(this.view.darkMode));
+      this.changeTheme();
+    },
+    changeTheme: function changeTheme() {
+      if (this.view.darkMode) {
+        document.body.className += ' ' + 'theme-dark';
+      } else {
+        document.body.classList.remove("theme-dark");
+      }
     }
   }
 });
@@ -58112,11 +58134,7 @@ var render = function() {
                   ? "dark-mode-button-enabled"
                   : "dark-mode-button-disabled",
                 attrs: { title: "Set Dark Mode (Not available yet)" },
-                on: {
-                  click: function($event) {
-                    _vm.view.darkMode = !_vm.view.darkMode
-                  }
-                }
+                on: { click: _vm.darkModeButtonHandler }
               },
               [
                 _c("font-awesome-icon", {
