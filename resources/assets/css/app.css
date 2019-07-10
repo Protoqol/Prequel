@@ -1,5 +1,18 @@
+:root {
+    --page-background-color: #edf1f3;
+}
 @tailwind base;
 @tailwind components;
+.theme-dark {
+    --page-background-color: #17181e;
+
+    --text-default-color: #fff;
+    --text-muted-color: rgba(255, 255, 255, 0.5);
+    --text-muted-light-color: rgba(255, 255, 255, 0.3);
+    --text-accent-color: #47cdff;
+    --text-accent-light-color: #8ae2fe;
+    --text-error-color: red;
+}
 @tailwind utilities;
 
 * {

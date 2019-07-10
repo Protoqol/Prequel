@@ -13,7 +13,7 @@
 
     <title>{{ (config('app.name')) }} Prequel</title>
 </head>
-<body class="overflow-x-auto overflow-y-scroll" style="background-color: #edf1f3;">
+<body class="theme-dark overflow-x-auto overflow-y-scroll bg-page">
 
 <div id="prequel"></div>
 
