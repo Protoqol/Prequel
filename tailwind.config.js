@@ -10,11 +10,13 @@ module.exports = {
         input: 'var(--input-background-color)',
         tableColumn: 'var(--table-column-background-color)',
         tableRowEven: 'var(--table-row-even-background-color)',
-        tableRowOdd: 'var(--table-row-odd-background-color)'
+        tableRowOdd: 'var(--table-row-odd-background-color)',
+        paginationButton: 'var(--pagination-button-color)'
       },
       textColor: {
         logo: 'var(--logo-text-color)',
         header: 'var(--header-text-color)',
+        tableHeader: 'var(--table-header-text-color)',
         paginationItem: 'var(--pagination-item-text-color)',
         secondary: 'var(--text-secondary-color)',
       },

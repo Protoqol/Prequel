@@ -169,7 +169,7 @@
           window.localStorage.setItem('showSidebar', 'false');
         }
 
-        // add theme button handler code here potentially 
+        // add theme button handler code here potentially
       },
 
       /**
@@ -565,7 +565,7 @@
             @apply block;
             @apply mt-4;
             @apply w-5/6;
-            border-bottom: 1px solid #d5dfe9;
+            border-bottom: 1px solid var(--header-bottom-border-color);
         }
     }
 

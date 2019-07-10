@@ -9,14 +9,14 @@
                 </th>
                 <th class="table-th"
                     :id="struct.Field"
-                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
+                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-tableHeader'"
                     :title="struct.Field + ' - ' + struct.Type"
                     :type="struct.Type"
                     @click="$emit('columnSelect', $event)"
                     v-for="struct in structure">
                     {{readability ? enhanceReadability(struct.Field) : struct.Field}}
                     <br>
-                    <p class="text-xs font-light text-gray-700 -mt-1" @click.prevent>
+                    <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
                         {{struct.Type}}</p>
                 </th>
             </tr>
@@ -192,7 +192,7 @@
                     @apply border;
                     @apply p-2;
                     @apply text-sm;
-                    @apply text-gray-800;
+                    @apply text-secondary;
                     @apply text-center;
                     @apply cursor-pointer;
 
@@ -217,7 +217,7 @@
                 @apply text-sm;
                 @apply text-center;
                 @apply cursor-pointer;
-
+                @apply text-secondary;
                 &:hover {
                     @apply bg-gray-300;
                 }
@@ -229,7 +229,7 @@
                 @apply text-sm;
                 @apply text-center;
                 @apply cursor-pointer;
-
+                @apply text-secondary;
                 &:hover {
                     @apply bg-gray-400;
                 }
