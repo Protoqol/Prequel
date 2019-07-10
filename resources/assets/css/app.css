@@ -1,12 +1,36 @@
 :root {
     --page-background-color: #edf1f3;
+    --component-background-color: #fff;
+    --logo-text-color: #000000;
+    --table-column-background-color: #e2e8f0;
+    --table-row-even-background-color: #edf2f7;
+    --table-row-odd-background-color: #f7fafc;
+    --header-text-color: #000000;
+    --input-background-color: #fff;
+    --pagination-item-text-color: #000000;
+    --text-secondary-color: #4a5568;
 }
 @tailwind base;
 @tailwind components;
 .theme-dark {
-    --page-background-color: #17181e;
 
-    --text-default-color: #fff;
+    /*Big stuff*/
+    --logo-text-color: #fff;
+    --page-background-color: #17181e;
+    --component-background-color: #1f2027;
+
+    /* Table component stuff*/
+    --table-column-background-color: #1f2027;
+    --table-row-even-background-color: #1f2027;
+    --table-row-odd-background-color: #1f2027;
+
+    /* Medium stuff */
+    --header-text-color: #fff;
+    --input-background-color: #1f2027;
+    --pagination-item-text-color: #fff;
+
+    /* Little stuff */
+    --text-secondary-color: #fff;
     --text-muted-color: rgba(255, 255, 255, 0.5);
     --text-muted-light-color: rgba(255, 255, 255, 0.3);
     --text-accent-color: #47cdff;

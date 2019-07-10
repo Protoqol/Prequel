@@ -43,7 +43,7 @@
         .page-item {
             @apply px-2;
             @apply cursor-pointer;
-
+            @apply text-paginationItem;
             &:hover {
                 @apply text-gray-500;
             }

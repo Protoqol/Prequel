@@ -7,7 +7,7 @@
                         <img width="32rem" height="32rem" alt="Protoqol Prequel"
                              :src="$root.prequel.asset.logo">
                     </div>
-                    <h1 class="header-left-logo-text">
+                    <h1 class="header-left-logo-text text-logo">
                         <span>Laravel</span> Prequel
                         <a href="https://github.com/Protoqol"
                            target="_blank"
@@ -17,7 +17,7 @@
                     </h1>
                 </div>
                 <div class="header-left-connection">
-                    <p title="Current connection">
+                    <p title="Current connection" class="text-secondary">
                         {{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
                     </p>
                 </div>
@@ -70,13 +70,12 @@
                     <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
                 </button>
 
-                <!-- Dark Mode Button -->
-                <!-- <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow" -->
-                <!--    title="Set Dark Mode (Not available yet)"                                                                            -->
-                <!--    :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"                                    -->
-                <!--    @click="view.darkMode = (!view.darkMode)">                                                                           -->
-                <!--    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;                                                                -->
-                <!-- </button>                                                                                                               -->
+                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+                        title="Set Dark Mode (Not available yet)"
+                        :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
+                        @click="view.darkMode = (!view.darkMode)">
+                    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
+                </button>
 
                 <button :class="showSideBar ? 'sidebar-button-enabled' : 'sidebar-button-disabled'"
                         :title="`${sideBarStatusText} side bar`"
@@ -348,7 +347,7 @@
                     @apply flex-row;
 
                     .search-column-input {
-                        @apply bg-white;
+                        @apply bg-input;
                         @apply shadow;
                         @apply appearance-none;
                         @apply border;
@@ -356,7 +355,7 @@
                         @apply w-1/3;
                         @apply py-2;
                         @apply px-3;
-                        @apply text-gray-700;
+                        @apply text-secondary;
                         @apply leading-tight;
 
                         &:focus {
@@ -372,7 +371,7 @@
                     }
 
                     .search-value-input {
-                        @apply bg-white;
+                        @apply bg-input;
                         @apply shadow;
                         @apply appearance-none;
                         @apply border;
@@ -380,7 +379,7 @@
                         @apply w-3/5;
                         @apply py-2;
                         @apply px-3 ;
-                        @apply text-gray-700;
+                        @apply text-secondary;
                         @apply leading-tight;
 
                         &:focus {

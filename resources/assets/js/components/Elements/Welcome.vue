@@ -55,7 +55,7 @@
 
         h1 {
             @apply text-center;
-            @apply text-gray-900;
+            @apply text-header;
             @apply font-semibold;
             @apply text-2xl;
             @apply mt-2;

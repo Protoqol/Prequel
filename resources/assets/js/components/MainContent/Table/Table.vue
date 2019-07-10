@@ -171,7 +171,7 @@
             thead {
                 @apply border-b;
                 @apply rounded;
-                @apply bg-gray-400;
+                @apply bg-tableColumn;
 
                 .table-th {
                     @apply border;
@@ -205,11 +205,11 @@
             }
 
             .table-row:nth-child(odd) {
-                @apply bg-gray-100;
+                @apply bg-tableRowOdd;
             }
 
             .table-row:nth-child(even) {
-                @apply bg-gray-200;
+                @apply bg-tableRowEven;
             }
 
             .table-td {

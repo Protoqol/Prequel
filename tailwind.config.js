@@ -5,7 +5,18 @@ module.exports = {
         cyan: '#9cdbff',
       },
       backgroundColor: {
-        page: 'var(--page-background-color)'
+        page: 'var(--page-background-color)',
+        component: 'var(--component-background-color)',
+        input: 'var(--input-background-color)',
+        tableColumn: 'var(--table-column-background-color)',
+        tableRowEven: 'var(--table-row-even-background-color)',
+        tableRowOdd: 'var(--table-row-odd-background-color)'
+      },
+      textColor: {
+        logo: 'var(--logo-text-color)',
+        header: 'var(--header-text-color)',
+        paginationItem: 'var(--pagination-item-text-color)',
+        secondary: 'var(--text-secondary-color)',
       },
     }
   },
