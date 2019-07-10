@@ -38,5 +38,14 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
                     'DatabaseController@findInTable'
                 );
             });
+
+            /**
+             * Get app status.
+             */
+            Route::get('status', 'PrequelController@status');
+
+            Route::get('migrations', function () {
+                return (new \Protoqol\Prequel\Classes\App\Migrations())->run();
+            });
         });
     });

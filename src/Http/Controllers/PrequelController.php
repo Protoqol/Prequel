@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Protoqol\Prequel\Classes\App\AppStatus;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
@@ -35,5 +36,15 @@ class PrequelController extends Controller
                 'flatTableCollection' => $databaseData->flatTableCollection,
             ],
         ]);
+    }
+
+    /**
+     * Get app status.
+     *
+     * @return array
+     */
+    public function status()
+    {
+        return (new AppStatus())->getStatus();
     }
 }

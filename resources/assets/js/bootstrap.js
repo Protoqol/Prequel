@@ -27,20 +27,24 @@ import {
   faSearchPlus,
   faTable,
   faTools,
-}                        from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+  faEye,
+  faWrench,
+  faRunning,
+}                              from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon}       from '@fortawesome/vue-fontawesome';
 
 library.add(faDatabase, faTable, faChevronCircleUp, faSearchPlus, faTools,
-    faGlasses, faAsterisk, faAdjust, faExclamationTriangle);
+    faGlasses, faAsterisk, faAdjust, faExclamationTriangle, faEye, faWrench,
+    faRunning);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 /**
  * Highlight.js
  */
-import highlight         from 'highlight.js';
+import highlight               from 'highlight.js';
 import 'highlight.js/styles/github.css';
-import sql               from 'highlight.js/lib/languages/sql';
+import sql                     from 'highlight.js/lib/languages/sql';
 
 highlight.registerLanguage('sql', sql);
 

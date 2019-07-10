@@ -4,8 +4,10 @@
             <div class="header-left">
                 <div class="header-left-logo">
                     <div class="header-left-logo-image">
-                        <img width="32rem" height="32rem" alt="Protoqol Prequel"
-                             :src="$root.prequel.asset.logo">
+                        <a href="/prequel">
+                            <img width="32rem" height="32rem" alt="Protoqol Prequel"
+                                 :src="$root.prequel.asset.logo">
+                        </a>
                     </div>
                     <h1 class="header-left-logo-text">
                         <span>Laravel</span> Prequel

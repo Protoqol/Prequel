@@ -1,35 +1,18 @@
 <template>
     <div class="welcome">
         <div class="img-wrapper">
-            <img class="no-drag" width="175" alt="Laravel Prequel" src="/vendor/prequel/favicon.png">
+            <img class="no-drag" width="75" alt="Laravel Prequel" src="/vendor/prequel/favicon.png">
         </div>
-        <h1>
-            Welcome to Laravel Prequel!
-        </h1>
-        <div class="button-wrapper">
-            <a :href="url.docs"
-               target="_blank"
-               class="bg-green-500 hover:bg-green-700">
-                Docs
-            </a>
-            <a :href="url.bug_report"
-               target="_blank"
-               class="bg-red-500 hover:bg-red-700">
-                Bug report
-            </a>
-            <a :href="url.github"
-               target="_blank"
-               class="bg-blue-500 hover:bg-blue-700">
-                Github
-            </a>
-        </div>
+        <Migrations/>
     </div>
 </template>
 
 <script>
-  export default {
-    name: 'Welcome',
+  import Migrations from '../MainContent/ManageDatabase/Migrations';
 
+  export default {
+    name      : 'Welcome',
+    components: {Migrations},
     data() {
       return {
         url: {

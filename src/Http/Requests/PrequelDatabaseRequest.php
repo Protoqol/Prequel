@@ -2,6 +2,7 @@
 
 namespace Protoqol\Prequel\Http\Requests;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
@@ -35,9 +36,9 @@ class PrequelDatabaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'database'      => 'required|string',
-            'table'         => 'required|string',
-            'qualifiedName' => 'required|string',
+            'database'      => 'string',
+            'table'         => 'string',
+            'qualifiedName' => 'string',
         ];
     }
 
@@ -59,7 +60,7 @@ class PrequelDatabaseRequest extends FormRequest
 
             $request['model'] = app(DatabaseTraverser::class)
                 ->getModel($request['table']);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return parent::getValidatorInstance();
         }
 
