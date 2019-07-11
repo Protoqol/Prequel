@@ -40,10 +40,12 @@
             @apply flex;
         }
 
+        li {
+            @apply text-secondary;
+        }
         .page-item {
             @apply px-2;
             @apply cursor-pointer;
-
             &:hover {
                 @apply text-gray-500;
             }

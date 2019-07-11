@@ -9,14 +9,14 @@
                 </th>
                 <th class="table-th"
                     :id="struct.Field"
-                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
+                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-tableHeader'"
                     :title="struct.Field + ' - ' + struct.Type"
                     :type="struct.Type"
                     @click="$emit('columnSelect', $event)"
                     v-for="struct in structure">
                     {{readability ? enhanceReadability(struct.Field) : struct.Field}}
                     <br>
-                    <p class="text-xs font-light text-gray-700 -mt-1" @click.prevent>
+                    <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
                         {{struct.Type}}</p>
                 </th>
             </tr>
@@ -171,7 +171,7 @@
             thead {
                 @apply border-b;
                 @apply rounded;
-                @apply bg-gray-400;
+                @apply bg-tableColumn;
 
                 .table-th {
                     @apply border;
@@ -183,7 +183,7 @@
                     @apply cursor-pointer;
 
                     &:hover {
-                        @apply bg-gray-300;
+                        @apply bg-tableHover;
                     }
                 }
 
@@ -192,12 +192,12 @@
                     @apply border;
                     @apply p-2;
                     @apply text-sm;
-                    @apply text-gray-800;
+                    @apply text-secondary;
                     @apply text-center;
                     @apply cursor-pointer;
 
                     &:hover {
-                        @apply bg-gray-300;
+                        @apply bg-tableHover;
                         @apply border;
                     }
                 }
@@ -205,11 +205,11 @@
             }
 
             .table-row:nth-child(odd) {
-                @apply bg-gray-100;
+                @apply bg-tableRowOdd;
             }
 
             .table-row:nth-child(even) {
-                @apply bg-gray-200;
+                @apply bg-tableRowEven;
             }
 
             .table-td {
@@ -217,9 +217,9 @@
                 @apply text-sm;
                 @apply text-center;
                 @apply cursor-pointer;
-
+                @apply text-secondary;
                 &:hover {
-                    @apply bg-gray-300;
+                    @apply bg-tableHover;
                 }
             }
 
@@ -229,9 +229,9 @@
                 @apply text-sm;
                 @apply text-center;
                 @apply cursor-pointer;
-
+                @apply text-secondary;
                 &:hover {
-                    @apply bg-gray-400;
+                    @apply bg-tableHover;
                 }
             }
             transform: rotateX(180deg);

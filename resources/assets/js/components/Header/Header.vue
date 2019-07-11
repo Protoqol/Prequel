@@ -9,7 +9,7 @@
                                  :src="$root.prequel.asset.logo">
                         </a>
                     </div>
-                    <h1 class="header-left-logo-text">
+                    <h1 class="header-left-logo-text text-logo">
                         <span>Laravel</span> Prequel
                         <a href="https://github.com/Protoqol"
                            target="_blank"
@@ -77,13 +77,12 @@
                     <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
                 </button>
 
-                <!-- Dark Mode Button -->
-                <!-- <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow" -->
-                <!--    title="Set Dark Mode (Not available yet)"                                                                            -->
-                <!--    :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"                                    -->
-                <!--    @click="view.darkMode = (!view.darkMode)">                                                                           -->
-                <!--    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;                                                                -->
-                <!-- </button>                                                                                                               -->
+                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+                        title="Set Dark Mode (Not available yet)"
+                        :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
+                        @click="darkModeButtonHandler">
+                    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
+                </button>
 
                 <button :class="showSideBar ? 'sidebar-button-enabled' : 'sidebar-button-disabled'"
                         :title="`${sideBarStatusText} side bar`"
@@ -130,6 +129,11 @@
           queryType       : '=',
         },
       };
+    },
+
+    created() {
+      this.view.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false;
+      this.changeTheme();
     },
 
     watch: {
@@ -182,6 +186,8 @@
         else {
           window.localStorage.setItem('showSidebar', 'false');
         }
+
+        // add theme button handler code here potentially
       },
 
       /**
@@ -254,6 +260,25 @@
       readabilityButtonHandler: function() {
         this.readability = !this.readability;
         this.$emit('enhanceReadability');
+      },
+
+      /**
+       | Handles dark mode button actions.
+       | Emits event to change theme globally.
+       */
+      darkModeButtonHandler: function() {
+        this.view.darkMode = !this.view.darkMode;
+        localStorage.setItem('dark-mode', JSON.stringify(this.view.darkMode));
+        this.changeTheme();
+      },
+
+      changeTheme: function() {
+        if (this.view.darkMode) {
+          document.body.className += ' ' + 'theme-dark';
+        }
+        else {
+          document.body.classList.remove('theme-dark');
+        }
       },
     },
   };
@@ -366,7 +391,7 @@
                     @apply flex-row;
 
                     .search-column-input {
-                        @apply bg-white;
+                        @apply bg-input;
                         @apply shadow;
                         @apply appearance-none;
                         @apply border;
@@ -374,8 +399,9 @@
                         @apply w-1/3;
                         @apply py-2;
                         @apply px-3;
-                        @apply text-gray-700;
+                        @apply text-secondary;
                         @apply leading-tight;
+                        border-style: var(--input-border);
 
                         &:focus {
                             @apply outline-none;
@@ -387,10 +413,12 @@
                         @apply bg-transparent;
                         @apply font-bold ;
                         @apply text-lg;
+                        @apply bg-input;
+                        @apply text-secondary;
                     }
 
                     .search-value-input {
-                        @apply bg-white;
+                        @apply bg-input;
                         @apply shadow;
                         @apply appearance-none;
                         @apply border;
@@ -398,8 +426,9 @@
                         @apply w-3/5;
                         @apply py-2;
                         @apply px-3 ;
-                        @apply text-gray-700;
+                        @apply text-secondary;
                         @apply leading-tight;
+                        border-style: var(--input-border);
 
                         &:focus {
                             @apply outline-none;
@@ -559,7 +588,7 @@
             @apply block;
             @apply mt-4;
             @apply w-5/6;
-            border-bottom: 1px solid #d5dfe9;
+            border-bottom: 1px solid var(--header-bottom-border-color);
         }
     }
 

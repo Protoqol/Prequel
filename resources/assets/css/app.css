@@ -1,5 +1,35 @@
+:root {
+    --page-background-color: #edf1f3;
+    --component-background-color: #fff;
+    --logo-text-color: #000000;
+    --table-column-background-color: #e2e8f0;
+    --table-row-even-background-color: #edf2f7;
+    --table-row-odd-background-color: #f7fafc;
+    --table-header-text-color: #2d3748;
+    --table-hover-background-color: #e2e8f0;
+    --header-text-color: #000000;
+    --input-background-color: #fff;
+    --input-border: '';
+    --dropdown-background-color: var(--input-background-color);
+    --text-secondary-color: #4a5568;
+}
 @tailwind base;
 @tailwind components;
+.theme-dark {
+    --logo-text-color: #e2edf4;
+    --page-background-color: #1c1c1c;
+    --component-background-color: #262525;
+    --table-column-background-color: #181818;
+    --table-row-even-background-color: #262525;
+    --table-row-odd-background-color: #262525;
+    --table-hover-background-color: #343434;
+    --header-text-color: #e2edf4;
+    --input-background-color: #242424;
+    --dropdown-background-color: var(--input-background-color);
+    --input-border: border-none;
+    --table-header-text-color: #e2edf4;
+    --text-secondary-color: #e2edf4;
+}
 @tailwind utilities;
 
 * {

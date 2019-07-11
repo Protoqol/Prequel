@@ -1,5 +1,5 @@
 <template>
-    <div class="main-content-wrapper">
+    <div class="main-content-wrapper bg-component">
 
         <div v-if="!welcomeShown">
             <Welcome/>
