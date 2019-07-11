@@ -4,13 +4,13 @@
 
 ### TODO before release
 - Feature Request #38
-- Dark mode
 - Fix #19, non-alphabetic characters breaking Prequel. 
 - Figure out support exact for Laravel 5.x
 - Add support for postgres.
 - Tests
 
 ### Functionality
+- [FEATURE] Dark mode feature by @James-N-M (see #36)
 - [FEATURE] Commands to install and update Prequel.
 - [FEATURE] Homepage now acts as a status page, keeping track of various things.
 - [FEATURE] Separate browsing and managing modes       

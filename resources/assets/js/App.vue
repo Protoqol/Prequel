@@ -427,48 +427,18 @@
 
 <style lang="scss">
 
-    * {
-        transition: .150ms ease;
-
-        :focus {
-            outline: 0;
-        }
-
-        ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
-            background-color: var(--scroll-track);
-            border-radius: 1px;
-            transition: .2s ease;
-        }
-
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-            background-color: #f5f5f5;
-            transition: .2s ease;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            background: var(--scroll-bar);
-            transition: .2s ease;
-        }
-
-        /**
-            Side bar transition
-         */
-        .slide-fade-enter-active {
-            transition: all .2s ease;
-        }
-
-        .slide-fade-leave-active {
-            transition: all .2s ease;
-        }
-
-        .slide-fade-enter, .slide-fade-leave-to {
-            opacity: 0;
-        }
+    .slide-fade-enter-active {
+        transition: all .2s ease;
     }
+
+    .slide-fade-leave-active {
+        transition: all .2s ease;
+    }
+
+    .slide-fade-enter, .slide-fade-leave-to {
+        opacity: 0;
+    }
+
 
     .main-content {
         @apply w-full;
