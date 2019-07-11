@@ -1,6 +1,6 @@
 <template>
     <div id="top-horizontal-scroll" class="table-wrapper">
-        <table v-if="data.length !== 0">
+        <table>
             <thead>
             <tr>
                 <th class="table-th-actions"
@@ -40,7 +40,7 @@
             </tr>
             </tbody>
         </table>
-        <TableEmpty v-if="data.length === 0" :structure="structure"/>
+<!--        <TableEmpty v-if="data.length === 0" :structure="structure"/>-->
     </div>
 </template>
 
