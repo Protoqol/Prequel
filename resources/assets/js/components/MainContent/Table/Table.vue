@@ -1,6 +1,6 @@
 <template>
     <div id="top-horizontal-scroll" class="table-wrapper">
-        <table>
+        <table v-if="data.length !== 0">
             <thead>
             <tr>
                 <th class="table-th-actions"
@@ -40,7 +40,7 @@
             </tr>
             </tbody>
         </table>
-<!--        <TableEmpty v-if="data.length === 0" :structure="structure"/>-->
+        <TableEmpty v-if="data.length === 0" :structure="structure"/>
     </div>
 </template>
 
@@ -51,6 +51,10 @@
     name      : 'Table',
     components: {TableEmpty},
     props     : ['structure', 'data', 'readability'],
+
+    mounted() {
+      this.checkTableOverflow();
+    },
 
     data() {
       return {
@@ -77,6 +81,17 @@
     },
 
     methods: {
+
+      checkTableOverflow: function() {
+        let tableContainer = document.getElementById('top-horizontal-scroll');
+
+        if (tableContainer.clientWidth === tableContainer.scrollWidth) {
+          tableContainer.style.overflowX = 'unset';
+        }
+        else {
+          tableContainer.style.overflowX = 'auto';
+        }
+      },
 
       seeCompleteData: function(ev) {
         if (ev.target.classList.contains('ellipsis') && ev.target.contentEditable === 'false') {
@@ -234,6 +249,7 @@
                     @apply bg-tableHover;
                 }
             }
+
             transform: rotateX(180deg);
         }
 

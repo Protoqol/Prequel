@@ -450,7 +450,7 @@
             width: 98%;
 
             .table-wrapper {
-                @apply overflow-x-scroll;
+                /*@apply overflow-x-scroll;*/
             }
         }
 

@@ -3,6 +3,13 @@
         <h1>
             This query did not yield any result
         </h1>
+        <div class="column-overview">
+            <h2>Columns in this table</h2>
+            <br>
+            <div class="columns-wrapper">
+                <p v-for="struct in structure">{{struct.Field}}</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -22,6 +29,17 @@
             @apply text-gray-700;
             @apply w-full;
             @apply text-center;
+        }
+
+        .column-overview {
+            @apply w-full;
+            @apply flex;
+            @apply justify-center;
+
+            .columns-wrapper {
+                @apply flex;
+                @apply flex-col;
+            }
         }
     }
 </style>
