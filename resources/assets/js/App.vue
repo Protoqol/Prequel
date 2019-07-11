@@ -165,11 +165,13 @@
 
     methods: {
       /**
-       * Switch between query and browse mode.
+       * Switch between query and browse mode. Only when in actual table.
        */
       switchMode: function(mode) {
-        this.view.modus.mode = mode;
-        this.updateUrl();
+        if (this.view.params.has('database') && this.view.params.has('table')) {
+          this.view.modus.mode = mode;
+          this.updateUrl();
+        }
       },
 
       /**

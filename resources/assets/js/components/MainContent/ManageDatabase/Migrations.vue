@@ -37,7 +37,9 @@
     methods: {
       runMigrations: function() {
         api.get('migrations').then(res => {
-          console.log(res);
+          if (res) {
+            window.location.reload();
+          }
         });
       },
     },

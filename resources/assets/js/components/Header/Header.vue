@@ -157,7 +157,7 @@
        */
       lenCheck: function(val) {
         val = val + '';
-        if (val.length > 7) {
+        if (val.length > 10) {
           return val.substr(0, 7) + '...';
         }
         return val;

@@ -3,6 +3,7 @@
 > [Protoqol now has a dedicated Discord to allow for better communication](https://discord.gg/vZpwDVU)
 
 ### TODO before release
+- Feature Request #38
 - Dark mode
 - Fix #19, non-alphabetic characters breaking Prequel. 
 - Figure out support exact for Laravel 5.x

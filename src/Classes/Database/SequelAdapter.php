@@ -43,11 +43,11 @@ class SequelAdapter
             case 'mysql':
                 return 'SHOW TABLES;';
             case 'pgsql':
-                return 'SELECT * FROM pg_catalog.pg_tables;';
-            case 'sqlite':
-                return 'SELECT name FROM sqlite_master WHERE type="table";';
-            case 'sqlsrv':
-                return 'SELECT * FROM  INFORMATION_SCHEMA.TABLES; GO';
+                return 'SELECT * FROM `pg_catalog`.`pg_tables`;';
+//            case 'sqlite':
+//                return 'SELECT name FROM sqlite_master WHERE type="table";';
+//            case 'sqlsrv':
+//                return 'SELECT * FROM  INFORMATION_SCHEMA.TABLES; GO';
             default:
                 throw new Exception('Selected invalid or unsupported database driver');
         }
@@ -63,7 +63,8 @@ class SequelAdapter
             case 'mysql':
                 return 'SHOW DATABASES;';
             case 'pgsql':
-                return 'SELECT datname FROM pg_database WHERE datistemplate = false;';
+                return "SELECT datname FROM pg_database WHERE datistemplate = false AND datname = '"
+                    .config('prequel.database.database')."';";
             default:
                 throw new Exception('Selected invalid or unsupported database driver');
         }

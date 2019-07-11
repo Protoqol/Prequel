@@ -154,7 +154,8 @@ class DatabaseTraverser
         string $database,
         string $table,
         array $column
-    ) :array {
+    ) :array
+    {
         $select = [
             'TABLE_SCHEMA',
             'TABLE_NAME',
@@ -202,12 +203,26 @@ class DatabaseTraverser
     public function getTablesFromDB(string $database) :array
     {
         $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
+
+        // Collect differently if postgres. @TODO.
+        $tmp = [];
+        if ($this->databaseConn === 'pgsql') {
+            for ($i = 0; $i < count($tables); $i++) {
+                if ($tables[$i]->schemaname === $database) {
+                    array_push($tmp, $tables[$i]);
+                }
+            }
+            unset($tables);
+            $tables = $tmp;
+        }
+
         return $this->normalise($tables);
     }
 
     /**
      * Get all tables from "main" database (DB_DATABASE in .env)
      *
+     * @Note Unused
      * @return array
      * @throws \Exception
      */
@@ -231,7 +246,7 @@ class DatabaseTraverser
 
     /**
      * Normalise query results; assumes a lot about the structure, which can
-     * potentially cause problems later on.
+     * potentially cause problems later on. @TODO
      * Assumed structure:
      *  -----------------
      *  Array [
@@ -239,19 +254,23 @@ class DatabaseTraverser
      *       'String': Mixed (single value)
      *  -----------------
      *
-     * @param  array  $arr  | Query results
+     * @param  array  $arr  Query results
      *
      * @return array
      */
-    public function normalise(array $arr)
+    public function normalise(array $arr) :array
     {
         $normalised = [];
 
-        for ($iterator = 0; $iterator < count($arr); $iterator++) {
-            foreach ($arr[$iterator] as $value) {
-                $arrayValue = ((array)$value)[0];
+        for ($i = 0; $i < count($arr); $i++) {
+            foreach ($arr[$i] as $value) {
+                if (!$value || !is_string($value)) {
+                    continue;
+                }
 
-                $normalised[$iterator]['name'] = [
+                $arrayValue = Arr::first((array)$value);
+
+                $normalised[$i]['name'] = [
                     "official" => $arrayValue,
                     "pretty"   => $this->prettifyName($arrayValue),
                 ];

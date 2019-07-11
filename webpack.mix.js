@@ -13,12 +13,11 @@ const atImport = require('postcss-import');
 
 mix.setResourceRoot('packages/protoqol/prequel').
     postCss('resources/assets/css/app.css', 'public', [
-      atImport(),
       require('tailwindcss'),
     ]).
     js('resources/assets/js/app.js', 'public').
     copy('public', '../../../public/vendor/prequel').
     browserSync('http://localhost').
     options({
-      purifyCss: true,
+        purifyCss: true,
     });
