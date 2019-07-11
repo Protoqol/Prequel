@@ -1,4 +1,7 @@
 :root {
+    --scroll-track: #F5F5F5;
+    --scroll-bar: #667eea;
+
     --page-background-color: #edf1f3;
     --component-background-color: #fff;
     --logo-text-color: #000000;
@@ -13,16 +16,21 @@
     --dropdown-background-color: var(--input-background-color);
     --text-secondary-color: #4a5568;
 }
+
 @tailwind base;
 @tailwind components;
+
 .theme-dark {
+    --scroll-track: #1c1c1c;
+    --scroll-bar: #5a67d8;
+
     --logo-text-color: #e2edf4;
     --page-background-color: #1c1c1c;
     --component-background-color: #262525;
     --table-column-background-color: #181818;
-    --table-row-even-background-color: #262525;
+    --table-row-even-background-color: #333232;
     --table-row-odd-background-color: #262525;
-    --table-hover-background-color: #343434;
+    --table-hover-background-color: #3c3c3c;
     --header-text-color: #e2edf4;
     --input-background-color: #242424;
     --dropdown-background-color: var(--input-background-color);
@@ -30,6 +38,7 @@
     --table-header-text-color: #e2edf4;
     --text-secondary-color: #e2edf4;
 }
+
 @tailwind utilities;
 
 * {

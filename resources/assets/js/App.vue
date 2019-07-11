@@ -436,7 +436,7 @@
 
         ::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
-            background-color: #F5F5F5;
+            background-color: var(--scroll-track);
             border-radius: 1px;
             transition: .2s ease;
         }
@@ -450,7 +450,7 @@
 
         ::-webkit-scrollbar-thumb {
             border-radius: 10px;
-            background: rgba(73, 125, 189, 0.5);
+            background: var(--scroll-bar);
             transition: .2s ease;
         }
 
