@@ -6,42 +6,29 @@
     --table-row-even-background-color: #edf2f7;
     --table-row-odd-background-color: #f7fafc;
     --table-header-text-color: #2d3748;
+    --table-hover-background-color: #e2e8f0;
     --header-text-color: #000000;
-    --header-bottom-border-color: #d5dfe9;
     --input-background-color: #fff;
-    --pagination-item-text-color: #000000;
-    --pagination-button-color: #e2e8f0;
+    --input-border: '';
+    --dropdown-background-color: var(--input-background-color);
     --text-secondary-color: #4a5568;
 }
 @tailwind base;
 @tailwind components;
 .theme-dark {
-
-    /*Big stuff*/
     --logo-text-color: #e2edf4;
     --page-background-color: #1c1c1c;
     --component-background-color: #262525;
-
-    /* Table component stuff*/
-    --table-column-background-color: #120f12;
+    --table-column-background-color: #181818;
     --table-row-even-background-color: #262525;
     --table-row-odd-background-color: #262525;
-
-    /* Medium stuff */
+    --table-hover-background-color: #343434;
     --header-text-color: #e2edf4;
-    --input-background-color: #1f2027;
-    --pagination-item-text-color: #fff;
-    --pagination-button-color: #9ea7ac;
-
-    /* Little stuff */
+    --input-background-color: #242424;
+    --dropdown-background-color: var(--input-background-color);
+    --input-border: border-none;
     --table-header-text-color: #e2edf4;
-    --header-bottom-border-color: #343434;
     --text-secondary-color: #e2edf4;
-    --text-muted-color: rgba(255, 255, 255, 0.5);
-    --text-muted-light-color: rgba(255, 255, 255, 0.3);
-    --text-accent-color: #47cdff;
-    --text-accent-light-color: #8ae2fe;
-    --text-error-color: red;
 }
 @tailwind utilities;
 

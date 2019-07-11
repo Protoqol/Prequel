@@ -382,6 +382,7 @@
                         @apply px-3;
                         @apply text-secondary;
                         @apply leading-tight;
+                        border-style: var(--input-border);
 
                         &:focus {
                             @apply outline-none;
@@ -393,6 +394,8 @@
                         @apply bg-transparent;
                         @apply font-bold ;
                         @apply text-lg;
+                        @apply bg-input;
+                        @apply text-secondary;
                     }
 
                     .search-value-input {
@@ -406,6 +409,7 @@
                         @apply px-3 ;
                         @apply text-secondary;
                         @apply leading-tight;
+                        border-style: var(--input-border);
 
                         &:focus {
                             @apply outline-none;

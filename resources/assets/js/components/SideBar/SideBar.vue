@@ -38,6 +38,7 @@
 
         .table-search-input {
             @apply bg-input;
+            border-style: var(--input-border);
             @apply ml-2;
             @apply appearance-none;
             @apply border;

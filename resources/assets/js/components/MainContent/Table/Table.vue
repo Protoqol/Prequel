@@ -183,7 +183,7 @@
                     @apply cursor-pointer;
 
                     &:hover {
-                        @apply bg-gray-300;
+                        @apply bg-tableHover;
                     }
                 }
 
@@ -197,7 +197,7 @@
                     @apply cursor-pointer;
 
                     &:hover {
-                        @apply bg-gray-300;
+                        @apply bg-tableHover;
                         @apply border;
                     }
                 }
@@ -219,7 +219,7 @@
                 @apply cursor-pointer;
                 @apply text-secondary;
                 &:hover {
-                    @apply bg-gray-300;
+                    @apply bg-tableHover;
                 }
             }
 
@@ -231,7 +231,7 @@
                 @apply cursor-pointer;
                 @apply text-secondary;
                 &:hover {
-                    @apply bg-gray-400;
+                    @apply bg-tableHover;
                 }
             }
             transform: rotateX(180deg);
