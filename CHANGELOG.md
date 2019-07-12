@@ -3,13 +3,13 @@
 > [Protoqol now has a dedicated Discord to allow for better communication](https://discord.gg/vZpwDVU)
 
 ### TODO before release
-- Ability to see table structure even with empty tables #38
 - Fix #19, non-alphabetic characters breaking Prequel. 
 - Figure out support exact for Laravel 5.x
 - Add support for postgres.
 - Tests
 
 ### Functionality
+- [FEATURE] You now see the table structure in an empty table (see #38)
 - [FEATURE] Dark mode feature by @James-N-M (see #36).
 - [FEATURE] Table scrollbar auto-hides when there is no overflow.
 - [FEATURE] Commands to install and update Prequel.

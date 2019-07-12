@@ -49,9 +49,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="buttons-wrapper">
-                <button>Insert new row</button>
-            </div>
+            <!--    @TODO Switch to management mode to insert new row        -->
+            <!--            <div class="buttons-wrapper">-->
+            <!--                <button>Insert new row</button>-->
+            <!--            </div>-->
         </div>
     </div>
 </template>
