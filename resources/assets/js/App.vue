@@ -146,10 +146,10 @@
 
     mounted() {
       this.checkUrlParameters();
+      window.addEventListener('popstate', this.handlePopState);
     },
 
     methods: {
-
       /**
        | Handles config changes.
        | Holds data like readability or side bar preferences in localStorage
@@ -286,12 +286,12 @@
        | @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
        | @returns {Promise<boolean>}
        */
-      getTableData: async function(databaseTable = `${this.table.database}.${this.table.table}`, dynamicLoad = true) {
+      getTableData: async function(databaseTable = `${this.table.database}.${this.table.table}`, dynamicLoad = true, updateUrlHistory = true) {
         if (!databaseTable.target && dynamicLoad) {
           return false;
         }
 
-        this.resetTableView();
+        // this.resetTableView();
 
         let loadWasSuccess = false,
             result         = {},
@@ -331,7 +331,9 @@
             this.table.numberOfRecords          = result.data.data.total;
             this.table.structure                = result.data.structure;
             this.table.error.loadError          = false;
-            this.updateUrl();
+            if (updateUrlHistory) {
+              this.updateUrl();
+            }
           }
 
           if (typeof error === 'object' && error.response) {
@@ -340,7 +342,9 @@
             this.table.structure              = [];
             this.table.error.loadError        = true;
             this.table.error.loadErrorMessage = error.response.data.message;
-            this.updateUrl();
+            if (updateUrlHistory) {
+              this.updateUrl();
+            }
           }
         }
         return loadWasSuccess;
@@ -385,9 +389,14 @@
 
         return !!this.table.data;
       },
-
+      handlePopState() {
+          this.view.params = new URLSearchParams(window.location.search);
+          this.table.pagination.currentPage = parseInt(this.view.params.get('page'));
+          this.table.database = this.view.params.get('database');
+          this.table.table = this.view.params.get('table');
+          this.getTableData(`${this.table.database}.${this.table.table}`, false, false);
+      },
     },
-
   };
 </script>
 
