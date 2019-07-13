@@ -123,19 +123,14 @@ class DatabaseTraverser
             return false;
         }
 
-        $model = 'App\\'.Str::studly(Str::singular($tableName));
-        if (class_exists($model)) {
-            return new $model;
-        }
+        $rootNamespace = app()->getNamespace();
+        $modelName = Str::studly(Str::singular($tableName));
 
-        $model = 'App\\Models\\'.Str::studly(Str::singular($tableName));
-        if (class_exists($model)) {
-            return new $model;
-        }
-
-        $model = 'App\\Model\\'.Str::studly(Str::singular($tableName));
-        if (class_exists($model)) {
-            return new $model;
+        foreach (['', 'Model\\', 'Models\\'] as $subNamespace) {
+            $model = $rootNamespace.$subNamespace.$modelName;
+            if (class_exists($model)) {
+                return new $model;
+            }
         }
 
         return false;
