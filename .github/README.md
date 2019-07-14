@@ -1,7 +1,7 @@
 
 ![Laravel Prequel](./assets/prequel.png)  
   
-# Laravel Prequel x.x.x-beta tbd
+# Laravel Prequel x.x.x-beta tbd -- DEV Version - Should only be used by developers of Prequel
 <p align="center">
     <a href="https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master">
 	    <img src="https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?=master"/>	
