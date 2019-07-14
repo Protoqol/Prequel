@@ -56,8 +56,8 @@ class AppStatus
      */
     private function querySpeed()
     {
-        // Get from Momento::class
-        return '234 queries/second';
+        // @TODO Get from Momento::class
+        return '322';
     }
 
     /**

@@ -34,7 +34,7 @@
         @apply w-full;
         @apply flex;
         @apply justify-center;
-        @apply my-2;
+        @apply mb-2;
 
         .pagination {
             @apply flex;

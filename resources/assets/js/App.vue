@@ -30,7 +30,7 @@
                 :numberOfPages="table.pagination.numberOfPages"
                 @pageChange="changePage($event)"/>
 
-        <div v-else class="block w-1 h-2 my-4"></div>
+        <div v-else class="block w-1 h-1 my-2"></div>
 
         <div v-if="!prequel.error" class="main-content">
             <div class="wrapper">

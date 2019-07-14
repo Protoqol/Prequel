@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Protoqol\Prequel\Classes\App\Migrations;
 
 Route::namespace('Protoqol\Prequel\Http\Controllers')
     ->middleware('Protoqol\Prequel\Http\Middleware\Authorised')
@@ -44,8 +45,12 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
              */
             Route::get('status', 'PrequelController@status');
 
-            Route::get('migrations', function () {
-                return (new \Protoqol\Prequel\Classes\App\Migrations())->run();
+            Route::get('run/migrations', function () {
+                return (new Migrations())->run();
+            });
+
+            Route::get('reset/migrations', function () {
+                return (new Migrations())->reset();
             });
         });
     });

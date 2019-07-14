@@ -7,6 +7,7 @@
 - Figure out support exact for Laravel 5.x
 - Add support for postgres.
 - Tests
+- Fix #37, not all column values are showing up
 
 ### Functionality
 - [FEATURE] You now see the table structure in an empty table (see #38)

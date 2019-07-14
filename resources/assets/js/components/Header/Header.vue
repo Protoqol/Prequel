@@ -299,6 +299,8 @@
         .header-flexbox {
             @apply flex;
             @apply w-5/6;
+            @apply pb-4;
+            @apply border-b;
 
             /**
                 Header - Left - Logo, Connection information

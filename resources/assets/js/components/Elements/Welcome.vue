@@ -1,25 +1,24 @@
 <template>
     <div class="welcome">
-        <div class="img-wrapper">
-            <img class="no-drag" width="75" alt="Laravel Prequel" src="/vendor/prequel/favicon.png">
+        <h1>Overview</h1>
+        <div class="status-cards">
+            <Migrations class="flex-1"/>
+            <DatabaseStatus class="flex-1"/>
+            <Migrations class="flex-1"/>
         </div>
-        <Migrations/>
     </div>
 </template>
 
 <script>
-  import Migrations from '../MainContent/ManageDatabase/Migrations';
+  import Migrations     from '../MainContent/ManageDatabase/Migrations';
+  import DatabaseStatus from '../MainContent/ManageDatabase/DatabaseStatus';
 
   export default {
     name      : 'Welcome',
-    components: {Migrations},
+    components: {DatabaseStatus, Migrations},
     data() {
       return {
-        url: {
-          docs      : 'https://protoqol.github.io/Prequel',
-          bug_report: 'https://github.com/Protoqol/Prequel/issues/new?assignees=&labels=bug&template=bug-report.md&title=%5BBUG%5D',
-          github    : 'https://github.com/Protoqol/Prequel',
-        },
+        //
       };
     },
   };
@@ -29,19 +28,22 @@
     .welcome {
         @apply my-2;
 
-        .img-wrapper {
-            @apply w-full;
+        .status-cards {
             @apply flex;
-            @apply justify-center;
-            @apply items-center;
+            @apply flex-wrap;
+            @apply mt-2;
+            @apply bg-gray-100;
+            @apply border-t;
+            @apply border-b;
         }
 
         h1 {
-            @apply text-center;
+            @apply text-left;
             @apply text-header;
-            @apply font-semibold;
-            @apply text-2xl;
+            @apply font-normal;
+            @apply text-lg;
             @apply mt-2;
+            @apply ml-2;
         }
 
         .button-wrapper {

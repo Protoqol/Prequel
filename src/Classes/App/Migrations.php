@@ -31,6 +31,14 @@ class Migrations
     }
 
     /**
+     * @return int
+     */
+    public function reset()
+    {
+        return Artisan::call('migrate:reset');
+    }
+
+    /**
      * Get total and pending migrations.
      *
      * @return array
@@ -42,7 +50,7 @@ class Migrations
             FilesystemIterator::SKIP_DOTS
         ));
 
-        $migrationTableCount = count($this->connection->select('SELECT * FROM `migrations`'));
+        $migrationTableCount = count($this->connection->select('SELECT `id` FROM `migrations`;'));
 
         $pending = $migrationFileCount - $migrationTableCount;
 
