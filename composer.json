@@ -37,10 +37,10 @@
   },
   "scripts": {
     "phpmd": [
-      "@php vendor/bin/phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
+      "phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
     ],
     "test": [
-      "@php vendor/bin/phpunit"
+      "phpunit"
     ]
   },
   "scripts-descriptions": {
