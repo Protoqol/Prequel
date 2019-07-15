@@ -25,8 +25,6 @@ class IndexTest extends TestCase
         $response->assertSeeText('No valid database connection');
     }
     
-    // additional tests should be ran that indicate successful connections
-    
     public function testIndexIsDeniedWhenPrequelIsDisabled(): void 
     {
         config(['prequel.enabled' => false]);
@@ -37,4 +35,9 @@ class IndexTest extends TestCase
         $response->assertSeeText('Error in Prequel');
         $response->assertSeeText('Prequel has been disabled.');
     }
+
+    // additional tests should be ran that indicate successful connections
+
+    // I don't recommend testing with app environment is 'production' because that may cause other side effects
+    // instead, in the future, create a method that can be mocked that returns whether we're in production or not.
 }
