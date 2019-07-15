@@ -23,8 +23,7 @@
   },
   "require-dev": {
     "orchestra/testbench": "^3.7",
-    "phpmd/phpmd": "^2.6",
-    "nunomaduro/phpinsights": "^1.7"
+    "phpmd/phpmd": "^2.6"
   },
   "autoload": {
     "psr-4": {
