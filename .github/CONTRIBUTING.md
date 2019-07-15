@@ -7,7 +7,7 @@
 - Use concise commit messages, e.g. `[FIX] Fixed x not doing b`.
 - Use the [PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).
 - When you have made changes to .vue files, run `$ npm run prod` to create a new build.
-- Make sure it works as intended.
+- Write tests. No tests means no merge.
 
 ## Setup - this will be improved soon.
 1. Create or use an existing Laravel project, as long as it has a valid database connection.
