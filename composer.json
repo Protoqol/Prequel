@@ -11,6 +11,7 @@
   ],
   "minimum-stability": "beta",
   "require": {
+    "php": "^7.1.3",
     "laravel/framework": "^5.7"
   },
   "extra": {
@@ -21,8 +22,8 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "8.0.*",
-    "orchestra/testbench": "^3.8"
+    "orchestra/testbench": "^3.7",
+    "phpmd/phpmd": "^2.6"
   },
   "autoload": {
     "psr-4": {
@@ -33,5 +34,17 @@
     "psr-4": {
       "Protoqol\\Prequel\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "phpmd": [
+      "phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
+    ],
+    "test": [
+      "phpunit"
+    ]
+  },
+  "scripts-descriptions": {
+    "phpmd": "Runs PHPMD based on original configuration.  You can find the new mess detector report at http://localhost/vendor/prequel/phpmd.html Note that 'Avoid using static access to class' errors should be ignored.",
+    "test": "Runs the default PHPUnit test suite configured in phpunit.xml"
   }
 }

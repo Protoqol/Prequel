@@ -28,7 +28,7 @@ class SequelAdapter
      */
     public function __construct(string $databaseType)
     {
-        $this->databaseType = $databaseType;
+        $this->databaseType = config("database.connections.{$databaseType}.driver");
     }
 
     /**
