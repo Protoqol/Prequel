@@ -30,7 +30,7 @@
 
 <style lang="scss">
     #db-status-wrapper {
-        @apply w-56;
+        @apply w-40;
         @apply bg-gray-100;
         @apply py-4;
         @apply px-2;
@@ -49,7 +49,8 @@
         }
 
         button {
-            @apply w-full;
+            @apply w-1/2;
+            @apply m-auto;
             @apply mt-2;
             @apply flex;
             @apply justify-center;
