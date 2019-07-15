@@ -10,6 +10,7 @@
 - Fix #37, not all column values are showing up
 
 ### Functionality
+- [FEATURE] Testing framework setup by @aaronsaray (see #44)
 - [FEATURE] You now see the table structure in an empty table (see #38)
 - [FEATURE] Dark mode feature by @James-N-M (see #36).
 - [FEATURE] Table scrollbar auto-hides when there is no overflow.

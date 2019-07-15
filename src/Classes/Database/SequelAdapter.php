@@ -63,8 +63,7 @@ class SequelAdapter
             case 'mysql':
                 return 'SHOW DATABASES;';
             case 'pgsql':
-                return "SELECT datname FROM pg_database WHERE datistemplate = false AND datname = '"
-                    .config('prequel.database.database')."';";
+                return "SELECT datname FROM pg_database WHERE datistemplate = false;";
             default:
                 throw new Exception('Selected invalid or unsupported database driver');
         }

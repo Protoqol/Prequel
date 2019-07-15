@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace Protoqol\Prequel\Tests\Unit\Classes\Database;
 
@@ -12,16 +13,18 @@ use Protoqol\Prequel\Tests\TestCase;
  */
 class SequelAdapterTest extends TestCase
 {
+
     /**
      * @dataProvider showDatabasesDataProvider
+     *
      * @param string $databaseType
      * @param string $expected
      */
-    public function testShowDatabasesGetsProperCommand(string $databaseType, string $expected): void 
+    public function testShowDatabasesGetsProperCommand(string $databaseType, string $expected): void
     {
         // force config
-        config(["database.connections.{$databaseType}.driver" => $databaseType]);
-        
+        config([ "database.connections.{$databaseType}.driver" => $databaseType ]);
+
         $adapter = new SequelAdapter($databaseType);
         $this->assertEquals($expected, $adapter->showDatabases());
     }
@@ -33,19 +36,19 @@ class SequelAdapterTest extends TestCase
     public function showDatabasesDataProvider(): array
     {
         return [
-            ['mysql', 'SHOW DATABASES;'],
-            ['pgsql', 'SELECT datname FROM pg_database WHERE datistemplate = false;']
+            [ 'mysql', 'SHOW DATABASES;' ],
+            [ 'pgsql', 'SELECT datname FROM pg_database WHERE datistemplate = false;' ],
         ];
     }
-    
-    public function testShowDatabasesThrowsExceptionForUnsupported(): void 
+
+    public function testShowDatabasesThrowsExceptionForUnsupported(): void
     {
         //$this->expectException(\Exception::class);
         $this->expectExceptionMessage('Selected invalid or unsupported database driver');
 
         // force config
-        config(["database.connections.my-test-here.driver" => 'unsupported-driver']);
-        
+        config([ "database.connections.my-test-here.driver" => 'unsupported-driver' ]);
+
         $adapter = new SequelAdapter('my-test-here');
         $adapter->showDatabases();
     }
