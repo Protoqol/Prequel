@@ -23,8 +23,8 @@
                     @click="$emit('tableSelect', $event)"
                     v-for="table in database.tables">
 
-                    <font-awesome-icon class="mr-2 hover:text-gray-700" icon="asterisk"
-                                       :title="`${database.official_name}.${table.name.official}`"/>
+<!--                    <font-awesome-icon class="mr-2 hover:text-gray-700" icon="asterisk"-->
+<!--                                       :title="`${database.official_name}.${table.name.official}`"/>-->
 
                     <font-awesome-icon class="mr-2 hover:text-gray-700" icon="table"
                                        :title="`${database.official_name}.${table.name.official}`"/>
@@ -37,7 +37,7 @@
                 </li>
                 <li v-if="database.tables.length === 0"
                     class="menu-li-no-content">
-                    This database does not contain any data
+                    This database does not contain any tables
                 </li>
             </Accordion>
         </ul>

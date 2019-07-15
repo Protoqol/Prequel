@@ -1,5 +1,4 @@
-const mix      = require('laravel-mix');
-const atImport = require('postcss-import');
+const mix = require('laravel-mix');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,12 +12,11 @@ const atImport = require('postcss-import');
 
 mix.setResourceRoot('packages/protoqol/prequel').
     postCss('resources/assets/css/app.css', 'public', [
-      atImport(),
       require('tailwindcss'),
     ]).
     js('resources/assets/js/app.js', 'public').
     copy('public', '../../../public/vendor/prequel').
-    browserSync('http://localhost').
+    // browserSync('http://localhost').
     options({
       purifyCss: true,
     });

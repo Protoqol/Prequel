@@ -1,42 +1,24 @@
 <template>
     <div class="welcome">
-        <div class="img-wrapper">
-            <img class="no-drag" width="175" alt="Laravel Prequel" src="/vendor/prequel/favicon.png">
-        </div>
-        <h1>
-            Welcome to Laravel Prequel!
-        </h1>
-        <div class="button-wrapper">
-            <a :href="url.docs"
-               target="_blank"
-               class="bg-green-500 hover:bg-green-700">
-                Docs
-            </a>
-            <a :href="url.bug_report"
-               target="_blank"
-               class="bg-red-500 hover:bg-red-700">
-                Bug report
-            </a>
-            <a :href="url.github"
-               target="_blank"
-               class="bg-blue-500 hover:bg-blue-700">
-                Github
-            </a>
+        <h1>Overview</h1>
+        <div class="status-cards">
+            <Migrations class="flex-1"/>
+            <DatabaseStatus class="flex-1"/>
+            <Migrations class="flex-1"/>
         </div>
     </div>
 </template>
 
 <script>
-  export default {
-    name: 'Welcome',
+  import Migrations     from '../MainContent/ManageDatabase/Migrations';
+  import DatabaseStatus from '../MainContent/ManageDatabase/DatabaseStatus';
 
+  export default {
+    name      : 'Welcome',
+    components: {DatabaseStatus, Migrations},
     data() {
       return {
-        url: {
-          docs      : 'https://protoqol.github.io/Prequel',
-          bug_report: 'https://github.com/Protoqol/Prequel/issues/new?assignees=&labels=bug&template=bug-report.md&title=%5BBUG%5D',
-          github    : 'https://github.com/Protoqol/Prequel',
-        },
+        //
       };
     },
   };
@@ -46,19 +28,22 @@
     .welcome {
         @apply my-2;
 
-        .img-wrapper {
-            @apply w-full;
+        .status-cards {
             @apply flex;
-            @apply justify-center;
-            @apply items-center;
+            @apply flex-wrap;
+            @apply mt-2;
+            @apply bg-gray-100;
+            @apply border-t;
+            @apply border-b;
         }
 
         h1 {
-            @apply text-center;
-            @apply text-gray-900;
-            @apply font-semibold;
-            @apply text-2xl;
+            @apply text-left;
+            @apply text-header;
+            @apply font-normal;
+            @apply text-lg;
             @apply mt-2;
+            @apply ml-2;
         }
 
         .button-wrapper {

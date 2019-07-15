@@ -8,6 +8,8 @@
              5. Vue loops
     -->
     <div v-cloak>
+        <SwitchMode :modus="view.modus.mode" @switchMode="switchMode($event)"/>
+
         <Header :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
                 :tableStructure="table.structure"
@@ -15,19 +17,20 @@
                 :loading="table.loading"
                 :tableLoading="table.tableLoading"
                 :searchColumn="table.search.column"
-                :numberOfPages="table.numberOfRecords"
+                :numberOfRecords="table.numberOfRecords"
                 @searchInTable="searchInTable($event)"
                 @resetSearchInTable="checkUrlParameters"
                 @shouldBeLoading="table.loading = true"
                 @enhanceReadability="readabilityEnhancer"
                 @collapseSideBar="sideBarCollapseHandler"/>
 
-        <Paginator v-if="table.currentActiveName.length !== 0"
-                   :currentPage="table.pagination.currentPage"
-                   :numberOfPages="table.pagination.numberOfPages"
-                   @pageChange="changePage($event)"/>
+        <Paginator
+                v-if="table.currentActiveName.length !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"
+                :currentPage="table.pagination.currentPage"
+                :numberOfPages="table.pagination.numberOfPages"
+                @pageChange="changePage($event)"/>
 
-        <div v-else class="block w-1 h-2 my-4"></div>
+        <div v-else class="block w-1 h-1 my-2"></div>
 
         <div v-if="!prequel.error" class="main-content">
             <div class="wrapper">
@@ -43,6 +46,7 @@
 
                 <MainContent class="table-wrapper"
                              :class="view.collapsed ? 'main-content-collapsed' : 'main-content-expanded'"
+                             :mode="view.modus.mode"
                              :readability="view.readability"
                              :loading="table.loading"
                              :welcome-shown="view.welcomeShown"
@@ -59,16 +63,18 @@
 </template>
 
 <script>
+  import axios        from 'axios';
   import Header       from './components/Header/Header';
   import SideBar      from './components/SideBar/SideBar';
   import MainContent  from './components/MainContent/MainContent';
-  import axios        from 'axios';
   import PrequelError from './components/Elements/PrequelError';
-  import Paginator    from './components/MainContent/Paginator';
+  import Paginator    from './components/MainContent/Table/Paginator';
+  import SwitchMode   from './components/Elements/SwitchMode';
 
   export default {
     name      : 'App',
     components: {
+      SwitchMode,
       Paginator,
       PrequelError,
       MainContent,
@@ -132,6 +138,13 @@
          |---------------------------------------------
          */
         view: {
+          modus       : {
+            enum: {
+              BROWSE: 0,
+              MANAGE: 1,
+            },
+            mode: 0,
+          },
           collapsed   : false,
           readability : true,
           welcomeShown: false,
@@ -145,10 +158,21 @@
     },
 
     mounted() {
-      this.checkUrlParameters();
+      if (!this.prequel.error) {
+        this.checkUrlParameters();
+      }
     },
 
     methods: {
+      /**
+       * Switch between query and browse mode. Only when in actual table.
+       */
+      switchMode: function(mode) {
+        if (this.view.params.has('database') && this.view.params.has('table')) {
+          this.view.modus.mode = mode;
+          this.updateUrl();
+        }
+      },
 
       /**
        | Handles config changes.
@@ -186,6 +210,9 @@
         this.table.search.column = e.target.id;
       },
 
+      /**
+       | Enhance/disable readability
+       */
       readabilityEnhancer: function() {
         this.view.readability = (!this.view.readability);
         window.localStorage.setItem('readability', (!this.view.readability) + '');
@@ -207,6 +234,7 @@
 
       /**
        | Open active table in menu, and set it to active. Purely an UI/UX addition.
+       | @TODO When tables with same name exist in different databases, resolve to get correct one.
        */
       setActiveTable: function() {
         if (this.view.params.has('database') && this.view.params.has('table')) {
@@ -259,12 +287,18 @@
           this.getTableData(`${this.view.params.get('database')}.${this.view.params.get('table')}`, false);
           this.setActiveTable();
         }
+
+        if (this.view.params.has('mode')) {
+          this.view.modus.mode = (this.view.params.get('mode') === 'browse') ? 0 : 1;
+        }
+
       },
 
       /**
        | Update url query parameters to match current database and table, only updates when table was loaded.
        */
       updateUrl: function() {
+        this.view.params.set('mode', this.view.modus.mode === this.view.modus.enum.BROWSE ? 'browse' : 'manage');
         this.view.params.set('database', this.table.database);
         this.view.params.set('table', this.table.table);
         this.view.params.set('page', this.table.pagination.currentPage);
@@ -373,7 +407,7 @@
 
         try {
           result = await axios.get(
-              `/database/find/${this.table.database}/${this.table.table}/${column}/${value}/${queryType}`);
+              `/database/find/${this.table.database}/${this.table.table}/${column}/${queryType}/${value}`);
         }
         catch (err) {
           error = err;
@@ -393,54 +427,18 @@
 
 <style lang="scss">
 
-    * {
-        transition: .150ms ease;
-
-        /**
-            Disable outline
-        */
-        :focus {
-            outline: 0;
-        }
-
-        /**
-            Scrollbar style
-        */
-        ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-            background-color: #F5F5F5;
-            border-radius: 10px;
-            transition: .2s ease;
-        }
-
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 10px;
-            background-color: #f5f5f5;
-            transition: .2s ease;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            background: rgba(73, 125, 189, 0.5);
-            transition: .2s ease;
-        }
-
-        /**
-            Side bar transition
-         */
-        .slide-fade-enter-active {
-            transition: all .2s ease;
-        }
-
-        .slide-fade-leave-active {
-            transition: all .2s ease;
-        }
-
-        .slide-fade-enter, .slide-fade-leave-to {
-            opacity: 0;
-        }
+    .slide-fade-enter-active {
+        transition: all .2s ease;
     }
+
+    .slide-fade-leave-active {
+        transition: all .2s ease;
+    }
+
+    .slide-fade-enter, .slide-fade-leave-to {
+        opacity: 0;
+    }
+
 
     .main-content {
         @apply w-full;
@@ -452,7 +450,7 @@
             width: 98%;
 
             .table-wrapper {
-                @apply overflow-x-scroll;
+                /*@apply overflow-x-scroll;*/
             }
         }
 

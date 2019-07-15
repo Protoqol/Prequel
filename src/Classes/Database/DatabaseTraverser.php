@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Protoqol\Prequel\Classes\Database;
 
+use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -27,21 +28,28 @@ class DatabaseTraverser
     /**
      * Query collection based on $DB_CONN
      *
-     * @var $databaseQueries
+     * @var \Protoqol\Prequel\Classes\Database\SequelAdapter $databaseQueries
      */
     private $databaseQueries;
-    
+
+    /**
+     * Holds custom database connection.
+     *
+     * @var \Illuminate\Database\Connection $connection
+     */
+    private $connection;
+
     /**
      * DatabaseTraverser constructor.
      *
-     * @param  string|null  $databaseType  Type of database see $_databaseConn
+     * @param  string|null  $databaseType
      */
     public function __construct(?string $databaseType = null)
     {
-        $this->databaseConn = $databaseType
-            ?: config('database.default');
-
+        $this->databaseConn    = $databaseType
+            ?: config('prequel.database.connection');
         $this->databaseQueries = new SequelAdapter($this->databaseConn);
+        $this->connection      = (new DatabaseConnector())->getConnection();
     }
 
     /**
@@ -57,10 +65,14 @@ class DatabaseTraverser
         $flatTableCollection = [];
 
         foreach ($this->getAllDatabases() as $value) {
-            $databaseName = (object) $value['name'];
+            $databaseName = (object)$value['name'];
 
-            if (array_key_exists($databaseName->official, config('prequel.ignored'))) {
-                if (config('prequel.ignored.' . $databaseName->official)[0] === '*') {
+            if (array_key_exists(
+                $databaseName->official,
+                config('prequel.ignored')
+            )) {
+                if (config('prequel.ignored.'.$databaseName->official)[0]
+                    === '*') {
                     continue;
                 }
             }
@@ -70,12 +82,19 @@ class DatabaseTraverser
                 "pretty_name"   => $databaseName->pretty,
                 "tables"        => $this->getTablesFromDB($databaseName->official),
             ];
-    
-            foreach ($collection[$databaseName->pretty]['tables'] as $key => $table) {
-                $tables_to_ignore = config('prequel.ignored.'.$databaseName->official) ?? [];
-                if (array_search($table['name']['official'], $tables_to_ignore) === false) {
+
+            foreach (
+                $collection[$databaseName->pretty]['tables'] as $key => $table
+            ) {
+                $tablesToIgnore = config('prequel.ignored.'
+                        .$databaseName->official) ?? [];
+                if (!array_search(
+                    $table['name']['official'],
+                    $tablesToIgnore
+                )) {
                     $tableName = $databaseName->official.'.'
-                    .$table['name']['official'];
+                        .$table['name']['official'];
+
                     array_push($flatTableCollection, $tableName);
                 } else {
                     unset($collection[$databaseName->pretty]['tables'][$key]);
@@ -100,19 +119,18 @@ class DatabaseTraverser
      */
     public function getModel(?string $tableName)
     {
-        $model = 'App\\'.Str::studly(Str::singular($tableName));
-        if (class_exists($model)) {
-            return new $model;
+        if (!$tableName) {
+            return false;
         }
 
-        $model = 'App\\Models\\'.Str::studly(Str::singular($tableName));
-        if (class_exists($model)) {
-            return new $model;
-        }
+        $rootNamespace = app()->getNamespace();
+        $modelName = Str::studly(Str::singular($tableName));
 
-        $model = 'App\\Model\\'.Str::studly(Str::singular($tableName));
-        if (class_exists($model)) {
-            return new $model;
+        foreach (['', 'Model\\', 'Models\\'] as $subNamespace) {
+            $model = $rootNamespace.$subNamespace.$modelName;
+            if (class_exists($model)) {
+                return new $model;
+            }
         }
 
         return false;
@@ -131,7 +149,8 @@ class DatabaseTraverser
         string $database,
         string $table,
         array $column
-    ) :array {
+    ) :array
+    {
         $select = [
             'TABLE_SCHEMA',
             'TABLE_NAME',
@@ -141,7 +160,8 @@ class DatabaseTraverser
             'COLUMN_COMMENT',
         ];
 
-        $result = (DB::table("information_schema.COLUMNS")
+        $result = ($this->connection
+            ->table("information_schema.COLUMNS")
             ->select($select)
             ->where([
                 ['TABLE_SCHEMA', '=', $database],
@@ -150,7 +170,7 @@ class DatabaseTraverser
             ])
             ->get())->toArray();
 
-        return Arr::flatten((array) $result);
+        return Arr::flatten((array)$result);
     }
 
     /**
@@ -163,7 +183,7 @@ class DatabaseTraverser
      */
     public function getTableStructure(string $database, string $table) :array
     {
-        $columns = DB::select("SHOW COLUMNS FROM `$database`.`$table`");
+        $columns = $this->connection->select("SHOW COLUMNS FROM `$database`.`$table`");
         return $columns;
     }
 
@@ -177,19 +197,33 @@ class DatabaseTraverser
      */
     public function getTablesFromDB(string $database) :array
     {
-        $tables = DB::select($this->databaseQueries->showTablesFrom($database));
+        $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
+
+        // Collect differently if postgres. @TODO.
+        $tmp = [];
+        if ($this->databaseConn === 'pgsql') {
+            for ($i = 0; $i < count($tables); $i++) {
+                if ($tables[$i]->schemaname === $database) {
+                    array_push($tmp, $tables[$i]);
+                }
+            }
+            unset($tables);
+            $tables = $tmp;
+        }
+
         return $this->normalise($tables);
     }
 
     /**
      * Get all tables from "main" database (DB_DATABASE in .env)
      *
+     * @Note Unused
      * @return array
      * @throws \Exception
      */
     public function getAllTables() :array
     {
-        $tables = DB::select($this->databaseQueries->showTables());
+        $tables = $this->connection->select($this->databaseQueries->showTables());
         return $this->normalise($tables);
     }
 
@@ -201,13 +235,13 @@ class DatabaseTraverser
      */
     public function getAllDatabases() :array
     {
-        $databases = DB::select($this->databaseQueries->showDatabases());
+        $databases = $this->connection->select($this->databaseQueries->showDatabases());
         return $this->normalise($databases);
     }
 
     /**
      * Normalise query results; assumes a lot about the structure, which can
-     * potentially cause problems later on.
+     * potentially cause problems later on. @TODO
      * Assumed structure:
      *  -----------------
      *  Array [
@@ -215,19 +249,23 @@ class DatabaseTraverser
      *       'String': Mixed (single value)
      *  -----------------
      *
-     * @param  array  $arr  | Query results
+     * @param  array  $arr  Query results
      *
      * @return array
      */
-    public function normalise(array $arr)
+    public function normalise(array $arr) :array
     {
         $normalised = [];
 
-        for ($iterator = 0; $iterator < count($arr); $iterator++) {
-            foreach ($arr[$iterator] as $value) {
-                $arrayValue = ((array) $value)[0];
+        for ($i = 0; $i < count($arr); $i++) {
+            foreach ($arr[$i] as $value) {
+                if (!$value || !is_string($value)) {
+                    continue;
+                }
 
-                $normalised[$iterator]['name'] = [
+                $arrayValue = Arr::first((array)$value);
+
+                $normalised[$i]['name'] = [
                     "official" => $arrayValue,
                     "pretty"   => $this->prettifyName($arrayValue),
                 ];

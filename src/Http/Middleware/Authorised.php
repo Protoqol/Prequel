@@ -6,6 +6,7 @@ namespace Protoqol\Prequel\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\DB;
+use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 
 /**
  * Class Authorised
@@ -45,11 +46,11 @@ class Authorised
                 'error_detailed' => $this->databaseConnectionCheck()->detailed,
                 'http_code'      => 503,
                 'env'            => [
-                    'connection' => config('app.default'),
-                    'database'   => config('app.mysql.database'),
-                    'host'       => config('app.mysql.host'),
-                    'port'       => config('app.mysql.port'),
-                    'user'       => config('app.mysql.user'),
+                    'connection' => config('prequel.database.connection'),
+                    'database'   => config('prequel.database.database'),
+                    'host'       => config('prequel.database.host'),
+                    'port'       => config('prequel.database.port'),
+                    'user'       => config('prequel.database.username'),
                 ],
             ]);
         }
@@ -67,18 +68,19 @@ class Authorised
         $connection = [];
 
         try {
+            $conn       = (new DatabaseConnector())->getConnection();
             $connection = [
-                'connected' => (bool) DB::connection()->getPdo(),
-                'detailed'  => DB::connection()->getPdo(),
+                'connected' => (bool)$conn->getPdo(),
+                'detailed'  => $conn->getPdo(),
             ];
         } catch (\Exception $exception) {
             $connection = [
                 'connected' => false,
-                'detailed'  => 'No valid database connection',
+                'detailed'  => 'Could not create a valid database connection.',
             ];
         }
 
-        return (object) $connection;
+        return (object)$connection;
     }
 
     /**
@@ -88,7 +90,7 @@ class Authorised
      */
     private function configurationCheck()
     {
-        return (object) [
+        return (object)[
             'enabled'  => (config('prequel.enabled')
                 && config('app.env') !== 'production'),
             'detailed' => 'Prequel has been disabled.',

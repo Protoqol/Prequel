@@ -50,9 +50,9 @@ class DatabaseController extends Controller
     /**
      * DatabaseActionController's constructor
      *
-     * @param  \Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest  $request
+     * @param  \Illuminate\Http\Request|\Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest  $request
      */
-    public function __construct(PrequelDatabaseRequest $request)
+    public function __construct($request)
     {
         $this->tableName     = $request->table;
         $this->databaseName  = $request->database;
@@ -71,12 +71,12 @@ class DatabaseController extends Controller
             && $this->databaseName
             === config('database.connections.mysql.database')
         ) {
-            $tableData = $this->model->paginate(100);
+            $tableData = $this->model->paginate(config('prequel.pagination'));
         } else {
-            $tableData = DB::table($this->qualifiedName)->paginate(100);
+            $tableData = DB::table($this->qualifiedName)
+                ->paginate(config('prequel.pagination'));
         }
 
-//        dd($tableData);
         return [
             "table"     => $this->qualifiedName,
             "structure" => app(DatabaseTraverser::class)->getTableStructure(
@@ -89,6 +89,7 @@ class DatabaseController extends Controller
 
     /**
      * Get count of rows in table
+     * Not yet used.
      *
      * @return array
      */
@@ -104,31 +105,24 @@ class DatabaseController extends Controller
     }
 
     /**
-     * Try to find input in each column in table.
+     * Find given value in given column with given operator.
      *
-     * @TODO Prefetch if possible with ID
      * @TODO Clean up, this is nowhere near production ready
      * @return mixed
      */
     public function findInTable()
     {
-        $column    = Route::current()->parameter('column');
-        $value     = Route::current()->parameter('value');
-        $queryType = Route::current()->parameter('type');
+        $column    = (string)Route::current()->parameter('column');
+        $value     = (string)Route::current()->parameter('value');
+        $queryType = (string)Route::current()->parameter('type');
 
-        if ($queryType === 'LIKE') {
-            return $this->model
-                ? $this->model->where($column, 'LIKE', '%'.$value.'%')
-                    ->paginate(100)
-                : DB::table($this->qualifiedName)
-                    ->where($column, 'LIKE', '%'.$value.'%')
-                    ->paginate(100);
-        }
+        $value = ($queryType === 'LIKE') ? '%'.$value.'%' : $value;
 
         return $this->model
             ? $this->model->where($column, $queryType, $value)
-                ->paginate(100)
+                ->paginate(config('prequel.pagination'))
             : DB::table($this->qualifiedName)
-                ->where($column, $queryType, $value)->paginate(100);
+                ->where($column, $queryType, $value)
+                ->paginate(config('prequel.pagination'));
     }
 }

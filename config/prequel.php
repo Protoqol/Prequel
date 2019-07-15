@@ -4,15 +4,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Prequel Master Switch
+    | Prequel Master Switch : boolean
     |--------------------------------------------------------------------------
     |
-    | Manually disable/enable Prequel, if in production Prequel will always
-    | be disabled. Reason being that nobody should ever be able to directly look
+    | Manually disable/enable Prequel, if in production Prequel will always be
+    | disabled. Reason being that nobody should ever be able to directly look
     | inside your database besides you or your dev team (obviously).
     |
     */
-    'enabled' => env('PREQUEL_ENABLED', true),
+    'enabled'    => env('PREQUEL_ENABLED', true),
 
 
     /*
@@ -24,49 +24,51 @@ return [
     | Prequel API routes.
     |
     */
-    'path'    => 'prequel',
+    'path'       => 'prequel',
 
     /*
     |--------------------------------------------------------------------------
-    | Prequel Database Configuration
+    | Prequel Database Configuration : array
     |--------------------------------------------------------------------------
     |
-    | Database configuration.
+    | This enables you to fully configure your database connection for Prequel.
     |
     */
-    'DB'      => [
-        'CONNECTION' => env('DB_CONNECTION', 'mysql'),
-        'HOST'       => env('DB_HOST', '127.0.0.1'),
-        'PORT'       => env('DB_PORT', '3306'),
-        'DATABASE'   => env('DB_DATABASE', 'homestead'),
-        'USERNAME'   => env('DB_USERNAME', 'homestead'),
-        'PASSWORD'   => env('DB_PASSWORD', 'secret'),
+    'database'   => [
+        'connection' => env('DB_CONNECTION', 'mysql'),
+        'host'       => env('DB_HOST', '127.0.0.1'),
+        'port'       => env('DB_PORT', '3306'),
+        'database'   => env('DB_DATABASE', 'homestead'),
+        'username'   => env('DB_USERNAME', 'homestead'),
+        'password'   => env('DB_PASSWORD', 'secret'),
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Prequel ignored databases and tables
+    | Prequel ignored databases and tables : array
     |--------------------------------------------------------------------------
+    | Databases and tables that will be ignored during database discovery.
     |
-    | Databases and tables that will be ignored during database discovery
-    |
-    | Example to ignore 'foo_database.users' and 'foo_database.password_resets':
-    |
-    |  'foo_database' => [
-    |         'users',
-    |         'password_resets'
-    |  ]
-    |
-    | Example to ignore the entire database using a wildcard
-    |
-    | 'foo_database' => [ '*' ]
+    | Using 'mysql' => ['foo']  ignores only the mysql.foo table.
+    | Using 'mysql' => ['*'] ignores the entire mysql database.
     |
     */
-    'ignored' => [
+    'ignored'    => [
         // 'information_schema'  => ['*'],
         // 'sys'                 => ['*'],
         // 'performance_schema'  => ['*'],
         // 'mysql'               => ['*'],
         '#mysql50#lost+found' => ['*'],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prequel pagination per page : integer
+    |--------------------------------------------------------------------------
+    |
+    | When Prequel retrieves paginated information, this is the number of
+    | records that will be in each page.
+    |
+    */
+    'pagination' => 100,
 ];
