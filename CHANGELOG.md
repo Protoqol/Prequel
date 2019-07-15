@@ -18,6 +18,7 @@
 - [FEATURE] Separate browsing and managing modes. 
     - Added tab switch in the top-left to switch between Browse and Manage modes.
     - Added new default query parameter that contains the current mode.
+    - Further functionality to be added.
 - [FEATURE] Prequel now uses it's own database instance with the config defined in `config/prequel.php::database`
 - [FEATURE] Pagination feature by @aaronsaray (see #26)
 - [FEATURE] Added extra error suggestions.
