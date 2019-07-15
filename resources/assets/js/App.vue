@@ -161,6 +161,8 @@
       if (!this.prequel.error) {
         this.checkUrlParameters();
       }
+
+      window.addEventListener('popstate', this.handlePopState);
     },
 
     methods: {
@@ -320,12 +322,13 @@
        | @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
        | @returns {Promise<boolean>}
        */
-      getTableData: async function(databaseTable = `${this.table.database}.${this.table.table}`, dynamicLoad = true) {
+      getTableData: async function(
+          databaseTable = `${this.table.database}.${this.table.table}`, dynamicLoad = true,
+          updateUrlHistory                                                          = true) {
+
         if (!databaseTable.target && dynamicLoad) {
           return false;
         }
-
-        this.resetTableView();
 
         let loadWasSuccess = false,
             result         = {},
@@ -347,8 +350,7 @@
         this.table.table             = table[1];
 
         try {
-          result = await axios.get(
-              `/database/get/${table[0]}/${table[1]}?page=${this.table.pagination.currentPage}`);
+          result = await axios.get(`/database/get/${table[0]}/${table[1]}?page=${this.table.pagination.currentPage}`);
         }
         catch (err) {
           error = err;
@@ -365,7 +367,10 @@
             this.table.numberOfRecords          = result.data.data.total;
             this.table.structure                = result.data.structure;
             this.table.error.loadError          = false;
-            this.updateUrl();
+
+            if (updateUrlHistory) {
+              this.updateUrl();
+            }
           }
 
           if (typeof error === 'object' && error.response) {
@@ -374,7 +379,10 @@
             this.table.structure              = [];
             this.table.error.loadError        = true;
             this.table.error.loadErrorMessage = error.response.data.message;
-            this.updateUrl();
+
+            if (updateUrlHistory) {
+              this.updateUrl();
+            }
           }
         }
         return loadWasSuccess;
@@ -420,8 +428,18 @@
         return !!this.table.data;
       },
 
+      /**
+       * Handles and tracks pop state.
+       *
+       */
+      handlePopState() {
+        this.view.params                  = new URLSearchParams(window.location.search);
+        this.table.pagination.currentPage = parseInt(this.view.params.get('page'));
+        this.table.database               = this.view.params.get('database');
+        this.table.table                  = this.view.params.get('table');
+        this.getTableData(`${this.table.database}.${this.table.table}`, false, false);
+      },
     },
-
   };
 </script>
 
