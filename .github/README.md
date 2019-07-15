@@ -3,18 +3,17 @@
   
 # Laravel Prequel x.x.x-beta tbd -- DEV Version - Should only be used by developers of Prequel
 <p align="center">
-    <a href="https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master">
-	    <img src="https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?=master"/>	
+    <a href="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev">
+	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev"/>	
     </a>
-    <a href="https://github.com/protoqol/prequel/graphs/contributors" alt="Contributors">
-        <img src="https://img.shields.io/github/contributors/protoqol/prequel.svg" />
+    <a href="https://packagist.org/packages/protoqol/prequel">
+	    <img src="https://img.shields.io/badge/php-%5E7.2-lightblue.svg"/>	
+    </a>
+    <a href="https://laravel.com/">
+	    <img src="https://img.shields.io/badge/laravel-%5E5.6-lightblue.svg"/>	
     </a>
     <a href="https://github.com/badges/shields/pulse" alt="Activity">
         <img src="https://img.shields.io/github/commit-activity/m/badges/shields.svg" />
-    </a>
-    <a href="https://discord.gg/vZpwDVU">
-        <img src="https://img.shields.io/discord/598160569660342327.svg?logo=discord"
-            alt="chat on Discord">
     </a>
     <a href="https://twitter.com/intent/follow?screen_name=Protoqol_XYZ">
         <img src="https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social"
