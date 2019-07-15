@@ -22,7 +22,8 @@
     }
   },
   "require-dev": {
-    "orchestra/testbench": "^3.7"
+    "orchestra/testbench": "^3.7",
+    "phpmd/phpmd": "^2.6"
   },
   "autoload": {
     "psr-4": {
@@ -33,5 +34,13 @@
     "psr-4": {
       "Protoqol\\Prequel\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "phpmd": [
+      "@php vendor/bin/phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
+    ]
+  },
+  "scripts-descriptions": {
+    "phpmd": "Runs PHPMD based on original configuration.  You can find the new mess detector report at http://localhost/vendor/prequel/phpmd.html Note that 'Avoid using static access to class' errors should be ignored."
   }
 }
