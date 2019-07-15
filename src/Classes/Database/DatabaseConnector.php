@@ -7,7 +7,6 @@ use PDO;
 
 /**
  * Class DatabaseConnector
- *
  * @package Protoqol\Prequel\Classes\Database
  */
 class DatabaseConnector
@@ -21,6 +20,7 @@ class DatabaseConnector
     public function getConnection()
     {
         $this->connection = (new Connection($this->getPdo()));
+
         return $this->connection;
     }
 
@@ -44,8 +44,8 @@ class DatabaseConnector
         $connection = config('prequel.database.connection');
         $database   = config('prequel.database.database');
         $host       = config('prequel.database.host');
-        $port       = (int)config('prequel.database.port');
+        $port       = config('prequel.database.port');
 
-        return $connection.':dbname='.$database.';host='.$host.';port='.$port;
+        return $connection . ':dbname=' . $database . ';host=' . $host . ';port=' . $port;
     }
 }

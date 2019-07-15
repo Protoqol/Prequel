@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 use Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest;
 
 /**
  * Class DatabaseActionController
- *
  * @package Protoqol\Prequel\Http\Controllers
  */
 class DatabaseController extends Controller
@@ -21,36 +21,38 @@ class DatabaseController extends Controller
 
     /**
      * Qualified table name; 'database.table'
-     *
      * @var string $qualifiedName
      */
-    public $qualifiedName;
+    private $qualifiedName;
 
     /**
      * Table name
-     *
      * @var string $tableName
      */
-    public $tableName;
+    private $tableName;
 
     /**
      * Database name
-     *
      * @var string $databaseName
      */
-    public $databaseName;
+    private $databaseName;
 
     /**
      * Holds model for given table if one exists.
-     *
      * @var Model $model
      */
-    public $model;
+    private $model;
+
+    /**
+     * Holds connection using credentials from config.
+     * @var \Illuminate\Database\Connection $connection
+     */
+    private $connection;
 
     /**
      * DatabaseActionController's constructor
      *
-     * @param  \Illuminate\Http\Request|\Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest  $request
+     * @param \Illuminate\Http\Request|\Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest $request
      */
     public function __construct($request)
     {
@@ -58,45 +60,51 @@ class DatabaseController extends Controller
         $this->databaseName  = $request->database;
         $this->qualifiedName = $request->qualifiedName;
         $this->model         = $request->model;
+        $this->connection    = (new DatabaseConnector())->getConnection();
     }
 
     /**
      * Get table data, table structure and its qualified name
-     *
      * @return mixed
      */
     public function getTableData()
     {
-        if ($this->model
-            && $this->databaseName
-            === config('database.connections.mysql.database')
-        ) {
-            $tableData = $this->model->paginate(config('prequel.pagination'));
-        } else {
-            $tableData = DB::table($this->qualifiedName)
-                ->paginate(config('prequel.pagination'));
+        // If Model exists
+        if ($this->model && $this->databaseName === config('database.connections.mysql.database')) {
+            $hidden    = $this->model->getHidden();
+            $paginated = $this->model->paginate(config('prequel.pagination'));
+            $paginated->setCollection($paginated->getCollection()->makeVisible($hidden));
+
+            return [
+                "table"     => $this->qualifiedName,
+                "structure" => app(DatabaseTraverser::class)->getTableStructure(
+                    $this->databaseName,
+                    $this->tableName
+                ),
+                "data"      => $paginated,
+            ];
         }
 
+        // Usage of the DB facade should be avoided since this uses the default config, and not the prequel config. @TODO refactor
         return [
             "table"     => $this->qualifiedName,
             "structure" => app(DatabaseTraverser::class)->getTableStructure(
                 $this->databaseName,
                 $this->tableName
             ),
-            "data"      => $tableData,
+            "data"      => DB::table($this->qualifiedName)->paginate(100),
         ];
     }
 
     /**
      * Get count of rows in table
      * Not yet used.
-     *
      * @return array
      */
-    public function countTableRecords() :array
+    public function countTableRecords(): array
     {
         $count = DB::table($this->qualifiedName)
-            ->count('id');
+                   ->count('id');
 
         return [
             "table" => $this->qualifiedName,
@@ -106,23 +114,19 @@ class DatabaseController extends Controller
 
     /**
      * Find given value in given column with given operator.
-     *
-     * @TODO Clean up, this is nowhere near production ready
+     * @TODO Clean up.
      * @return mixed
      */
     public function findInTable()
     {
         $column    = (string)Route::current()->parameter('column');
-        $value     = (string)Route::current()->parameter('value');
         $queryType = (string)Route::current()->parameter('type');
+        $value     = (string)Route::current()->parameter('value');
+        $value     = ($queryType === 'LIKE') ? '%' . $value . '%' : $value;
 
-        $value = ($queryType === 'LIKE') ? '%'.$value.'%' : $value;
-
-        return $this->model
-            ? $this->model->where($column, $queryType, $value)
-                ->paginate(config('prequel.pagination'))
-            : DB::table($this->qualifiedName)
-                ->where($column, $queryType, $value)
-                ->paginate(config('prequel.pagination'));
+        // Usage of the DB facade should be avoided since this uses the default config, and not the prequel config. @TODO refactor
+        return DB::table($this->qualifiedName)
+                 ->where($column, $queryType, $value)
+                 ->paginate(config('prequel.pagination'));
     }
 }

@@ -1,21 +1,21 @@
 <template>
     <div class="welcome">
-        <h1>Overview</h1>
-        <div class="status-cards">
-            <Migrations class="flex-1"/>
-            <DatabaseStatus class="flex-1"/>
-            <Migrations class="flex-1"/>
+        <div class="img-wrapper">
+            <img class="no-drag" width="175" alt="Laravel Prequel" :src="$root.prequel.asset.logo">
         </div>
+        <h1>
+            Welcome to Laravel Prequel!
+        </h1>
+        <Management/>
     </div>
 </template>
 
 <script>
-  import Migrations     from '../MainContent/ManageDatabase/Migrations';
-  import DatabaseStatus from '../MainContent/ManageDatabase/DatabaseStatus';
+  import Management from '../MainContent/ManageDatabase/Management';
 
   export default {
     name      : 'Welcome',
-    components: {DatabaseStatus, Migrations},
+    components: {Management},
     data() {
       return {
         //
@@ -24,26 +24,24 @@
   };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
     .welcome {
-        @apply my-2;
+        @apply mt-2;
 
-        .status-cards {
+        .img-wrapper {
+            @apply w-full;
             @apply flex;
-            @apply flex-wrap;
-            @apply mt-2;
-            @apply bg-gray-100;
-            @apply border-t;
-            @apply border-b;
+            @apply justify-center;
+            @apply items-center;
         }
 
         h1 {
-            @apply text-left;
-            @apply text-header;
-            @apply font-normal;
-            @apply text-lg;
+            @apply text-center;
+            @apply text-gray-900;
+            @apply font-semibold;
+            @apply text-2xl;
             @apply mt-2;
-            @apply ml-2;
+            @apply mb-4;
         }
 
         .button-wrapper {

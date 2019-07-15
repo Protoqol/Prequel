@@ -10,3 +10,4 @@ yarn-error.log
 mix-manifest.json
 todo.md
 /public/phpmd.html
+phpunit-watcher.yml

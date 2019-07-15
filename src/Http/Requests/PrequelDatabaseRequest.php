@@ -8,7 +8,6 @@ use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
  * Class PrequelDatabaseRequest
- *
  * @property mixed database
  * @property mixed table
  * @property mixed model
@@ -20,7 +19,6 @@ class PrequelDatabaseRequest extends FormRequest
 
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -30,21 +28,19 @@ class PrequelDatabaseRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
         return [
-            'database'      => 'string',
-            'table'         => 'string',
-            'qualifiedName' => 'string',
+            'database'      => 'required|string',
+            'table'         => 'required|string',
+            'qualifiedName' => 'required|string',
         ];
     }
 
     /**
      * Get the validator instance for the request.
-     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     public function getValidatorInstance()
@@ -55,22 +51,22 @@ class PrequelDatabaseRequest extends FormRequest
             $request['database'] = $this->route('database');
             $request['table']    = $this->route('table');
 
-            $request['qualifiedName'] = $request['database'].'.'
-                .$request['table'];
+            $request['qualifiedName'] = $request['database'] . '.' . $request['table'];
 
             $request['model'] = app(DatabaseTraverser::class)
                 ->getModel($request['table']);
+
         } catch (Exception $exception) {
             return parent::getValidatorInstance();
         }
 
         $this->getInputSource()->replace($request);
+
         return parent::getValidatorInstance();
     }
 
     /**
      * Get the error messages for the defined validation rules.
-     *
      * @return array
      */
     public function messages()

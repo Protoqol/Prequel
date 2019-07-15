@@ -40,7 +40,8 @@
       'tableLoadError',
       'tableErrorDetailed',
       'welcomeShown',
-      'mode'],
+      'mode',
+    ],
   };
 </script>
 
@@ -51,5 +52,6 @@
         @apply bg-white;
         @apply rounded;
         @apply shadow;
+        @apply ml-1;
     }
 </style>

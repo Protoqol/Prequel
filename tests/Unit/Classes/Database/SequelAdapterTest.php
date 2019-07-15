@@ -45,10 +45,10 @@ class SequelAdapterTest extends TestCase
 
     public function testShowDatabasesThrowsExceptionForUnsupported(): void
     {
-        //$this->expectException(\Exception::class);
+        // $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Selected invalid or unsupported database driver');
 
-        // force config
+        // Force config
         config(["database.connections.my-test-here.driver" => 'unsupported-driver']);
 
         $adapter = new SequelAdapter('my-test-here');

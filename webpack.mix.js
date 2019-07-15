@@ -16,7 +16,7 @@ mix.setResourceRoot('packages/protoqol/prequel').
     ]).
     js('resources/assets/js/app.js', 'public').
     copy('public', '../../../public/vendor/prequel').
-    // browserSync('http://localhost').
+    browserSync('http://localhost').
     options({
-      purifyCss: true,
+        purifyCss: true,
     });

@@ -45,10 +45,8 @@
       },
 
       resetMigrations: function() {
-        api.get('reset/migrations').then(res => {
-          if (res) {
-            window.location.reload();
-          }
+        api.get('reset/migrations').finally(() => {
+          window.location.reload();
         });
       },
     },
@@ -57,6 +55,7 @@
 
 <style lang="scss">
     #migration-wrapper {
+        @apply flex-1;
         @apply w-40;
         @apply bg-gray-100;
         @apply py-4;

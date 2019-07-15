@@ -4,8 +4,10 @@
 
 ### TODO before release
 - Fix #19, non-alphabetic characters breaking Prequel. 
-- Add support for postgres.
-- Fix #37, not all column values are showing up
+- Fix #37, not all column values are showing up -> Caused by model's $hidden properties.
+
+##### Planned for next release
+- Add support for postgres - Will be pushed back to next release.
 
 ### Functionality
 - [FEATURE] Testing framework setup by @aaronsaray (see #44)
@@ -20,10 +22,10 @@
     - Further functionality to be added.
 - [FEATURE] Prequel now uses it's own database instance with the config defined in `config/prequel.php::database`
 - [FEATURE] Pagination feature by @aaronsaray (see #26)
-- [FEATURE] Added extra error suggestions.
-- [FEATURE] Config: DB key renamed to database; changed all child keys to lowercase.
+- [BREAKING][REFACTOR]Config: DB key renamed to database; changed all child keys to lowercase.
 
 ### Fixed
+- [FIX] Added extra error suggestions.
 - [FIX] Scrollbar appearing on the bottom of table view.
 - [FIX] With Prequel now using it's own config issues #23 #24 #29 are solved.
 - [FIX] Changed all config calls for database credentials solving. 

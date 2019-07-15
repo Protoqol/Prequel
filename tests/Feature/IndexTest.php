@@ -21,7 +21,7 @@ class IndexTest extends TestCase
 
         $response = $this->get(route('prequel.index'));
 
-        $response->assertStatus(200); // 200, even though it's showing an error
+        $response->assertStatus(503);
         $response->assertViewIs('Prequel::error');
         $response->assertSeeText('Error in Prequel');
         $response->assertSeeText('Could not create a valid database connection.');
@@ -32,11 +32,12 @@ class IndexTest extends TestCase
         config(['prequel.enabled' => false]);
 
         $response = $this->get(route('prequel.index'));
-        $response->assertStatus(200); // 200, even though it's showing an error
+        $response->assertStatus(403);
         $response->assertViewIs('Prequel::error');
         $response->assertSeeText('Error in Prequel');
         $response->assertSeeText('Prequel has been disabled.');
     }
+
 
     // additional tests should be ran that indicate successful connections
 
