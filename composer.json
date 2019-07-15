@@ -38,9 +38,13 @@
   "scripts": {
     "phpmd": [
       "@php vendor/bin/phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
+    ],
+    "test": [
+      "@php vendor/bin/phpunit"
     ]
   },
   "scripts-descriptions": {
-    "phpmd": "Runs PHPMD based on original configuration.  You can find the new mess detector report at http://localhost/vendor/prequel/phpmd.html Note that 'Avoid using static access to class' errors should be ignored."
+    "phpmd": "Runs PHPMD based on original configuration.  You can find the new mess detector report at http://localhost/vendor/prequel/phpmd.html Note that 'Avoid using static access to class' errors should be ignored.",
+    "test": "Runs the default PHPUnit test suite configured in phpunit.xml"
   }
 }
