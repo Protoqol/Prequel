@@ -6,7 +6,6 @@
 - Fix #19, non-alphabetic characters breaking Prequel. 
 - Figure out support exact for Laravel 5.x
 - Add support for postgres.
-- Tests
 - Fix #37, not all column values are showing up
 
 ### Functionality
