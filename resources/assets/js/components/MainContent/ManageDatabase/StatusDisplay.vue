@@ -1,7 +1,12 @@
 <template>
     <div id="db-status-wrapper">
-        <h1> {{header}} </h1>
-        <h2> {{value}} {{unit}} </h2>
+        <h1>
+            {{header}}
+            <slot ref="alert"></slot>
+        </h1>
+        <h2> {{value}}
+            <small v-if="unit">/ {{unit}}</small>
+        </h2>
     </div>
 </template>
 
@@ -23,6 +28,9 @@
         @apply border-r;
 
         h1 {
+            @apply flex;
+            @apply flex-row;
+            @apply justify-between;
             @apply text-lg;
             @apply text-left;
             @apply ml-2;

@@ -294,7 +294,9 @@
         @apply flex-col;
         @apply justify-center;
         @apply items-center;
-        @apply mt-5;
+        @apply pt-5;
+        @apply border-t-4;
+        @apply border-indigo-500;
 
         .header-flexbox {
             @apply flex;
