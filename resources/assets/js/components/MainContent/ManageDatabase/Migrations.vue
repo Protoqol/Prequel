@@ -54,7 +54,9 @@
 </script>
 
 <style lang="scss">
+    
     #migration-wrapper {
+
         @apply flex-1;
         @apply w-40;
         @apply bg-gray-100;
@@ -75,7 +77,7 @@
         }
 
         button {
-            @apply w-1/2;
+            @apply w-4/5;
             @apply m-auto;
             @apply mt-2;
             @apply flex;
