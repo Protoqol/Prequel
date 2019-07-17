@@ -1,6 +1,7 @@
 <template>
     <div class="paginator-wrapper">
-        <paginate :page-count="numberOfPages"
+        <paginate ref="paginate"
+                  :page-count="numberOfPages"
                   :force-page="parseInt(currentPage)"
                   :click-handler="pageChange"
                   :container-class="'pagination'"
@@ -21,6 +22,11 @@
     name      : 'Paginator',
     props     : ['currentPage', 'numberOfPages'],
     components: {Paginate},
+    watch     : {
+      currentPage(newValue) {
+        this.$refs.paginate.selected = newValue;
+      },
+    },
     methods   : {
       pageChange: function(pageNum) {
         this.$emit('pageChange', pageNum);
@@ -34,16 +40,19 @@
         @apply w-full;
         @apply flex;
         @apply justify-center;
-        @apply my-2;
+        @apply mb-2;
 
         .pagination {
             @apply flex;
         }
 
+        li {
+            @apply text-secondary;
+        }
+
         .page-item {
             @apply px-2;
             @apply cursor-pointer;
-
             &:hover {
                 @apply text-gray-500;
             }
@@ -58,7 +67,7 @@
             @apply py-0;
             @apply px-3;
             @apply rounded;
-            @apply bg-gray-300;
+            background-color: var(--input-background-color);
             @apply text-gray-800;
             @apply font-bold;
             @apply shadow;

@@ -6,10 +6,10 @@ namespace Protoqol\Prequel\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\DB;
+use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 
 /**
  * Class Authorised
- *
  * @package Protoqol\Prequel\Http\Middleware
  */
 class Authorised
@@ -19,15 +19,15 @@ class Authorised
      * Handle an incoming request.
      * Checks if Prequel is enabled and has a valid database connection.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
      *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         if (!$this->configurationCheck()->enabled) {
-            return view('Prequel::error', [
+            return response()->view('Prequel::error', [
                 'error_detailed' => $this->configurationCheck()->detailed,
                 'http_code'      => 403,
                 'env'            => [
@@ -37,21 +37,21 @@ class Authorised
                     'port'       => 'protected',
                     'user'       => 'protected',
                 ],
-            ]);
+            ], 403);
         }
 
         if (!$this->databaseConnectionCheck()->connected) {
-            return view('Prequel::error', [
+            return response()->view('Prequel::error', [
                 'error_detailed' => $this->databaseConnectionCheck()->detailed,
                 'http_code'      => 503,
                 'env'            => [
-                    'connection' => config('app.default'),
-                    'database'   => config('app.mysql.database'),
-                    'host'       => config('app.mysql.host'),
-                    'port'       => config('app.mysql.port'),
-                    'user'       => config('app.mysql.user'),
+                    'connection' => config('prequel.database.connection'),
+                    'database'   => config('prequel.database.database'),
+                    'host'       => config('prequel.database.host'),
+                    'port'       => config('prequel.database.port'),
+                    'user'       => config('prequel.database.username'),
                 ],
-            ]);
+            ], 503);
         }
 
         return $next($request);
@@ -59,7 +59,6 @@ class Authorised
 
     /**
      * Check connection with database
-     *
      * @return object
      */
     private function databaseConnectionCheck()
@@ -67,28 +66,28 @@ class Authorised
         $connection = [];
 
         try {
+            $conn       = (new DatabaseConnector())->getConnection();
             $connection = [
-                'connected' => (bool) DB::connection()->getPdo(),
-                'detailed'  => DB::connection()->getPdo(),
+                'connected' => (bool)$conn->getPdo(),
+                'detailed'  => $conn->getPdo(),
             ];
         } catch (\Exception $exception) {
             $connection = [
                 'connected' => false,
-                'detailed'  => 'No valid database connection',
+                'detailed'  => 'Could not create a valid database connection.',
             ];
         }
 
-        return (object) $connection;
+        return (object)$connection;
     }
 
     /**
      * Check if Prequel is enabled and/or in development
-     *
      * @return object
      */
     private function configurationCheck()
     {
-        return (object) [
+        return (object)[
             'enabled'  => (config('prequel.enabled')
                 && config('app.env') !== 'production'),
             'detailed' => 'Prequel has been disabled.',

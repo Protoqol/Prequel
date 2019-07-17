@@ -1,44 +1,130 @@
-![Laravel Prequel](./assets/prequel.png)
 
-# Laravel Prequel 0.6.2-beta
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Protoqol/Prequel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Protoqol/Prequel/?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/protoqol/prequel.svg?style=flat)](https://packagist.org/packages/protoqol/prequel)
-![@Protoqol_XYZ](https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social)
+![Laravel Prequel](./assets/prequel.png)  
+  
+# Laravel Prequel v1.1.1
+<p align="center">
+    <a href="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev">
+	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev"/>	
+    </a>
+    <a href="https://packagist.org/packages/protoqol/prequel">
+	    <img src="https://img.shields.io/badge/php-%5E7.2-lightblue.svg"/>	
+    </a>
+    <a href="https://laravel.com/">
+	    <img src="https://img.shields.io/badge/laravel-%5E5.6-lightblue.svg"/>	
+    </a>
+    <a href="https://github.com/badges/shields/pulse" alt="Activity">
+        <img src="https://img.shields.io/github/commit-activity/m/badges/shields.svg" />
+    </a>
+    <a href="https://twitter.com/intent/follow?screen_name=Protoqol_XYZ">
+        <img src="https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social"
+            alt="follow on Twitter">
+    </a>
+</p>
 
-#### What is Laravel Prequel exactly?
-Laravel Prequel is meant to be a database management tool to replace the need for separate standalone database tools like phpMyAdmin, Sequel Pro or MySQL Workbench. With its (hopefully) clear and concise UI, Prequel is to be a modern and lightweight database browser/tool ready for the web of the future. Prequel's design is purposefully based on that of [Laravel Telescope](https://github.com/laravel/telescope) because (web-)developers today have enough to learn and master already, so let's help eachother out and make sure to not add anything virtually useless to that huge pile of knowledge. 
+#### What is Laravel Prequel exactly?  
+Laravel Prequel is meant to be a database management tool to replace the need for separate standalone database tools like phpMyAdmin, Sequel Pro or MySQL Workbench. With its (hopefully) clear and concise UI, Prequel is to be a modern and lightweight database browser/tool ready for the web of the future. Prequel's design is purposefully based on that of [Laravel Telescope](https://github.com/laravel/telescope) because (web-)developers today have enough to learn and master already, so let's help eachother out and make sure to not add anything virtually useless to that huge pile of knowledge.   
+  
+![Prequel Screenshot](./assets/prequel_screenshot.png)  
+> Clear and concise database management  
+  
+## Installation
+###### To install follow the instructions below.  
+```bash  
+$ composer require protoqol/prequel  
+$ php artisan prequel:install
+```  
+###### When installation and publishing is done navigate to `/prequel` in your browser to see Prequel in action!  
+  
+#### Issues, bugs and feature requests can be reported [here!](https://github.com/Protoqol/Prequel/issues/new/choose)  
 
-![Prequel Screenshot](./assets/prequel_screenshot.png)
-> Clear and concise database management
+## Configuration
+You might have noticed that, while publishing a config file appeared under `config/prequel.php`. 
+That configuration file looks something like this.
+> Note that you can define `PREQUEL_ENABLED` in your .env file.
+```php
+[  
 
-#### Laravel Prequel (Beta)
-Laravel Prequel has entered/surpassed v0.5.0-beta, that means I deemed it ready enough to be tested by the public.
-But note that a beta release is still a beta release and is not a stable release so it is definitely not recommended to be used in production environments. 
-
-Luckily, Prequel has taken precautions, Prequel automatically disables itself in a production environment as people looking directly into your database is - let's just say - not ideal.
-
-The beta supports `mysql`.
-
-## Installation (the beta release way)
-###### To install follow the instructions below.
-```bash
-$ composer require protoqol/prequel
-$ php artisan vendor:publish --tag=config
-$ php artisan vendor:publish --tag=public
+    /*  
+    |--------------------------------------------------------------------------  
+    | Prequel Master Switch : boolean
+    |--------------------------------------------------------------------------  
+    |  
+    | Manually disable/enable Prequel, if in production Prequel will always  
+    | be disabled. Reason being that nobody should ever be able to directly look  
+    | inside your database besides you or your dev team (obviously).  
+    |  
+    */
+    'enabled'      => env('PREQUEL_ENABLED', true),  
+      
+    /*  
+    |--------------------------------------------------------------------------  
+    | Prequel Path : string
+    |--------------------------------------------------------------------------  
+    |  
+    | The path where Prequel will be residing. Note that this does not affect 
+    | Prequel API routes.  
+    |  
+    */
+    'path'         => 'prequel',  
+    
+    /*  
+    |--------------------------------------------------------------------------  
+    | Prequel Database Configuration : array
+    |--------------------------------------------------------------------------  
+    |  
+    | This enables you to fully configure your database-connection for Prequel.
+    |  
+    */
+    'database' => [  
+      'connection' => env('DB_CONNECTION', 'mysql'),  
+      'host'       => env('DB_HOST', '127.0.0.1'),  
+      'port'       => env('DB_PORT', '3306'),  
+      'database'   => env('DB_DATABASE', 'homestead'),  
+      'username'   => env('DB_USERNAME', 'homestead'),  
+      'password'   => env('DB_PASSWORD', 'secret'),  
+     ],  
+     
+    /*  
+    |--------------------------------------------------------------------------  
+    | Prequel ignored databases and tables : array
+    |--------------------------------------------------------------------------  
+    | Databases and tables that will be ignored during database discovery.
+    |
+    | Using 'mysql' => ['*'] ignores the entire mysql database.
+    | Using 'mysql' => ['foo']  ignores only the mysql.foo table.
+    */
+    'ignored'      => [  
+         // 'information_schema'  => ['*'],  
+         // 'sys'                 => ['*'],
+         // 'performance_schema'  => ['*'], 
+         // 'mysql'               => ['*'],
+         '#mysql50#lost+found'    => ['*'],  
+     ],
+     
+    /*
+    |--------------------------------------------------------------------------
+    | Prequel pagination per page : integer
+    |--------------------------------------------------------------------------
+    |
+    | When Prequel retrieves paginated information, this is the number of
+    | records that will be in each page.
+    |
+    */
+    'pagination' => 100,
+];
 ```
-###### When installation and publishing is done navigate to `/prequel` in your browser to see Prequel in action!
-
-#### Issues, bugs and feature requests can be reported [here!](https://github.com/Protoqol/Prequel/issues/new/choose)
+  
+![Prequel Screenshot](./assets/prequel_screen_.png)  
+> Clear and concise database management  
 
 ## Contributing
-
-See [Contributing](CONTRIBUTING.md) to see how you can contribute to Prequel! 
-
-
-## Contributors
-- [Quinten Schorsij](https://github.com/QuintenJustus)
-- [Contributors](https://github.com/Protoqol/Prequel/graphs/contributors)
-
-## License
-
+See [Contributing](CONTRIBUTING.md) to see how you can contribute to Prequel!   
+  
+  
+## Contributors  
+- [Quinten Schorsij](https://github.com/QuintenJustus)  
+- [Contributors](https://github.com/Protoqol/Prequel/graphs/contributors)  
+  
+## License  
+  
 Prequel is licensed under the MIT License. Please see [License File](LICENSE) for more information.

@@ -37,17 +37,18 @@
         width: 17%;
 
         .table-search-input {
-            @apply bg-white;
-            @apply ml-2;
+            @apply bg-input;
+            border-style: var(--input-border);
             @apply appearance-none;
             @apply border;
             @apply w-full;
             @apply rounded;
+            @apply shadow;
             @apply py-2;
             @apply px-3;
-            @apply text-gray-700;
+            @apply text-secondary;
             @apply leading-tight;
-            width: 97%;
+            @apply mb-1;
 
             &:focus {
                 @apply outline-none;

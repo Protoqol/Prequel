@@ -48,7 +48,7 @@
         // If no suggestions were found.
         if (errorCollection.length === 0) {
           errorCollection.push(
-              'Prequel could not make sense of the current error!',
+              'Prequel could not suggest any fixes.',
           );
         }
 

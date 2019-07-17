@@ -8,12 +8,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('vendor/prequel/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('vendor/prequel/app.css') }}">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vividlog@latest/dist/vividLog.js"></script>
-
 
     <title>{{ (config('app.name')) }} Prequel</title>
 </head>
-<body class="overflow-x-auto overflow-y-scroll" style="background-color: #edf1f3;">
+<body class="overflow-x-auto overflow-y-scroll bg-page">
 
 <div id="prequel"></div>
 

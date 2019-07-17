@@ -1,3 +1,5 @@
+import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
+
 window._ = require('lodash');
 
 window.v = window.vividLog;
@@ -14,8 +16,8 @@ window.axios.defaults.baseURL                            = `${window.location.or
 /**
  * Fontawesome
  */
-import Vue               from 'vue';
-import {library}         from '@fortawesome/fontawesome-svg-core';
+import Vue                     from 'vue';
+import {library}               from '@fortawesome/fontawesome-svg-core';
 import {
   faAdjust,
   faAsterisk,
@@ -25,20 +27,24 @@ import {
   faSearchPlus,
   faTable,
   faTools,
-}                        from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+  faEye,
+  faWrench,
+  faRunning,
+}                              from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon}       from '@fortawesome/vue-fontawesome';
 
 library.add(faDatabase, faTable, faChevronCircleUp, faSearchPlus, faTools,
-    faGlasses, faAsterisk, faAdjust);
+    faGlasses, faAsterisk, faAdjust, faExclamationTriangle, faEye, faWrench,
+    faRunning);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 /**
  * Highlight.js
  */
-import highlight         from 'highlight.js';
+import highlight               from 'highlight.js';
 import 'highlight.js/styles/github.css';
-import sql               from 'highlight.js/lib/languages/sql';
+import sql                     from 'highlight.js/lib/languages/sql';
 
 highlight.registerLanguage('sql', sql);
 

@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - '7.2'
+  - '7.3'
+env:
+  - LARAVEL_VERSION=5.6.*
+  - LARAVEL_VERSION=5.7.*
+  - LARAVEL_VERSION=5.8.*
+matrix:
+  fast_finish: true
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --prefer-source --no-interaction
+  - if [ "$LARAVEL_VERSION" != "" ]; then composer require --dev "laravel/laravel:${LARAVEL_VERSION}" --no-update; fi;
+script:
+  - phpunit

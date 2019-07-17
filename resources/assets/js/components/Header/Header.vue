@@ -4,10 +4,12 @@
             <div class="header-left">
                 <div class="header-left-logo">
                     <div class="header-left-logo-image">
-                        <img width="32rem" height="32rem" alt="Protoqol Prequel"
-                             :src="$root.prequel.asset.logo">
+                        <a href="/prequel">
+                            <img width="32rem" height="32rem" alt="Protoqol Prequel"
+                                 :src="$root.prequel.asset.logo">
+                        </a>
                     </div>
-                    <h1 class="header-left-logo-text">
+                    <h1 class="header-left-logo-text text-logo">
                         <span>Laravel</span> Prequel
                         <a href="https://github.com/Protoqol"
                            target="_blank"
@@ -18,7 +20,12 @@
                 </div>
                 <div class="header-left-connection">
                     <p title="Current connection">
-                        {{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
+                        <span :title="'User: ' + env.user" v-html="lenCheck(env.user)"></span>@<span
+                            :title="'Host: ' + env.host"
+                            v-html="lenCheck(env.host)"></span>:<span
+                            :title="'Port: ' + env.port" v-html="lenCheck(env.port)"></span>/<span
+                            :title="'Database: ' + env.database"
+                            v-html="lenCheck(env.database)"></span>
                     </p>
                 </div>
             </div>
@@ -27,7 +34,7 @@
                 <h1 v-if="activeTable">
                     <span v-if="!tableLoading" id="header-table-message">
                         <font-awesome-icon class="fa" icon="table"/>
-                        {{activeTable}} <small>({{ numberOfPages }} records)</small>
+                        {{ activeTable }} <small>({{ numberOfRecords }} records)</small>
                     </span>
                     <img v-else width="20" height="20" :src="$root.prequel.asset.loader" alt="Loading table data...">
                 </h1>
@@ -70,13 +77,12 @@
                     <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
                 </button>
 
-                <!-- Dark Mode Button -->
-                <!-- <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow" -->
-                <!--    title="Set Dark Mode (Not available yet)"                                                                            -->
-                <!--    :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"                                    -->
-                <!--    @click="view.darkMode = (!view.darkMode)">                                                                           -->
-                <!--    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;                                                                -->
-                <!-- </button>                                                                                                               -->
+                <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+                        title="Set Dark Mode (Not available yet)"
+                        :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
+                        @click="darkModeButtonHandler">
+                    <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
+                </button>
 
                 <button :class="showSideBar ? 'sidebar-button-enabled' : 'sidebar-button-disabled'"
                         :title="`${sideBarStatusText} side bar`"
@@ -103,7 +109,7 @@
       'tableLoading',
       'tableStructure',
       'searchColumn',
-      'numberOfPages',
+      'numberOfRecords',
     ],
 
     data() {
@@ -123,6 +129,11 @@
           queryType       : '=',
         },
       };
+    },
+
+    created() {
+      this.view.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false;
+      this.changeTheme();
     },
 
     watch: {
@@ -146,6 +157,17 @@
     methods: {
 
       /**
+       | Check length and cut down if too long.
+       */
+      lenCheck: function(val) {
+        val = val + '';
+        if (val.length > 10) {
+          return val.substr(0, 7) + '...';
+        }
+        return val;
+      },
+
+      /**
        | This is not working as intended. @TODO
        | Handles config changes.
        | Holds data like readability or side bar preferences in localStorage
@@ -164,6 +186,8 @@
         else {
           window.localStorage.setItem('showSidebar', 'false');
         }
+
+        // add theme button handler code here potentially
       },
 
       /**
@@ -237,6 +261,25 @@
         this.readability = !this.readability;
         this.$emit('enhanceReadability');
       },
+
+      /**
+       | Handles dark mode button actions.
+       | Emits event to change theme globally.
+       */
+      darkModeButtonHandler: function() {
+        this.view.darkMode = !this.view.darkMode;
+        localStorage.setItem('dark-mode', JSON.stringify(this.view.darkMode));
+        this.changeTheme();
+      },
+
+      changeTheme: function() {
+        if (this.view.darkMode) {
+          document.body.className += ' ' + 'theme-dark';
+        }
+        else {
+          document.body.classList.remove('theme-dark');
+        }
+      },
     },
   };
 </script>
@@ -251,11 +294,16 @@
         @apply flex-col;
         @apply justify-center;
         @apply items-center;
-        @apply mt-5;
+        @apply pt-5;
+        @apply border-t-4;
+        @apply border-indigo-500;
 
         .header-flexbox {
             @apply flex;
             @apply w-5/6;
+            @apply pb-4;
+            @apply border-b;
+            border-color: var(--border-color);
 
             /**
                 Header - Left - Logo, Connection information
@@ -282,12 +330,15 @@
 
                     .header-left-logo-text {
                         @apply text-2xl;
+                        letter-spacing: 1px;
+                        color: var(--header-text-color);
 
                         span {
                             @apply font-bold;
                         }
 
                         a {
+                            letter-spacing: normal;
                             @apply not-italic;
                             @apply text-xs;
                             @apply font-light;
@@ -348,7 +399,7 @@
                     @apply flex-row;
 
                     .search-column-input {
-                        @apply bg-white;
+                        @apply bg-input;
                         @apply shadow;
                         @apply appearance-none;
                         @apply border;
@@ -356,8 +407,9 @@
                         @apply w-1/3;
                         @apply py-2;
                         @apply px-3;
-                        @apply text-gray-700;
+                        @apply text-secondary;
                         @apply leading-tight;
+                        border-style: var(--input-border);
 
                         &:focus {
                             @apply outline-none;
@@ -369,10 +421,12 @@
                         @apply bg-transparent;
                         @apply font-bold ;
                         @apply text-lg;
+                        @apply bg-input;
+                        @apply text-secondary;
                     }
 
                     .search-value-input {
-                        @apply bg-white;
+                        @apply bg-input;
                         @apply shadow;
                         @apply appearance-none;
                         @apply border;
@@ -380,8 +434,9 @@
                         @apply w-3/5;
                         @apply py-2;
                         @apply px-3 ;
-                        @apply text-gray-700;
+                        @apply text-secondary;
                         @apply leading-tight;
+                        border-style: var(--input-border);
 
                         &:focus {
                             @apply outline-none;
@@ -389,7 +444,7 @@
                     }
 
                     .search-get-button {
-                        @apply bg-indigo-500;
+                        background-color: var(--button-background);
                         @apply mx-1;
                         @apply text-white;
                         @apply font-semibold;
@@ -399,16 +454,16 @@
                         @apply shadow;
 
                         &:hover {
-                            @apply bg-indigo-400;
+                            background-color: var(--button-background-hover);
                         }
 
                         &:active {
-                            @apply bg-indigo-300;
+                            background-color: var(--button-background-active);
                         }
                     }
 
                     .search-reset-button {
-                        @apply bg-indigo-300;
+                        background-color: var(--button-background-light);
                         @apply text-white;
                         @apply font-semibold;
                         @apply py-1;
@@ -417,11 +472,11 @@
                         @apply shadow;
 
                         &:hover {
-                            @apply bg-indigo-200;
+                            background-color: var(--button-background-light-hover);
                         }
 
                         &:active {
-                            @apply bg-indigo-100;
+                            background-color: var(--button-background-light-active);
                         }
                     }
                 }
@@ -447,10 +502,6 @@
                     @apply rounded;
                     @apply shadow;
 
-                    &:hover {
-                        @apply bg-indigo-100;
-                    }
-
                     &:active {
                         @apply bg-indigo-200;
                     }
@@ -458,11 +509,11 @@
 
                 .dark-mode-button-enabled {
                     color: #fff;
-                    background-color: #667eea;
+                    background-color: var(--button-background);
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: rgba(105, 144, 255, 0.7);
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }
@@ -480,11 +531,11 @@
 
                 .readability-button-enabled {
                     color: #fff;
-                    background-color: #667eea;
+                    background-color: var(--button-background);
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: rgba(105, 144, 255, 0.7);
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }
@@ -495,7 +546,7 @@
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: #667eea;
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }
@@ -512,12 +563,12 @@
                 }
 
                 .sidebar-button-disabled {
-                    background-color: #667eea;
+                    background-color: var(--button-background-hover);
                     color: #fff;
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: rgba(105, 144, 255, 0.7);
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }
@@ -541,7 +592,7 @@
             @apply block;
             @apply mt-4;
             @apply w-5/6;
-            border-bottom: 1px solid #d5dfe9;
+            border-bottom: 1px solid var(--header-bottom-border-color);
         }
     }
 

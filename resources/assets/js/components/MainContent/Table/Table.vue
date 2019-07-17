@@ -9,14 +9,14 @@
                 </th>
                 <th class="table-th"
                     :id="struct.Field"
-                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-gray-800'"
+                    :class="struct.Key === 'PRI' ? 'text-indigo-800' : 'text-tableHeader'"
                     :title="struct.Field + ' - ' + struct.Type"
                     :type="struct.Type"
                     @click="$emit('columnSelect', $event)"
                     v-for="struct in structure">
                     {{readability ? enhanceReadability(struct.Field) : struct.Field}}
                     <br>
-                    <p class="text-xs font-light text-gray-700 -mt-1" @click.prevent>
+                    <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
                         {{struct.Type}}</p>
                 </th>
             </tr>
@@ -52,6 +52,10 @@
     components: {TableEmpty},
     props     : ['structure', 'data', 'readability'],
 
+    mounted() {
+      this.checkTableOverflow();
+    },
+
     data() {
       return {
 
@@ -77,6 +81,17 @@
     },
 
     methods: {
+
+      checkTableOverflow: function() {
+        let tableContainer = document.getElementById('top-horizontal-scroll');
+
+        if (tableContainer.clientWidth === tableContainer.scrollWidth) {
+          tableContainer.style.overflowX = 'unset';
+        }
+        else {
+          tableContainer.style.overflowX = 'auto';
+        }
+      },
 
       seeCompleteData: function(ev) {
         if (ev.target.classList.contains('ellipsis') && ev.target.contentEditable === 'false') {
@@ -164,17 +179,20 @@
 
     .table-wrapper {
         table {
+            @apply mb-6;
             @apply w-full;
             @apply rounded;
             @apply bg-gray-200;
 
             thead {
                 @apply border-b;
+                border-color: var(--border-color);
                 @apply rounded;
-                @apply bg-gray-400;
+                @apply bg-tableColumn;
 
                 .table-th {
                     @apply border;
+                    border-color: var(--column-border);
                     @apply p-1;
                     @apply whitespace-no-wrap;
                     @apply text-sm;
@@ -183,21 +201,22 @@
                     @apply cursor-pointer;
 
                     &:hover {
-                        @apply bg-gray-300;
+                        @apply bg-tableHover;
                     }
                 }
 
 
                 .table-th-actions {
                     @apply border;
+                    border-color: var(--column-border);
                     @apply p-2;
                     @apply text-sm;
-                    @apply text-gray-800;
+                    @apply text-secondary;
                     @apply text-center;
                     @apply cursor-pointer;
 
                     &:hover {
-                        @apply bg-gray-300;
+                        @apply bg-tableHover;
                         @apply border;
                     }
                 }
@@ -205,11 +224,11 @@
             }
 
             .table-row:nth-child(odd) {
-                @apply bg-gray-100;
+                @apply bg-tableRowOdd;
             }
 
             .table-row:nth-child(even) {
-                @apply bg-gray-200;
+                @apply bg-tableRowEven;
             }
 
             .table-td {
@@ -217,9 +236,9 @@
                 @apply text-sm;
                 @apply text-center;
                 @apply cursor-pointer;
-
+                @apply text-secondary;
                 &:hover {
-                    @apply bg-gray-300;
+                    @apply bg-tableHover;
                 }
             }
 
@@ -229,11 +248,12 @@
                 @apply text-sm;
                 @apply text-center;
                 @apply cursor-pointer;
-
+                @apply text-secondary;
                 &:hover {
-                    @apply bg-gray-400;
+                    @apply bg-tableHover;
                 }
             }
+
             transform: rotateX(180deg);
         }
 

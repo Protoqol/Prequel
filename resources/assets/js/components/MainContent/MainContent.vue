@@ -1,20 +1,25 @@
 <template>
-    <div class="main-content-wrapper">
+    <div class="main-content-wrapper bg-component">
 
         <div v-if="!welcomeShown">
             <Welcome/>
         </div>
 
-        <TableStatus v-if="loading || tableLoadError"
-                     :loading="loading"
-                     :table-error-detailed="tableErrorDetailed"
-                     :table-load-error="tableLoadError"/>
+        <div v-if="mode === $root.view.modus.enum.BROWSE">
+            <TableStatus v-if="loading || tableLoadError"
+                         :loading="loading"
+                         :table-error-detailed="tableErrorDetailed"
+                         :table-load-error="tableLoadError"/>
 
-        <Table v-if="!loading && !tableLoadError && welcomeShown"
-               :data="data"
-               :readability="readability"
-               :structure="structure"
-               @columnSelect="$emit('columnSelect', $event)"/>
+            <Table v-if="!loading && !tableLoadError && welcomeShown"
+                   :data="data"
+                   :readability="readability"
+                   :structure="structure"
+                   @columnSelect="$emit('columnSelect', $event)"/>
+        </div>
+        <div v-if="mode === $root.view.modus.enum.MANAGE">
+            <ManageTable/>
+        </div>
     </div>
 </template>
 
@@ -22,11 +27,22 @@
   import Table       from './Table/Table';
   import TableStatus from './Table/TableStatus';
   import Welcome     from '../Elements/Welcome';
+  import Management  from './ManageDatabase/Management';
+  import ManageTable from './ManageTable/ManageTable';
 
   export default {
     name      : 'MainContent',
-    components: {Welcome, TableStatus, Table},
-    props     : ['structure', 'data', 'readability', 'loading', 'tableLoadError', 'tableErrorDetailed', 'welcomeShown'],
+    components: {ManageTable, Management, Welcome, TableStatus, Table},
+    props     : [
+      'structure',
+      'data',
+      'readability',
+      'loading',
+      'tableLoadError',
+      'tableErrorDetailed',
+      'welcomeShown',
+      'mode',
+    ],
   };
 </script>
 
@@ -34,8 +50,9 @@
     .main-content-wrapper {
         @apply block;
         @apply h-full;
-        @apply bg-white;
+        background-color: var(--main-content);
         @apply rounded;
         @apply shadow;
+        @apply ml-1;
     }
 </style>
