@@ -33,7 +33,13 @@ Laravel Prequel is meant to be a database management tool to replace the need fo
 $ composer require protoqol/prequel  
 $ php artisan prequel:install
 ```  
-###### When installation and publishing is done navigate to `/prequel` in your browser to see Prequel in action!  
+###### When installation and publishing is done navigate to `/prequel` in your browser to see Prequel in action!
+
+## Updating
+###### To update you can use the command specified below.
+```bash
+$ php artisan prequel:update
+```
   
 #### Issues, bugs and feature requests can be reported [here!](https://github.com/Protoqol/Prequel/issues/new/choose)  
 
