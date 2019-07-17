@@ -1,5 +1,5 @@
 <template>
-    <div id="db-status-wrapper">
+    <div class="status">
         <h1>
             {{header}}
             <slot ref="alert"></slot>
@@ -17,15 +17,16 @@
   };
 </script>
 
-<style lang="scss">
-    #db-status-wrapper {
+<style scoped lang="scss">
+    .status {
         @apply flex-1;
         @apply w-40;
-        @apply bg-gray-100;
+        background-color: var(--table-item-overview);
         @apply py-4;
         @apply px-2;
         @apply border-l;
         @apply border-r;
+        border-color: var(--border-color);
 
         h1 {
             @apply flex;
@@ -34,11 +35,11 @@
             @apply text-lg;
             @apply text-left;
             @apply ml-2;
-            @apply text-gray-700;
+            color: var(--header-text-color);
         }
 
         h2 {
-            @apply text-black;
+            color: var(--text-secondary-color);
             @apply text-xl;
             @apply mt-4;
             @apply text-center;

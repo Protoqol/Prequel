@@ -49,7 +49,7 @@
     .main-content-wrapper {
         @apply block;
         @apply h-full;
-        @apply bg-white;
+        background-color: var(--main-content);
         @apply rounded;
         @apply shadow;
         @apply ml-1;

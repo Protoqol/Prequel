@@ -2,6 +2,7 @@ source
 /node_modules
 /vendor
 /.idea
+.DS_STORE
 composer.lock
 package-lock.json
 npm-debug.log

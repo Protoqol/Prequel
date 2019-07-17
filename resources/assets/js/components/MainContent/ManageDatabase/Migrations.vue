@@ -54,18 +54,23 @@
 </script>
 
 <style lang="scss">
+
     #migration-wrapper {
+
         @apply flex-1;
         @apply w-40;
-        @apply bg-gray-100;
+        background-color: var(--table-item-overview);
         @apply py-4;
         @apply px-2;
         @apply border-l;
         @apply border-r;
+        border-color: var(--border-color);
 
         h1 {
             @apply text-lg;
-            @apply text-center;
+            @apply text-left;
+            @apply ml-2;
+            color: var(--header-text-color);
         }
 
         h2 {
@@ -75,33 +80,33 @@
         }
 
         button {
-            @apply w-1/2;
+            @apply w-4/5;
             @apply m-auto;
             @apply mt-2;
             @apply flex;
             @apply justify-center;
-            @apply bg-indigo-500;
+            background-color: var(--button-background);
             @apply text-white;
             @apply items-center;
             @apply rounded;
             @apply shadow;
 
             &:hover {
-                @apply bg-indigo-400;
+                background-color: var(--button-background-hover);
             }
 
             &:active {
-                @apply bg-indigo-300;
+                background-color: var(--button-background-active);
                 @apply shadow-none;
             }
 
             &:disabled, &[disabled] {
-                @apply bg-indigo-300;
+                background-color: var(--button-background-hover);
                 @apply shadow-none;
                 @apply cursor-default;
 
                 &:hover {
-                    @apply bg-indigo-300;
+                    background-color: var(--button-background-hover);
                 }
             }
         }

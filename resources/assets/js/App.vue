@@ -25,7 +25,7 @@
                 @collapseSideBar="sideBarCollapseHandler"/>
 
         <Paginator
-                v-if="table.currentActiveName.length !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"
+                v-if="table.currentActiveName.length !== 0 && table.data.total !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"
                 :currentPage="table.pagination.currentPage"
                 :numberOfPages="table.pagination.numberOfPages"
                 @pageChange="changePage($event)"/>
@@ -100,8 +100,9 @@
             database: '',
           },
           asset        : {
-            logo  : '/vendor/prequel/favicon.png',
-            loader: '/vendor/prequel/loader.gif',
+            logo   : '/vendor/prequel/favicon.png',
+            prequel: '/vendor/prequel/prequel.png',
+            loader : '/vendor/prequel/loader.gif',
           },
         },
 

@@ -1,7 +1,7 @@
 <template>
     <div class="welcome">
         <div class="img-wrapper">
-            <img class="no-drag" width="175" alt="Laravel Prequel" :src="$root.prequel.asset.logo">
+            <img class="no-drag" width="250" alt="Laravel Prequel" :src="$root.prequel.asset.prequel">
         </div>
         <Management/>
     </div>

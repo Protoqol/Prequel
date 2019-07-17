@@ -5,6 +5,18 @@
 :root {
     --scroll-track: #F5F5F5;
     --scroll-bar: #667eea;
+    --main-content: #fff;
+    --column-border: rgba(0, 0, 0, 0);
+    --table-item-overview: rgba(0, 0, 0, 0);
+    --table-item-text: #718096;
+    --list-header-text: #4a5568;
+    --border-color: #e2e8f0;
+    --button-background: #667eea;
+    --button-background-hover: #6988f7;
+    --button-background-active: #667eea;
+    --button-background-light: #97b3ed;
+    --button-background-light-hover: #a3bff9;
+    --button-background-light-active: #a7c3ff;
 
     --page-background-color: #edf1f3;
     --component-background-color: #fff;
@@ -19,11 +31,24 @@
     --input-border: '';
     --dropdown-background-color: var(--input-background-color);
     --text-secondary-color: #4a5568;
+    --text-secondary-color-invert: #ffffff;
 }
 
 .theme-dark {
     --scroll-track: #1c1c1c;
     --scroll-bar: #5a67d8;
+    --main-content: #424242;
+    --column-border: #4a5568;
+    --table-item-overview: #2d2d2d;
+    --table-item-text: #a1b2cd;
+    --list-header-text: #d4dfe6;
+    --border-color: #545454;
+    --button-background: #394fb1;
+    --button-background-hover: #3c52ca;
+    --button-background-active: #425bc0;
+    --button-background-light: #6176a1;
+    --button-background-light-hover: #6c84b4;
+    --button-background-light-active: #6b85b8;
 
     --logo-text-color: #e2edf4;
     --page-background-color: #1c1c1c;
@@ -38,6 +63,8 @@
     --input-border: border-none;
     --table-header-text-color: #e2edf4;
     --text-secondary-color: #e2edf4;
+    --text-secondary-color-invert: #4a5568;
+
 }
 
 * {

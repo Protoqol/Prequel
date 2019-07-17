@@ -4,7 +4,6 @@
             This query did not yield any result
         </h1>
         <div class="column-overview">
-            <h2>Columns in this table</h2>
             <div class="columns-wrapper">
                 <table>
                     <thead>
@@ -49,10 +48,7 @@
                     </tbody>
                 </table>
             </div>
-            <!--    @TODO Switch to management mode to insert new row        -->
-            <!--            <div class="buttons-wrapper">-->
-            <!--                <button>Insert new row</button>-->
-            <!--            </div>-->
+
         </div>
     </div>
 </template>
@@ -69,8 +65,9 @@
         transform: rotateX(180deg);
 
         h1 {
-            @apply my-4;
-            @apply text-gray-700;
+            @apply mt-4;
+            @apply mb-2;
+            color: var(--header-text-color);
             @apply w-full;
             @apply text-center;
         }
@@ -102,11 +99,13 @@
 
                     thead {
                         @apply border-b;
+                        border-color: var(--border-color);
                         @apply rounded;
                         @apply bg-tableColumn;
 
                         .table-th {
                             @apply border;
+                            border-color: var(--border-color);
                             @apply p-1;
                             @apply whitespace-no-wrap;
                             @apply text-sm;

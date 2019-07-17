@@ -22,11 +22,11 @@
     name      : 'Paginator',
     props     : ['currentPage', 'numberOfPages'],
     components: {Paginate},
-      watch: {
-        currentPage(newValue) {
-          this.$refs.paginate.selected = newValue
-        },
+    watch     : {
+      currentPage(newValue) {
+        this.$refs.paginate.selected = newValue;
       },
+    },
     methods   : {
       pageChange: function(pageNum) {
         this.$emit('pageChange', pageNum);
@@ -49,6 +49,7 @@
         li {
             @apply text-secondary;
         }
+
         .page-item {
             @apply px-2;
             @apply cursor-pointer;
@@ -66,7 +67,7 @@
             @apply py-0;
             @apply px-3;
             @apply rounded;
-            @apply bg-gray-300;
+            background-color: var(--input-background-color);
             @apply text-gray-800;
             @apply font-bold;
             @apply shadow;

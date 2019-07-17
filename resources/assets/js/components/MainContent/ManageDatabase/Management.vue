@@ -9,23 +9,29 @@
                            :value="app.serverInfo.QUERIES_PER_SECOND_AVG ? app.serverInfo.QUERIES_PER_SECOND_AVG : 'Could not retrieve'"
                            :unit="app.serverInfo.QUERIES_PER_SECOND_AVG ? 'queries per second' : '...'">
                 <slot ref="alert">
-                    <span class="badge-good">New</span>
+                    <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG && app.serverInfo.QUERIES_PER_SECOND_AVG === 0"
+                           type="critical"/>
+                    <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG && app.serverInfo.QUERIES_PER_SECOND_AVG >= 0.3"
+                           type="average"/>
+                    <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG && app.serverInfo.QUERIES_PER_SECOND_AVG >= 1"
+                           type="good"/>
                 </slot>
             </StatusDisplay>
 
             <StatusDisplay header="Active Threads"
                            :value="app.serverInfo.THREADS ? app.serverInfo.THREADS : 'Could not retrieve...'"
-                           :unit="app.serverInfo.THREADS ? 'Threads' : ''">
+                           :unit="app.serverInfo.THREADS ? 'threads' : ''">
                 <slot ref="alert">
-                    <span class="badge-critical">New</span>
+                    <Badge v-if="app.serverInfo.THREADS && app.serverInfo.THREADS > 0" type="good"/>
+                    <Badge v-else type="warning"/>
                 </slot>
             </StatusDisplay>
 
             <StatusDisplay header="Open Tables"
                            :value="app.serverInfo.OPEN_TABLES ? app.serverInfo.OPEN_TABLES : 'Could not retrieve...'"
-                           :unit="app.serverInfo.OPEN_TABLES ? 'Tables' : ''">
+                           :unit="app.serverInfo.OPEN_TABLES ? 'tables' : ''">
                 <slot ref="alert">
-                    <span class="badge-warning">New</span>
+                    <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
         </div>
@@ -37,7 +43,7 @@
                            :value="app.serverInfo.UPTIME ? secsToHours(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'hours' : ''">
                 <slot ref="alert">
-                    <span class="badge-neutral">New</span>
+                    <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
 
@@ -45,7 +51,7 @@
                            :value="app.serverInfo.UPTIME ? secsToMins(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'minutes' : ''">
                 <slot ref="alert">
-                    <span class="badge-neutral">New</span>
+                    <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
 
@@ -53,7 +59,7 @@
                            :value="app.serverInfo.UPTIME ? app.serverInfo.UPTIME : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'seconds' : ''">
                 <slot ref="alert">
-                    <span class="badge-neutral">New</span>
+                    <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
         </div>
@@ -64,10 +70,11 @@
   import api           from 'axios';
   import Migrations    from './Migrations';
   import StatusDisplay from './StatusDisplay';
+  import Badge         from '../../Elements/Badge';
 
   export default {
     name      : 'Management',
-    components: {StatusDisplay, Migrations},
+    components: {Badge, StatusDisplay, Migrations},
     data() {
       return {
         app: {},
@@ -146,6 +153,7 @@
             @apply mb-1;
             @apply pl-2;
             @apply border-t;
+            border-color: var(--border-color);
             @apply rounded;
         }
 
@@ -155,53 +163,7 @@
             @apply bg-gray-100;
             @apply border-t;
             @apply border-b;
-
-            .badge-neutral {
-                @apply rounded-full;
-                @apply bg-blue-300;
-                @apply uppercase;
-                @apply px-2;
-                @apply py-1;
-                @apply text-xs;
-                @apply font-medium;
-                @apply mr-3;
-            }
-
-            .badge-warning {
-                @apply rounded-full;
-                @apply bg-orange-300;
-                @apply text-white;
-                @apply uppercase;
-                @apply px-2;
-                @apply py-1;
-                @apply text-xs;
-                @apply font-bold;
-                @apply mr-3;
-            }
-
-            .badge-critical {
-                @apply rounded-full;
-                @apply bg-red-300;
-                @apply text-white;
-                @apply uppercase;
-                @apply px-2;
-                @apply py-1;
-                @apply text-xs;
-                @apply font-bold;
-                @apply mr-3;
-            }
-
-            .badge-good {
-                @apply rounded-full;
-                @apply bg-green-300;
-                @apply text-white;
-                @apply uppercase;
-                @apply px-2;
-                @apply py-1;
-                @apply text-xs;
-                @apply font-bold;
-                @apply mr-3;
-            }
+            border-color: var(--border-color);
         }
 
         .button-wrapper {

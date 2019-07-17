@@ -186,11 +186,13 @@
 
             thead {
                 @apply border-b;
+                border-color: var(--border-color);
                 @apply rounded;
                 @apply bg-tableColumn;
 
                 .table-th {
                     @apply border;
+                    border-color: var(--column-border);
                     @apply p-1;
                     @apply whitespace-no-wrap;
                     @apply text-sm;
@@ -206,6 +208,7 @@
 
                 .table-th-actions {
                     @apply border;
+                    border-color: var(--column-border);
                     @apply p-2;
                     @apply text-sm;
                     @apply text-secondary;
