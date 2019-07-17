@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!--        @TODO -->
+        <h1>Coming soon</h1>
     </div>
 </template>
 
@@ -10,6 +10,11 @@
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    h1 {
+        color: var(--header-text-color);
+        @apply text-2xl;
+        @apply text-center;
+    }
 
 </style>
