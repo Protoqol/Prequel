@@ -54,15 +54,24 @@ class AppStatus
      */
     private function serverInfo(): array
     {
-        $serverInfo         = $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_INFO);
-        $explodedServerInfo = explode('  ', $serverInfo);
-        $serverInfoArray    = [];
+        if($this->connection->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql') {
+            $serverInfoArray    = [
+                'UPTIME' => $this->connection->getPdo()->query('select extract(epoch from current_timestamp - pg_postmaster_start_time())')->fetch()[0]
+            ];
+        } else {
+            $serverInfo         = $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_INFO);
 
-        foreach ($explodedServerInfo as $attr) {
-            $split                 = explode(': ', $attr);
-            $key                   = strtoupper(str_replace(' ', '_', str_replace(':', '', $split[0])));
-            $serverInfoArray[$key] = $split[1];
+            $explodedServerInfo = explode('  ', $serverInfo);
+            $serverInfoArray    = [];
+
+            foreach ($explodedServerInfo as $attr) {
+                $split                 = explode(': ', $attr);
+                $key                   = strtoupper(str_replace(' ', '_', str_replace(':', '', $split[0])));
+                $serverInfoArray[$key] = $split[1];
+            }
         }
+        //$serverInfo = $this->connection->getPdo()->query('select extract(epoch from current_timestamp - pg_postmaster_start_time())')->fetch()[0];
+//        echo "<pre>".print_r($serverInfo, true)."</pre>";
 
         return $serverInfoArray;
     }
@@ -73,7 +82,9 @@ class AppStatus
      */
     public function userPermissions(): array
     {
-        $grants      = (array)$this->connection->select('SHOW GRANTS FOR CURRENT_USER();')[0];
+        //PostgreSQL
+        $grants      = (array)$this->connection->select('SELECT grantee, privilege_type FROM information_schema.role_table_grants;')[0];
+        //$grants      = (array)$this->connection->select('SHOW GRANTS FOR CURRENT_USER();')[0];
         $privs       = (string)array_values($grants)[0];
         $permissions = [];
 
