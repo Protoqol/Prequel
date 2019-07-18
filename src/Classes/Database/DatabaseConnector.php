@@ -25,11 +25,22 @@ class DatabaseConnector
     }
 
     /**
+    * @return Connection
+    */
+    public function getPostgreConnection(string $database)
+    {
+        $this->connection = (new Connection($this->getPdo($database)));
+
+        return $this->connection;
+    }
+
+    /**
+     * @param string $database Database name
      * @return \PDO
      */
-    private function getPdo()
+    private function getPdo(string $database = null)
     {
-        $dsn  = $this->constructDsn();
+        $dsn  = $this->constructDsn($database);
         $user = config('prequel.database.username');
         $pass = config('prequel.database.password');
 
@@ -37,12 +48,16 @@ class DatabaseConnector
     }
 
     /**
+     * @param string $database Database name
      * @return string
      */
-    private function constructDsn()
+    private function constructDsn(string $database = null)
     {
+        if(!$database){
+            $database = config('prequel.database.database');
+        }
+
         $connection = config('prequel.database.connection');
-        $database   = config('prequel.database.database');
         $host       = config('prequel.database.host');
         $port       = config('prequel.database.port');
 

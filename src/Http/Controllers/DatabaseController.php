@@ -85,6 +85,17 @@ class DatabaseController extends Controller
             ];
         }
 
+        if(config('prequel.database.connection') === "pgsql"){
+            return [
+                "table"     => $this->tableName,
+                "structure" => app(DatabaseTraverser::class)->getTableStructure(
+                    $this->databaseName,
+                    $this->tableName
+                ),
+                "data"      => DB::table($this->tableName)->paginate(100),
+            ];
+        }
+
         // Usage of the DB facade should be avoided since this uses the default config, and not the prequel config. @TODO refactor
         return [
             "table"     => $this->qualifiedName,

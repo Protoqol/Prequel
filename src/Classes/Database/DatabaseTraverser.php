@@ -6,10 +6,12 @@ namespace Protoqol\Prequel\Classes\Database;
 
 use phpDocumentor\Reflection\Types\Mixed_;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PDO;
 
 /**
  * Class DatabaseTraverser
@@ -167,7 +169,27 @@ class DatabaseTraverser
      */
     public function getTableStructure(string $database, string $table): array
     {
-        $columns = $this->connection->select("SHOW COLUMNS FROM `$database`.`$table`");
+        if($this->databaseConn === 'pgsql'){
+            $columns = [];
+            $connection = (new DatabaseConnector())->getPostgreConnection($database);
+            $temp_columns = $connection->select("SELECT column_name as Field, data_type as Type, is_nullable as Null, column_default as Default FROM information_schema.columns WHERE table_schema='public' AND table_name='".$table."'");
+            foreach ($temp_columns as $key => $array) {
+                foreach ($array as $column_key => $value) {
+                    $columns[$key][ucfirst($column_key)] = $value;
+                }
+                $columns[$key]["Key"] = "N/A";
+                $columns[$key]["Extra"] = "N/A";
+            }
+        } else {
+            $columns = $this->connection->select("SHOW COLUMNS FROM `$database`.`$table`");
+        }
+
+        //  [Field] => id - column_name
+        //  [Type] => int(10) unsigned - data_type
+        //  [Null] => NO - is_nullable
+        //  [Key] => PRI
+        //  [Default] => - column_default
+        //  [Extra] => auto_increment
 
         return $columns;
     }
@@ -182,19 +204,19 @@ class DatabaseTraverser
      */
     public function getTablesFromDB(string $database): array
     {
-        $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
-
-        // Collect differently if postgres. @TODO.
         $tmp = [];
 
         if ($this->databaseConn === 'pgsql') {
+            $connection = (new DatabaseConnector())->getPostgreConnection($database);
+            $tables = $connection->select($this->databaseQueries->showTablesFrom($database));
+
             for ($i = 0; $i < count($tables); $i++) {
-                if ($tables[$i]->schemaname === $database) {
-                    array_push($tmp, $tables[$i]);
-                }
+                array_push($tmp, $tables[$i]);
             }
             unset($tables);
             $tables = $tmp;
+        } else {
+            $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
         }
 
         return $this->normalise($tables);

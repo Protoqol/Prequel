@@ -55,8 +55,13 @@ class AppStatus
     private function serverInfo(): array
     {
         if($this->connection->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql') {
+            $query = 'select extract(epoch from current_timestamp - pg_postmaster_start_time())';
+            $query2 = 'select count(*) from pg_stat_activity where state=\'active\'';
+            $query3 = 'select * from pg_locks';
             $serverInfoArray    = [
-                'UPTIME' => $this->connection->getPdo()->query('select extract(epoch from current_timestamp - pg_postmaster_start_time())')->fetch()[0]
+                'UPTIME'    => $this->connection->getPdo()->query($query)->fetch()[0],
+                'THREADS'   => $this->connection->getPdo()->query($query2)->fetch()[0],
+                //'OPEN_TABLES'    => $this->connection->getPdo()->query($query3)->fetch()[]
             ];
         } else {
             $serverInfo         = $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_INFO);
@@ -73,6 +78,8 @@ class AppStatus
         //$serverInfo = $this->connection->getPdo()->query('select extract(epoch from current_timestamp - pg_postmaster_start_time())')->fetch()[0];
 //        echo "<pre>".print_r($serverInfo, true)."</pre>";
 
+
+        //pr($serverInfoArray);
         return $serverInfoArray;
     }
 
@@ -83,8 +90,11 @@ class AppStatus
     public function userPermissions(): array
     {
         //PostgreSQL
-        $grants      = (array)$this->connection->select('SELECT grantee, privilege_type FROM information_schema.role_table_grants;')[0];
-        //$grants      = (array)$this->connection->select('SHOW GRANTS FOR CURRENT_USER();')[0];
+        if($this->connection->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql') {
+            $grants      = (array)$this->connection->select('SELECT grantee, privilege_type FROM information_schema.role_table_grants;')[0];
+        } else {
+            $grants      = (array)$this->connection->select('SHOW GRANTS FOR CURRENT_USER();')[0];
+        }
         $privs       = (string)array_values($grants)[0];
         $permissions = [];
 
