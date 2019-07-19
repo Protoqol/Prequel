@@ -1,10 +1,10 @@
 
 ![Laravel Prequel](./assets/prequel.png)  
   
-# Laravel Prequel v1.1.1
+# Laravel Prequel v1.13
 <p align="center">
     <a href="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev">
-	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev"/>	
+	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=master"/>	
     </a>
     <a href="https://packagist.org/packages/protoqol/prequel">
 	    <img src="https://img.shields.io/badge/php-%5E7.1-lightblue.svg"/>	
