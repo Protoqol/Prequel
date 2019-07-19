@@ -25,8 +25,9 @@ class DatabaseConnector
     }
 
     /**
-    * @return Connection
-    */
+     * @param string $database Database name
+     * @return Connection
+     */
     public function getPostgreConnection(string $database)
     {
         $this->connection = (new Connection($this->getPdo($database)));

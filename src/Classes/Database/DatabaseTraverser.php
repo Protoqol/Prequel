@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Protoqol\Prequel\Classes\Database;
 
 use phpDocumentor\Reflection\Types\Mixed_;
+use function PHPSTORM_META\type;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
@@ -172,24 +173,20 @@ class DatabaseTraverser
         if($this->databaseConn === 'pgsql'){
             $columns = [];
             $connection = (new DatabaseConnector())->getPostgreConnection($database);
-            $temp_columns = $connection->select("SELECT column_name as Field, data_type as Type, is_nullable as Null, column_default as Default FROM information_schema.columns WHERE table_schema='public' AND table_name='".$table."'");
+            $temp_columns = $connection->select("SELECT column_name as field, data_type as type, is_nullable as null, column_default as default FROM information_schema.columns WHERE table_schema='".config('database.connections.pgsql.schema')."' AND table_name='".$table."'");
+            $index = $connection->select("SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '".$table."'::regclass AND i.indisprimary;");
             foreach ($temp_columns as $key => $array) {
+                if(count($index) > 0 && $array->field === $index[0]->attname){
+                    $array->key = "PRI";
+                    $array->default = null;
+                }
                 foreach ($array as $column_key => $value) {
                     $columns[$key][ucfirst($column_key)] = $value;
                 }
-                $columns[$key]["Key"] = "N/A";
-                $columns[$key]["Extra"] = "N/A";
             }
         } else {
             $columns = $this->connection->select("SHOW COLUMNS FROM `$database`.`$table`");
         }
-
-        //  [Field] => id - column_name
-        //  [Type] => int(10) unsigned - data_type
-        //  [Null] => NO - is_nullable
-        //  [Key] => PRI
-        //  [Default] => - column_default
-        //  [Extra] => auto_increment
 
         return $columns;
     }
