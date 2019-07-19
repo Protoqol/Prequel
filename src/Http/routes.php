@@ -2,6 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+/**
+ |-----------------------------------------
+ |  Prequel Web Routes /prequel or via config.
+ |-----------------------------------------
+ |
+ | Separate from web route to avoid user configured path messing up the Prequel-API.
+ |
+*/
 Route::namespace('Protoqol\Prequel\Http\Controllers')
      ->middleware(config('prequel.middleware'))
      ->prefix(config('prequel.path'))
@@ -12,9 +21,16 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
 
      });
 
-// Separate from web route to avoid user configured path messing up the Prequel-API.
+/**
+ |-----------------------------------------
+ |  Prequel API Routes /prequel-api
+ |-----------------------------------------
+ |
+ | Separate from web route to avoid user configured path messing up the Prequel-API.
+ |
+*/
 Route::namespace('Protoqol\Prequel\Http\Controllers')
-     ->middleware([Protoqol\Prequel\Http\Middleware\Authorised::class])
+     ->middleware(config('prequel.middleware'))
      ->prefix('prequel-api')
      ->name('prequel.')
      ->group(function () {
@@ -26,8 +42,8 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
              Route::get('count/{database}/{table}', 'DatabaseController@countTableRecords');
              Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
 
-             Route::get('run', 'DatabaseController@runMigrations');
-             Route::get('reset', 'DatabaseController@resetMigrations');
+             Route::get('migrations/run', 'PrequelController@runMigrations');
+             Route::get('migrations/reset', 'PrequelController@resetMigrations');
          });
 
      });

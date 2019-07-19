@@ -9,11 +9,11 @@
                            :value="app.serverInfo.QUERIES_PER_SECOND_AVG ? app.serverInfo.QUERIES_PER_SECOND_AVG : 'Could not retrieve'"
                            :unit="app.serverInfo.QUERIES_PER_SECOND_AVG ? 'queries per second' : '...'">
                 <slot ref="alert">
-                    <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG && app.serverInfo.QUERIES_PER_SECOND_AVG === 0"
+                    <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG === 0"
                            type="critical"/>
-                    <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG && app.serverInfo.QUERIES_PER_SECOND_AVG >= 0.3"
-                           type="average"/>
-                    <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG && app.serverInfo.QUERIES_PER_SECOND_AVG >= 1"
+                    <Badge v-else-if="app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.3 && app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.9"
+                           type="neutral"/>
+                    <Badge v-else-if="app.serverInfo.QUERIES_PER_SECOND_AVG > 0.9"
                            type="good"/>
                 </slot>
             </StatusDisplay>

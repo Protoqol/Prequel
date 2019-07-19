@@ -6,11 +6,11 @@ namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Protoqol\Prequel\Classes\App\AppStatus;
+use Protoqol\Prequel\Classes\App\Migrations;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
  * Class PrequelController
- *
  * @package Protoqol\Prequel\Http\Controllers
  */
 class PrequelController extends Controller
@@ -40,11 +40,28 @@ class PrequelController extends Controller
 
     /**
      * Get app status.
-     *
      * @return array
      */
     public function status()
     {
         return (new AppStatus())->getStatus();
+    }
+
+    /**
+     * Run pending migrations.
+     * @return int
+     */
+    public function runMigrations()
+    {
+        return (new Migrations())->run();
+    }
+
+    /**
+     * Reset latest migrations.
+     * @return int
+     */
+    public function resetMigrations()
+    {
+        return (new Migrations())->reset();
     }
 }

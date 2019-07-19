@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Protoqol\Prequel\Classes\App\Migrations;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
-use Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest;
 
 /**
  * Class DatabaseActionController
@@ -72,8 +70,6 @@ class DatabaseController extends Controller
     {
         // If Model exists
         if ($this->model && $this->databaseName === config('database.connections.mysql.database')) {
-            $hidden    = $this->model->getHidden();
-            $visible   = $this->model->getVisible();
             $paginated = $this->model->paginate(config('prequel.pagination'));
             $paginated->setCollection($paginated->getCollection()->each->setHidden([])->each->setVisible([]));
 
@@ -99,24 +95,7 @@ class DatabaseController extends Controller
     }
 
     /**
-     * Get count of rows in table
-     * Not yet used.
-     * @return array
-     */
-    public function countTableRecords(): array
-    {
-        $count = DB::table($this->qualifiedName)
-                   ->count('id');
-
-        return [
-            "table" => $this->qualifiedName,
-            "count" => $count,
-        ];
-    }
-
-    /**
      * Find given value in given column with given operator.
-     * @TODO Clean up.
      * @return mixed
      */
     public function findInTable()
@@ -130,23 +109,5 @@ class DatabaseController extends Controller
         return DB::table($this->qualifiedName)
                  ->where($column, $queryType, $value)
                  ->paginate(config('prequel.pagination'));
-    }
-
-    /**
-     * Run pending migrations.
-     * @return int
-     */
-    public function runMigrations()
-    {
-        return (new Migrations())->run();
-    }
-
-    /**
-     * Reset latest migrations.
-     * @return int
-     */
-    public function resetMigrations()
-    {
-        return (new Migrations())->reset();
     }
 }
