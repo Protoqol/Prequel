@@ -18,7 +18,7 @@
                    @columnSelect="$emit('columnSelect', $event)"/>
         </div>
         <div v-if="mode === $root.view.modus.enum.MANAGE">
-            <Management/>
+            <ManageTable/>
         </div>
     </div>
 </template>
@@ -28,10 +28,11 @@
   import TableStatus from './Table/TableStatus';
   import Welcome     from '../Elements/Welcome';
   import Management  from './ManageDatabase/Management';
+  import ManageTable from './ManageTable/ManageTable';
 
   export default {
     name      : 'MainContent',
-    components: {Management, Welcome, TableStatus, Table},
+    components: {ManageTable, Management, Welcome, TableStatus, Table},
     props     : [
       'structure',
       'data',
@@ -49,7 +50,7 @@
     .main-content-wrapper {
         @apply block;
         @apply h-full;
-        @apply bg-white;
+        background-color: var(--main-content);
         @apply rounded;
         @apply shadow;
         @apply ml-1;

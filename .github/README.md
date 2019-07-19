@@ -1,7 +1,7 @@
 
 ![Laravel Prequel](./assets/prequel.png)  
   
-# Laravel Prequel x.x.x-beta tbd -- DEV Version - Should only be used by developers of Prequel
+# Laravel Prequel v1.1.1
 <p align="center">
     <a href="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev">
 	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev"/>	
@@ -26,14 +26,6 @@ Laravel Prequel is meant to be a database management tool to replace the need fo
   
 ![Prequel Screenshot](./assets/prequel_screenshot.png)  
 > Clear and concise database management  
-  
-#### Laravel Prequel (Beta)  
-Laravel Prequel has entered/surpassed v0.5.0-beta, that means I deemed it ready enough to be tested by the public.  
-But note that a beta release is still a beta release and is not a stable release so it is definitely not recommended to be used in production environments.   
-  
-Luckily, Prequel has taken precautions, Prequel automatically disables itself in a production environment as people looking directly into your database is - let's just say - not ideal.  
-  
-The beta only supports `MySQL` for now. But support for `PostgreSQL` is coming soon!
   
 ## Installation
 ###### To install follow the instructions below.  
@@ -122,8 +114,10 @@ That configuration file looks something like this.
 ];
 ```
   
-## Contributing  
-  
+![Prequel Screenshot](./assets/prequel_screen_.png)  
+> Clear and concise database management  
+
+## Contributing
 See [Contributing](CONTRIBUTING.md) to see how you can contribute to Prequel!   
   
   

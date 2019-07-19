@@ -294,13 +294,16 @@
         @apply flex-col;
         @apply justify-center;
         @apply items-center;
-        @apply mt-5;
+        @apply pt-5;
+        @apply border-t-4;
+        @apply border-indigo-500;
 
         .header-flexbox {
             @apply flex;
             @apply w-5/6;
             @apply pb-4;
             @apply border-b;
+            border-color: var(--border-color);
 
             /**
                 Header - Left - Logo, Connection information
@@ -327,12 +330,15 @@
 
                     .header-left-logo-text {
                         @apply text-2xl;
+                        letter-spacing: 1px;
+                        color: var(--header-text-color);
 
                         span {
                             @apply font-bold;
                         }
 
                         a {
+                            letter-spacing: normal;
                             @apply not-italic;
                             @apply text-xs;
                             @apply font-light;
@@ -438,7 +444,7 @@
                     }
 
                     .search-get-button {
-                        @apply bg-indigo-500;
+                        background-color: var(--button-background);
                         @apply mx-1;
                         @apply text-white;
                         @apply font-semibold;
@@ -448,16 +454,16 @@
                         @apply shadow;
 
                         &:hover {
-                            @apply bg-indigo-400;
+                            background-color: var(--button-background-hover);
                         }
 
                         &:active {
-                            @apply bg-indigo-300;
+                            background-color: var(--button-background-active);
                         }
                     }
 
                     .search-reset-button {
-                        @apply bg-indigo-300;
+                        background-color: var(--button-background-light);
                         @apply text-white;
                         @apply font-semibold;
                         @apply py-1;
@@ -466,11 +472,11 @@
                         @apply shadow;
 
                         &:hover {
-                            @apply bg-indigo-200;
+                            background-color: var(--button-background-light-hover);
                         }
 
                         &:active {
-                            @apply bg-indigo-100;
+                            background-color: var(--button-background-light-active);
                         }
                     }
                 }
@@ -496,10 +502,6 @@
                     @apply rounded;
                     @apply shadow;
 
-                    &:hover {
-                        @apply bg-indigo-100;
-                    }
-
                     &:active {
                         @apply bg-indigo-200;
                     }
@@ -507,11 +509,11 @@
 
                 .dark-mode-button-enabled {
                     color: #fff;
-                    background-color: #667eea;
+                    background-color: var(--button-background);
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: rgba(105, 144, 255, 0.7);
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }
@@ -529,11 +531,11 @@
 
                 .readability-button-enabled {
                     color: #fff;
-                    background-color: #667eea;
+                    background-color: var(--button-background);
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: rgba(105, 144, 255, 0.7);
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }
@@ -544,7 +546,7 @@
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: #667eea;
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }
@@ -561,12 +563,12 @@
                 }
 
                 .sidebar-button-disabled {
-                    background-color: #667eea;
+                    background-color: var(--button-background-hover);
                     color: #fff;
                     transition: 0.5s ease;
 
                     &:hover {
-                        background-color: rgba(105, 144, 255, 0.7);
+                        background-color: var(--button-background-hover);
                         transition: 0.5s ease;
                     }
                 }

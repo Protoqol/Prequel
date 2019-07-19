@@ -112,7 +112,7 @@
                 @apply items-center;
                 @apply justify-center;
                 @apply bg-transparent;
-                @apply text-gray-800;
+                color: var(--header-text-color);
                 @apply py-2;
                 @apply px-2;
                 @apply w-12;
@@ -123,8 +123,8 @@
 
                 small {
                     z-index: 5;
+                    color: var(--header-text-color);
                     @apply text-xs;
-                    @apply text-gray-800;
                 }
 
                 &:hover {

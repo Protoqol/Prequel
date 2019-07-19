@@ -100,8 +100,9 @@
             database: '',
           },
           asset        : {
-            logo  : '/vendor/prequel/favicon.png',
-            loader: '/vendor/prequel/loader.gif',
+            logo   : '/vendor/prequel/favicon.png',
+            prequel: '/vendor/prequel/prequel.png',
+            loader : '/vendor/prequel/loader.gif',
           },
         },
 

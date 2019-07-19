@@ -1,11 +1,8 @@
 <template>
     <div class="welcome">
         <div class="img-wrapper">
-            <img class="no-drag" width="175" alt="Laravel Prequel" :src="$root.prequel.asset.logo">
+            <img class="no-drag" width="250" alt="Laravel Prequel" :src="$root.prequel.asset.prequel">
         </div>
-        <h1>
-            Welcome to Laravel Prequel!
-        </h1>
         <Management/>
     </div>
 </template>
@@ -33,6 +30,7 @@
             @apply flex;
             @apply justify-center;
             @apply items-center;
+            @apply mb-4;
         }
 
         h1 {
