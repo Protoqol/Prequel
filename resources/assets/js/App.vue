@@ -446,6 +446,9 @@
 
 <style lang="scss">
 
+    $break-md: 1400px;
+
+
     .slide-fade-enter-active {
         transition: all .2s ease;
     }
