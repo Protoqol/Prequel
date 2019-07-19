@@ -368,6 +368,11 @@
             this.table.numberOfRecords          = result.data.data.total;
             this.table.structure                = result.data.structure;
             this.table.error.loadError          = false;
+            window.scrollTo({
+              top     : 0,
+              left    : 0,
+              behavior: 'smooth',
+            });
 
             if (updateUrlHistory) {
               this.updateUrl();
