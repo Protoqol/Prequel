@@ -32,10 +32,7 @@ class IndexTest extends TestCase
         config(['prequel.enabled' => false]);
 
         $response = $this->get(route('prequel.index'));
-        $response->assertStatus(403);
-        $response->assertViewIs('Prequel::error');
-        $response->assertSeeText('Error in Prequel');
-        $response->assertSeeText('Prequel has been disabled.');
+        $response->assertStatus(404);
     }
 
 
