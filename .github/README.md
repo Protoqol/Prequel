@@ -7,7 +7,7 @@
 	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev"/>	
     </a>
     <a href="https://packagist.org/packages/protoqol/prequel">
-	    <img src="https://img.shields.io/badge/php-%5E7.2-lightblue.svg"/>	
+	    <img src="https://img.shields.io/badge/php-%5E7.1-lightblue.svg"/>	
     </a>
     <a href="https://laravel.com/">
 	    <img src="https://img.shields.io/badge/laravel-%5E5.6-lightblue.svg"/>	
