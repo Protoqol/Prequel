@@ -27,17 +27,7 @@ class Authorised
     public function handle($request, Closure $next)
     {
         if (!$this->configurationCheck()->enabled) {
-            return response()->view('Prequel::error', [
-                'error_detailed' => $this->configurationCheck()->detailed,
-                'http_code'      => 403,
-                'env'            => [
-                    'connection' => 'protected',
-                    'database'   => 'protected',
-                    'host'       => 'protected',
-                    'port'       => 'protected',
-                    'user'       => 'protected',
-                ],
-            ], 403);
+            return response('', 404);
         }
 
         if (!$this->databaseConnectionCheck()->connected) {

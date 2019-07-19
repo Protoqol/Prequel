@@ -1,49 +1,49 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Protoqol\Prequel\Classes\App\Migrations;
 
+
+/**
+ |-----------------------------------------
+ |  Prequel Web Routes /prequel or via config.
+ |-----------------------------------------
+ |
+ | Separate from web route to avoid user configured path messing up the Prequel-API.
+ |
+*/
 Route::namespace('Protoqol\Prequel\Http\Controllers')
-     ->middleware('Protoqol\Prequel\Http\Middleware\Authorised')
+     ->middleware(config('prequel.middleware'))
      ->prefix(config('prequel.path'))
      ->name('prequel.')
      ->group(function () {
 
-         /**
-          * Main view route
-          */
          Route::get('/', 'PrequelController@index')->name('index');
 
+     });
 
-         /**
-          * API Routes.
-          */
-         Route::prefix('prequel-api')->group(function () {
-             Route::prefix('database')->group(function () {
+/**
+ |-----------------------------------------
+ |  Prequel API Routes /prequel-api
+ |-----------------------------------------
+ |
+ | Separate from web route to avoid user configured path messing up the Prequel-API.
+ |
+*/
+Route::namespace('Protoqol\Prequel\Http\Controllers')
+     ->middleware(config('prequel.middleware'))
+     ->prefix('prequel-api')
+     ->name('prequel.')
+     ->group(function () {
 
-                 // Get data from table, data includes structure, actual data and table name.
-                 Route::get('get/{database}/{table}', 'DatabaseController@getTableData');
+         Route::get('status', 'PrequelController@status');
 
-                 // Get count of total records in table
-                 // Note: Unused as of yet.
-                 Route::get('count/{database}/{table}', 'DatabaseController@countTableRecords');
+         Route::prefix('database')->group(function () {
+             Route::get('get/{database}/{table}', 'DatabaseController@getTableData');
+             Route::get('count/{database}/{table}', 'DatabaseController@countTableRecords');
+             Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
 
-                 // Find data with given input
-                 Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
-
-             });
-
-             /**
-              * Get app status.
-              */
-             Route::get('status', 'PrequelController@status');
-
-             Route::get('run/migrations', function () {
-                 return (new Migrations())->run();
-             });
-
-             Route::get('reset/migrations', function () {
-                 return (new Migrations())->reset();
-             });
+             Route::get('migrations/run', 'PrequelController@runMigrations');
+             Route::get('migrations/reset', 'PrequelController@resetMigrations');
          });
+
      });

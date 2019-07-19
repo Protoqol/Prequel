@@ -184,19 +184,6 @@ class DatabaseTraverser
     {
         $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
 
-        // Collect differently if postgres. @TODO.
-        $tmp = [];
-
-        if ($this->databaseConn === 'pgsql') {
-            for ($i = 0; $i < count($tables); $i++) {
-                if ($tables[$i]->schemaname === $database) {
-                    array_push($tmp, $tables[$i]);
-                }
-            }
-            unset($tables);
-            $tables = $tmp;
-        }
-
         return $this->normalise($tables);
     }
 
@@ -227,7 +214,7 @@ class DatabaseTraverser
 
     /**
      * Normalise query results; assumes a lot about the structure, which can
-     * potentially cause problems later on. @TODO
+     * potentially cause problems later on.
      * Assumed structure:
      *  -----------------
      *  Array [

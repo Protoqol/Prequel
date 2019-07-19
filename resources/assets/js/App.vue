@@ -368,6 +368,11 @@
             this.table.numberOfRecords          = result.data.data.total;
             this.table.structure                = result.data.structure;
             this.table.error.loadError          = false;
+            window.scrollTo({
+              top     : 0,
+              left    : 0,
+              behavior: 'smooth',
+            });
 
             if (updateUrlHistory) {
               this.updateUrl();
@@ -445,6 +450,9 @@
 </script>
 
 <style lang="scss">
+
+    $break-md: 1400px;
+
 
     .slide-fade-enter-active {
         transition: all .2s ease;

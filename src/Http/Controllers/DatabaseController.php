@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
-use Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest;
 
 /**
  * Class DatabaseActionController
@@ -71,17 +70,16 @@ class DatabaseController extends Controller
     {
         // If Model exists
         if ($this->model && $this->databaseName === config('database.connections.mysql.database')) {
-            $hidden    = $this->model->getHidden();
             $paginated = $this->model->paginate(config('prequel.pagination'));
-            $paginated->setCollection($paginated->getCollection()->makeVisible($hidden));
+            $paginated->setCollection($paginated->getCollection()->each->setHidden([])->each->setVisible([]));
 
             return [
                 "table"     => $this->qualifiedName,
+                "data"      => $paginated,
                 "structure" => app(DatabaseTraverser::class)->getTableStructure(
                     $this->databaseName,
                     $this->tableName
                 ),
-                "data"      => $paginated,
             ];
         }
 
@@ -92,29 +90,12 @@ class DatabaseController extends Controller
                 $this->databaseName,
                 $this->tableName
             ),
-            "data"      => DB::table($this->qualifiedName)->paginate(100),
-        ];
-    }
-
-    /**
-     * Get count of rows in table
-     * Not yet used.
-     * @return array
-     */
-    public function countTableRecords(): array
-    {
-        $count = DB::table($this->qualifiedName)
-                   ->count('id');
-
-        return [
-            "table" => $this->qualifiedName,
-            "count" => $count,
+            "data"      => DB::table($this->qualifiedName)->paginate(config('prequel.pagination')),
         ];
     }
 
     /**
      * Find given value in given column with given operator.
-     * @TODO Clean up.
      * @return mixed
      */
     public function findInTable()

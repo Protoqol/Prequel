@@ -37,7 +37,7 @@
 
     methods: {
       runMigrations: function() {
-        api.get('run/migrations').then(res => {
+        api.get('database/migrations/run').then(res => {
           if (res) {
             window.location.reload();
           }
@@ -45,7 +45,7 @@
       },
 
       resetMigrations: function() {
-        api.get('reset/migrations').finally(() => {
+        api.get('database/migrations/reset').finally(() => {
           window.location.reload();
         });
       },

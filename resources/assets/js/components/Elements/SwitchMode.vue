@@ -104,7 +104,9 @@
         .switch {
             @apply flex;
             @apply flex-row;
-            @apply mx-2;
+            @media (min-width: 1401px) {
+                @apply mx-2;
+            }
 
             .tab {
                 @apply flex;
