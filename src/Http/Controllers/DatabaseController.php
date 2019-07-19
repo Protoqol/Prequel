@@ -72,16 +72,17 @@ class DatabaseController extends Controller
         // If Model exists
         if ($this->model && $this->databaseName === config('database.connections.mysql.database')) {
             $hidden    = $this->model->getHidden();
+            $visible   = $this->model->getVisible();
             $paginated = $this->model->paginate(config('prequel.pagination'));
-            $paginated->setCollection($paginated->getCollection()->makeVisible($hidden));
+            $paginated->setCollection($paginated->getCollection()->each->setHidden([])->each->setVisible([]));
 
             return [
                 "table"     => $this->qualifiedName,
+                "data"      => $paginated,
                 "structure" => app(DatabaseTraverser::class)->getTableStructure(
                     $this->databaseName,
                     $this->tableName
                 ),
-                "data"      => $paginated,
             ];
         }
 
@@ -92,7 +93,7 @@ class DatabaseController extends Controller
                 $this->databaseName,
                 $this->tableName
             ),
-            "data"      => DB::table($this->qualifiedName)->paginate(100),
+            "data"      => DB::table($this->qualifiedName)->paginate(config('prequel.pagination')),
         ];
     }
 
