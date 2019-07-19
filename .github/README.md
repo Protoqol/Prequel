@@ -24,7 +24,7 @@
 #### What is Laravel Prequel exactly?  
 Laravel Prequel is meant to be a database management tool to replace the need for separate standalone database tools like phpMyAdmin, Sequel Pro or MySQL Workbench. With its (hopefully) clear and concise UI, Prequel is to be a modern and lightweight database browser/tool ready for the web of the future. Prequel's design is purposefully based on that of [Laravel Telescope](https://github.com/laravel/telescope) because (web-)developers today have enough to learn and master already, so let's help eachother out and make sure to not add anything virtually useless to that huge pile of knowledge.   
   
-![Prequel Screenshot](./assets/prequel_screenshot.png)  
+![Prequel Screenshot](./assets/prequel_screenshot_table.png)  
 > Clear and concise database management  
   
 ## Installation
@@ -114,7 +114,7 @@ That configuration file looks something like this.
 ];
 ```
   
-![Prequel Screenshot](./assets/prequel_screen_.png)  
+![Prequel Screenshot](./assets/prequel_screenshot.png)  
 > Clear and concise database management  
 
 ## Contributing
