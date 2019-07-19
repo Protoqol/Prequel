@@ -111,6 +111,21 @@ That configuration file looks something like this.
     |
     */
     'pagination' => 100,
+    
+        /*
+        |--------------------------------------------------------------------------
+        | Prequel middleware : array
+        |--------------------------------------------------------------------------
+        |
+        | Define custom middleware for Prequel to use.
+        |
+        | Ex. 'web', Protoqol\Prequel\Http\Middleware\Authorised::class
+        |
+        */
+    
+        'middleware' => [
+            Protoqol\Prequel\Http\Middleware\Authorised::class,
+        ],
 ];
 ```
   

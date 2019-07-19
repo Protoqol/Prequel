@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Protoqol\Prequel\Classes\App\Migrations;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 use Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest;
@@ -129,5 +130,23 @@ class DatabaseController extends Controller
         return DB::table($this->qualifiedName)
                  ->where($column, $queryType, $value)
                  ->paginate(config('prequel.pagination'));
+    }
+
+    /**
+     * Run pending migrations.
+     * @return int
+     */
+    public function runMigrations()
+    {
+        return (new Migrations())->run();
+    }
+
+    /**
+     * Reset latest migrations.
+     * @return int
+     */
+    public function resetMigrations()
+    {
+        return (new Migrations())->reset();
     }
 }
