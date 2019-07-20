@@ -12,7 +12,8 @@ return [
     | inside your database besides you or your dev team (obviously).
     |
     */
-    'enabled'    => env('PREQUEL_ENABLED', true),
+
+    'enabled' => env('PREQUEL_ENABLED', true),
 
 
     /*
@@ -24,7 +25,8 @@ return [
     | Prequel API routes.
     |
     */
-    'path'       => 'prequel',
+
+    'path' => 'prequel',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +36,8 @@ return [
     | This enables you to fully configure your database connection for Prequel.
     |
     */
-    'database'   => [
+
+    'database' => [
         'connection' => env('DB_CONNECTION', 'mysql'),
         'host'       => env('DB_HOST', '127.0.0.1'),
         'port'       => env('DB_PORT', '3306'),
@@ -53,7 +56,8 @@ return [
     | Using 'mysql' => ['*'] ignores the entire mysql database.
     |
     */
-    'ignored'    => [
+
+    'ignored' => [
         // 'information_schema'  => ['*'],
         // 'sys'                 => ['*'],
         // 'performance_schema'  => ['*'],
@@ -70,5 +74,21 @@ return [
     | records that will be in each page.
     |
     */
+
     'pagination' => 100,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prequel middleware : array
+    |--------------------------------------------------------------------------
+    |
+    | Define custom middleware for Prequel to use.
+    |
+    | Ex. 'web', Protoqol\Prequel\Http\Middleware\Authorised::class
+    |
+    */
+
+    'middleware' => [
+        Protoqol\Prequel\Http\Middleware\Authorised::class,
+    ],
 ];

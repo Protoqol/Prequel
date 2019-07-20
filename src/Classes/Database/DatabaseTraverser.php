@@ -216,6 +216,8 @@ class DatabaseTraverser
             $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
         }
 
+        $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
+
         return $this->normalise($tables);
     }
 
@@ -246,7 +248,7 @@ class DatabaseTraverser
 
     /**
      * Normalise query results; assumes a lot about the structure, which can
-     * potentially cause problems later on. @TODO
+     * potentially cause problems later on.
      * Assumed structure:
      *  -----------------
      *  Array [

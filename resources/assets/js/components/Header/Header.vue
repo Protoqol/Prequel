@@ -10,7 +10,7 @@
                         </a>
                     </div>
                     <h1 class="header-left-logo-text text-logo">
-                        <span>Laravel</span> Prequel
+                        <span id="laravel">Laravel</span> Prequel
                         <a href="https://github.com/Protoqol"
                            target="_blank"
                            title="Creator of Laravel Prequel">
@@ -333,15 +333,31 @@
                         letter-spacing: 1px;
                         color: var(--header-text-color);
 
+                        @media (min-width: 700px) and (max-width: 1400px) {
+                            @apply font-bold;
+                        }
+
+                        #laravel {
+                            @media (min-width: 700px) and (max-width: 1400px) {
+                                display: none;
+                            }
+                        }
+
                         span {
                             @apply font-bold;
                         }
 
                         a {
-                            letter-spacing: normal;
-                            @apply not-italic;
-                            @apply text-xs;
-                            @apply font-light;
+                            @media (min-width: 700px) and (max-width: 1400px) {
+                                display: none;
+                            }
+
+                            @media (min-width: 1401px) {
+                                letter-spacing: normal;
+                                @apply not-italic;
+                                @apply text-xs;
+                                @apply font-light;
+                            }
                         }
                     }
                 }
@@ -350,12 +366,16 @@
                     @apply ml-2;
                     @apply mt-1;
                     @apply self-center;
-                    @apply flex ;
+                    @apply flex;
                     @apply flex-row;
                     @apply items-center;
-                    @apply mr-1 ;
+                    @apply mr-1;
                     @apply tracking-wide;
                     @apply text-gray-700;
+
+                    @media (min-width: 700px) and (max-width: 1400px) {
+                        @apply text-sm;
+                    }
                 }
             }
 
@@ -493,7 +513,13 @@
                 @apply items-center;
 
                 button {
-                    @apply mr-4;
+                    @media (min-width: 700px) and (max-width: 1400px) {
+                        @apply mr-2;
+                    }
+
+                    @media (min-width: 1401px) {
+                        @apply mr-4;
+                    }
                     @apply flex;
                     @apply justify-center;
                     @apply items-center;
