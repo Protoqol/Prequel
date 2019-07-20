@@ -17,7 +17,7 @@
     "cross-env": "^5.1",
     "husky": "^2.4.1",
     "laravel-mix": "^4.0.7",
-    "lodash": "^4.17.5",
+    "lodash": ">=4.17.13",
     "purify-css": "^1.2.5",
     "purifycss-webpack": "^0.7.0",
     "resolve-url-loader": "^2.3.1",

@@ -5,11 +5,14 @@ declare(strict_types = 1);
 namespace Protoqol\Prequel\Classes\Database;
 
 use phpDocumentor\Reflection\Types\Mixed_;
+use function PHPSTORM_META\type;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PDO;
 
 /**
  * Class DatabaseTraverser
@@ -167,9 +170,45 @@ class DatabaseTraverser
      */
     public function getTableStructure(string $database, string $table): array
     {
-        $columns = $this->connection->select("SHOW COLUMNS FROM `$database`.`$table`");
+        if($this->databaseConn === 'pgsql'){
+            $columns = [];
+            $connection = (new DatabaseConnector())->getConnection($database);
+            $temp_columns = $connection->select("SELECT column_name as field, data_type as type, is_nullable as null, column_default as default FROM information_schema.columns WHERE table_schema='".config('database.connections.pgsql.schema')."' AND table_name='".$table."'");
+            $index = $connection->select("SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '".$table."'::regclass AND i.indisprimary;");
+            foreach ($temp_columns as $key => $array) {
+                if(count($index) > 0 && $array->field === $index[0]->attname){
+                    $array->key = "PRI";
+                    $array->default = null;
+                }
+                foreach ($array as $column_key => $value) {
+                    $columns[$key][ucfirst($column_key)] = $value;
+                }
+            }
+        } else {
+            $columns = $this->connection->select("SHOW COLUMNS FROM `$database`.`$table`");
+        }
 
         return $columns;
+    }
+
+    /**
+     * @param string $database Database name
+     * @param string $table Table name
+     *
+     * @return array
+     */
+    public function getTableData(string $database, string $table): array
+    {
+        $data = [];
+
+        if($this->databaseConn === 'pgsql'){
+            $connection = (new DatabaseConnector())->getConnection($database);
+            $data = $connection->select("SELECT * FROM ".$table);
+        } else {
+            $data = $this->connection->select("SELECT * FROM `$database`.`$table`");
+        }
+
+        return $data;
     }
 
     /**
@@ -182,7 +221,20 @@ class DatabaseTraverser
      */
     public function getTablesFromDB(string $database): array
     {
-        $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
+        $tmp = [];
+
+        if ($this->databaseConn === 'pgsql') {
+            $connection = (new DatabaseConnector())->getConnection($database);
+            $tables = $connection->select($this->databaseQueries->showTablesFrom($database));
+
+            for ($i = 0; $i < count($tables); $i++) {
+                array_push($tmp, $tables[$i]);
+            }
+            unset($tables);
+            $tables = $tmp;
+        } else {
+            $tables = $this->connection->select($this->databaseQueries->showTablesFrom($database));
+        }
 
         return $this->normalise($tables);
     }

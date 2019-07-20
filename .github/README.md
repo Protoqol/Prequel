@@ -1,13 +1,13 @@
 
 ![Laravel Prequel](./assets/prequel.png)  
   
-# Laravel Prequel v1.1.1
+# Laravel Prequel v1.13
 <p align="center">
     <a href="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev">
-	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev"/>	
+	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=master"/>	
     </a>
     <a href="https://packagist.org/packages/protoqol/prequel">
-	    <img src="https://img.shields.io/badge/php-%5E7.2-lightblue.svg"/>	
+	    <img src="https://img.shields.io/badge/php-%5E7.1-lightblue.svg"/>	
     </a>
     <a href="https://laravel.com/">
 	    <img src="https://img.shields.io/badge/laravel-%5E5.6-lightblue.svg"/>	
@@ -33,7 +33,13 @@ Laravel Prequel is meant to be a database management tool to replace the need fo
 $ composer require protoqol/prequel  
 $ php artisan prequel:install
 ```  
-###### When installation and publishing is done navigate to `/prequel` in your browser to see Prequel in action!  
+###### When installation and publishing is done navigate to `/prequel` in your browser to see Prequel in action!
+
+## Updating
+###### To update you can use the command specified below.
+```bash
+$ php artisan prequel:update
+```
   
 #### Issues, bugs and feature requests can be reported [here!](https://github.com/Protoqol/Prequel/issues/new/choose)  
 

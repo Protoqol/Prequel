@@ -52,11 +52,12 @@
         let connection           = this.$props.env.connection;
 
         if (userPort !== this.standards.port && connection === 'mysql') {
-          suggestionCollection.push(
-              `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
+	        suggestionCollection.push(
+		        `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
         }
 
         for (let i = 0; i < this.standards.supportedConnectionTypes.length; i++) {
+        	console.log(this.standards.supportedConnectionTypes[i]);
           if (this.standards.supportedConnectionTypes[i] !== connection) {
             suggestionCollection.push(
                 `Your database connection might not be supported yet, currently supported: 'mysql'. (Yours is: '${connection}').`);
