@@ -15,20 +15,10 @@ class DatabaseConnector
     public $connection;
 
     /**
-     * @return \Illuminate\Database\Connection
-     */
-    public function getConnection()
-    {
-        $this->connection = (new Connection($this->getPdo()));
-
-        return $this->connection;
-    }
-
-    /**
      * @param string $database Database name
      * @return Connection
      */
-    public function getPostgreConnection(string $database)
+    public function getConnection(string $database = '')
     {
         $this->connection = (new Connection($this->getPdo($database)));
 
@@ -39,7 +29,7 @@ class DatabaseConnector
      * @param string $database Database name
      * @return \PDO
      */
-    private function getPdo(string $database = null)
+    private function getPdo(string $database = '')
     {
         $dsn  = $this->constructDsn($database);
         $user = config('prequel.database.username');
@@ -52,9 +42,9 @@ class DatabaseConnector
      * @param string $database Database name
      * @return string
      */
-    private function constructDsn(string $database = null)
+    private function constructDsn(string $database = '')
     {
-        if(!$database){
+        if(empty($database)){
             $database = config('prequel.database.database');
         }
 

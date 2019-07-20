@@ -56,12 +56,8 @@ class AppStatus
     {
         if($this->connection->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql') {
             $query = 'select extract(epoch from current_timestamp - pg_postmaster_start_time())';
-            $query2 = 'select count(*) from pg_stat_activity where state=\'active\'';
-            $query3 = 'select * from pg_locks';
             $serverInfoArray    = [
-                'UPTIME'    => $this->connection->getPdo()->query($query)->fetch()[0],
-                'THREADS'   => $this->connection->getPdo()->query($query2)->fetch()[0],
-                //'OPEN_TABLES'    => $this->connection->getPdo()->query($query3)->fetch()[]
+                'UPTIME'    => $this->connection->getPdo()->query($query)->fetch()[0]
             ];
         } else {
             $serverInfo         = $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_INFO);

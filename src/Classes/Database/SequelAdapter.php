@@ -43,7 +43,7 @@ class SequelAdapter
             case 'mysql':
                 return 'SHOW TABLES;';
             case 'pgsql':
-                return 'SELECT table_schema,table_name FROM information_schema.tables WHERE table_schema NOT IN (\'pg_catalog\', \'information_schema\') ORDER BY table_schema,table_name;';
+                return 'SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;';
 //            case 'sqlite':
 //                return 'SELECT name FROM sqlite_master WHERE type="table";';
 //            case 'sqlsrv':
@@ -81,7 +81,7 @@ class SequelAdapter
             case 'mysql':
                 return 'SHOW TABLES FROM `'.$databaseName.'`;';
             case 'pgsql':
-                return 'SELECT table_schema,table_name FROM information_schema.tables WHERE table_schema NOT IN (\'pg_catalog\', \'information_schema\') ORDER BY table_schema,table_name;';
+                return 'SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;';
             default:
                 throw new Exception('Selected invalid or unsupported database driver');
         }

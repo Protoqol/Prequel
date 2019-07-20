@@ -9,15 +9,8 @@
  */
 
 html {
-<<<<<<< HEAD
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
-=======
-  line-height: 1.15;
-  /* 1 */
-  -webkit-text-size-adjust: 100%;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /* Sections
@@ -58,18 +51,9 @@ h1 {
  */
 
 hr {
-<<<<<<< HEAD
   box-sizing: content-box; /* 1 */
   height: 0; /* 1 */
   overflow: visible; /* 2 */
-=======
-  box-sizing: content-box;
-  /* 1 */
-  height: 0;
-  /* 1 */
-  overflow: visible;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /**
@@ -78,15 +62,8 @@ hr {
  */
 
 pre {
-<<<<<<< HEAD
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
-=======
-  font-family: monospace, monospace;
-  /* 1 */
-  font-size: 1em;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /* Text-level semantics
@@ -105,7 +82,6 @@ a {
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 
-<<<<<<< HEAD
 abbr[title] {
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
@@ -113,18 +89,12 @@ abbr[title] {
           text-decoration: underline dotted; /* 2 */
 }
 
-=======
->>>>>>> upstream/master
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
  */
 
-<<<<<<< HEAD
 b,
 strong {
-=======
-b {
->>>>>>> upstream/master
   font-weight: bolder;
 }
 
@@ -133,19 +103,11 @@ b {
  * 2. Correct the odd `em` font sizing in all browsers.
  */
 
-<<<<<<< HEAD
 code,
 kbd,
 samp {
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
-=======
-code {
-  font-family: monospace, monospace;
-  /* 1 */
-  font-size: 1em;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /**
@@ -161,12 +123,8 @@ small {
  * all browsers.
  */
 
-<<<<<<< HEAD
 sub,
 sup {
-=======
-sub {
->>>>>>> upstream/master
   font-size: 75%;
   line-height: 0;
   position: relative;
@@ -177,13 +135,10 @@ sub {
   bottom: -0.25em;
 }
 
-<<<<<<< HEAD
 sup {
   top: -0.5em;
 }
 
-=======
->>>>>>> upstream/master
 /* Embedded content
    ========================================================================== */
 
@@ -203,7 +158,6 @@ img {
  * 2. Remove the margin in Firefox and Safari.
  */
 
-<<<<<<< HEAD
 button,
 input,
 optgroup,
@@ -213,17 +167,6 @@ textarea {
   font-size: 100%; /* 1 */
   line-height: 1.15; /* 1 */
   margin: 0; /* 2 */
-=======
-button,input,select {
-  font-family: inherit;
-  /* 1 */
-  font-size: 100%;
-  /* 1 */
-  line-height: 1.15;
-  /* 1 */
-  margin: 0;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /**
@@ -231,13 +174,8 @@ button,input,select {
  * 1. Show the overflow in Edge.
  */
 
-<<<<<<< HEAD
 button,
 input { /* 1 */
-=======
-button,input {
-  /* 1 */
->>>>>>> upstream/master
   overflow: visible;
 }
 
@@ -246,13 +184,8 @@ button,input {
  * 1. Remove the inheritance of text transform in Firefox.
  */
 
-<<<<<<< HEAD
 button,
 select { /* 1 */
-=======
-button,select {
-  /* 1 */
->>>>>>> upstream/master
   text-transform: none;
 }
 
@@ -260,14 +193,10 @@ button,select {
  * Correct the inability to style clickable types in iOS and Safari.
  */
 
-<<<<<<< HEAD
 button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-=======
-button,[type="button"],[type="reset"],[type="submit"] {
->>>>>>> upstream/master
   -webkit-appearance: button;
 }
 
@@ -275,14 +204,10 @@ button,[type="button"],[type="reset"],[type="submit"] {
  * Remove the inner border and padding in Firefox.
  */
 
-<<<<<<< HEAD
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
-=======
-button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {
->>>>>>> upstream/master
   border-style: none;
   padding: 0;
 }
@@ -291,14 +216,10 @@ button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-
  * Restore the focus styles unset by the previous rule.
  */
 
-<<<<<<< HEAD
 button:-moz-focusring,
 [type="button"]:-moz-focusring,
 [type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
-=======
-button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {
->>>>>>> upstream/master
   outline: 1px dotted ButtonText;
 }
 
@@ -306,13 +227,10 @@ button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusri
  * Correct the padding in Firefox.
  */
 
-<<<<<<< HEAD
 fieldset {
   padding: 0.35em 0.75em 0.625em;
 }
 
-=======
->>>>>>> upstream/master
 /**
  * 1. Correct the text wrapping in Edge and IE.
  * 2. Correct the color inheritance from `fieldset` elements in IE.
@@ -320,7 +238,6 @@ fieldset {
  *    `fieldset` elements in all browsers.
  */
 
-<<<<<<< HEAD
 legend {
   box-sizing: border-box; /* 1 */
   color: inherit; /* 2 */
@@ -330,59 +247,39 @@ legend {
   white-space: normal; /* 1 */
 }
 
-=======
->>>>>>> upstream/master
 /**
  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
  */
 
-<<<<<<< HEAD
 progress {
   vertical-align: baseline;
 }
 
-=======
->>>>>>> upstream/master
 /**
  * Remove the default vertical scrollbar in IE 10+.
  */
 
-<<<<<<< HEAD
 textarea {
   overflow: auto;
 }
 
-=======
->>>>>>> upstream/master
 /**
  * 1. Add the correct box sizing in IE 10.
  * 2. Remove the padding in IE 10.
  */
 
-<<<<<<< HEAD
 [type="checkbox"],
 [type="radio"] {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
-=======
-[type="checkbox"],[type="radio"] {
-  box-sizing: border-box;
-  /* 1 */
-  padding: 0;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
 
-<<<<<<< HEAD
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
-=======
-[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button {
->>>>>>> upstream/master
   height: auto;
 }
 
@@ -392,15 +289,8 @@ textarea {
  */
 
 [type="search"] {
-<<<<<<< HEAD
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
-=======
-  -webkit-appearance: textfield;
-  /* 1 */
-  outline-offset: -2px;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /**
@@ -417,15 +307,8 @@ textarea {
  */
 
 ::-webkit-file-upload-button {
-<<<<<<< HEAD
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
-=======
-  -webkit-appearance: button;
-  /* 1 */
-  font: inherit;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /* Interactive
@@ -435,24 +318,18 @@ textarea {
  * Add the correct display in Edge, IE 10+, and Firefox.
  */
 
-<<<<<<< HEAD
 details {
   display: block;
 }
 
-=======
->>>>>>> upstream/master
 /*
  * Add the correct display in all browsers.
  */
 
-<<<<<<< HEAD
 summary {
   display: list-item;
 }
 
-=======
->>>>>>> upstream/master
 /* Misc
    ========================================================================== */
 
@@ -485,7 +362,6 @@ template {
  */
 
 html {
-<<<<<<< HEAD
   box-sizing: border-box; /* 1 */
   font-family: sans-serif; /* 2 */
 }
@@ -493,15 +369,6 @@ html {
 *,
 *::before,
 *::after {
-=======
-  box-sizing: border-box;
-  /* 1 */
-  font-family: sans-serif;
-  /* 2 */
-}
-
-*,*::before,*::after {
->>>>>>> upstream/master
   box-sizing: inherit;
 }
 
@@ -509,7 +376,6 @@ html {
  * Removes the default spacing and border for appropriate elements.
  */
 
-<<<<<<< HEAD
 blockquote,
 dl,
 dd,
@@ -522,9 +388,6 @@ h6,
 figure,
 p,
 pre {
-=======
-h1,h2,h3,h4,h5,h6,figure,p,pre {
->>>>>>> upstream/master
   margin: 0;
 }
 
@@ -543,15 +406,12 @@ button:focus {
   outline: 5px auto -webkit-focus-ring-color;
 }
 
-<<<<<<< HEAD
 fieldset {
   margin: 0;
   padding: 0;
 }
 
 ol,
-=======
->>>>>>> upstream/master
 ul {
   list-style: none;
   margin: 0;
@@ -569,15 +429,8 @@ ul {
  */
 
 html {
-<<<<<<< HEAD
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
   line-height: 1.5; /* 2 */
-=======
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  /* 1 */
-  line-height: 1.5;
-  /* 2 */
->>>>>>> upstream/master
 }
 
 /**
@@ -596,13 +449,9 @@ html {
  * https://github.com/tailwindcss/tailwindcss/pull/116
  */
 
-<<<<<<< HEAD
 *,
 *::before,
 *::after {
-=======
-*,*::before,*::after {
->>>>>>> upstream/master
   border-width: 0;
   border-style: solid;
   border-color: #e2e8f0;
@@ -622,66 +471,42 @@ img {
   border-style: solid;
 }
 
-<<<<<<< HEAD
 textarea {
   resize: vertical;
 }
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-=======
-input::-webkit-input-placeholder {
->>>>>>> upstream/master
   color: inherit;
   opacity: 0.5;
 }
 
-<<<<<<< HEAD
 input::-moz-placeholder,
 textarea::-moz-placeholder {
-=======
-input::-moz-placeholder {
->>>>>>> upstream/master
   color: inherit;
   opacity: 0.5;
 }
 
-<<<<<<< HEAD
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-=======
-input:-ms-input-placeholder {
->>>>>>> upstream/master
   color: inherit;
   opacity: 0.5;
 }
 
-<<<<<<< HEAD
 input::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
-=======
-input::-ms-input-placeholder {
->>>>>>> upstream/master
   color: inherit;
   opacity: 0.5;
 }
 
-<<<<<<< HEAD
 input::placeholder,
 textarea::placeholder {
-=======
-input::placeholder {
->>>>>>> upstream/master
   color: inherit;
   opacity: 0.5;
 }
 
-<<<<<<< HEAD
 button,
 [role="button"] {
-=======
-button,[role="button"] {
->>>>>>> upstream/master
   cursor: pointer;
 }
 
@@ -689,16 +514,12 @@ table {
   border-collapse: collapse;
 }
 
-<<<<<<< HEAD
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-=======
-h1,h2,h3,h4,h5,h6 {
->>>>>>> upstream/master
   font-size: inherit;
   font-weight: inherit;
 }
@@ -721,15 +542,11 @@ a {
  * normalize.css.
  */
 
-<<<<<<< HEAD
 button,
 input,
 optgroup,
 select,
 textarea {
-=======
-button,input,select {
->>>>>>> upstream/master
   padding: 0;
   line-height: inherit;
   color: inherit;
@@ -742,14 +559,10 @@ button,input,select {
  * 'mono' font family.
  */
 
-<<<<<<< HEAD
 pre,
 code,
 kbd,
 samp {
-=======
-pre,code {
->>>>>>> upstream/master
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -761,7 +574,6 @@ pre,code {
  * https://github.com/mozdevs/cssremedy/issues/14
  */
 
-<<<<<<< HEAD
 img,
 svg,
 video,
@@ -770,9 +582,6 @@ audio,
 iframe,
 embed,
 object {
-=======
-img,object {
->>>>>>> upstream/master
   display: block;
   vertical-align: middle;
 }
@@ -784,12 +593,8 @@ img,object {
  * https://github.com/mozdevs/cssremedy/issues/14
  */
 
-<<<<<<< HEAD
 img,
 video {
-=======
-img {
->>>>>>> upstream/master
   max-width: 100%;
   height: auto;
 }
@@ -824,7 +629,6 @@ img {
 
 .appearance-none {
   -webkit-appearance: none;
-<<<<<<< HEAD
      -moz-appearance: none;
           appearance: none;
 }
@@ -835,10 +639,6 @@ img {
 
 .bg-local {
   background-attachment: local;
-=======
-  -moz-appearance: none;
-  appearance: none;
->>>>>>> upstream/master
 }
 
 .bg-scroll {
@@ -965,7 +765,6 @@ img {
   background-color: #7b341e;
 }
 
-<<<<<<< HEAD
 .bg-yellow-100 {
   background-color: #fffff0;
 }
@@ -1002,8 +801,6 @@ img {
   background-color: #744210;
 }
 
-=======
->>>>>>> upstream/master
 .bg-green-100 {
   background-color: #f0fff4;
 }
@@ -1040,7 +837,6 @@ img {
   background-color: #22543d;
 }
 
-<<<<<<< HEAD
 .bg-teal-100 {
   background-color: #e6fffa;
 }
@@ -1077,8 +873,6 @@ img {
   background-color: #234e52;
 }
 
-=======
->>>>>>> upstream/master
 .bg-blue-100 {
   background-color: #ebf8ff;
 }
@@ -1151,7 +945,6 @@ img {
   background-color: #3c366b;
 }
 
-<<<<<<< HEAD
 .bg-purple-100 {
   background-color: #faf5ff;
 }
@@ -1224,8 +1017,6 @@ img {
   background-color: #702459;
 }
 
-=======
->>>>>>> upstream/master
 .bg-page {
   background-color: var(--page-background-color);
 }
@@ -1238,13 +1029,10 @@ img {
   background-color: var(--input-background-color);
 }
 
-<<<<<<< HEAD
 .bg-dropdown {
   background-color: var(--dropdown-background-color);
 }
 
-=======
->>>>>>> upstream/master
 .bg-tableColumn {
   background-color: var(--table-column-background-color);
 }
@@ -2105,7 +1893,6 @@ img {
   background-position: top;
 }
 
-<<<<<<< HEAD
 .bg-repeat {
   background-repeat: repeat;
 }
@@ -2130,19 +1917,14 @@ img {
   background-repeat: space;
 }
 
-=======
->>>>>>> upstream/master
 .bg-auto {
   background-size: auto;
 }
 
-<<<<<<< HEAD
 .bg-cover {
   background-size: cover;
 }
 
-=======
->>>>>>> upstream/master
 .bg-contain {
   background-size: contain;
 }
@@ -2275,7 +2057,6 @@ img {
   border-color: #7b341e;
 }
 
-<<<<<<< HEAD
 .border-yellow-100 {
   border-color: #fffff0;
 }
@@ -2312,8 +2093,6 @@ img {
   border-color: #744210;
 }
 
-=======
->>>>>>> upstream/master
 .border-green-100 {
   border-color: #f0fff4;
 }
@@ -2350,7 +2129,6 @@ img {
   border-color: #22543d;
 }
 
-<<<<<<< HEAD
 .border-teal-100 {
   border-color: #e6fffa;
 }
@@ -2387,8 +2165,6 @@ img {
   border-color: #234e52;
 }
 
-=======
->>>>>>> upstream/master
 .border-blue-100 {
   border-color: #ebf8ff;
 }
@@ -2461,7 +2237,6 @@ img {
   border-color: #3c366b;
 }
 
-<<<<<<< HEAD
 .border-purple-100 {
   border-color: #faf5ff;
 }
@@ -2534,8 +2309,6 @@ img {
   border-color: #702459;
 }
 
-=======
->>>>>>> upstream/master
 .hover\:border-transparent:hover {
   border-color: transparent;
 }
@@ -3400,13 +3173,10 @@ img {
   border-bottom-left-radius: 9999px;
 }
 
-<<<<<<< HEAD
 .rounded-tl-none {
   border-top-left-radius: 0;
 }
 
-=======
->>>>>>> upstream/master
 .rounded-tr-none {
   border-top-right-radius: 0;
 }
@@ -3415,7 +3185,6 @@ img {
   border-bottom-right-radius: 0;
 }
 
-<<<<<<< HEAD
 .rounded-bl-none {
   border-bottom-left-radius: 0;
 }
@@ -3424,8 +3193,6 @@ img {
   border-top-left-radius: 0.125rem;
 }
 
-=======
->>>>>>> upstream/master
 .rounded-tr-sm {
   border-top-right-radius: 0.125rem;
 }
@@ -3434,7 +3201,6 @@ img {
   border-bottom-right-radius: 0.125rem;
 }
 
-<<<<<<< HEAD
 .rounded-bl-sm {
   border-bottom-left-radius: 0.125rem;
 }
@@ -3443,8 +3209,6 @@ img {
   border-top-left-radius: 0.25rem;
 }
 
-=======
->>>>>>> upstream/master
 .rounded-tr {
   border-top-right-radius: 0.25rem;
 }
@@ -3453,7 +3217,6 @@ img {
   border-bottom-right-radius: 0.25rem;
 }
 
-<<<<<<< HEAD
 .rounded-bl {
   border-bottom-left-radius: 0.25rem;
 }
@@ -3462,8 +3225,6 @@ img {
   border-top-left-radius: 0.5rem;
 }
 
-=======
->>>>>>> upstream/master
 .rounded-tr-lg {
   border-top-right-radius: 0.5rem;
 }
@@ -3472,7 +3233,6 @@ img {
   border-bottom-right-radius: 0.5rem;
 }
 
-<<<<<<< HEAD
 .rounded-bl-lg {
   border-bottom-left-radius: 0.5rem;
 }
@@ -3481,8 +3241,6 @@ img {
   border-top-left-radius: 9999px;
 }
 
-=======
->>>>>>> upstream/master
 .rounded-tr-full {
   border-top-right-radius: 9999px;
 }
@@ -3491,18 +3249,14 @@ img {
   border-bottom-right-radius: 9999px;
 }
 
-<<<<<<< HEAD
 .rounded-bl-full {
   border-bottom-left-radius: 9999px;
 }
 
-=======
->>>>>>> upstream/master
 .border-solid {
   border-style: solid;
 }
 
-<<<<<<< HEAD
 .border-dashed {
   border-style: dashed;
 }
@@ -3511,8 +3265,6 @@ img {
   border-style: dotted;
 }
 
-=======
->>>>>>> upstream/master
 .border-none {
   border-style: none;
 }
@@ -3629,18 +3381,14 @@ img {
   cursor: pointer;
 }
 
-<<<<<<< HEAD
 .cursor-wait {
   cursor: wait;
 }
 
-=======
->>>>>>> upstream/master
 .cursor-text {
   cursor: text;
 }
 
-<<<<<<< HEAD
 .cursor-move {
   cursor: move;
 }
@@ -3649,8 +3397,6 @@ img {
   cursor: not-allowed;
 }
 
-=======
->>>>>>> upstream/master
 .block {
   display: block;
 }
@@ -3691,35 +3437,26 @@ img {
   flex-direction: row;
 }
 
-<<<<<<< HEAD
 .flex-row-reverse {
   flex-direction: row-reverse;
 }
 
-=======
->>>>>>> upstream/master
 .flex-col {
   flex-direction: column;
 }
 
-<<<<<<< HEAD
 .flex-col-reverse {
   flex-direction: column-reverse;
 }
 
-=======
->>>>>>> upstream/master
 .flex-wrap {
   flex-wrap: wrap;
 }
 
-<<<<<<< HEAD
 .flex-wrap-reverse {
   flex-wrap: wrap-reverse;
 }
 
-=======
->>>>>>> upstream/master
 .flex-no-wrap {
   flex-wrap: nowrap;
 }
@@ -3736,7 +3473,6 @@ img {
   align-items: center;
 }
 
-<<<<<<< HEAD
 .items-baseline {
   align-items: baseline;
 }
@@ -3745,8 +3481,6 @@ img {
   align-items: stretch;
 }
 
-=======
->>>>>>> upstream/master
 .self-auto {
   align-self: auto;
 }
@@ -3763,13 +3497,10 @@ img {
   align-self: center;
 }
 
-<<<<<<< HEAD
 .self-stretch {
   align-self: stretch;
 }
 
-=======
->>>>>>> upstream/master
 .justify-start {
   justify-content: flex-start;
 }
@@ -3786,13 +3517,10 @@ img {
   justify-content: space-between;
 }
 
-<<<<<<< HEAD
 .justify-around {
   justify-content: space-around;
 }
 
-=======
->>>>>>> upstream/master
 .content-center {
   align-content: center;
 }
@@ -3809,13 +3537,10 @@ img {
   align-content: space-between;
 }
 
-<<<<<<< HEAD
 .content-around {
   align-content: space-around;
 }
 
-=======
->>>>>>> upstream/master
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -3832,7 +3557,6 @@ img {
   flex: none;
 }
 
-<<<<<<< HEAD
 .flex-grow-0 {
   flex-grow: 0;
 }
@@ -3841,8 +3565,6 @@ img {
   flex-grow: 1;
 }
 
-=======
->>>>>>> upstream/master
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -3899,13 +3621,10 @@ img {
   order: 12;
 }
 
-<<<<<<< HEAD
 .order-first {
   order: -9999;
 }
 
-=======
->>>>>>> upstream/master
 .order-last {
   order: 9999;
 }
@@ -3914,7 +3633,6 @@ img {
   order: 0;
 }
 
-<<<<<<< HEAD
 .float-right {
   float: right;
 }
@@ -3933,8 +3651,6 @@ img {
   clear: both;
 }
 
-=======
->>>>>>> upstream/master
 .font-sans {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -3943,7 +3659,6 @@ img {
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-<<<<<<< HEAD
 .font-mono {
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -3952,8 +3667,6 @@ img {
   font-weight: 100;
 }
 
-=======
->>>>>>> upstream/master
 .font-thin {
   font-weight: 200;
 }
@@ -3978,13 +3691,10 @@ img {
   font-weight: 700;
 }
 
-<<<<<<< HEAD
 .font-extrabold {
   font-weight: 800;
 }
 
-=======
->>>>>>> upstream/master
 .font-black {
   font-weight: 900;
 }
@@ -4145,13 +3855,10 @@ img {
   height: 100%;
 }
 
-<<<<<<< HEAD
 .h-screen {
   height: 100vh;
 }
 
-=======
->>>>>>> upstream/master
 .leading-none {
   line-height: 1;
 }
@@ -4160,18 +3867,14 @@ img {
   line-height: 1.25;
 }
 
-<<<<<<< HEAD
 .leading-snug {
   line-height: 1.375;
 }
 
-=======
->>>>>>> upstream/master
 .leading-normal {
   line-height: 1.5;
 }
 
-<<<<<<< HEAD
 .leading-relaxed {
   line-height: 1.625;
 }
@@ -4180,24 +3883,18 @@ img {
   line-height: 2;
 }
 
-=======
->>>>>>> upstream/master
 .list-inside {
   list-style-position: inside;
 }
 
-<<<<<<< HEAD
 .list-outside {
   list-style-position: outside;
 }
 
-=======
->>>>>>> upstream/master
 .list-none {
   list-style-type: none;
 }
 
-<<<<<<< HEAD
 .list-disc {
   list-style-type: disc;
 }
@@ -4206,8 +3903,6 @@ img {
   list-style-type: decimal;
 }
 
-=======
->>>>>>> upstream/master
 .m-0 {
   margin: 0;
 }
@@ -5352,13 +5047,10 @@ img {
   max-height: 100%;
 }
 
-<<<<<<< HEAD
 .max-h-screen {
   max-height: 100vh;
 }
 
-=======
->>>>>>> upstream/master
 .max-w-xs {
   max-width: 20rem;
 }
@@ -5411,13 +5103,10 @@ img {
   min-height: 100%;
 }
 
-<<<<<<< HEAD
 .min-h-screen {
   min-height: 100vh;
 }
 
-=======
->>>>>>> upstream/master
 .min-w-0 {
   min-width: 0;
 }
@@ -5428,7 +5117,6 @@ img {
 
 .object-contain {
   -o-object-fit: contain;
-<<<<<<< HEAD
      object-fit: contain;
 }
 
@@ -5440,108 +5128,61 @@ img {
 .object-fill {
   -o-object-fit: fill;
      object-fit: fill;
-=======
-  object-fit: contain;
->>>>>>> upstream/master
 }
 
 .object-none {
   -o-object-fit: none;
-<<<<<<< HEAD
      object-fit: none;
-=======
-  object-fit: none;
->>>>>>> upstream/master
 }
 
 .object-scale-down {
   -o-object-fit: scale-down;
-<<<<<<< HEAD
      object-fit: scale-down;
-=======
-  object-fit: scale-down;
->>>>>>> upstream/master
 }
 
 .object-bottom {
   -o-object-position: bottom;
-<<<<<<< HEAD
      object-position: bottom;
-=======
-  object-position: bottom;
->>>>>>> upstream/master
 }
 
 .object-center {
   -o-object-position: center;
-<<<<<<< HEAD
      object-position: center;
-=======
-  object-position: center;
->>>>>>> upstream/master
 }
 
 .object-left {
   -o-object-position: left;
-<<<<<<< HEAD
      object-position: left;
-=======
-  object-position: left;
->>>>>>> upstream/master
 }
 
 .object-left-bottom {
   -o-object-position: left bottom;
-<<<<<<< HEAD
      object-position: left bottom;
-=======
-  object-position: left bottom;
->>>>>>> upstream/master
 }
 
 .object-left-top {
   -o-object-position: left top;
-<<<<<<< HEAD
      object-position: left top;
-=======
-  object-position: left top;
->>>>>>> upstream/master
 }
 
 .object-right {
   -o-object-position: right;
-<<<<<<< HEAD
      object-position: right;
-=======
-  object-position: right;
->>>>>>> upstream/master
 }
 
 .object-right-bottom {
   -o-object-position: right bottom;
-<<<<<<< HEAD
      object-position: right bottom;
-=======
-  object-position: right bottom;
->>>>>>> upstream/master
 }
 
 .object-right-top {
   -o-object-position: right top;
-<<<<<<< HEAD
      object-position: right top;
-=======
-  object-position: right top;
->>>>>>> upstream/master
 }
 
 .object-top {
   -o-object-position: top;
-<<<<<<< HEAD
      object-position: top;
-=======
-  object-position: top;
->>>>>>> upstream/master
 }
 
 .opacity-0 {
@@ -5580,13 +5221,10 @@ img {
   overflow: hidden;
 }
 
-<<<<<<< HEAD
 .overflow-visible {
   overflow: visible;
 }
 
-=======
->>>>>>> upstream/master
 .overflow-scroll {
   overflow: scroll;
 }
@@ -5607,7 +5245,6 @@ img {
   overflow-y: hidden;
 }
 
-<<<<<<< HEAD
 .overflow-x-visible {
   overflow-x: visible;
 }
@@ -5616,8 +5253,6 @@ img {
   overflow-y: visible;
 }
 
-=======
->>>>>>> upstream/master
 .overflow-x-scroll {
   overflow-x: scroll;
 }
@@ -5626,7 +5261,6 @@ img {
   overflow-y: scroll;
 }
 
-<<<<<<< HEAD
 .scrolling-touch {
   -webkit-overflow-scrolling: touch;
 }
@@ -5635,8 +5269,6 @@ img {
   -webkit-overflow-scrolling: auto;
 }
 
-=======
->>>>>>> upstream/master
 .p-0 {
   padding: 0;
 }
@@ -5907,13 +5539,10 @@ img {
   padding-top: 0;
 }
 
-<<<<<<< HEAD
 .pr-0 {
   padding-right: 0;
 }
 
-=======
->>>>>>> upstream/master
 .pb-0 {
   padding-bottom: 0;
 }
@@ -5926,13 +5555,10 @@ img {
   padding-top: 0.25rem;
 }
 
-<<<<<<< HEAD
 .pr-1 {
   padding-right: 0.25rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -5945,13 +5571,10 @@ img {
   padding-top: 0.5rem;
 }
 
-<<<<<<< HEAD
 .pr-2 {
   padding-right: 0.5rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -5964,13 +5587,10 @@ img {
   padding-top: 0.75rem;
 }
 
-<<<<<<< HEAD
 .pr-3 {
   padding-right: 0.75rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-3 {
   padding-bottom: 0.75rem;
 }
@@ -5983,13 +5603,10 @@ img {
   padding-top: 1rem;
 }
 
-<<<<<<< HEAD
 .pr-4 {
   padding-right: 1rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -6002,13 +5619,10 @@ img {
   padding-top: 1.25rem;
 }
 
-<<<<<<< HEAD
 .pr-5 {
   padding-right: 1.25rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-5 {
   padding-bottom: 1.25rem;
 }
@@ -6021,13 +5635,10 @@ img {
   padding-top: 1.5rem;
 }
 
-<<<<<<< HEAD
 .pr-6 {
   padding-right: 1.5rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-6 {
   padding-bottom: 1.5rem;
 }
@@ -6040,13 +5651,10 @@ img {
   padding-top: 2rem;
 }
 
-<<<<<<< HEAD
 .pr-8 {
   padding-right: 2rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-8 {
   padding-bottom: 2rem;
 }
@@ -6059,13 +5667,10 @@ img {
   padding-top: 2.5rem;
 }
 
-<<<<<<< HEAD
 .pr-10 {
   padding-right: 2.5rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-10 {
   padding-bottom: 2.5rem;
 }
@@ -6078,13 +5683,10 @@ img {
   padding-top: 3rem;
 }
 
-<<<<<<< HEAD
 .pr-12 {
   padding-right: 3rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-12 {
   padding-bottom: 3rem;
 }
@@ -6097,13 +5699,10 @@ img {
   padding-top: 4rem;
 }
 
-<<<<<<< HEAD
 .pr-16 {
   padding-right: 4rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-16 {
   padding-bottom: 4rem;
 }
@@ -6116,13 +5715,10 @@ img {
   padding-top: 5rem;
 }
 
-<<<<<<< HEAD
 .pr-20 {
   padding-right: 5rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-20 {
   padding-bottom: 5rem;
 }
@@ -6135,13 +5731,10 @@ img {
   padding-top: 6rem;
 }
 
-<<<<<<< HEAD
 .pr-24 {
   padding-right: 6rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-24 {
   padding-bottom: 6rem;
 }
@@ -6154,13 +5747,10 @@ img {
   padding-top: 8rem;
 }
 
-<<<<<<< HEAD
 .pr-32 {
   padding-right: 8rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-32 {
   padding-bottom: 8rem;
 }
@@ -6173,13 +5763,10 @@ img {
   padding-top: 10rem;
 }
 
-<<<<<<< HEAD
 .pr-40 {
   padding-right: 10rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-40 {
   padding-bottom: 10rem;
 }
@@ -6192,13 +5779,10 @@ img {
   padding-top: 12rem;
 }
 
-<<<<<<< HEAD
 .pr-48 {
   padding-right: 12rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-48 {
   padding-bottom: 12rem;
 }
@@ -6211,13 +5795,10 @@ img {
   padding-top: 14rem;
 }
 
-<<<<<<< HEAD
 .pr-56 {
   padding-right: 14rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-56 {
   padding-bottom: 14rem;
 }
@@ -6230,13 +5811,10 @@ img {
   padding-top: 16rem;
 }
 
-<<<<<<< HEAD
 .pr-64 {
   padding-right: 16rem;
 }
 
-=======
->>>>>>> upstream/master
 .pb-64 {
   padding-bottom: 16rem;
 }
@@ -6249,13 +5827,10 @@ img {
   padding-top: 1px;
 }
 
-<<<<<<< HEAD
 .pr-px {
   padding-right: 1px;
 }
 
-=======
->>>>>>> upstream/master
 .pb-px {
   padding-bottom: 1px;
 }
@@ -6272,7 +5847,6 @@ img {
   pointer-events: auto;
 }
 
-<<<<<<< HEAD
 .static {
   position: static;
 }
@@ -6281,13 +5855,10 @@ img {
   position: fixed;
 }
 
-=======
->>>>>>> upstream/master
 .absolute {
   position: absolute;
 }
 
-<<<<<<< HEAD
 .relative {
   position: relative;
 }
@@ -6331,8 +5902,6 @@ img {
   left: auto;
 }
 
-=======
->>>>>>> upstream/master
 .top-0 {
   top: 0;
 }
@@ -6365,7 +5934,6 @@ img {
   left: auto;
 }
 
-<<<<<<< HEAD
 .resize-none {
   resize: none;
 }
@@ -6382,8 +5950,6 @@ img {
   resize: both;
 }
 
-=======
->>>>>>> upstream/master
 .shadow {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
@@ -6480,7 +6046,6 @@ img {
   box-shadow: none;
 }
 
-<<<<<<< HEAD
 .fill-current {
   fill: currentColor;
 }
@@ -6489,19 +6054,14 @@ img {
   stroke: currentColor;
 }
 
-=======
->>>>>>> upstream/master
 .table-auto {
   table-layout: auto;
 }
 
-<<<<<<< HEAD
 .table-fixed {
   table-layout: fixed;
 }
 
-=======
->>>>>>> upstream/master
 .text-left {
   text-align: left;
 }
@@ -6638,7 +6198,6 @@ img {
   color: #7b341e;
 }
 
-<<<<<<< HEAD
 .text-yellow-100 {
   color: #fffff0;
 }
@@ -6675,8 +6234,6 @@ img {
   color: #744210;
 }
 
-=======
->>>>>>> upstream/master
 .text-green-100 {
   color: #f0fff4;
 }
@@ -6713,7 +6270,6 @@ img {
   color: #22543d;
 }
 
-<<<<<<< HEAD
 .text-teal-100 {
   color: #e6fffa;
 }
@@ -6750,8 +6306,6 @@ img {
   color: #234e52;
 }
 
-=======
->>>>>>> upstream/master
 .text-blue-100 {
   color: #ebf8ff;
 }
@@ -6824,7 +6378,6 @@ img {
   color: #3c366b;
 }
 
-<<<<<<< HEAD
 .text-purple-100 {
   color: #faf5ff;
 }
@@ -6897,8 +6450,6 @@ img {
   color: #702459;
 }
 
-=======
->>>>>>> upstream/master
 .text-logo {
   color: var(--logo-text-color);
 }
@@ -7699,13 +7250,10 @@ img {
   font-size: 0.875rem;
 }
 
-<<<<<<< HEAD
 .text-base {
   font-size: 1rem;
 }
 
-=======
->>>>>>> upstream/master
 .text-lg {
   font-size: 1.125rem;
 }
@@ -7746,7 +7294,6 @@ img {
   text-transform: uppercase;
 }
 
-<<<<<<< HEAD
 .lowercase {
   text-transform: lowercase;
 }
@@ -7759,19 +7306,14 @@ img {
   text-transform: none;
 }
 
-=======
->>>>>>> upstream/master
 .underline {
   text-decoration: underline;
 }
 
-<<<<<<< HEAD
 .line-through {
   text-decoration: line-through;
 }
 
-=======
->>>>>>> upstream/master
 .no-underline {
   text-decoration: none;
 }
@@ -7800,7 +7342,6 @@ img {
   text-decoration: none;
 }
 
-<<<<<<< HEAD
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -7815,8 +7356,6 @@ img {
   letter-spacing: -0.05em;
 }
 
-=======
->>>>>>> upstream/master
 .tracking-tight {
   letter-spacing: -0.025em;
 }
@@ -7829,7 +7368,6 @@ img {
   letter-spacing: 0.025em;
 }
 
-<<<<<<< HEAD
 .tracking-wider {
   letter-spacing: 0.05em;
 }
@@ -7843,44 +7381,24 @@ img {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-=======
-.select-none {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
->>>>>>> upstream/master
 }
 
 .select-text {
   -webkit-user-select: text;
-<<<<<<< HEAD
      -moz-user-select: text;
       -ms-user-select: text;
           user-select: text;
-=======
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
->>>>>>> upstream/master
 }
 
 .select-all {
   -webkit-user-select: all;
-<<<<<<< HEAD
      -moz-user-select: all;
       -ms-user-select: all;
           user-select: all;
-=======
-  -moz-user-select: all;
-  -ms-user-select: all;
-  user-select: all;
->>>>>>> upstream/master
 }
 
 .select-auto {
   -webkit-user-select: auto;
-<<<<<<< HEAD
      -moz-user-select: auto;
       -ms-user-select: auto;
           user-select: auto;
@@ -7916,11 +7434,6 @@ img {
 
 .invisible {
   visibility: hidden;
-=======
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto;
->>>>>>> upstream/master
 }
 
 .whitespace-normal {
@@ -7935,13 +7448,10 @@ img {
   white-space: pre;
 }
 
-<<<<<<< HEAD
 .whitespace-pre-line {
   white-space: pre-line;
 }
 
-=======
->>>>>>> upstream/master
 .whitespace-pre-wrap {
   white-space: pre-wrap;
 }
@@ -7959,15 +7469,12 @@ img {
   word-break: break-all;
 }
 
-<<<<<<< HEAD
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-=======
->>>>>>> upstream/master
 .w-0 {
   width: 0;
 }
@@ -8053,19 +7560,11 @@ img {
 }
 
 .w-1\/3 {
-<<<<<<< HEAD
   width: 33.333333%;
 }
 
 .w-2\/3 {
   width: 66.666667%;
-=======
-  width: 33.33333%;
-}
-
-.w-2\/3 {
-  width: 66.66667%;
->>>>>>> upstream/master
 }
 
 .w-1\/4 {
@@ -8097,19 +7596,11 @@ img {
 }
 
 .w-1\/6 {
-<<<<<<< HEAD
   width: 16.666667%;
 }
 
 .w-2\/6 {
   width: 33.333333%;
-=======
-  width: 16.66667%;
-}
-
-.w-2\/6 {
-  width: 33.33333%;
->>>>>>> upstream/master
 }
 
 .w-3\/6 {
@@ -8117,7 +7608,6 @@ img {
 }
 
 .w-4\/6 {
-<<<<<<< HEAD
   width: 66.666667%;
 }
 
@@ -8131,21 +7621,6 @@ img {
 
 .w-2\/12 {
   width: 16.666667%;
-=======
-  width: 66.66667%;
-}
-
-.w-5\/6 {
-  width: 83.33333%;
-}
-
-.w-1\/12 {
-  width: 8.33333%;
-}
-
-.w-2\/12 {
-  width: 16.66667%;
->>>>>>> upstream/master
 }
 
 .w-3\/12 {
@@ -8153,19 +7628,11 @@ img {
 }
 
 .w-4\/12 {
-<<<<<<< HEAD
   width: 33.333333%;
 }
 
 .w-5\/12 {
   width: 41.666667%;
-=======
-  width: 33.33333%;
-}
-
-.w-5\/12 {
-  width: 41.66667%;
->>>>>>> upstream/master
 }
 
 .w-6\/12 {
@@ -8173,19 +7640,11 @@ img {
 }
 
 .w-7\/12 {
-<<<<<<< HEAD
   width: 58.333333%;
 }
 
 .w-8\/12 {
   width: 66.666667%;
-=======
-  width: 58.33333%;
-}
-
-.w-8\/12 {
-  width: 66.66667%;
->>>>>>> upstream/master
 }
 
 .w-9\/12 {
@@ -8193,32 +7652,21 @@ img {
 }
 
 .w-10\/12 {
-<<<<<<< HEAD
   width: 83.333333%;
 }
 
 .w-11\/12 {
   width: 91.666667%;
-=======
-  width: 83.33333%;
-}
-
-.w-11\/12 {
-  width: 91.66667%;
->>>>>>> upstream/master
 }
 
 .w-full {
   width: 100%;
 }
 
-<<<<<<< HEAD
 .w-screen {
   width: 100vw;
 }
 
-=======
->>>>>>> upstream/master
 .z-0 {
   z-index: 0;
 }
@@ -8350,13 +7798,8 @@ img {
 @media (min-width: 640px) {
   .sm\:appearance-none {
     -webkit-appearance: none;
-<<<<<<< HEAD
        -moz-appearance: none;
             appearance: none;
-=======
-    -moz-appearance: none;
-    appearance: none;
->>>>>>> upstream/master
   }
 
   .sm\:bg-fixed {
@@ -12843,128 +12286,72 @@ img {
 
   .sm\:object-contain {
     -o-object-fit: contain;
-<<<<<<< HEAD
        object-fit: contain;
-=======
-    object-fit: contain;
->>>>>>> upstream/master
   }
 
   .sm\:object-cover {
     -o-object-fit: cover;
-<<<<<<< HEAD
        object-fit: cover;
-=======
-    object-fit: cover;
->>>>>>> upstream/master
   }
 
   .sm\:object-fill {
     -o-object-fit: fill;
-<<<<<<< HEAD
        object-fit: fill;
-=======
-    object-fit: fill;
->>>>>>> upstream/master
   }
 
   .sm\:object-none {
     -o-object-fit: none;
-<<<<<<< HEAD
        object-fit: none;
-=======
-    object-fit: none;
->>>>>>> upstream/master
   }
 
   .sm\:object-scale-down {
     -o-object-fit: scale-down;
-<<<<<<< HEAD
        object-fit: scale-down;
-=======
-    object-fit: scale-down;
->>>>>>> upstream/master
   }
 
   .sm\:object-bottom {
     -o-object-position: bottom;
-<<<<<<< HEAD
        object-position: bottom;
-=======
-    object-position: bottom;
->>>>>>> upstream/master
   }
 
   .sm\:object-center {
     -o-object-position: center;
-<<<<<<< HEAD
        object-position: center;
-=======
-    object-position: center;
->>>>>>> upstream/master
   }
 
   .sm\:object-left {
     -o-object-position: left;
-<<<<<<< HEAD
        object-position: left;
-=======
-    object-position: left;
->>>>>>> upstream/master
   }
 
   .sm\:object-left-bottom {
     -o-object-position: left bottom;
-<<<<<<< HEAD
        object-position: left bottom;
-=======
-    object-position: left bottom;
->>>>>>> upstream/master
   }
 
   .sm\:object-left-top {
     -o-object-position: left top;
-<<<<<<< HEAD
        object-position: left top;
-=======
-    object-position: left top;
->>>>>>> upstream/master
   }
 
   .sm\:object-right {
     -o-object-position: right;
-<<<<<<< HEAD
        object-position: right;
-=======
-    object-position: right;
->>>>>>> upstream/master
   }
 
   .sm\:object-right-bottom {
     -o-object-position: right bottom;
-<<<<<<< HEAD
        object-position: right bottom;
-=======
-    object-position: right bottom;
->>>>>>> upstream/master
   }
 
   .sm\:object-right-top {
     -o-object-position: right top;
-<<<<<<< HEAD
        object-position: right top;
-=======
-    object-position: right top;
->>>>>>> upstream/master
   }
 
   .sm\:object-top {
     -o-object-position: top;
-<<<<<<< HEAD
        object-position: top;
-=======
-    object-position: top;
->>>>>>> upstream/master
   }
 
   .sm\:opacity-0 {
@@ -15160,54 +14547,30 @@ img {
 
   .sm\:select-none {
     -webkit-user-select: none;
-<<<<<<< HEAD
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-=======
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
->>>>>>> upstream/master
   }
 
   .sm\:select-text {
     -webkit-user-select: text;
-<<<<<<< HEAD
        -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
-=======
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
->>>>>>> upstream/master
   }
 
   .sm\:select-all {
     -webkit-user-select: all;
-<<<<<<< HEAD
        -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
-=======
-    -moz-user-select: all;
-    -ms-user-select: all;
-    user-select: all;
->>>>>>> upstream/master
   }
 
   .sm\:select-auto {
     -webkit-user-select: auto;
-<<<<<<< HEAD
        -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
-=======
-    -moz-user-select: auto;
-    -ms-user-select: auto;
-    user-select: auto;
->>>>>>> upstream/master
   }
 
   .sm\:align-baseline {
@@ -15366,19 +14729,11 @@ img {
   }
 
   .sm\:w-1\/3 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .sm\:w-2\/3 {
     width: 66.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .sm\:w-2\/3 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .sm\:w-1\/4 {
@@ -15410,19 +14765,11 @@ img {
   }
 
   .sm\:w-1\/6 {
-<<<<<<< HEAD
     width: 16.666667%;
   }
 
   .sm\:w-2\/6 {
     width: 33.333333%;
-=======
-    width: 16.66667%;
-  }
-
-  .sm\:w-2\/6 {
-    width: 33.33333%;
->>>>>>> upstream/master
   }
 
   .sm\:w-3\/6 {
@@ -15430,7 +14777,6 @@ img {
   }
 
   .sm\:w-4\/6 {
-<<<<<<< HEAD
     width: 66.666667%;
   }
 
@@ -15444,21 +14790,6 @@ img {
 
   .sm\:w-2\/12 {
     width: 16.666667%;
-=======
-    width: 66.66667%;
-  }
-
-  .sm\:w-5\/6 {
-    width: 83.33333%;
-  }
-
-  .sm\:w-1\/12 {
-    width: 8.33333%;
-  }
-
-  .sm\:w-2\/12 {
-    width: 16.66667%;
->>>>>>> upstream/master
   }
 
   .sm\:w-3\/12 {
@@ -15466,19 +14797,11 @@ img {
   }
 
   .sm\:w-4\/12 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .sm\:w-5\/12 {
     width: 41.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .sm\:w-5\/12 {
-    width: 41.66667%;
->>>>>>> upstream/master
   }
 
   .sm\:w-6\/12 {
@@ -15486,19 +14809,11 @@ img {
   }
 
   .sm\:w-7\/12 {
-<<<<<<< HEAD
     width: 58.333333%;
   }
 
   .sm\:w-8\/12 {
     width: 66.666667%;
-=======
-    width: 58.33333%;
-  }
-
-  .sm\:w-8\/12 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .sm\:w-9\/12 {
@@ -15506,19 +14821,11 @@ img {
   }
 
   .sm\:w-10\/12 {
-<<<<<<< HEAD
     width: 83.333333%;
   }
 
   .sm\:w-11\/12 {
     width: 91.666667%;
-=======
-    width: 83.33333%;
-  }
-
-  .sm\:w-11\/12 {
-    width: 91.66667%;
->>>>>>> upstream/master
   }
 
   .sm\:w-full {
@@ -15561,13 +14868,8 @@ img {
 @media (min-width: 768px) {
   .md\:appearance-none {
     -webkit-appearance: none;
-<<<<<<< HEAD
        -moz-appearance: none;
             appearance: none;
-=======
-    -moz-appearance: none;
-    appearance: none;
->>>>>>> upstream/master
   }
 
   .md\:bg-fixed {
@@ -20054,128 +19356,72 @@ img {
 
   .md\:object-contain {
     -o-object-fit: contain;
-<<<<<<< HEAD
        object-fit: contain;
-=======
-    object-fit: contain;
->>>>>>> upstream/master
   }
 
   .md\:object-cover {
     -o-object-fit: cover;
-<<<<<<< HEAD
        object-fit: cover;
-=======
-    object-fit: cover;
->>>>>>> upstream/master
   }
 
   .md\:object-fill {
     -o-object-fit: fill;
-<<<<<<< HEAD
        object-fit: fill;
-=======
-    object-fit: fill;
->>>>>>> upstream/master
   }
 
   .md\:object-none {
     -o-object-fit: none;
-<<<<<<< HEAD
        object-fit: none;
-=======
-    object-fit: none;
->>>>>>> upstream/master
   }
 
   .md\:object-scale-down {
     -o-object-fit: scale-down;
-<<<<<<< HEAD
        object-fit: scale-down;
-=======
-    object-fit: scale-down;
->>>>>>> upstream/master
   }
 
   .md\:object-bottom {
     -o-object-position: bottom;
-<<<<<<< HEAD
        object-position: bottom;
-=======
-    object-position: bottom;
->>>>>>> upstream/master
   }
 
   .md\:object-center {
     -o-object-position: center;
-<<<<<<< HEAD
        object-position: center;
-=======
-    object-position: center;
->>>>>>> upstream/master
   }
 
   .md\:object-left {
     -o-object-position: left;
-<<<<<<< HEAD
        object-position: left;
-=======
-    object-position: left;
->>>>>>> upstream/master
   }
 
   .md\:object-left-bottom {
     -o-object-position: left bottom;
-<<<<<<< HEAD
        object-position: left bottom;
-=======
-    object-position: left bottom;
->>>>>>> upstream/master
   }
 
   .md\:object-left-top {
     -o-object-position: left top;
-<<<<<<< HEAD
        object-position: left top;
-=======
-    object-position: left top;
->>>>>>> upstream/master
   }
 
   .md\:object-right {
     -o-object-position: right;
-<<<<<<< HEAD
        object-position: right;
-=======
-    object-position: right;
->>>>>>> upstream/master
   }
 
   .md\:object-right-bottom {
     -o-object-position: right bottom;
-<<<<<<< HEAD
        object-position: right bottom;
-=======
-    object-position: right bottom;
->>>>>>> upstream/master
   }
 
   .md\:object-right-top {
     -o-object-position: right top;
-<<<<<<< HEAD
        object-position: right top;
-=======
-    object-position: right top;
->>>>>>> upstream/master
   }
 
   .md\:object-top {
     -o-object-position: top;
-<<<<<<< HEAD
        object-position: top;
-=======
-    object-position: top;
->>>>>>> upstream/master
   }
 
   .md\:opacity-0 {
@@ -22371,54 +21617,30 @@ img {
 
   .md\:select-none {
     -webkit-user-select: none;
-<<<<<<< HEAD
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-=======
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
->>>>>>> upstream/master
   }
 
   .md\:select-text {
     -webkit-user-select: text;
-<<<<<<< HEAD
        -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
-=======
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
->>>>>>> upstream/master
   }
 
   .md\:select-all {
     -webkit-user-select: all;
-<<<<<<< HEAD
        -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
-=======
-    -moz-user-select: all;
-    -ms-user-select: all;
-    user-select: all;
->>>>>>> upstream/master
   }
 
   .md\:select-auto {
     -webkit-user-select: auto;
-<<<<<<< HEAD
        -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
-=======
-    -moz-user-select: auto;
-    -ms-user-select: auto;
-    user-select: auto;
->>>>>>> upstream/master
   }
 
   .md\:align-baseline {
@@ -22577,19 +21799,11 @@ img {
   }
 
   .md\:w-1\/3 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .md\:w-2\/3 {
     width: 66.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .md\:w-2\/3 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .md\:w-1\/4 {
@@ -22621,19 +21835,11 @@ img {
   }
 
   .md\:w-1\/6 {
-<<<<<<< HEAD
     width: 16.666667%;
   }
 
   .md\:w-2\/6 {
     width: 33.333333%;
-=======
-    width: 16.66667%;
-  }
-
-  .md\:w-2\/6 {
-    width: 33.33333%;
->>>>>>> upstream/master
   }
 
   .md\:w-3\/6 {
@@ -22641,7 +21847,6 @@ img {
   }
 
   .md\:w-4\/6 {
-<<<<<<< HEAD
     width: 66.666667%;
   }
 
@@ -22655,21 +21860,6 @@ img {
 
   .md\:w-2\/12 {
     width: 16.666667%;
-=======
-    width: 66.66667%;
-  }
-
-  .md\:w-5\/6 {
-    width: 83.33333%;
-  }
-
-  .md\:w-1\/12 {
-    width: 8.33333%;
-  }
-
-  .md\:w-2\/12 {
-    width: 16.66667%;
->>>>>>> upstream/master
   }
 
   .md\:w-3\/12 {
@@ -22677,19 +21867,11 @@ img {
   }
 
   .md\:w-4\/12 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .md\:w-5\/12 {
     width: 41.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .md\:w-5\/12 {
-    width: 41.66667%;
->>>>>>> upstream/master
   }
 
   .md\:w-6\/12 {
@@ -22697,19 +21879,11 @@ img {
   }
 
   .md\:w-7\/12 {
-<<<<<<< HEAD
     width: 58.333333%;
   }
 
   .md\:w-8\/12 {
     width: 66.666667%;
-=======
-    width: 58.33333%;
-  }
-
-  .md\:w-8\/12 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .md\:w-9\/12 {
@@ -22717,19 +21891,11 @@ img {
   }
 
   .md\:w-10\/12 {
-<<<<<<< HEAD
     width: 83.333333%;
   }
 
   .md\:w-11\/12 {
     width: 91.666667%;
-=======
-    width: 83.33333%;
-  }
-
-  .md\:w-11\/12 {
-    width: 91.66667%;
->>>>>>> upstream/master
   }
 
   .md\:w-full {
@@ -22772,13 +21938,8 @@ img {
 @media (min-width: 1024px) {
   .lg\:appearance-none {
     -webkit-appearance: none;
-<<<<<<< HEAD
        -moz-appearance: none;
             appearance: none;
-=======
-    -moz-appearance: none;
-    appearance: none;
->>>>>>> upstream/master
   }
 
   .lg\:bg-fixed {
@@ -27265,128 +26426,72 @@ img {
 
   .lg\:object-contain {
     -o-object-fit: contain;
-<<<<<<< HEAD
        object-fit: contain;
-=======
-    object-fit: contain;
->>>>>>> upstream/master
   }
 
   .lg\:object-cover {
     -o-object-fit: cover;
-<<<<<<< HEAD
        object-fit: cover;
-=======
-    object-fit: cover;
->>>>>>> upstream/master
   }
 
   .lg\:object-fill {
     -o-object-fit: fill;
-<<<<<<< HEAD
        object-fit: fill;
-=======
-    object-fit: fill;
->>>>>>> upstream/master
   }
 
   .lg\:object-none {
     -o-object-fit: none;
-<<<<<<< HEAD
        object-fit: none;
-=======
-    object-fit: none;
->>>>>>> upstream/master
   }
 
   .lg\:object-scale-down {
     -o-object-fit: scale-down;
-<<<<<<< HEAD
        object-fit: scale-down;
-=======
-    object-fit: scale-down;
->>>>>>> upstream/master
   }
 
   .lg\:object-bottom {
     -o-object-position: bottom;
-<<<<<<< HEAD
        object-position: bottom;
-=======
-    object-position: bottom;
->>>>>>> upstream/master
   }
 
   .lg\:object-center {
     -o-object-position: center;
-<<<<<<< HEAD
        object-position: center;
-=======
-    object-position: center;
->>>>>>> upstream/master
   }
 
   .lg\:object-left {
     -o-object-position: left;
-<<<<<<< HEAD
        object-position: left;
-=======
-    object-position: left;
->>>>>>> upstream/master
   }
 
   .lg\:object-left-bottom {
     -o-object-position: left bottom;
-<<<<<<< HEAD
        object-position: left bottom;
-=======
-    object-position: left bottom;
->>>>>>> upstream/master
   }
 
   .lg\:object-left-top {
     -o-object-position: left top;
-<<<<<<< HEAD
        object-position: left top;
-=======
-    object-position: left top;
->>>>>>> upstream/master
   }
 
   .lg\:object-right {
     -o-object-position: right;
-<<<<<<< HEAD
        object-position: right;
-=======
-    object-position: right;
->>>>>>> upstream/master
   }
 
   .lg\:object-right-bottom {
     -o-object-position: right bottom;
-<<<<<<< HEAD
        object-position: right bottom;
-=======
-    object-position: right bottom;
->>>>>>> upstream/master
   }
 
   .lg\:object-right-top {
     -o-object-position: right top;
-<<<<<<< HEAD
        object-position: right top;
-=======
-    object-position: right top;
->>>>>>> upstream/master
   }
 
   .lg\:object-top {
     -o-object-position: top;
-<<<<<<< HEAD
        object-position: top;
-=======
-    object-position: top;
->>>>>>> upstream/master
   }
 
   .lg\:opacity-0 {
@@ -29582,54 +28687,30 @@ img {
 
   .lg\:select-none {
     -webkit-user-select: none;
-<<<<<<< HEAD
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-=======
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
->>>>>>> upstream/master
   }
 
   .lg\:select-text {
     -webkit-user-select: text;
-<<<<<<< HEAD
        -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
-=======
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
->>>>>>> upstream/master
   }
 
   .lg\:select-all {
     -webkit-user-select: all;
-<<<<<<< HEAD
        -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
-=======
-    -moz-user-select: all;
-    -ms-user-select: all;
-    user-select: all;
->>>>>>> upstream/master
   }
 
   .lg\:select-auto {
     -webkit-user-select: auto;
-<<<<<<< HEAD
        -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
-=======
-    -moz-user-select: auto;
-    -ms-user-select: auto;
-    user-select: auto;
->>>>>>> upstream/master
   }
 
   .lg\:align-baseline {
@@ -29788,19 +28869,11 @@ img {
   }
 
   .lg\:w-1\/3 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .lg\:w-2\/3 {
     width: 66.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .lg\:w-2\/3 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .lg\:w-1\/4 {
@@ -29832,19 +28905,11 @@ img {
   }
 
   .lg\:w-1\/6 {
-<<<<<<< HEAD
     width: 16.666667%;
   }
 
   .lg\:w-2\/6 {
     width: 33.333333%;
-=======
-    width: 16.66667%;
-  }
-
-  .lg\:w-2\/6 {
-    width: 33.33333%;
->>>>>>> upstream/master
   }
 
   .lg\:w-3\/6 {
@@ -29852,7 +28917,6 @@ img {
   }
 
   .lg\:w-4\/6 {
-<<<<<<< HEAD
     width: 66.666667%;
   }
 
@@ -29866,21 +28930,6 @@ img {
 
   .lg\:w-2\/12 {
     width: 16.666667%;
-=======
-    width: 66.66667%;
-  }
-
-  .lg\:w-5\/6 {
-    width: 83.33333%;
-  }
-
-  .lg\:w-1\/12 {
-    width: 8.33333%;
-  }
-
-  .lg\:w-2\/12 {
-    width: 16.66667%;
->>>>>>> upstream/master
   }
 
   .lg\:w-3\/12 {
@@ -29888,19 +28937,11 @@ img {
   }
 
   .lg\:w-4\/12 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .lg\:w-5\/12 {
     width: 41.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .lg\:w-5\/12 {
-    width: 41.66667%;
->>>>>>> upstream/master
   }
 
   .lg\:w-6\/12 {
@@ -29908,19 +28949,11 @@ img {
   }
 
   .lg\:w-7\/12 {
-<<<<<<< HEAD
     width: 58.333333%;
   }
 
   .lg\:w-8\/12 {
     width: 66.666667%;
-=======
-    width: 58.33333%;
-  }
-
-  .lg\:w-8\/12 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .lg\:w-9\/12 {
@@ -29928,19 +28961,11 @@ img {
   }
 
   .lg\:w-10\/12 {
-<<<<<<< HEAD
     width: 83.333333%;
   }
 
   .lg\:w-11\/12 {
     width: 91.666667%;
-=======
-    width: 83.33333%;
-  }
-
-  .lg\:w-11\/12 {
-    width: 91.66667%;
->>>>>>> upstream/master
   }
 
   .lg\:w-full {
@@ -29983,13 +29008,8 @@ img {
 @media (min-width: 1280px) {
   .xl\:appearance-none {
     -webkit-appearance: none;
-<<<<<<< HEAD
        -moz-appearance: none;
             appearance: none;
-=======
-    -moz-appearance: none;
-    appearance: none;
->>>>>>> upstream/master
   }
 
   .xl\:bg-fixed {
@@ -34476,128 +33496,72 @@ img {
 
   .xl\:object-contain {
     -o-object-fit: contain;
-<<<<<<< HEAD
        object-fit: contain;
-=======
-    object-fit: contain;
->>>>>>> upstream/master
   }
 
   .xl\:object-cover {
     -o-object-fit: cover;
-<<<<<<< HEAD
        object-fit: cover;
-=======
-    object-fit: cover;
->>>>>>> upstream/master
   }
 
   .xl\:object-fill {
     -o-object-fit: fill;
-<<<<<<< HEAD
        object-fit: fill;
-=======
-    object-fit: fill;
->>>>>>> upstream/master
   }
 
   .xl\:object-none {
     -o-object-fit: none;
-<<<<<<< HEAD
        object-fit: none;
-=======
-    object-fit: none;
->>>>>>> upstream/master
   }
 
   .xl\:object-scale-down {
     -o-object-fit: scale-down;
-<<<<<<< HEAD
        object-fit: scale-down;
-=======
-    object-fit: scale-down;
->>>>>>> upstream/master
   }
 
   .xl\:object-bottom {
     -o-object-position: bottom;
-<<<<<<< HEAD
        object-position: bottom;
-=======
-    object-position: bottom;
->>>>>>> upstream/master
   }
 
   .xl\:object-center {
     -o-object-position: center;
-<<<<<<< HEAD
        object-position: center;
-=======
-    object-position: center;
->>>>>>> upstream/master
   }
 
   .xl\:object-left {
     -o-object-position: left;
-<<<<<<< HEAD
        object-position: left;
-=======
-    object-position: left;
->>>>>>> upstream/master
   }
 
   .xl\:object-left-bottom {
     -o-object-position: left bottom;
-<<<<<<< HEAD
        object-position: left bottom;
-=======
-    object-position: left bottom;
->>>>>>> upstream/master
   }
 
   .xl\:object-left-top {
     -o-object-position: left top;
-<<<<<<< HEAD
        object-position: left top;
-=======
-    object-position: left top;
->>>>>>> upstream/master
   }
 
   .xl\:object-right {
     -o-object-position: right;
-<<<<<<< HEAD
        object-position: right;
-=======
-    object-position: right;
->>>>>>> upstream/master
   }
 
   .xl\:object-right-bottom {
     -o-object-position: right bottom;
-<<<<<<< HEAD
        object-position: right bottom;
-=======
-    object-position: right bottom;
->>>>>>> upstream/master
   }
 
   .xl\:object-right-top {
     -o-object-position: right top;
-<<<<<<< HEAD
        object-position: right top;
-=======
-    object-position: right top;
->>>>>>> upstream/master
   }
 
   .xl\:object-top {
     -o-object-position: top;
-<<<<<<< HEAD
        object-position: top;
-=======
-    object-position: top;
->>>>>>> upstream/master
   }
 
   .xl\:opacity-0 {
@@ -36793,54 +35757,30 @@ img {
 
   .xl\:select-none {
     -webkit-user-select: none;
-<<<<<<< HEAD
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-=======
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
->>>>>>> upstream/master
   }
 
   .xl\:select-text {
     -webkit-user-select: text;
-<<<<<<< HEAD
        -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
-=======
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
->>>>>>> upstream/master
   }
 
   .xl\:select-all {
     -webkit-user-select: all;
-<<<<<<< HEAD
        -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
-=======
-    -moz-user-select: all;
-    -ms-user-select: all;
-    user-select: all;
->>>>>>> upstream/master
   }
 
   .xl\:select-auto {
     -webkit-user-select: auto;
-<<<<<<< HEAD
        -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
-=======
-    -moz-user-select: auto;
-    -ms-user-select: auto;
-    user-select: auto;
->>>>>>> upstream/master
   }
 
   .xl\:align-baseline {
@@ -36999,19 +35939,11 @@ img {
   }
 
   .xl\:w-1\/3 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .xl\:w-2\/3 {
     width: 66.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .xl\:w-2\/3 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .xl\:w-1\/4 {
@@ -37043,19 +35975,11 @@ img {
   }
 
   .xl\:w-1\/6 {
-<<<<<<< HEAD
     width: 16.666667%;
   }
 
   .xl\:w-2\/6 {
     width: 33.333333%;
-=======
-    width: 16.66667%;
-  }
-
-  .xl\:w-2\/6 {
-    width: 33.33333%;
->>>>>>> upstream/master
   }
 
   .xl\:w-3\/6 {
@@ -37063,7 +35987,6 @@ img {
   }
 
   .xl\:w-4\/6 {
-<<<<<<< HEAD
     width: 66.666667%;
   }
 
@@ -37077,21 +36000,6 @@ img {
 
   .xl\:w-2\/12 {
     width: 16.666667%;
-=======
-    width: 66.66667%;
-  }
-
-  .xl\:w-5\/6 {
-    width: 83.33333%;
-  }
-
-  .xl\:w-1\/12 {
-    width: 8.33333%;
-  }
-
-  .xl\:w-2\/12 {
-    width: 16.66667%;
->>>>>>> upstream/master
   }
 
   .xl\:w-3\/12 {
@@ -37099,19 +36007,11 @@ img {
   }
 
   .xl\:w-4\/12 {
-<<<<<<< HEAD
     width: 33.333333%;
   }
 
   .xl\:w-5\/12 {
     width: 41.666667%;
-=======
-    width: 33.33333%;
-  }
-
-  .xl\:w-5\/12 {
-    width: 41.66667%;
->>>>>>> upstream/master
   }
 
   .xl\:w-6\/12 {
@@ -37119,19 +36019,11 @@ img {
   }
 
   .xl\:w-7\/12 {
-<<<<<<< HEAD
     width: 58.333333%;
   }
 
   .xl\:w-8\/12 {
     width: 66.666667%;
-=======
-    width: 58.33333%;
-  }
-
-  .xl\:w-8\/12 {
-    width: 66.66667%;
->>>>>>> upstream/master
   }
 
   .xl\:w-9\/12 {
@@ -37139,19 +36031,11 @@ img {
   }
 
   .xl\:w-10\/12 {
-<<<<<<< HEAD
     width: 83.333333%;
   }
 
   .xl\:w-11\/12 {
     width: 91.666667%;
-=======
-    width: 83.33333%;
-  }
-
-  .xl\:w-11\/12 {
-    width: 91.66667%;
->>>>>>> upstream/master
   }
 
   .xl\:w-full {
@@ -37189,8 +36073,4 @@ img {
   .xl\:z-auto {
     z-index: auto;
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> upstream/master
