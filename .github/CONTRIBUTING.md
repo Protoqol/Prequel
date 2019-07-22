@@ -1,4 +1,4 @@
-![Laravel Prequel](./assets/prequel.png)
+![Prequel](./assets/prequel.png)
 
 ## Contribution guidelines 
 #### If these guidelines are not respected there's a high chance your pull request will not be merged 
