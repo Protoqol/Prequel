@@ -18,7 +18,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Prequel Path
+    | Prequel Path : string
     |--------------------------------------------------------------------------
     |
     | The path where Prequel will be residing. Note that this does not affect
