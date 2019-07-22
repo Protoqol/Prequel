@@ -57,7 +57,7 @@ class AppStatus
         if($this->connection->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql') {
             $query = 'select extract(epoch from current_timestamp - pg_postmaster_start_time())';
             $serverInfoArray    = [
-                'UPTIME'    => $this->connection->getPdo()->query($query)->fetch()[0]
+                'UPTIME'    => intval($this->connection->getPdo()->query($query)->fetch()[0])
             ];
         } else {
             $serverInfo         = $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_INFO);
