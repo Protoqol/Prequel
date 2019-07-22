@@ -81,7 +81,7 @@ class DatabaseTraverser
             foreach ($collection[$databaseName->pretty]['tables'] as $key => $table) {
                 $tablesToIgnore = config('prequel.ignored.' . $databaseName->official) ?? [];
 
-                if (!array_search($table['name']['official'], $tablesToIgnore)) {
+                if (array_search($table['name']['official'], $tablesToIgnore) === false) {
                     array_push($flatTableCollection, $databaseName->official . '.' . $table['name']['official']);
                 } else {
                     unset($collection[$databaseName->pretty]['tables'][$key]);
