@@ -5,10 +5,10 @@
         <div class="status-cards" v-cloak>
             <Migrations/>
 
-            <StatusDisplay header="Average Query Speed"
-                           :value="app.serverInfo.QUERIES_PER_SECOND_AVG ? app.serverInfo.QUERIES_PER_SECOND_AVG : 'Could not retrieve'"
-                           :unit="app.serverInfo.QUERIES_PER_SECOND_AVG ? 'queries per second' : '...'">
-                <slot ref="alert">
+            <StatusDisplay v-if="app.serverInfo" header="Average Query Speed"
+                           :value="app.serverInfo.QUERIES_PER_SECOND_AVG ? app.serverInfo.QUERIES_PER_SECOND_AVG : 'Could not retrieve...'"
+                           :unit="app.serverInfo.QUERIES_PER_SECOND_AVG ? 'queries per second' : ''">
+                <slot v-if="app.serverInfo.QUERIES_PER_SECOND_AVG" ref="alert">
                     <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG === 0"
                            type="critical"/>
                     <Badge v-else-if="app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.3 && app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.9"
@@ -21,7 +21,7 @@
             <StatusDisplay header="Active Threads"
                            :value="app.serverInfo.THREADS ? app.serverInfo.THREADS : 'Could not retrieve...'"
                            :unit="app.serverInfo.THREADS ? 'threads' : ''">
-                <slot ref="alert">
+                <slot v-if="app.serverInfo.THREADS" ref="alert">
                     <Badge v-if="app.serverInfo.THREADS && app.serverInfo.THREADS > 0" type="good"/>
                     <Badge v-else type="warning"/>
                 </slot>
@@ -30,7 +30,7 @@
             <StatusDisplay header="Open Tables"
                            :value="app.serverInfo.OPEN_TABLES ? app.serverInfo.OPEN_TABLES : 'Could not retrieve...'"
                            :unit="app.serverInfo.OPEN_TABLES ? 'tables' : ''">
-                <slot ref="alert">
+                <slot v-if="app.serverInfo.OPEN_TABLES" ref="alert">
                     <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
@@ -42,7 +42,7 @@
             <StatusDisplay header="Uptime in hours"
                            :value="app.serverInfo.UPTIME ? secsToHours(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'hours' : ''">
-                <slot ref="alert">
+                <slot v-if="app.serverInfo.UPTIME" ref="alert">
                     <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
@@ -50,7 +50,7 @@
             <StatusDisplay header="Uptime in minutes"
                            :value="app.serverInfo.UPTIME ? secsToMins(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'minutes' : ''">
-                <slot ref="alert">
+                <slot v-if="app.serverInfo.UPTIME" ref="alert">
                     <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
@@ -58,7 +58,7 @@
             <StatusDisplay header="Uptime in seconds"
                            :value="app.serverInfo.UPTIME ? app.serverInfo.UPTIME : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'seconds' : ''">
-                <slot ref="alert">
+                <slot v-if="app.serverInfo.UPTIME" ref="alert">
                     <Badge type="neutral" text="OK"/>
                 </slot>
             </StatusDisplay>
