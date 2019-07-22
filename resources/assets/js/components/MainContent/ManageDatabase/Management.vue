@@ -18,7 +18,7 @@
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay header="Active Threads"
+            <StatusDisplay v-if="app.serverInfo" header="Active Threads"
                            :value="app.serverInfo.THREADS ? app.serverInfo.THREADS : 'Could not retrieve...'"
                            :unit="app.serverInfo.THREADS ? 'threads' : ''">
                 <slot v-if="app.serverInfo.THREADS" ref="alert">
@@ -27,7 +27,7 @@
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay header="Open Tables"
+            <StatusDisplay v-if="app.serverInfo" header="Open Tables"
                            :value="app.serverInfo.OPEN_TABLES ? app.serverInfo.OPEN_TABLES : 'Could not retrieve...'"
                            :unit="app.serverInfo.OPEN_TABLES ? 'tables' : ''">
                 <slot v-if="app.serverInfo.OPEN_TABLES" ref="alert">
@@ -39,7 +39,7 @@
             <!--            <StatusDisplay :header="`Permissions for user '${$root.prequel.env.user}'`"-->
             <!--                           :value="readableArray(app.permissions)"/>-->
 
-            <StatusDisplay header="Uptime in hours"
+            <StatusDisplay v-if="app.serverInfo" header="Uptime in hours"
                            :value="app.serverInfo.UPTIME ? secsToHours(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'hours' : ''">
                 <slot v-if="app.serverInfo.UPTIME" ref="alert">
@@ -47,7 +47,7 @@
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay header="Uptime in minutes"
+            <StatusDisplay v-if="app.serverInfo" header="Uptime in minutes"
                            :value="app.serverInfo.UPTIME ? secsToMins(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'minutes' : ''">
                 <slot v-if="app.serverInfo.UPTIME" ref="alert">
@@ -55,7 +55,7 @@
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay header="Uptime in seconds"
+            <StatusDisplay v-if="app.serverInfo" header="Uptime in seconds"
                            :value="app.serverInfo.UPTIME ? app.serverInfo.UPTIME : 'Could not retrieve...'"
                            :unit="app.serverInfo.UPTIME ? 'seconds' : ''">
                 <slot v-if="app.serverInfo.UPTIME" ref="alert">

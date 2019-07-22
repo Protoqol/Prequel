@@ -38340,7 +38340,7 @@ module.exports = function isBuffer (obj) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.15';
+  var VERSION = '4.17.14';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -59266,49 +59266,54 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _c(
-          "StatusDisplay",
-          {
-            attrs: {
-              header: "Active Threads",
-              value: _vm.app.serverInfo.THREADS
-                ? _vm.app.serverInfo.THREADS
-                : "Could not retrieve...",
-              unit: _vm.app.serverInfo.THREADS ? "threads" : ""
-            }
-          },
-          [
-            _vm.app.serverInfo.THREADS
-              ? _vm._t("default", [
-                  _vm.app.serverInfo.THREADS && _vm.app.serverInfo.THREADS > 0
-                    ? _c("Badge", { attrs: { type: "good" } })
-                    : _c("Badge", { attrs: { type: "warning" } })
-                ])
-              : _vm._e()
-          ],
-          2
-        ),
+        _vm.app.serverInfo
+          ? _c(
+              "StatusDisplay",
+              {
+                attrs: {
+                  header: "Active Threads",
+                  value: _vm.app.serverInfo.THREADS
+                    ? _vm.app.serverInfo.THREADS
+                    : "Could not retrieve...",
+                  unit: _vm.app.serverInfo.THREADS ? "threads" : ""
+                }
+              },
+              [
+                _vm.app.serverInfo.THREADS
+                  ? _vm._t("default", [
+                      _vm.app.serverInfo.THREADS &&
+                      _vm.app.serverInfo.THREADS > 0
+                        ? _c("Badge", { attrs: { type: "good" } })
+                        : _c("Badge", { attrs: { type: "warning" } })
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "StatusDisplay",
-          {
-            attrs: {
-              header: "Open Tables",
-              value: _vm.app.serverInfo.OPEN_TABLES
-                ? _vm.app.serverInfo.OPEN_TABLES
-                : "Could not retrieve...",
-              unit: _vm.app.serverInfo.OPEN_TABLES ? "tables" : ""
-            }
-          },
-          [
-            _vm.app.serverInfo.OPEN_TABLES
-              ? _vm._t("default", [
-                  _c("Badge", { attrs: { type: "neutral", text: "OK" } })
-                ])
-              : _vm._e()
-          ],
-          2
-        )
+        _vm.app.serverInfo
+          ? _c(
+              "StatusDisplay",
+              {
+                attrs: {
+                  header: "Open Tables",
+                  value: _vm.app.serverInfo.OPEN_TABLES
+                    ? _vm.app.serverInfo.OPEN_TABLES
+                    : "Could not retrieve...",
+                  unit: _vm.app.serverInfo.OPEN_TABLES ? "tables" : ""
+                }
+              },
+              [
+                _vm.app.serverInfo.OPEN_TABLES
+                  ? _vm._t("default", [
+                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e()
       ],
       1
     ),
@@ -59317,68 +59322,74 @@ var render = function() {
       "div",
       { staticClass: "status-cards" },
       [
-        _c(
-          "StatusDisplay",
-          {
-            attrs: {
-              header: "Uptime in hours",
-              value: _vm.app.serverInfo.UPTIME
-                ? _vm.secsToHours(_vm.app.serverInfo.UPTIME)
-                : "Could not retrieve...",
-              unit: _vm.app.serverInfo.UPTIME ? "hours" : ""
-            }
-          },
-          [
-            _vm.app.serverInfo.UPTIME
-              ? _vm._t("default", [
-                  _c("Badge", { attrs: { type: "neutral", text: "OK" } })
-                ])
-              : _vm._e()
-          ],
-          2
-        ),
+        _vm.app.serverInfo
+          ? _c(
+              "StatusDisplay",
+              {
+                attrs: {
+                  header: "Uptime in hours",
+                  value: _vm.app.serverInfo.UPTIME
+                    ? _vm.secsToHours(_vm.app.serverInfo.UPTIME)
+                    : "Could not retrieve...",
+                  unit: _vm.app.serverInfo.UPTIME ? "hours" : ""
+                }
+              },
+              [
+                _vm.app.serverInfo.UPTIME
+                  ? _vm._t("default", [
+                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "StatusDisplay",
-          {
-            attrs: {
-              header: "Uptime in minutes",
-              value: _vm.app.serverInfo.UPTIME
-                ? _vm.secsToMins(_vm.app.serverInfo.UPTIME)
-                : "Could not retrieve...",
-              unit: _vm.app.serverInfo.UPTIME ? "minutes" : ""
-            }
-          },
-          [
-            _vm.app.serverInfo.UPTIME
-              ? _vm._t("default", [
-                  _c("Badge", { attrs: { type: "neutral", text: "OK" } })
-                ])
-              : _vm._e()
-          ],
-          2
-        ),
+        _vm.app.serverInfo
+          ? _c(
+              "StatusDisplay",
+              {
+                attrs: {
+                  header: "Uptime in minutes",
+                  value: _vm.app.serverInfo.UPTIME
+                    ? _vm.secsToMins(_vm.app.serverInfo.UPTIME)
+                    : "Could not retrieve...",
+                  unit: _vm.app.serverInfo.UPTIME ? "minutes" : ""
+                }
+              },
+              [
+                _vm.app.serverInfo.UPTIME
+                  ? _vm._t("default", [
+                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "StatusDisplay",
-          {
-            attrs: {
-              header: "Uptime in seconds",
-              value: _vm.app.serverInfo.UPTIME
-                ? _vm.app.serverInfo.UPTIME
-                : "Could not retrieve...",
-              unit: _vm.app.serverInfo.UPTIME ? "seconds" : ""
-            }
-          },
-          [
-            _vm.app.serverInfo.UPTIME
-              ? _vm._t("default", [
-                  _c("Badge", { attrs: { type: "neutral", text: "OK" } })
-                ])
-              : _vm._e()
-          ],
-          2
-        )
+        _vm.app.serverInfo
+          ? _c(
+              "StatusDisplay",
+              {
+                attrs: {
+                  header: "Uptime in seconds",
+                  value: _vm.app.serverInfo.UPTIME
+                    ? _vm.app.serverInfo.UPTIME
+                    : "Could not retrieve...",
+                  unit: _vm.app.serverInfo.UPTIME ? "seconds" : ""
+                }
+              },
+              [
+                _vm.app.serverInfo.UPTIME
+                  ? _vm._t("default", [
+                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e()
       ],
       1
     )
@@ -74271,8 +74282,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\xampp\htdocs\localhost\packages\prequel\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! E:\xampp\htdocs\localhost\packages\prequel\resources\assets\css\app.css */"./resources/assets/css/app.css");
+__webpack_require__(/*! /Users/martin.kun/Code/prequel/packages/prequel/resources/assets/js/app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! /Users/martin.kun/Code/prequel/packages/prequel/resources/assets/css/app.css */"./resources/assets/css/app.css");
 
 
 /***/ })
