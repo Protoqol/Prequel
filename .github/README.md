@@ -1,5 +1,5 @@
 
-![Prequel](./assets/prequel.png)  
+![Prequel](assets/prequel_v1.png)  
   
 # Prequel v1.13
 <p align="center">
