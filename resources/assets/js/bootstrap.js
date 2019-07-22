@@ -1,8 +1,4 @@
-import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
-
 window._ = require('lodash');
-
-window.v = window.vividLog;
 
 /**
  * Axios
@@ -16,8 +12,8 @@ window.axios.defaults.baseURL                            = `${window.location.or
 /**
  * Fontawesome
  */
-import Vue                     from 'vue';
-import {library}               from '@fortawesome/fontawesome-svg-core';
+import Vue               from 'vue';
+import {library}         from '@fortawesome/fontawesome-svg-core';
 import {
   faAdjust,
   faAsterisk,
@@ -30,8 +26,9 @@ import {
   faEye,
   faWrench,
   faRunning,
-}                              from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon}       from '@fortawesome/vue-fontawesome';
+  faExclamationTriangle,
+}                        from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 library.add(faDatabase, faTable, faChevronCircleUp, faSearchPlus, faTools,
     faGlasses, faAsterisk, faAdjust, faExclamationTriangle, faEye, faWrench,
@@ -42,12 +39,15 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 /**
  * Highlight.js
  */
-import highlight               from 'highlight.js';
+import highlight         from 'highlight.js';
 import 'highlight.js/styles/github.css';
-import sql                     from 'highlight.js/lib/languages/sql';
+import sql               from 'highlight.js/lib/languages/sql';
 
 highlight.registerLanguage('sql', sql);
 
+/**
+ * Directive to highlight programming language syntax.
+ */
 Vue.directive('highlightjs', {
   deep            : true,
   bind            : function(el, binding) {
@@ -78,17 +78,17 @@ window.capitalise = function(str) {
 };
 
 /**
- *  Might do real-time database updating in the future. Let people F5 for now
- * :^).
+ * Handle translations.
  *
- *  import Echo from 'laravel-echo'
- *
- *  window.Pusher = require('pusher-js');
- *
- *  window.Echo = new Echo({
- *      broadcaster: 'pusher',
- *      key: process.env.MIX_PUSHER_APP_KEY,
- *      cluster: process.env.MIX_PUSHER_APP_CLUSTER,
- *      encrypted: true
- *  });
+ * @param string
+ * @param args
+ * @returns {*}
  */
+Vue.prototype.trans = (string, args) => {
+  let value = _.get(window.Prequel.i18n, string);
+
+  _.eachRight(args, (paramVal, paramKey) => {
+    value = _.replace(value, `:${paramKey}`, paramVal);
+  });
+  return value;
+};

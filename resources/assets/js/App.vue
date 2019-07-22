@@ -96,6 +96,7 @@
           data         : window.Prequel.data,        // Object
           env          : window.Prequel.env,         // Object
           flat         : window.Prequel.flat,        // Array
+          lang         : window.Prequel.i18n,
           api          : {
             database: '',
           },

@@ -15,8 +15,9 @@ mix.setResourceRoot('packages/protoqol/prequel').
       require('tailwindcss'),
     ]).
     js('resources/assets/js/app.js', 'public').
-    copy('public', '../../../public/vendor/prequel')/*.
-    browserSync('http://prequel.local/prequel').
+    copy('public', '../../../public/vendor/prequel').
+    copy('resources/lang', '../../../resources/lang/vendor/prequel').
+    browserSync('http://prequel.test').
     options({
         purifyCss: true,
-    })*/;
+    });

@@ -57,7 +57,7 @@
         }
 
         for (let i = 0; i < this.standards.supportedConnectionTypes.length; i++) {
-        	console.log(this.standards.supportedConnectionTypes[i]);
+        	console.log(this.standards.supportedConnectionTypes);
           if (this.standards.supportedConnectionTypes[i] !== connection) {
             suggestionCollection.push(
                 `Your database connection might not be supported yet, currently supported: 'mysql'. (Yours is: '${connection}').`);

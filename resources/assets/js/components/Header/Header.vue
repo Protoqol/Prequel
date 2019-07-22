@@ -10,10 +10,10 @@
                         </a>
                     </div>
                     <h1 class="header-left-logo-text text-logo">
-                        <span id="laravel">Laravel</span> Prequel
+                        <span id="laravel">Prequel</span>
                         <a href="https://github.com/Protoqol"
                            target="_blank"
-                           title="Creator of Laravel Prequel">
+                           title="Creator of Prequel">
                             PROTOQOL
                         </a>
                     </h1>

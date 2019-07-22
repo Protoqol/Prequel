@@ -26,6 +26,8 @@
   window.Prequel.data  = {};
   window.Prequel.flat  = [];
   window.Prequel.env   = @json($env);
+  window.Prequel.i18n  = @json($lang);
+
 </script>
 <script src="{{ asset('/vendor/prequel/app.js') }}"></script>
 </body>
