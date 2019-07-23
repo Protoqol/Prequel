@@ -4,7 +4,7 @@
             <Accordion>
                 <div slot="header">
                     <li class="list-header"
-                        :title="`${database.official_name} (${database.tables.length} tables)`"
+                        :title="`${database.official_name} (${database.tables.length} ${trans('general.tables')})`"
                         :value="database.official_name">
 
                         <font-awesome-icon class="mr-1" icon="database"/>
@@ -23,6 +23,7 @@
                     @click="$emit('tableSelect', $event)"
                     v-for="table in database.tables">
 
+                    <!--        @TODO model info            -->
                     <!--                    <font-awesome-icon class="mr-2 hover:text-gray-700" icon="asterisk"-->
                     <!--                                       :title="`${database.official_name}.${table.name.official}`"/>-->
 
@@ -37,7 +38,7 @@
                 </li>
                 <li v-if="database.tables.length === 0"
                     class="menu-li-no-content">
-                    This database does not contain any tables
+                    {{trans('table_menu.empty_table')}}
                 </li>
             </Accordion>
         </ul>

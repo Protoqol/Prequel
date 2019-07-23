@@ -1,7 +1,7 @@
 <template>
     <div id="empty-table-wrapper">
         <h1>
-            This query did not yield any result
+            {{trans('table_empty.no_results')}}
         </h1>
         <div class="column-overview">
             <div class="columns-wrapper">
@@ -10,22 +10,22 @@
                     <tr>
                         <th class="table-th">
                             <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
-                                Column Key
+                                {{trans('table_empty.col_key')}}
                             </p>
                         </th>
                         <th class="table-th">
                             <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
-                                Column Field
+                                {{trans('table_empty.col_field')}}
                             </p>
                         </th>
                         <th class="table-th">
                             <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
-                                Column Default
+                                {{trans('table_empty.col_def')}}
                             </p>
                         </th>
                         <th class="table-th">
                             <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
-                                Column Type
+                                {{trans('table_empty.col_type')}}
                             </p>
                         </th>
                     </tr>
@@ -33,16 +33,16 @@
                     <tbody>
                     <tr class="table-row" v-for="struct in structure">
                         <td class="ellipsis table-td" :class="struct.Key ? '' : 'italic'">
-                            {{struct.Key ? struct.Key : 'Not set'}}
+                            {{struct.Key ? struct.Key : trans('table_empty.not_set')}}
                         </td>
                         <td class="ellipsis table-td" :class="struct.Field ? '' : 'italic'">
-                            {{struct.Field ? struct.Field : 'Not set'}}
+                            {{struct.Field ? struct.Field : trans('table_empty.not_set')}}
                         </td>
                         <td class="ellipsis table-td" :class="struct.Default ? '' : 'italic'">
-                            {{struct.Default ? struct.Default : 'Not set'}}
+                            {{struct.Default ? struct.Default : trans('table_empty.not_set')}}
                         </td>
                         <td class="ellipsis table-td" :class="struct.Type  ? '' : 'italic'">
-                            {{struct.Type ? struct.Type : 'Not set'}}
+                            {{struct.Type ? struct.Type : trans('table_empty.not_set')}}
                         </td>
                     </tr>
                     </tbody>
