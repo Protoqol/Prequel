@@ -15,12 +15,29 @@ class DatabaseConnector
     public $connection;
 
     /**
-     * @param string $database Database name
      * @return Connection
+     *
+     * @throws \Exception
      */
-    public function getConnection(string $database = '')
+    public function getConnection()
     {
-        $this->connection = (new Connection($this->getPdo($database)));
+        switch (config('prequel.database.connection')) {
+            case 'mysql':
+                $className = 'MySql';
+                break;
+            case 'pgsql':
+                $className = 'PostgreSql';
+                break;
+            default:
+                $className = 'error';
+                break;
+        }
+
+        if($className === 'error') throw new \Exception("Connection couldn't be established due to unsupported database. (".config('prequel.database.connection').")");
+
+        $class = 'Protoqol\\Prequel\\Classes\\Database\\' . $className;
+
+        $this->connection = new Connection((new $class)->getPdo());
 
         return $this->connection;
     }
