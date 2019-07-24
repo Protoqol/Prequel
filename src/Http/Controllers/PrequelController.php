@@ -39,31 +39,4 @@ class PrequelController extends Controller
             'lang' => Lang::get('Prequel::lang', [], (string)config('prequel.locale')),
         ]);
     }
-
-    /**
-     * Get app status.
-     * @return array
-     */
-    public function status()
-    {
-        return (new AppStatus())->getStatus();
-    }
-
-    /**
-     * Run pending migrations.
-     * @return int
-     */
-    public function runMigrations()
-    {
-        return (new Migrations())->run();
-    }
-
-    /**
-     * Reset latest migrations.
-     * @return int
-     */
-    public function resetMigrations()
-    {
-        return (new Migrations())->reset();
-    }
 }
