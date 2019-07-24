@@ -57,11 +57,11 @@
                            @keyup.esc="resetInputs">
 
                     <button class="search-get-button" :title="trans('header.buttons.get.title')" @click="searchHandler">
-                        {{trans('header.button.get.text')}}
+                        {{trans('header.buttons.get.text')}}
                     </button>
                     <button class="search-reset-button" :title="trans('header.buttons.reset.title')"
                             @click="resetHandler">
-                        {{trans('header.button.reset.text')}}
+                        {{trans('header.buttons.reset.text')}}
                     </button>
                 </label>
             </div>

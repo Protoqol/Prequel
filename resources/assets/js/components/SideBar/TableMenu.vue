@@ -85,7 +85,7 @@
         }
 
         .list-header {
-            color: var(--list-header-text) !important;
+            color: var(--list-header-text);
             @apply border-b;
             border-color: var(--border-color);
             @apply p-2;

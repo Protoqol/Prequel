@@ -41,7 +41,7 @@ class InstallCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $this->comment('Publishing Prequel Service Provider...');
         $this->callSilent('vendor:publish', [
@@ -56,6 +56,11 @@ class InstallCommand extends Command
         $this->comment('Publishing Prequel Config...');
         $this->callSilent('vendor:publish', [
             '--tag' => 'prequel-config',
+        ]);
+
+        $this->comment('Publishing Prequel Translations...');
+        $this->callSilent('vendor:publish', [
+            '--tag' => 'prequel-lang',
         ]);
 
         $this->info('Prequel succesfully installed.');

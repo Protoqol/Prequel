@@ -179,7 +179,6 @@
 
     .table-wrapper {
         table {
-            @apply mb-6;
             @apply w-full;
             @apply rounded;
             @apply bg-gray-200;
