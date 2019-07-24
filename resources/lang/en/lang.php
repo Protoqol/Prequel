@@ -123,7 +123,7 @@ return [
             'no_reset_migrations' => 'No existing migrations',
         ],
         'avg_query_speed'    => [
-            'header' => 'Average Query Speed',
+            'header' => 'Average Queries per second',
             'unit'   => 'queries per second',
         ],
         'active_threads'     => [
