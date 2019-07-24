@@ -6,8 +6,6 @@ namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
-use Protoqol\Prequel\Classes\App\AppStatus;
-use Protoqol\Prequel\Classes\App\Migrations;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
