@@ -152,8 +152,8 @@
           welcomeShown: false,
           params      : new URLSearchParams(window.location.search),
           menu        : {
-            active_header_class: 'text-indigo-600',
-            active_item_class  : 'text-indigo-400',
+            active_header_color: '#5a67d8',
+            active_item_color  : '#7f9cf5',
           },
         },
       };
@@ -251,14 +251,15 @@
           // All 'li' elements
           let menuItemElements = document.getElementsByTagName('li');
 
+          // Reset other inactive items to their defaults.
           // Pretty costly operation, @TODO Refactor
           for (let menuElement of menuItemElements) {
-            if (menuElement && menuElement.classList.contains(this.view.menu.active_item_class)) {
-              menuElement.classList.remove(this.view.menu.active_item_class);
+            if (menuElement && menuElement.style.color !== this.view.menu.active_header_color) {
+              menuElement.style.color = '';
             }
 
-            if (menuElement && menuElement.classList.contains(this.view.menu.active_header_class)) {
-              menuElement.classList.remove(this.view.menu.active_header_class);
+            if (menuElement && menuElement.style.color !== this.view.menu.active_item_color) {
+              menuElement.style.color = '';
             }
           }
 
@@ -267,8 +268,8 @@
             databaseEl.click();
           }
 
-          databaseEl.classList.add(this.view.menu.active_header_class);
-          tableEl.classList.add(this.view.menu.active_item_class);
+          databaseEl.style.color = this.view.menu.active_header_color;
+          tableEl.style.color    = this.view.menu.active_item_color;
         }
       },
 

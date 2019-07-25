@@ -170,14 +170,18 @@ class DatabaseTraverser
      */
     public function getTableStructure(string $database, string $table): array
     {
-        if($this->databaseConn === 'pgsql'){
-            $columns = [];
-            $connection = (new DatabaseConnector())->getConnection($database);
-            $temp_columns = $connection->select("SELECT column_name as field, data_type as type, is_nullable as null, column_default as default FROM information_schema.columns WHERE table_schema='".config('database.connections.pgsql.schema')."' AND table_name='".$table."'");
-            $index = $connection->select("SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '".$table."'::regclass AND i.indisprimary;");
+        if ($this->databaseConn === 'pgsql') {
+            $columns      = [];
+            $connection   = (new DatabaseConnector())->getConnection($database);
+            $temp_columns =
+                $connection->select("SELECT column_name as field, data_type as type, is_nullable as null, column_default as default FROM information_schema.columns WHERE table_schema='"
+                    . config('database.connections.pgsql.schema') . "' AND table_name='" . $table . "'");
+            $index        =
+                $connection->select("SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '"
+                    . $table . "'::regclass AND i.indisprimary;");
             foreach ($temp_columns as $key => $array) {
-                if(count($index) > 0 && $array->field === $index[0]->attname){
-                    $array->key = "PRI";
+                if (count($index) > 0 && $array->field === $index[0]->attname) {
+                    $array->key     = "PRI";
                     $array->default = null;
                 }
                 foreach ($array as $column_key => $value) {
@@ -193,7 +197,7 @@ class DatabaseTraverser
 
     /**
      * @param string $database Database name
-     * @param string $table Table name
+     * @param string $table    Table name
      *
      * @return array
      */
@@ -201,9 +205,9 @@ class DatabaseTraverser
     {
         $data = [];
 
-        if($this->databaseConn === 'pgsql'){
+        if ($this->databaseConn === 'pgsql') {
             $connection = (new DatabaseConnector())->getConnection($database);
-            $data = $connection->select("SELECT * FROM ".$table);
+            $data       = $connection->select("SELECT * FROM " . $table);
         } else {
             $data = $this->connection->select("SELECT * FROM `$database`.`$table`");
         }
@@ -225,7 +229,7 @@ class DatabaseTraverser
 
         if ($this->databaseConn === 'pgsql') {
             $connection = (new DatabaseConnector())->getConnection($database);
-            $tables = $connection->select($this->databaseQueries->showTablesFrom($database));
+            $tables     = $connection->select($this->databaseQueries->showTablesFrom($database));
 
             for ($i = 0; $i < count($tables); $i++) {
                 array_push($tmp, $tables[$i]);

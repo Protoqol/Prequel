@@ -63,6 +63,12 @@ class UpdateCommand extends Command
             '--force' => true,
         ]);
 
+        $this->comment('Updating Prequel Translations...');
+        $this->callSilent('vendor:publish', [
+            '--tag'   => 'prequel-lang',
+            '--force' => true,
+        ]);
+
         $this->info('Prequel is up-to-date!');
     }
 }

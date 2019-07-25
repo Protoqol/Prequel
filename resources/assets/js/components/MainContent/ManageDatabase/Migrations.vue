@@ -1,15 +1,21 @@
 <template>
     <div id="migration-wrapper">
         <h1>
-            Migrations ({{migrations.pending}}/{{migrations.total}})
+            {{trans('general.migrations')}} ({{migrations.pending}}/{{migrations.total}})
         </h1>
-        <button title="Run pending migrations" :disabled="migrations.pending === 0" @click="runMigrations">
+        <button :title="migrations.pending === 0 ? trans('dashboard.migrations.no_run_migrations') :
+            trans('dashboard.migrations.run_migrations', {'number': migrations.pending})"
+                :disabled="migrations.pending === 0" @click="runMigrations">
             <font-awesome-icon v-if='migrations.pending !== 0' class="mr-1" icon="running"/>
-            {{migrations.pending === 0 ? 'No pending migrations' : `Run ${migrations.pending} migration(s)`}}
+            {{migrations.pending === 0 ? trans('dashboard.migrations.no_run_migrations') :
+            trans('dashboard.migrations.run_migrations', {'number': migrations.pending})}}
         </button>
-        <button title="Run pending migrations" :disabled="migrations.pending !== 0" @click="resetMigrations">
+        <button :title="migrations.pending === 0 ? trans('dashboard.migrations.reset_migrations', {'number': migrations.total}):
+            trans('dashboard.migrations.no_reset_migrations') " :disabled="migrations.pending !== 0"
+                @click="resetMigrations">
             <font-awesome-icon v-if='migrations.pending === 0' class="mr-1" icon="running"/>
-            {{migrations.pending !== 0 ? 'No existing migrations' : `Reset ${migrations.total} migration(s)`}}
+            {{migrations.pending === 0 ? trans('dashboard.migrations.reset_migrations', {'number': migrations.total}):
+            trans('dashboard.migrations.no_reset_migrations') }}
         </button>
     </div>
 </template>

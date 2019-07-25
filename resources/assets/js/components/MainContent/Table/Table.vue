@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th class="table-th-actions"
-                    title="Quick actions">
+                    :title="trans('table.quick_actions')">
                     <font-awesome-icon icon="tools"/>
                 </th>
                 <th class="table-th"
@@ -23,19 +23,19 @@
             </thead>
             <tbody>
             <tr v-if="data" class="table-row" v-for="row in data">
-                <td class="table-td-actions" title="Inspect row">
+                <td class="table-td-actions" :title="trans('table.inspect_row')">
                     <font-awesome-icon style="transform: rotate(90deg);" icon="search-plus"/>&nbsp;
                 </td>
                 <td class="ellipsis table-td"
                     :id="item ? item : ENUM.PREQUEL_UNDEFINED"
                     :class="!item ? 'text-gray-500 italic' : 'text-gray-700'"
-                    :title="(item ? item + ` (Length ${(item + '').length})` : 'This item is empty') + '\nLeft click to see\nRight click to edit'"
+                    :title="(item ? item + ` (${trans('general.length')} ${(item + '').length})` : '' + '\nLeft click to see\nRight click to edit')"
                     :contenteditable="false"
                     @contextmenu.prevent="dataModifier($event)"
                     @click="seeCompleteData($event)"
                     @focusout="resetFocus($event)"
                     v-for="item in row">
-                    {{item ? item : 'Nothing here'}}
+                    {{item ? item : trans('table.item_empty')}}
                 </td>
             </tr>
             </tbody>
@@ -179,7 +179,6 @@
 
     .table-wrapper {
         table {
-            @apply mb-6;
             @apply w-full;
             @apply rounded;
             @apply bg-gray-200;

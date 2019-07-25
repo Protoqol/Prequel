@@ -4,18 +4,13 @@
             <div class="header-left">
                 <div class="header-left-logo">
                     <div class="header-left-logo-image">
-                        <a href="/prequel">
-                            <img width="32rem" height="32rem" alt="Protoqol Prequel"
-                                 :src="$root.prequel.asset.logo">
+                        <a href="/prequel" :title="trans('general.home')">
+                            <img width="35rem" height="35rem" alt="Protoqol Prequel" :src="$root.prequel.asset.logo">
                         </a>
                     </div>
                     <h1 class="header-left-logo-text text-logo">
-                        <span id="laravel">Prequel</span>
-                        <a href="https://github.com/Protoqol"
-                           target="_blank"
-                           title="Creator of Prequel">
-                            PROTOQOL
-                        </a>
+                        <span>Prequel</span>
+                        <a href="https://github.com/Protoqol" target="_blank" title="Creator of Prequel">PROTOQOL</a>
                     </h1>
                 </div>
                 <div class="header-left-connection">
@@ -34,7 +29,7 @@
                 <h1 v-if="activeTable">
                     <span v-if="!tableLoading" id="header-table-message">
                         <font-awesome-icon class="fa" icon="table"/>
-                        {{ activeTable }} <small>({{ numberOfRecords }} records)</small>
+                        {{ activeTable }} <small>({{ numberOfRecords }} {{trans('header.records')}})</small>
                     </span>
                     <img v-else width="20" height="20" :src="$root.prequel.asset.loader" alt="Loading table data...">
                 </h1>
@@ -42,7 +37,7 @@
                 <label v-if="activeTable">
 
                     <input class="search-column-input" list="columnList" type="text" name="column" autocomplete="off"
-                           placeholder="Column..." v-model="input.column" :disabled="loading">
+                           :placeholder="trans('header.column')" v-model="input.column" :disabled="loading">
                     <datalist id="columnList">
                         <option v-for="struct in tableStructure" :value="struct.Field"></option>
                     </datalist>
@@ -53,39 +48,40 @@
                         <option>LIKE</option>
                     </select>
 
-                    <!-- Type should be based on selected column     -->
-                    <input class="search-value-input" name="value" placeholder="Value..."
+                    <!-- @TODO Type should be based on selected column     -->
+                    <input class="search-value-input" name="value" :placeholder="trans('header.value')"
                            :type="'text'"
                            :disabled="loading"
                            v-model="input.value"
                            @keyup.enter="searchHandler"
                            @keyup.esc="resetInputs">
 
-                    <button class="search-get-button" title="Run query (ENTER)" @click="searchHandler">
-                        Get
+                    <button class="search-get-button" :title="trans('header.buttons.get.title')" @click="searchHandler">
+                        {{trans('header.buttons.get.text')}}
                     </button>
-                    <button class="search-reset-button" title="Reset query (ESC)" @click="resetHandler">
-                        Reset
+                    <button class="search-reset-button" :title="trans('header.buttons.reset.title')"
+                            @click="resetHandler">
+                        {{trans('header.buttons.reset.text')}}
                     </button>
                 </label>
             </div>
 
             <div v-if="!error.error" class="header-right">
                 <button :class="readability ? 'readability-button-enabled' : 'readability-button-disabled'"
-                        :title="`Enhance readability (${readability ? 'Enabled' : 'Disabled'})`"
+                        :title="trans('header.buttons.readability')"
                         @click="readabilityButtonHandler">
                     <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
                 </button>
 
                 <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
-                        title="Set Dark Mode (Not available yet)"
+                        :title="trans('header.buttons.dark_mode')"
                         :class="view.darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
                         @click="darkModeButtonHandler">
                     <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
                 </button>
 
                 <button :class="showSideBar ? 'sidebar-button-enabled' : 'sidebar-button-disabled'"
-                        :title="`${sideBarStatusText} side bar`"
+                        :title="trans('header.buttons.side_bar')"
                         @click="sideBarButtonHandler">
                     <font-awesome-icon class="ml-1"
                                        :class="showSideBar ? 'chevron-point-left' : 'chevron-point-right'"
@@ -314,10 +310,11 @@
                 .header-left-logo {
                     @apply flex;
                     @apply flex-row;
+                    @apply justify-start;
+                    @apply items-center;
 
                     .header-left-logo-image {
                         @apply mr-1;
-                        @apply mt-1;
 
                         img {
                             user-select: none;
@@ -335,12 +332,6 @@
 
                         @media (min-width: 700px) and (max-width: 1400px) {
                             @apply font-bold;
-                        }
-
-                        #laravel {
-                            @media (min-width: 700px) and (max-width: 1400px) {
-                                display: none;
-                            }
                         }
 
                         span {

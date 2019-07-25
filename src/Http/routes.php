@@ -35,15 +35,15 @@ Route::namespace('Protoqol\Prequel\Http\Controllers')
      ->name('prequel.')
      ->group(function () {
 
-         Route::get('status', 'PrequelController@status');
+         Route::get('status', 'DatabaseActionController@status');
 
          Route::prefix('database')->group(function () {
              Route::get('get/{database}/{table}', 'DatabaseController@getTableData');
              Route::get('count/{database}/{table}', 'DatabaseController@countTableRecords');
              Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
 
-             Route::get('migrations/run', 'PrequelController@runMigrations');
-             Route::get('migrations/reset', 'PrequelController@resetMigrations');
+             Route::get('migrations/run', 'DatabaseActionController@runMigrations');
+             Route::get('migrations/reset', 'DatabaseActionController@resetMigrations');
          });
 
      });

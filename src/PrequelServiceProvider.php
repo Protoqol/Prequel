@@ -6,6 +6,7 @@ namespace Protoqol\Prequel;
 
 use Illuminate\Support\ServiceProvider;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
+use Protoqol\Prequel\Classes\Database\PrequelDB;
 use Protoqol\Prequel\Commands;
 use Protoqol\Prequel\Http\Controllers\DatabaseController;
 use Protoqol\Prequel\Http\Requests\PrequelDatabaseRequest;
@@ -25,6 +26,10 @@ class PrequelServiceProvider extends ServiceProvider
     {
         $this->app->singleton(DatabaseTraverser::class, function () {
             return new DatabaseTraverser();
+        });
+
+        $this->app->bind('prequeldb', function () {
+            return new PrequelDB();
         });
 
         $this->app->singleton(DatabaseController::class, function ($app) {
