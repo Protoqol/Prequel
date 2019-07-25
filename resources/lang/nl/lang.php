@@ -98,7 +98,7 @@ return [
     ],
 
     /**
-     * SideBar/SideBar.vue
+     * SideBar/SideBarWrapper.vue
      */
     'side_bar'     => [
         'look_for_table' => 'Zoek een tabel...',
@@ -116,6 +116,7 @@ return [
      */
     'dashboard'    => [
         'overview'           => 'Overzicht',
+        'settings'           => 'Instellingen',
         'could_not_retrieve' => 'Kon dit niet ophalen...',
         'migrations'         => [
             'run_migrations'      => 'Draai :number migraties(s)',
@@ -124,7 +125,7 @@ return [
             'no_reset_migrations' => 'Geen bestaande migraties',
         ],
         'avg_query_speed'    => [
-            'header' => 'Gemiddelde Query Snelheid',
+            'header' => 'Gem. Queries Per Seconde',
             'unit'   => 'queries per seconde',
         ],
         'active_threads'     => [

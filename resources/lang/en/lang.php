@@ -97,7 +97,7 @@ return [
     ],
 
     /**
-     * SideBar/SideBar.vue
+     * SideBar/SideBarWrapper.vue
      */
     'side_bar'     => [
         'look_for_table' => 'Look for table...',
@@ -106,15 +106,16 @@ return [
     /**
      * SideBar/TableMenu.vue
      */
-    'table_menu' => [
+    'table_menu'   => [
         'empty_table' => 'This database does not contain any tables',
     ],
 
     /**
      * MainContent/ManageDatabase
      */
-    'dashboard'  => [
+    'dashboard'    => [
         'overview'           => 'Overview',
+        'settings'           => 'Settings',
         'could_not_retrieve' => 'Could not retrieve this...',
         'migrations'         => [
             'run_migrations'      => 'Run :number migration(s)',
@@ -123,7 +124,7 @@ return [
             'no_reset_migrations' => 'No existing migrations',
         ],
         'avg_query_speed'    => [
-            'header' => 'Average Queries per second',
+            'header' => 'Avg. Queries Per Second',
             'unit'   => 'queries per second',
         ],
         'active_threads'     => [

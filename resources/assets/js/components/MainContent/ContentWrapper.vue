@@ -2,7 +2,7 @@
     <div class="main-content-wrapper bg-component">
 
         <div v-if="!welcomeShown">
-            <Welcome/>
+            <Dashboard/>
         </div>
 
         <div v-if="mode === $root.view.modus.enum.BROWSE">
@@ -24,15 +24,15 @@
 </template>
 
 <script>
-  import Table       from './Table/Table';
-  import TableStatus from './Table/TableStatus';
-  import Welcome     from '../Elements/Welcome';
-  import Management  from './ManageDatabase/Management';
-  import ManageTable from './ManageTable/ManageTable';
+  import Table       from './BrowseMode/Table/Table';
+  import TableStatus from './BrowseMode/Table/TableStatus';
+  import Dashboard   from '../Dashboard/Dashboard';
+  import Management  from '../Dashboard/DashboardElements/Management';
+  import ManageTable from './ManageMode/ManageTable';
 
   export default {
     name      : 'MainContent',
-    components: {ManageTable, Management, Welcome, TableStatus, Table},
+    components: {ManageTable, Management, Dashboard, TableStatus, Table},
     props     : [
       'structure',
       'data',
