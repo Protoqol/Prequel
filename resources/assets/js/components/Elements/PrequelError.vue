@@ -67,7 +67,7 @@
 
           if(i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength){
             suggestionCollection.push(
-                `Your database connection might not be supported yet, currently supported: '${this.standards.supportedConnectionTypes.map(type => `'${type}'`).join(',')}'. (Yours is: '${connection}').`);
+                `Your database connection might not be supported yet, currently supported: ${this.standards.supportedConnectionTypes.map(type => `'${type}'`).join(', ')}. (Yours is: '${connection}').`);
           }
         }
 

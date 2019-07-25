@@ -6,6 +6,7 @@ namespace Protoqol\Prequel\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 
 /**
@@ -41,6 +42,7 @@ class Authorised
                     'port'       => config('prequel.database.port'),
                     'user'       => config('prequel.database.username'),
                 ],
+                'lang' => Lang::get('Prequel::lang', [], (string)config('prequel.locale')),
             ], 503);
         }
 
