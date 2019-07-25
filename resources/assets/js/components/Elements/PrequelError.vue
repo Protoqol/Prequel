@@ -3,21 +3,21 @@
     <div class="prequel-error">
         <h1>
             <font-awesome-icon icon="exclamation-triangle"></font-awesome-icon>
-            Oops...
+            {{trans('error_page.oops')}}
         </h1>
         <h2>
             {{ errorDetailed.detailed }}
         </h2>
         <hr>
         <!--   This if condition is horrible, I know that @TODO     -->
-        <div v-if="errorDetailed.detailed !== 'Prequel has been disabled.'">
+        <div v-if="errorDetailed.detailed !== trans('error_page.disabled')">
             <h3>
-                Tried connecting through
+                {{trans('error_page.tried_connecting')}}
             </h3>
             <code class="code-block">
                 {{env.connection}}://{{env.user}}@{{env.host}}:{{env.port}}/{{env.database}}
                 <br>
-                <span>connection://user@host:port/database</span>
+                <span>{{trans('error_page.example_connection')}}</span>
                 <br><br>
                 <div class="suggestions">
                     <h4>
@@ -51,27 +51,39 @@
         let userPort             = parseInt(this.$props.env.port);
         let connection           = this.$props.env.connection;
 
+<<<<<<< HEAD
         let supportedConnectionTypeLength = this.standards.supportedConnectionTypes.length;
         let connectionErrorCounter = false;
+=======
+        // @TODO More suggestions
+>>>>>>> origin/Dev
 
         if (userPort !== this.standards.port && connection === 'mysql') {
-	        suggestionCollection.push(
-		        `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
+          suggestionCollection.push(
+              `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
         }
 
+<<<<<<< HEAD
         for (let i = 0; i < supportedConnectionTypeLength; i++) {
+=======
+        for (let i = 0; i < this.standards.supportedConnectionTypes.length; i++) {
+>>>>>>> origin/Dev
           if (this.standards.supportedConnectionTypes[i] !== connection) {
             connectionErrorCounter++;
           }
 
           if(i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength){
             suggestionCollection.push(
+<<<<<<< HEAD
                 `Your database connection might not be supported yet, currently supported: '${this.standards.supportedConnectionTypes.join(', ')}'. (Yours is: '${connection}').`);
+=======
+                `Your database connection might not be supported yet, currently supported: 'mysql', 'pgsql'. (Yours is: '${connection}').`);
+>>>>>>> origin/Dev
           }
         }
 
         if (suggestionCollection.length === 0) {
-          suggestionCollection.push('Prequel could not suggest any fixes.');
+          suggestionCollection.push(trans('error_page.no_suggestions'));
         }
 
         return suggestionCollection;

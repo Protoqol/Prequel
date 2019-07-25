@@ -1,19 +1,19 @@
 <template>
     <div class="table-status-wrapper">
         <div v-if="loading && !tableLoadError" class="table-status-loading">
-            <img width="20" height="20" alt="Loading table data..." :src="$root.prequel.asset.loader"/>
-            <p>Loading table data...</p>
+            <img width="20" height="20" :alt="trans('table_status.loading_data')" :src="$root.prequel.asset.loader"/>
+            <p>{{trans('table_status.loading_data')}}</p>
         </div>
 
         <div v-if="tableLoadError && !loading" class="table-status-error">
-            <h1> There was an error while loading this table. See the following: </h1>
+            <h1>{{trans('table_status.error_occurred')}}</h1>
             <pre v-highlightjs>
                 <code class="sql">
-                    {{tableErrorDetailed ? tableErrorDetailed : 'Could not resolve error'}}
+                    {{tableErrorDetailed ? tableErrorDetailed : trans('table_status.could_not_resolve')}}
                 </code>
             </pre>
             <h4>
-                Prequel suggests looking at the following points
+                {{trans('table_status.prequel_suggestions')}}
             </h4>
             <code v-for="error in errorResolver(tableErrorDetailed)">- {{error}}</code>
         </div>

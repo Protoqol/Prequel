@@ -1654,16 +1654,8 @@ img {
   background-size: auto;
 }
 
-.bg-contain {
-  background-size: contain;
-}
-
 .border-collapse {
   border-collapse: collapse;
-}
-
-.border-separate {
-  border-collapse: separate;
 }
 
 .border-transparent {
@@ -4528,11 +4520,6 @@ img {
 
 .min-w-full {
   min-width: 100%;
-}
-
-.object-contain {
-  -o-object-fit: contain;
-  object-fit: contain;
 }
 
 .object-none {

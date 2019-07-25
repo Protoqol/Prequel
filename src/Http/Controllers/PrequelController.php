@@ -5,8 +5,7 @@ declare(strict_types = 1);
 namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Protoqol\Prequel\Classes\App\AppStatus;
-use Protoqol\Prequel\Classes\App\Migrations;
+use Illuminate\Support\Facades\Lang;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
 /**
@@ -35,33 +34,7 @@ class PrequelController extends Controller
                 'collection'          => $databaseData->collection,
                 'flatTableCollection' => $databaseData->flatTableCollection,
             ],
+            'lang' => Lang::get('Prequel::lang', [], (string)config('prequel.locale')),
         ]);
-    }
-
-    /**
-     * Get app status.
-     * @return array
-     */
-    public function status()
-    {
-        return (new AppStatus())->getStatus();
-    }
-
-    /**
-     * Run pending migrations.
-     * @return int
-     */
-    public function runMigrations()
-    {
-        return (new Migrations())->run();
-    }
-
-    /**
-     * Reset latest migrations.
-     * @return int
-     */
-    public function resetMigrations()
-    {
-        return (new Migrations())->reset();
     }
 }

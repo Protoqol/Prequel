@@ -2475,46 +2475,6 @@ var autoReplace = function autoReplace() {
 
 /***/ }),
 
-/***/ "./node_modules/@fortawesome/free-solid-svg-icons/faExclamationTriangle.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/@fortawesome/free-solid-svg-icons/faExclamationTriangle.js ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, '__esModule', { value: true });
-var prefix = 'fas';
-var iconName = 'exclamation-triangle';
-var width = 576;
-var height = 512;
-var ligatures = [];
-var unicode = 'f071';
-var svgPathData = 'M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z';
-
-exports.definition = {
-  prefix: prefix,
-  iconName: iconName,
-  icon: [
-    width,
-    height,
-    ligatures,
-    unicode,
-    svgPathData
-  ]};
-
-exports.faExclamationTriangle = exports.definition;
-exports.prefix = prefix;
-exports.iconName = iconName;
-exports.width = width;
-exports.height = height;
-exports.ligatures = ligatures;
-exports.unicode = unicode;
-exports.svgPathData = svgPathData;
-
-/***/ }),
-
 /***/ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js":
 /*!********************************************************************!*\
   !*** ./node_modules/@fortawesome/free-solid-svg-icons/index.es.js ***!
@@ -11625,6 +11585,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // Object
         flat: window.Prequel.flat,
         // Array
+        lang: window.Prequel.i18n,
         api: {
           database: ''
         },
@@ -11680,8 +11641,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         welcomeShown: false,
         params: new URLSearchParams(window.location.search),
         menu: {
-          active_header_class: 'text-indigo-600',
-          active_item_class: 'text-indigo-400'
+          active_header_color: '#5a67d8',
+          active_item_color: '#7f9cf5'
         }
       }
     };
@@ -11770,7 +11731,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         var tableEl = document.querySelector("li[value=".concat(this.view.params.get('table'), "]")); // All 'li' elements
 
-        var menuItemElements = document.getElementsByTagName('li'); // Pretty costly operation, @TODO Refactor
+        var menuItemElements = document.getElementsByTagName('li'); // Reset other inactive items to their defaults.
+        // Pretty costly operation, @TODO Refactor
 
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
@@ -11780,12 +11742,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           for (var _iterator = menuItemElements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var menuElement = _step.value;
 
-            if (menuElement && menuElement.classList.contains(this.view.menu.active_item_class)) {
-              menuElement.classList.remove(this.view.menu.active_item_class);
+            if (menuElement && menuElement.style.color !== this.view.menu.active_header_color) {
+              menuElement.style.color = '';
             }
 
-            if (menuElement && menuElement.classList.contains(this.view.menu.active_header_class)) {
-              menuElement.classList.remove(this.view.menu.active_header_class);
+            if (menuElement && menuElement.style.color !== this.view.menu.active_item_color) {
+              menuElement.style.color = '';
             }
           } // Only click if not already open as this causes it to be closed again.
 
@@ -11808,8 +11770,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           databaseEl.click();
         }
 
-        databaseEl.classList.add(this.view.menu.active_header_class);
-        tableEl.classList.add(this.view.menu.active_item_class);
+        databaseEl.style.color = this.view.menu.active_header_color;
+        tableEl.style.color = this.view.menu.active_item_color;
       }
     },
 
@@ -12091,87 +12053,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Elements/PrequelError.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'PrequelError',
-  props: ['errorDetailed', 'env'],
-  data: function data() {
-    return {
-      standards: {
-        port: 3306,
-        supportedConnectionTypes: ['mysql', 'pgsql']
-      }
-    };
-  },
-  methods: {
-    errorSuggestion: function errorSuggestion() {
-      var suggestionCollection = [];
-      var userPort = parseInt(this.$props.env.port);
-      var connection = this.$props.env.connection;
-      var supportedConnectionTypeLength = this.standards.supportedConnectionTypes.length;
-      var connectionErrorCounter = false;
-
-      if (userPort !== this.standards.port && connection === 'mysql') {
-        suggestionCollection.push("You're using an irregular port number, usually the port is 3306. (Yours is: ".concat(userPort, ")"));
-      }
-
-      for (var i = 0; i < supportedConnectionTypeLength; i++) {
-        if (this.standards.supportedConnectionTypes[i] !== connection) {
-          connectionErrorCounter++;
-        }
-
-        if (i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength) {
-          suggestionCollection.push("Your database connection might not be supported yet, currently supported: '".concat(this.standards.supportedConnectionTypes.join(', '), "'. (Yours is: '").concat(connection, "')."));
-        }
-      }
-
-      if (suggestionCollection.length === 0) {
-        suggestionCollection.push('Prequel could not suggest any fixes.');
-      }
-
-      return suggestionCollection;
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/martin.kun/Code/prequel/packages/protoqol/prequel/resources/assets/js/components/Elements/PrequelError.vue: Unexpected token (54:0)\n\n\u001b[0m \u001b[90m 52 | \u001b[39m        let connection           \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m$props\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39mconnection\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 53 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 54 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 55 | \u001b[39m        let supportedConnectionTypeLength \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstandards\u001b[33m.\u001b[39msupportedConnectionTypes\u001b[33m.\u001b[39mlength\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 56 | \u001b[39m        let connectionErrorCounter \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 57 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n    at Parser.raise (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:6325:17)\n    at Parser.unexpected (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:7642:16)\n    at Parser.parseExprAtom (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8841:20)\n    at Parser.parseExprSubscripts (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseExpression (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8135:23)\n    at Parser.parseStatementContent (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9958:23)\n    at Parser.parseStatement (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:10405:25)\n    at Parser.parseBlockBody (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:10392:10)\n    at Parser.parseBlock (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:10376:10)\n    at Parser.parseFunctionBody (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9424:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9394:10)\n    at withTopicForbiddingContext (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:10535:12)\n    at Parser.withTopicForbiddingContext (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9702:14)\n    at Parser.parseFunction (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:10534:10)\n    at Parser.parseFunctionExpression (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8877:17)\n    at Parser.parseExprAtom (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8790:21)\n    at Parser.parseExprSubscripts (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseObjectProperty (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9281:101)\n    at Parser.parseObjPropValue (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9306:101)\n    at Parser.parseObjectMember (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9230:10)\n    at Parser.parseObj (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:9154:25)\n    at Parser.parseExprAtom (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8784:28)\n    at Parser.parseExprSubscripts (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/Users/martin.kun/Code/prequel/packages/protoqol/prequel/node_modules/@babel/parser/lib/index.js:8187:21)");
 
 /***/ }),
 
@@ -12318,10 +12203,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -12720,6 +12601,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12806,6 +12694,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13416,6 +13310,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'TableMenu',
@@ -13550,7 +13445,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "/**\n    Header - Container\n*/\n.header-container {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  padding-top: 1.25rem;\n  border-top-width: 4px;\n  border-color: #667eea;\n  /**\n      Header - Bottom - Divider\n  */\n}\n.header-container .header-flexbox {\n  display: flex;\n  width: 83.333333%;\n  padding-bottom: 1rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  /**\n      Header - Left - Logo, Connection information\n  */\n  /**\n      Header - Middle - Search in table inputs\n  */\n  /**\n      Header - Right - Configuration buttons\n   */\n}\n.header-container .header-flexbox .header-left {\n  width: 25%;\n}\n.header-container .header-flexbox .header-left .header-left-logo {\n  display: flex;\n  flex-direction: row;\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-image {\n  margin-right: 0.25rem;\n  margin-top: 0.25rem;\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-image img {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-drag: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text {\n  font-size: 1.5rem;\n  letter-spacing: 1px;\n  color: var(--header-text-color);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text {\n    font-weight: 700;\n}\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text #laravel {\n    display: none;\n}\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text span {\n  font-weight: 700;\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text a {\n    display: none;\n}\n}\n@media (min-width: 1401px) {\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text a {\n    letter-spacing: normal;\n    font-style: normal;\n    font-size: 0.75rem;\n    font-weight: 300;\n}\n}\n.header-container .header-flexbox .header-left .header-left-connection {\n  margin-left: 0.5rem;\n  margin-top: 0.25rem;\n  align-self: center;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  margin-right: 0.25rem;\n  letter-spacing: 0.025em;\n  color: #4a5568;\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-left .header-left-connection {\n    font-size: 0.875rem;\n}\n}\n.header-container .header-flexbox .header-middle {\n  width: 50%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.header-container .header-flexbox .header-middle h1 {\n  font-size: 1.125rem;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  font-weight: 600;\n}\n.header-container .header-flexbox .header-middle h1 span {\n  color: #718096;\n  font-weight: 200;\n}\n.header-container .header-flexbox .header-middle h1 img {\n  margin-bottom: 0.25rem;\n}\n.header-container .header-flexbox .header-middle h1 .fa {\n  margin-right: 0.25rem;\n}\n.header-container .header-flexbox .header-middle h1 .fa:hover {\n  color: #4a5568;\n}\n.header-container .header-flexbox .header-middle label {\n  display: flex;\n  flex-direction: row;\n}\n.header-container .header-flexbox .header-middle label .search-column-input {\n  background-color: var(--input-background-color);\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 33.333333%;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\n.header-container .header-flexbox .header-middle label .search-column-input:focus {\n  outline: 0;\n}\n.header-container .header-flexbox .header-middle label .search-type-input {\n  margin: 0.5rem;\n  background-color: transparent;\n  font-weight: 700;\n  font-size: 1.125rem;\n  background-color: var(--input-background-color);\n  color: var(--text-secondary-color);\n}\n.header-container .header-flexbox .header-middle label .search-value-input {\n  background-color: var(--input-background-color);\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 60%;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\n.header-container .header-flexbox .header-middle label .search-value-input:focus {\n  outline: 0;\n}\n.header-container .header-flexbox .header-middle label .search-get-button {\n  background-color: var(--button-background);\n  margin-left: 0.25rem;\n  margin-right: 0.25rem;\n  color: #fff;\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n}\n.header-container .header-flexbox .header-middle label .search-get-button:hover {\n  background-color: var(--button-background-hover);\n}\n.header-container .header-flexbox .header-middle label .search-get-button:active {\n  background-color: var(--button-background-active);\n}\n.header-container .header-flexbox .header-middle label .search-reset-button {\n  background-color: var(--button-background-light);\n  color: #fff;\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n}\n.header-container .header-flexbox .header-middle label .search-reset-button:hover {\n  background-color: var(--button-background-light-hover);\n}\n.header-container .header-flexbox .header-middle label .search-reset-button:active {\n  background-color: var(--button-background-light-active);\n}\n.header-container .header-flexbox .header-right {\n  width: 25%;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  align-items: center;\n}\n.header-container .header-flexbox .header-right button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 2.5rem;\n  width: 2.5rem;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-right button {\n    margin-right: 0.5rem;\n}\n}\n@media (min-width: 1401px) {\n.header-container .header-flexbox .header-right button {\n    margin-right: 1rem;\n}\n}\n.header-container .header-flexbox .header-right button:active {\n  background-color: #c3dafe;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-enabled {\n  color: #fff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-enabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-disabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-disabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-enabled {\n  color: #fff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-enabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-disabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-disabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-enabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-enabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-disabled {\n  background-color: var(--button-background-hover);\n  color: #fff;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-disabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .chevron-point-left {\n  transform: rotate(270deg);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .chevron-point-right {\n  transform: rotate(90deg);\n  transition: 0.5s ease;\n}\n.header-container .header-bottom {\n  display: block;\n  margin-top: 1rem;\n  width: 83.333333%;\n  border-bottom: 1px solid var(--header-bottom-border-color);\n}", ""]);
+exports.push([module.i, "/**\n    Header - Container\n*/\n.header-container {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  padding-top: 1.25rem;\n  border-top-width: 4px;\n  border-color: #667eea;\n  /**\n      Header - Bottom - Divider\n  */\n}\n.header-container .header-flexbox {\n  display: flex;\n  width: 83.333333%;\n  padding-bottom: 1rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  /**\n      Header - Left - Logo, Connection information\n  */\n  /**\n      Header - Middle - Search in table inputs\n  */\n  /**\n      Header - Right - Configuration buttons\n   */\n}\n.header-container .header-flexbox .header-left {\n  width: 25%;\n}\n.header-container .header-flexbox .header-left .header-left-logo {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-image {\n  margin-right: 0.25rem;\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-image img {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-drag: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text {\n  font-size: 1.5rem;\n  letter-spacing: 1px;\n  color: var(--header-text-color);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text {\n    font-weight: 700;\n}\n}\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text span {\n  font-weight: 700;\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text a {\n    display: none;\n}\n}\n@media (min-width: 1401px) {\n.header-container .header-flexbox .header-left .header-left-logo .header-left-logo-text a {\n    letter-spacing: normal;\n    font-style: normal;\n    font-size: 0.75rem;\n    font-weight: 300;\n}\n}\n.header-container .header-flexbox .header-left .header-left-connection {\n  margin-left: 0.5rem;\n  margin-top: 0.25rem;\n  align-self: center;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  margin-right: 0.25rem;\n  letter-spacing: 0.025em;\n  color: #4a5568;\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-left .header-left-connection {\n    font-size: 0.875rem;\n}\n}\n.header-container .header-flexbox .header-middle {\n  width: 50%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.header-container .header-flexbox .header-middle h1 {\n  font-size: 1.125rem;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  font-weight: 600;\n}\n.header-container .header-flexbox .header-middle h1 span {\n  color: #718096;\n  font-weight: 200;\n}\n.header-container .header-flexbox .header-middle h1 img {\n  margin-bottom: 0.25rem;\n}\n.header-container .header-flexbox .header-middle h1 .fa {\n  margin-right: 0.25rem;\n}\n.header-container .header-flexbox .header-middle h1 .fa:hover {\n  color: #4a5568;\n}\n.header-container .header-flexbox .header-middle label {\n  display: flex;\n  flex-direction: row;\n}\n.header-container .header-flexbox .header-middle label .search-column-input {\n  background-color: var(--input-background-color);\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 33.333333%;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\n.header-container .header-flexbox .header-middle label .search-column-input:focus {\n  outline: 0;\n}\n.header-container .header-flexbox .header-middle label .search-type-input {\n  margin: 0.5rem;\n  background-color: transparent;\n  font-weight: 700;\n  font-size: 1.125rem;\n  background-color: var(--input-background-color);\n  color: var(--text-secondary-color);\n}\n.header-container .header-flexbox .header-middle label .search-value-input {\n  background-color: var(--input-background-color);\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 60%;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\n.header-container .header-flexbox .header-middle label .search-value-input:focus {\n  outline: 0;\n}\n.header-container .header-flexbox .header-middle label .search-get-button {\n  background-color: var(--button-background);\n  margin-left: 0.25rem;\n  margin-right: 0.25rem;\n  color: #fff;\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n}\n.header-container .header-flexbox .header-middle label .search-get-button:hover {\n  background-color: var(--button-background-hover);\n}\n.header-container .header-flexbox .header-middle label .search-get-button:active {\n  background-color: var(--button-background-active);\n}\n.header-container .header-flexbox .header-middle label .search-reset-button {\n  background-color: var(--button-background-light);\n  color: #fff;\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n}\n.header-container .header-flexbox .header-middle label .search-reset-button:hover {\n  background-color: var(--button-background-light-hover);\n}\n.header-container .header-flexbox .header-middle label .search-reset-button:active {\n  background-color: var(--button-background-light-active);\n}\n.header-container .header-flexbox .header-right {\n  width: 25%;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  align-items: center;\n}\n.header-container .header-flexbox .header-right button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 2.5rem;\n  width: 2.5rem;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-container .header-flexbox .header-right button {\n    margin-right: 0.5rem;\n}\n}\n@media (min-width: 1401px) {\n.header-container .header-flexbox .header-right button {\n    margin-right: 1rem;\n}\n}\n.header-container .header-flexbox .header-right button:active {\n  background-color: #c3dafe;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-enabled {\n  color: #fff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-enabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-disabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .dark-mode-button-disabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-enabled {\n  color: #fff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-enabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-disabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .readability-button-disabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-enabled {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-enabled:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-disabled {\n  background-color: var(--button-background-hover);\n  color: #fff;\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .sidebar-button-disabled:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .chevron-point-left {\n  transform: rotate(270deg);\n  transition: 0.5s ease;\n}\n.header-container .header-flexbox .header-right .chevron-point-right {\n  transform: rotate(90deg);\n  transition: 0.5s ease;\n}\n.header-container .header-bottom {\n  display: block;\n  margin-top: 1rem;\n  width: 83.333333%;\n  border-bottom: 1px solid var(--header-bottom-border-color);\n}", ""]);
 
 // exports
 
@@ -13683,7 +13578,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "#top-horizontal-scroll {\n  transform: rotateX(180deg);\n}\n.ellipsis {\n  width: 250px;\n  max-width: 250px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  transition: all 0.5s ease;\n}\n.table-wrapper table {\n  margin-bottom: 1.5rem;\n  width: 100%;\n  border-radius: 0.25rem;\n  background-color: #edf2f7;\n  transform: rotateX(180deg);\n}\n.table-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n.table-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th:hover {\n  background-color: var(--table-hover-background-color);\n}\n.table-wrapper table thead .table-th-actions {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.5rem;\n  font-size: 0.875rem;\n  color: var(--text-secondary-color);\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th-actions:hover {\n  background-color: var(--table-hover-background-color);\n  border-width: 1px;\n}\n.table-wrapper table .table-row:nth-child(odd) {\n  background-color: var(--table-row-odd-background-color);\n}\n.table-wrapper table .table-row:nth-child(even) {\n  background-color: var(--table-row-even-background-color);\n}\n.table-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td:hover {\n  background-color: var(--table-hover-background-color);\n}\n.table-wrapper table .table-td-actions {\n  color: #4a5568;\n  width: 2rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td-actions:hover {\n  background-color: var(--table-hover-background-color);\n}", ""]);
+exports.push([module.i, "#top-horizontal-scroll {\n  transform: rotateX(180deg);\n}\n.ellipsis {\n  width: 250px;\n  max-width: 250px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  transition: all 0.5s ease;\n}\n.table-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  background-color: #edf2f7;\n  transform: rotateX(180deg);\n}\n.table-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n.table-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th:hover {\n  background-color: var(--table-hover-background-color);\n}\n.table-wrapper table thead .table-th-actions {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.5rem;\n  font-size: 0.875rem;\n  color: var(--text-secondary-color);\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th-actions:hover {\n  background-color: var(--table-hover-background-color);\n  border-width: 1px;\n}\n.table-wrapper table .table-row:nth-child(odd) {\n  background-color: var(--table-row-odd-background-color);\n}\n.table-wrapper table .table-row:nth-child(even) {\n  background-color: var(--table-row-even-background-color);\n}\n.table-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td:hover {\n  background-color: var(--table-hover-background-color);\n}\n.table-wrapper table .table-td-actions {\n  color: #4a5568;\n  width: 2rem;\n  font-size: 0.875rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td-actions:hover {\n  background-color: var(--table-hover-background-color);\n}", ""]);
 
 // exports
 
@@ -13778,7 +13673,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".menu-ul[data-v-7d799cf3] {\n  background-color: var(--table-item-overview);\n  border-radius: 0.25rem;\n}\n.menu-ul li[data-v-7d799cf3] {\n  font-family: Nunito, sans-serif !important;\n  font-size: 0.95rem !important;\n  font-weight: 400 !important;\n}\n.menu-ul .list-header[data-v-7d799cf3] {\n  color: var(--list-header-text) !important;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.5rem;\n  border-top-left-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem;\n  cursor: pointer;\n  text-align: left;\n}\n.menu-ul .list-sub[data-v-7d799cf3] {\n  color: var(--table-item-text);\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  cursor: pointer;\n  font-size: 0.875rem;\n  text-align: left;\n}\n.menu-ul .list-sub[data-v-7d799cf3]:hover {\n  color: #667eea;\n}\n.menu-ul .menu-li-no-content[data-v-7d799cf3] {\n  border-bottom-width: 1px;\n  border-color: #4a5568;\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  font-size: 0.875rem;\n  color: #718096;\n  text-align: left;\n}", ""]);
+exports.push([module.i, ".menu-ul[data-v-7d799cf3] {\n  background-color: var(--table-item-overview);\n  border-radius: 0.25rem;\n}\n.menu-ul li[data-v-7d799cf3] {\n  font-family: Nunito, sans-serif !important;\n  font-size: 0.95rem !important;\n  font-weight: 400 !important;\n}\n.menu-ul .list-header[data-v-7d799cf3] {\n  color: var(--list-header-text);\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.5rem;\n  border-top-left-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem;\n  cursor: pointer;\n  text-align: left;\n}\n.menu-ul .list-sub[data-v-7d799cf3] {\n  color: var(--table-item-text);\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  cursor: pointer;\n  font-size: 0.875rem;\n  text-align: left;\n}\n.menu-ul .list-sub[data-v-7d799cf3]:hover {\n  color: #667eea;\n}\n.menu-ul .menu-li-no-content[data-v-7d799cf3] {\n  border-bottom-width: 1px;\n  border-color: #4a5568;\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  font-size: 0.875rem;\n  color: #718096;\n  text-align: left;\n}", ""]);
 
 // exports
 
@@ -58617,7 +58512,7 @@ var render = function() {
       "h1",
       [
         _c("font-awesome-icon", { attrs: { icon: "exclamation-triangle" } }),
-        _vm._v("\n        Oops...\n    ")
+        _vm._v("\n        " + _vm._s(_vm.trans("error_page.oops")) + "\n    ")
       ],
       1
     ),
@@ -58628,10 +58523,14 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _vm.errorDetailed.detailed !== "Prequel has been disabled."
+    _vm.errorDetailed.detailed !== _vm.trans("error_page.disabled")
       ? _c("div", [
           _c("h3", [
-            _vm._v("\n            Tried connecting through\n        ")
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.trans("error_page.tried_connecting")) +
+                "\n        "
+            )
           ]),
           _vm._v(" "),
           _c("code", { staticClass: "code-block" }, [
@@ -58650,7 +58549,9 @@ var render = function() {
             ),
             _c("br"),
             _vm._v(" "),
-            _c("span", [_vm._v("connection://user@host:port/database")]),
+            _c("span", [
+              _vm._v(_vm._s(_vm.trans("error_page.example_connection")))
+            ]),
             _vm._v(" "),
             _c("br"),
             _c("br"),
@@ -58713,13 +58614,13 @@ var render = function() {
         "div",
         {
           staticClass: "tab",
-          attrs: { id: "0", title: "Browse mode" },
+          attrs: { id: "0", title: _vm.trans("switch_mode.browse.title") },
           on: { click: _vm.browseSwitchHandler }
         },
         [
           _c("font-awesome-icon", { attrs: { icon: "eye" } }),
           _vm._v(" "),
-          _c("small", [_vm._v("Browse")])
+          _c("small", [_vm._v(_vm._s(_vm.trans("switch_mode.browse.text")))])
         ],
         1
       ),
@@ -58728,13 +58629,13 @@ var render = function() {
         "div",
         {
           staticClass: "tab",
-          attrs: { id: "1", title: "Query mode" },
+          attrs: { id: "1", title: _vm.trans("switch_mode.manage.title") },
           on: { click: _vm.querySwitchHandler }
         },
         [
           _c("font-awesome-icon", { attrs: { icon: "wrench" } }),
           _vm._v(" "),
-          _c("small", [_vm._v("Manage")])
+          _c("small", [_vm._v(_vm._s(_vm.trans("switch_mode.manage.text")))])
         ],
         1
       )
@@ -58810,16 +58711,20 @@ var render = function() {
       _c("div", { staticClass: "header-left" }, [
         _c("div", { staticClass: "header-left-logo" }, [
           _c("div", { staticClass: "header-left-logo-image" }, [
-            _c("a", { attrs: { href: "/prequel" } }, [
-              _c("img", {
-                attrs: {
-                  width: "32rem",
-                  height: "32rem",
-                  alt: "Protoqol Prequel",
-                  src: _vm.$root.prequel.asset.logo
-                }
-              })
-            ])
+            _c(
+              "a",
+              { attrs: { href: "/prequel", title: _vm.trans("general.home") } },
+              [
+                _c("img", {
+                  attrs: {
+                    width: "35rem",
+                    height: "35rem",
+                    alt: "Protoqol Prequel",
+                    src: _vm.$root.prequel.asset.logo
+                  }
+                })
+              ]
+            )
           ]),
           _vm._v(" "),
           _vm._m(0)
@@ -58870,7 +58775,11 @@ var render = function() {
                           ),
                           _c("small", [
                             _vm._v(
-                              "(" + _vm._s(_vm.numberOfRecords) + " records)"
+                              "(" +
+                                _vm._s(_vm.numberOfRecords) +
+                                " " +
+                                _vm._s(_vm.trans("header.records")) +
+                                ")"
                             )
                           ])
                         ],
@@ -58904,7 +58813,7 @@ var render = function() {
                       type: "text",
                       name: "column",
                       autocomplete: "off",
-                      placeholder: "Column...",
+                      placeholder: _vm.trans("header.column"),
                       disabled: _vm.loading
                     },
                     domProps: { value: _vm.input.column },
@@ -58985,7 +58894,7 @@ var render = function() {
                         staticClass: "search-value-input",
                         attrs: {
                           name: "value",
-                          placeholder: "Value...",
+                          placeholder: _vm.trans("header.value"),
                           disabled: _vm.loading,
                           type: "text"
                         },
@@ -59033,20 +58942,32 @@ var render = function() {
                     "button",
                     {
                       staticClass: "search-get-button",
-                      attrs: { title: "Run query (ENTER)" },
+                      attrs: { title: _vm.trans("header.buttons.get.title") },
                       on: { click: _vm.searchHandler }
                     },
-                    [_vm._v("\n                    Get\n                ")]
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.trans("header.buttons.get.text")) +
+                          "\n                "
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
                     "button",
                     {
                       staticClass: "search-reset-button",
-                      attrs: { title: "Reset query (ESC)" },
+                      attrs: { title: _vm.trans("header.buttons.reset.title") },
                       on: { click: _vm.resetHandler }
                     },
-                    [_vm._v("\n                    Reset\n                ")]
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.trans("header.buttons.reset.text")) +
+                          "\n                "
+                      )
+                    ]
                   )
                 ])
               : _vm._e()
@@ -59061,12 +58982,7 @@ var render = function() {
                 class: _vm.readability
                   ? "readability-button-enabled"
                   : "readability-button-disabled",
-                attrs: {
-                  title:
-                    "Enhance readability (" +
-                    (_vm.readability ? "Enabled" : "Disabled") +
-                    ")"
-                },
+                attrs: { title: _vm.trans("header.buttons.readability") },
                 on: { click: _vm.readabilityButtonHandler }
               },
               [
@@ -59087,7 +59003,7 @@ var render = function() {
                 class: _vm.view.darkMode
                   ? "dark-mode-button-enabled"
                   : "dark-mode-button-disabled",
-                attrs: { title: "Set Dark Mode (Not available yet)" },
+                attrs: { title: _vm.trans("header.buttons.dark_mode") },
                 on: { click: _vm.darkModeButtonHandler }
               },
               [
@@ -59106,7 +59022,7 @@ var render = function() {
                 class: _vm.showSideBar
                   ? "sidebar-button-enabled"
                   : "sidebar-button-disabled",
-                attrs: { title: _vm.sideBarStatusText + " side bar" },
+                attrs: { title: _vm.trans("header.buttons.side_bar") },
                 on: { click: _vm.sideBarButtonHandler }
               },
               [
@@ -59134,18 +59050,18 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h1", { staticClass: "header-left-logo-text text-logo" }, [
-      _c("span", { attrs: { id: "laravel" } }, [_vm._v("Laravel")]),
-      _vm._v(" Prequel\n                    "),
+      _c("span", [_vm._v("Prequel")]),
+      _vm._v(" "),
       _c(
         "a",
         {
           attrs: {
             href: "https://github.com/Protoqol",
             target: "_blank",
-            title: "Creator of Laravel Prequel"
+            title: "Creator of Prequel"
           }
         },
-        [_vm._v("\n                        PROTOQOL\n                    ")]
+        [_vm._v("PROTOQOL")]
       )
     ])
   }
@@ -59235,7 +59151,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "database-management" }, [
-    _c("h1", [_vm._v("Overview")]),
+    _c("h1", [_vm._v(_vm._s(_vm.trans("dashboard.overview")))]),
     _vm._v(" "),
     _c(
       "div",
@@ -59248,25 +59164,36 @@ var render = function() {
               "StatusDisplay",
               {
                 attrs: {
-                  header: "Average Query Speed",
-                  value: _vm.app.serverInfo.QUERIES_PER_SECOND_AVG
-                    ? _vm.app.serverInfo.QUERIES_PER_SECOND_AVG
-                    : "Could not retrieve...",
-                  unit: _vm.app.serverInfo.QUERIES_PER_SECOND_AVG
-                    ? "queries per second"
-                    : ""
+                  header: _vm.trans("dashboard.avg_query_speed.header"),
+                  value: _vm.app.serverInfo.QUERIES_PER_SECOND_AVG,
+                  unit: _vm.trans("dashboard.avg_query_speed.unit")
                 }
               },
               [
                 _vm.app.serverInfo.QUERIES_PER_SECOND_AVG
                   ? _vm._t("default", [
                       _vm.app.serverInfo.QUERIES_PER_SECOND_AVG === 0
-                        ? _c("Badge", { attrs: { type: "critical" } })
+                        ? _c("Badge", {
+                            attrs: {
+                              type: "critical",
+                              text: _vm.trans("general.critical")
+                            }
+                          })
                         : _vm.app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.3 &&
                           _vm.app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.9
-                        ? _c("Badge", { attrs: { type: "neutral" } })
+                        ? _c("Badge", {
+                            attrs: {
+                              type: "neutral",
+                              text: _vm.trans("general.neutral")
+                            }
+                          })
                         : _vm.app.serverInfo.QUERIES_PER_SECOND_AVG > 0.9
-                        ? _c("Badge", { attrs: { type: "good" } })
+                        ? _c("Badge", {
+                            attrs: {
+                              type: "good",
+                              text: _vm.trans("general.good")
+                            }
+                          })
                         : _vm._e()
                     ])
                   : _vm._e()
@@ -59280,11 +59207,11 @@ var render = function() {
               "StatusDisplay",
               {
                 attrs: {
-                  header: "Active Threads",
+                  header: _vm.trans("dashboard.active_threads.header"),
                   value: _vm.app.serverInfo.THREADS
                     ? _vm.app.serverInfo.THREADS
                     : "Could not retrieve...",
-                  unit: _vm.app.serverInfo.THREADS ? "threads" : ""
+                  unit: _vm.trans("dashboard.active_threads.unit")
                 }
               },
               [
@@ -59292,8 +59219,18 @@ var render = function() {
                   ? _vm._t("default", [
                       _vm.app.serverInfo.THREADS &&
                       _vm.app.serverInfo.THREADS > 0
-                        ? _c("Badge", { attrs: { type: "good" } })
-                        : _c("Badge", { attrs: { type: "warning" } })
+                        ? _c("Badge", {
+                            attrs: {
+                              type: "good",
+                              text: _vm.trans("general.good")
+                            }
+                          })
+                        : _c("Badge", {
+                            attrs: {
+                              type: "warning",
+                              text: _vm.trans("general.warning")
+                            }
+                          })
                     ])
                   : _vm._e()
               ],
@@ -59306,17 +59243,22 @@ var render = function() {
               "StatusDisplay",
               {
                 attrs: {
-                  header: "Open Tables",
+                  header: _vm.trans("dashboard.open_tables.header"),
                   value: _vm.app.serverInfo.OPEN_TABLES
                     ? _vm.app.serverInfo.OPEN_TABLES
                     : "Could not retrieve...",
-                  unit: _vm.app.serverInfo.OPEN_TABLES ? "tables" : ""
+                  unit: _vm.trans("dashboard.open_tables.unit")
                 }
               },
               [
                 _vm.app.serverInfo.OPEN_TABLES
                   ? _vm._t("default", [
-                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                      _c("Badge", {
+                        attrs: {
+                          type: "neutral",
+                          text: _vm.trans("general.neutral")
+                        }
+                      })
                     ])
                   : _vm._e()
               ],
@@ -59336,17 +59278,22 @@ var render = function() {
               "StatusDisplay",
               {
                 attrs: {
-                  header: "Uptime in hours",
+                  header: _vm.trans("dashboard.uptime_hours.header"),
                   value: _vm.app.serverInfo.UPTIME
                     ? _vm.secsToHours(_vm.app.serverInfo.UPTIME)
                     : "Could not retrieve...",
-                  unit: _vm.app.serverInfo.UPTIME ? "hours" : ""
+                  unit: _vm.trans("dashboard.uptime_hours.unit")
                 }
               },
               [
                 _vm.app.serverInfo.UPTIME
                   ? _vm._t("default", [
-                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                      _c("Badge", {
+                        attrs: {
+                          type: "neutral",
+                          text: _vm.trans("general.neutral")
+                        }
+                      })
                     ])
                   : _vm._e()
               ],
@@ -59359,17 +59306,22 @@ var render = function() {
               "StatusDisplay",
               {
                 attrs: {
-                  header: "Uptime in minutes",
+                  header: _vm.trans("dashboard.uptime_minutes.header"),
                   value: _vm.app.serverInfo.UPTIME
                     ? _vm.secsToMins(_vm.app.serverInfo.UPTIME)
                     : "Could not retrieve...",
-                  unit: _vm.app.serverInfo.UPTIME ? "minutes" : ""
+                  unit: _vm.trans("dashboard.uptime_minutes.unit")
                 }
               },
               [
                 _vm.app.serverInfo.UPTIME
                   ? _vm._t("default", [
-                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                      _c("Badge", {
+                        attrs: {
+                          type: "neutral",
+                          text: _vm.trans("general.neutral")
+                        }
+                      })
                     ])
                   : _vm._e()
               ],
@@ -59382,17 +59334,22 @@ var render = function() {
               "StatusDisplay",
               {
                 attrs: {
-                  header: "Uptime in seconds",
+                  header: _vm.trans("dashboard.uptime_seconds.header"),
                   value: _vm.app.serverInfo.UPTIME
                     ? _vm.app.serverInfo.UPTIME
                     : "Could not retrieve...",
-                  unit: _vm.app.serverInfo.UPTIME ? "seconds" : ""
+                  unit: _vm.trans("dashboard.uptime_seconds.unit")
                 }
               },
               [
                 _vm.app.serverInfo.UPTIME
                   ? _vm._t("default", [
-                      _c("Badge", { attrs: { type: "neutral", text: "OK" } })
+                      _c("Badge", {
+                        attrs: {
+                          type: "neutral",
+                          text: _vm.trans("general.neutral")
+                        }
+                      })
                     ])
                   : _vm._e()
               ],
@@ -59429,7 +59386,9 @@ var render = function() {
   return _c("div", { attrs: { id: "migration-wrapper" } }, [
     _c("h1", [
       _vm._v(
-        "\n        Migrations (" +
+        "\n        " +
+          _vm._s(_vm.trans("general.migrations")) +
+          " (" +
           _vm._s(_vm.migrations.pending) +
           "/" +
           _vm._s(_vm.migrations.total) +
@@ -59441,7 +59400,12 @@ var render = function() {
       "button",
       {
         attrs: {
-          title: "Run pending migrations",
+          title:
+            _vm.migrations.pending === 0
+              ? _vm.trans("dashboard.migrations.no_run_migrations")
+              : _vm.trans("dashboard.migrations.run_migrations", {
+                  number: _vm.migrations.pending
+                }),
           disabled: _vm.migrations.pending === 0
         },
         on: { click: _vm.runMigrations }
@@ -59457,8 +59421,10 @@ var render = function() {
           "\n        " +
             _vm._s(
               _vm.migrations.pending === 0
-                ? "No pending migrations"
-                : "Run " + _vm.migrations.pending + " migration(s)"
+                ? _vm.trans("dashboard.migrations.no_run_migrations")
+                : _vm.trans("dashboard.migrations.run_migrations", {
+                    number: _vm.migrations.pending
+                  })
             ) +
             "\n    "
         )
@@ -59470,7 +59436,12 @@ var render = function() {
       "button",
       {
         attrs: {
-          title: "Run pending migrations",
+          title:
+            _vm.migrations.pending === 0
+              ? _vm.trans("dashboard.migrations.reset_migrations", {
+                  number: _vm.migrations.total
+                })
+              : _vm.trans("dashboard.migrations.no_reset_migrations"),
           disabled: _vm.migrations.pending !== 0
         },
         on: { click: _vm.resetMigrations }
@@ -59485,9 +59456,11 @@ var render = function() {
         _vm._v(
           "\n        " +
             _vm._s(
-              _vm.migrations.pending !== 0
-                ? "No existing migrations"
-                : "Reset " + _vm.migrations.total + " migration(s)"
+              _vm.migrations.pending === 0
+                ? _vm.trans("dashboard.migrations.reset_migrations", {
+                    number: _vm.migrations.total
+                  })
+                : _vm.trans("dashboard.migrations.no_reset_migrations")
             ) +
             "\n    "
         )
@@ -59646,7 +59619,7 @@ var render = function() {
                     "th",
                     {
                       staticClass: "table-th-actions",
-                      attrs: { title: "Quick actions" }
+                      attrs: { title: _vm.trans("table.quick_actions") }
                     },
                     [_c("font-awesome-icon", { attrs: { icon: "tools" } })],
                     1
@@ -59721,7 +59694,7 @@ var render = function() {
                           "td",
                           {
                             staticClass: "table-td-actions",
-                            attrs: { title: "Inspect row" }
+                            attrs: { title: _vm.trans("table.inspect_row") }
                           },
                           [
                             _c("font-awesome-icon", {
@@ -59743,14 +59716,15 @@ var render = function() {
                                 : "text-gray-700",
                               attrs: {
                                 id: item ? item : _vm.ENUM.PREQUEL_UNDEFINED,
-                                title:
-                                  (item
-                                    ? item +
-                                      " (Length " +
-                                      (item + "").length +
-                                      ")"
-                                    : "This item is empty") +
-                                  "\nLeft click to see\nRight click to edit",
+                                title: item
+                                  ? item +
+                                    " (" +
+                                    _vm.trans("general.length") +
+                                    " " +
+                                    (item + "").length +
+                                    ")"
+                                  : "" +
+                                    "\nLeft click to see\nRight click to edit",
                                 contenteditable: false
                               },
                               on: {
@@ -59769,7 +59743,9 @@ var render = function() {
                             [
                               _vm._v(
                                 "\n                " +
-                                  _vm._s(item ? item : "Nothing here") +
+                                  _vm._s(
+                                    item ? item : _vm.trans("table.item_empty")
+                                  ) +
                                   "\n            "
                               )
                             ]
@@ -59815,7 +59791,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "empty-table-wrapper" } }, [
-    _c("h1", [_vm._v("\n        This query did not yield any result\n    ")]),
+    _c("h1", [
+      _vm._v(
+        "\n        " + _vm._s(_vm.trans("table_empty.no_results")) + "\n    "
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "column-overview" }, [
       _c("div", { staticClass: "columns-wrapper" }, [
@@ -59835,7 +59815,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                            Column Key\n                        "
+                      "\n                            " +
+                        _vm._s(_vm.trans("table_empty.col_key")) +
+                        "\n                        "
                     )
                   ]
                 )
@@ -59854,7 +59836,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                            Column Field\n                        "
+                      "\n                            " +
+                        _vm._s(_vm.trans("table_empty.col_field")) +
+                        "\n                        "
                     )
                   ]
                 )
@@ -59873,7 +59857,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                            Column Default\n                        "
+                      "\n                            " +
+                        _vm._s(_vm.trans("table_empty.col_def")) +
+                        "\n                        "
                     )
                   ]
                 )
@@ -59892,7 +59878,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                            Column Type\n                        "
+                      "\n                            " +
+                        _vm._s(_vm.trans("table_empty.col_type")) +
+                        "\n                        "
                     )
                   ]
                 )
@@ -59913,7 +59901,11 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(struct.Key ? struct.Key : "Not set") +
+                        _vm._s(
+                          struct.Key
+                            ? struct.Key
+                            : _vm.trans("table_empty.not_set")
+                        ) +
                         "\n                    "
                     )
                   ]
@@ -59928,7 +59920,11 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(struct.Field ? struct.Field : "Not set") +
+                        _vm._s(
+                          struct.Field
+                            ? struct.Field
+                            : _vm.trans("table_empty.not_set")
+                        ) +
                         "\n                    "
                     )
                   ]
@@ -59943,7 +59939,11 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(struct.Default ? struct.Default : "Not set") +
+                        _vm._s(
+                          struct.Default
+                            ? struct.Default
+                            : _vm.trans("table_empty.not_set")
+                        ) +
                         "\n                    "
                     )
                   ]
@@ -59958,7 +59958,11 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(struct.Type ? struct.Type : "Not set") +
+                        _vm._s(
+                          struct.Type
+                            ? struct.Type
+                            : _vm.trans("table_empty.not_set")
+                        ) +
                         "\n                    "
                     )
                   ]
@@ -60001,12 +60005,12 @@ var render = function() {
             attrs: {
               width: "20",
               height: "20",
-              alt: "Loading table data...",
+              alt: _vm.trans("table_status.loading_data"),
               src: _vm.$root.prequel.asset.loader
             }
           }),
           _vm._v(" "),
-          _c("p", [_vm._v("Loading table data...")])
+          _c("p", [_vm._v(_vm._s(_vm.trans("table_status.loading_data")))])
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -60016,9 +60020,7 @@ var render = function() {
           { staticClass: "table-status-error" },
           [
             _c("h1", [
-              _vm._v(
-                " There was an error while loading this table. See the following: "
-              )
+              _vm._v(_vm._s(_vm.trans("table_status.error_occurred")))
             ]),
             _vm._v(" "),
             _c(
@@ -60034,7 +60036,7 @@ var render = function() {
                       _vm._s(
                         _vm.tableErrorDetailed
                           ? _vm.tableErrorDetailed
-                          : "Could not resolve error"
+                          : _vm.trans("table_status.could_not_resolve")
                       ) +
                       "\n            "
                   )
@@ -60045,7 +60047,9 @@ var render = function() {
             _vm._v(" "),
             _c("h4", [
               _vm._v(
-                "\n            Prequel suggests looking at the following points\n        "
+                "\n            " +
+                  _vm._s(_vm.trans("table_status.prequel_suggestions")) +
+                  "\n        "
               )
             ]),
             _vm._v(" "),
@@ -60161,7 +60165,7 @@ var render = function() {
             type: "text",
             list: "tableSearch",
             autocomplete: "on",
-            placeholder: "Look for table..."
+            placeholder: _vm.trans("side_bar.look_for_table")
           },
           on: {
             keyup: function($event) {
@@ -60240,7 +60244,9 @@ var render = function() {
                         database.official_name +
                         " (" +
                         database.tables.length +
-                        " tables)",
+                        " " +
+                        _vm.trans("general.tables") +
+                        ")",
                       value: database.official_name
                     }
                   },
@@ -60330,7 +60336,9 @@ var render = function() {
               database.tables.length === 0
                 ? _c("li", { staticClass: "menu-li-no-content" }, [
                     _vm._v(
-                      "\n                This database does not contain any tables\n            "
+                      "\n                " +
+                        _vm._s(_vm.trans("table_menu.empty_table")) +
+                        "\n            "
                     )
                   ])
                 : _vm._e()
@@ -72716,22 +72724,18 @@ new Vue(_objectSpread({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _fortawesome_free_solid_svg_icons_faExclamationTriangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons/faExclamationTriangle */ "./node_modules/@fortawesome/free-solid-svg-icons/faExclamationTriangle.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons_faExclamationTriangle__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_free_solid_svg_icons_faExclamationTriangle__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/vue-fontawesome */ "./node_modules/@fortawesome/vue-fontawesome/index.es.js");
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! highlight.js */ "./node_modules/highlight.js/lib/index.js");
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(highlight_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! highlight.js/styles/github.css */ "./node_modules/highlight.js/styles/github.css");
-/* harmony import */ var highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! highlight.js/lib/languages/sql */ "./node_modules/highlight.js/lib/languages/sql.js");
-/* harmony import */ var highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_7__);
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/vue-fontawesome */ "./node_modules/@fortawesome/vue-fontawesome/index.es.js");
+/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! highlight.js */ "./node_modules/highlight.js/lib/index.js");
+/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(highlight_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! highlight.js/styles/github.css */ "./node_modules/highlight.js/styles/github.css");
+/* harmony import */ var highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! highlight.js/lib/languages/sql */ "./node_modules/highlight.js/lib/languages/sql.js");
+/* harmony import */ var highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_6__);
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-window.v = window.vividLog;
 /**
  * Axios
  */
@@ -72748,8 +72752,8 @@ window.axios.defaults.baseURL = "".concat(window.location.origin, "/prequel-api"
 
 
 
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faDatabase"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTable"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faChevronCircleUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSearchPlus"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faTools"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faGlasses"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faAsterisk"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faAdjust"], _fortawesome_free_solid_svg_icons_faExclamationTriangle__WEBPACK_IMPORTED_MODULE_0__["faExclamationTriangle"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faEye"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faWrench"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faRunning"]);
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faDatabase"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faTable"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faChevronCircleUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSearchPlus"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faTools"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faGlasses"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faAsterisk"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faAdjust"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faExclamationTriangle"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faEye"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faWrench"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faRunning"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"]);
 /**
  * Highlight.js
  */
@@ -72757,8 +72761,12 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('font-awesome-icon', _forta
 
 
 
-highlight_js__WEBPACK_IMPORTED_MODULE_5___default.a.registerLanguage('sql', highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_7___default.a);
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.directive('highlightjs', {
+highlight_js__WEBPACK_IMPORTED_MODULE_4___default.a.registerLanguage('sql', highlight_js_lib_languages_sql__WEBPACK_IMPORTED_MODULE_6___default.a);
+/**
+ * Directive to highlight programming language syntax.
+ */
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('highlightjs', {
   deep: true,
   bind: function bind(el, binding) {
     var targets = el.querySelectorAll('code');
@@ -72767,7 +72775,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.directive('highlightjs', {
         target.textContent = binding.value;
       }
 
-      highlight_js__WEBPACK_IMPORTED_MODULE_5___default.a.highlightBlock(target);
+      highlight_js__WEBPACK_IMPORTED_MODULE_4___default.a.highlightBlock(target);
     });
   },
   componentUpdated: function componentUpdated(el, binding) {
@@ -72775,7 +72783,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.directive('highlightjs', {
     targets.forEach(function (target) {
       if (binding.value) {
         target.textContent = binding.value;
-        highlight_js__WEBPACK_IMPORTED_MODULE_5___default.a.highlightBlock(target);
+        highlight_js__WEBPACK_IMPORTED_MODULE_4___default.a.highlightBlock(target);
       }
     });
   }
@@ -72788,20 +72796,23 @@ window.capitalise = function (str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 /**
- *  Might do real-time database updating in the future. Let people F5 for now
- * :^).
+ * Handle translations.
  *
- *  import Echo from 'laravel-echo'
- *
- *  window.Pusher = require('pusher-js');
- *
- *  window.Echo = new Echo({
- *      broadcaster: 'pusher',
- *      key: process.env.MIX_PUSHER_APP_KEY,
- *      cluster: process.env.MIX_PUSHER_APP_CLUSTER,
- *      encrypted: true
- *  });
+ * @param string
+ * @param args
+ * @returns {*}
  */
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.trans = function (string, args) {
+  var value = _.get(window.Prequel.i18n, string);
+
+  _.eachRight(args, function (paramVal, paramKey) {
+    value = _.replace(value, ":".concat(paramKey), paramVal);
+  });
+
+  return value;
+};
 
 /***/ }),
 
@@ -72896,14 +72907,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************!*\
   !*** ./resources/assets/js/components/Elements/PrequelError.vue ***!
   \******************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PrequelError_vue_vue_type_template_id_7751a74b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrequelError.vue?vue&type=template&id=7751a74b& */ "./resources/assets/js/components/Elements/PrequelError.vue?vue&type=template&id=7751a74b&");
 /* harmony import */ var _PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrequelError.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/Elements/PrequelError.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _PrequelError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PrequelError.vue?vue&type=style&index=0&lang=scss& */ "./resources/assets/js/components/Elements/PrequelError.vue?vue&type=style&index=0&lang=scss&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _PrequelError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PrequelError.vue?vue&type=style&index=0&lang=scss& */ "./resources/assets/js/components/Elements/PrequelError.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -72935,13 +72947,15 @@ component.options.__file = "resources/assets/js/components/Elements/PrequelError
 /*!*******************************************************************************************!*\
   !*** ./resources/assets/js/components/Elements/PrequelError.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PrequelError.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Elements/PrequelError.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrequelError_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

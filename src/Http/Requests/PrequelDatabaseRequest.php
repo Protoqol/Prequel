@@ -33,9 +33,9 @@ class PrequelDatabaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'database'      => 'required|string',
-            'table'         => 'required|string',
-            'qualifiedName' => 'required|string',
+            'database'      => 'string',
+            'table'         => 'string',
+            'qualifiedName' => 'string',
         ];
     }
 

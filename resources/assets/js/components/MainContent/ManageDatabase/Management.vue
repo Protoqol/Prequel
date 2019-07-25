@@ -1,37 +1,41 @@
 <template>
-    <!-- @TODO Make badges less hardcoded ex. separate components.   -->
     <div class="database-management">
-        <h1>Overview</h1>
+        <h1>{{trans('dashboard.overview')}}</h1>
         <div class="status-cards" v-cloak>
             <Migrations/>
 
-            <StatusDisplay v-if="app.serverInfo" header="Average Query Speed"
-                           :value="app.serverInfo.QUERIES_PER_SECOND_AVG ? app.serverInfo.QUERIES_PER_SECOND_AVG : 'Could not retrieve...'"
-                           :unit="app.serverInfo.QUERIES_PER_SECOND_AVG ? 'queries per second' : ''">
+            <StatusDisplay v-if="app.serverInfo"
+                           :header="trans('dashboard.avg_query_speed.header')"
+                           :value="app.serverInfo.QUERIES_PER_SECOND_AVG "
+                           :unit="trans('dashboard.avg_query_speed.unit')">
+
                 <slot v-if="app.serverInfo.QUERIES_PER_SECOND_AVG" ref="alert">
                     <Badge v-if="app.serverInfo.QUERIES_PER_SECOND_AVG === 0"
-                           type="critical"/>
+                           type='critical' :text="trans('general.critical')"/>
                     <Badge v-else-if="app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.3 && app.serverInfo.QUERIES_PER_SECOND_AVG <= 0.9"
-                           type="neutral"/>
+                           type='neutral' :text="trans('general.neutral')"/>
                     <Badge v-else-if="app.serverInfo.QUERIES_PER_SECOND_AVG > 0.9"
-                           type="good"/>
+                           type='good' :text="trans('general.good')"/>
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay v-if="app.serverInfo" header="Active Threads"
+            <StatusDisplay v-if="app.serverInfo"
+                           :header="trans('dashboard.active_threads.header')"
                            :value="app.serverInfo.THREADS ? app.serverInfo.THREADS : 'Could not retrieve...'"
-                           :unit="app.serverInfo.THREADS ? 'threads' : ''">
+                           :unit="trans('dashboard.active_threads.unit')">
                 <slot v-if="app.serverInfo.THREADS" ref="alert">
-                    <Badge v-if="app.serverInfo.THREADS && app.serverInfo.THREADS > 0" type="good"/>
-                    <Badge v-else type="warning"/>
+                    <Badge v-if="app.serverInfo.THREADS && app.serverInfo.THREADS > 0"
+                           type='good' :text="trans('general.good')"/>
+                    <Badge v-else type='warning' :text="trans('general.warning')"/>
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay v-if="app.serverInfo" header="Open Tables"
+            <StatusDisplay v-if="app.serverInfo"
+                           :header="trans('dashboard.open_tables.header')"
                            :value="app.serverInfo.OPEN_TABLES ? app.serverInfo.OPEN_TABLES : 'Could not retrieve...'"
-                           :unit="app.serverInfo.OPEN_TABLES ? 'tables' : ''">
+                           :unit="trans('dashboard.open_tables.unit')">
                 <slot v-if="app.serverInfo.OPEN_TABLES" ref="alert">
-                    <Badge type="neutral" text="OK"/>
+                    <Badge type="neutral" :text="trans('general.neutral')"/>
                 </slot>
             </StatusDisplay>
         </div>
@@ -39,27 +43,30 @@
             <!--            <StatusDisplay :header="`Permissions for user '${$root.prequel.env.user}'`"-->
             <!--                           :value="readableArray(app.permissions)"/>-->
 
-            <StatusDisplay v-if="app.serverInfo" header="Uptime in hours"
+            <StatusDisplay v-if="app.serverInfo"
+                           :header="trans('dashboard.uptime_hours.header')"
                            :value="app.serverInfo.UPTIME ? secsToHours(app.serverInfo.UPTIME) : 'Could not retrieve...'"
-                           :unit="app.serverInfo.UPTIME ? 'hours' : ''">
+                           :unit="trans('dashboard.uptime_hours.unit')">
                 <slot v-if="app.serverInfo.UPTIME" ref="alert">
-                    <Badge type="neutral" text="OK"/>
+                    <Badge type="neutral" :text="trans('general.neutral')"/>
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay v-if="app.serverInfo" header="Uptime in minutes"
+            <StatusDisplay v-if="app.serverInfo"
+                           :header="trans('dashboard.uptime_minutes.header')"
                            :value="app.serverInfo.UPTIME ? secsToMins(app.serverInfo.UPTIME) : 'Could not retrieve...'"
-                           :unit="app.serverInfo.UPTIME ? 'minutes' : ''">
+                           :unit="trans('dashboard.uptime_minutes.unit')">
                 <slot v-if="app.serverInfo.UPTIME" ref="alert">
-                    <Badge type="neutral" text="OK"/>
+                    <Badge type="neutral" :text="trans('general.neutral')"/>
                 </slot>
             </StatusDisplay>
 
-            <StatusDisplay v-if="app.serverInfo" header="Uptime in seconds"
+            <StatusDisplay v-if="app.serverInfo"
+                           :header="trans('dashboard.uptime_seconds.header')"
                            :value="app.serverInfo.UPTIME ? app.serverInfo.UPTIME : 'Could not retrieve...'"
-                           :unit="app.serverInfo.UPTIME ? 'seconds' : ''">
+                           :unit="trans('dashboard.uptime_seconds.unit')">
                 <slot v-if="app.serverInfo.UPTIME" ref="alert">
-                    <Badge type="neutral" text="OK"/>
+                    <Badge type="neutral" :text="trans('general.neutral')"/>
                 </slot>
             </StatusDisplay>
         </div>

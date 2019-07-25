@@ -7,12 +7,16 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\MySqlGrammar;
 use Illuminate\Database\Query\Grammars\PostgresGrammar;
 
+/**
+ * Class PrequelDB
+ * @package Protoqol\Prequel\Classes\Database
+ */
 class PrequelDB extends Model
 {
 
     /**
      * @param string $database Database name
-     * @param string $table Table name
+     * @param string $table    Table name
      *
      * @return Builder
      */
