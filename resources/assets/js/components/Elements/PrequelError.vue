@@ -51,34 +51,23 @@
         let userPort             = parseInt(this.$props.env.port);
         let connection           = this.$props.env.connection;
 
-<<<<<<< HEAD
         let supportedConnectionTypeLength = this.standards.supportedConnectionTypes.length;
         let connectionErrorCounter = false;
-=======
-        // @TODO More suggestions
->>>>>>> origin/Dev
 
+        // @TODO More suggestions
         if (userPort !== this.standards.port && connection === 'mysql') {
           suggestionCollection.push(
               `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
         }
 
-<<<<<<< HEAD
         for (let i = 0; i < supportedConnectionTypeLength; i++) {
-=======
-        for (let i = 0; i < this.standards.supportedConnectionTypes.length; i++) {
->>>>>>> origin/Dev
           if (this.standards.supportedConnectionTypes[i] !== connection) {
             connectionErrorCounter++;
           }
 
           if(i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength){
             suggestionCollection.push(
-<<<<<<< HEAD
-                `Your database connection might not be supported yet, currently supported: '${this.standards.supportedConnectionTypes.join(', ')}'. (Yours is: '${connection}').`);
-=======
-                `Your database connection might not be supported yet, currently supported: 'mysql', 'pgsql'. (Yours is: '${connection}').`);
->>>>>>> origin/Dev
+                `Your database connection might not be supported yet, currently supported: '${this.standards.supportedConnectionTypes.map(type => `'${type}'`).join(',')}'. (Yours is: '${connection}').`);
           }
         }
 
