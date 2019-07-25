@@ -23,7 +23,7 @@ class PrequelDB extends Model
     public function create(string $database, string $table)
     {
         $connection = (new DatabaseConnector())->getConnection($database);
-        $tableName = $this->connection->formatTableName($database, $table);
+        $tableName = $connection->formatTableName($database, $table);
         $builder = new Builder($connection, $connection->getGrammar(), $connection->getProcessor());
 
         $builder->from($tableName);

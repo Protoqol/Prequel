@@ -5,7 +5,7 @@ namespace Protoqol\Prequel\Classes\Database;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Processors\PostgresProcessor;
-use Illuminate\Database\Schema\Grammars\PostgresGrammar;
+use Illuminate\Database\Query\Grammars\PostgresGrammar;
 
 class PgsqlConnection extends Connection
 {
@@ -85,6 +85,16 @@ class PgsqlConnection extends Connection
         ];
 
         return $serverInfoArray;
+    }
+
+    /**
+     * @param string $database Database name
+     * @param string $table Table name
+     * @return string
+     */
+    public function formatTableName(string $database, string $table): string
+    {
+        return $table;
     }
 
     /**

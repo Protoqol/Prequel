@@ -5,7 +5,7 @@ namespace Protoqol\Prequel\Classes\Database;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Processors\MySqlProcessor;
-use Illuminate\Database\Schema\Grammars\MySqlGrammar;
+use Illuminate\Database\Query\Grammars\MySqlGrammar;
 
 class MysqlConnection extends Connection
 {
