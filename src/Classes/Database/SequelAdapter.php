@@ -81,7 +81,7 @@ class SequelAdapter
             case 'mysql':
                 return 'SHOW TABLES FROM `'.$databaseName.'`;';
             case 'pgsql':
-                return 'SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;';
+                return 'SELECT table_name FROM information_schema.tables WHERE table_schema=\''.config('database.connections.pgsql.schema').'\' ORDER BY table_name;';
             default:
                 throw new Exception('Selected invalid or unsupported database driver');
         }

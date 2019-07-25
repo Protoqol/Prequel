@@ -2,9 +2,6 @@
 
 namespace Protoqol\Prequel\Classes\Database;
 
-use Illuminate\Database\Connection;
-use PDO;
-
 /**
  * Class DatabaseConnector
  * @package Protoqol\Prequel\Classes\Database
@@ -15,60 +12,20 @@ class DatabaseConnector
     public $connection;
 
     /**
-     * @return Connection
-     *
-     * @throws \Exception
+     * @param null $database Database name
+     * @return mixed
      */
-    public function getConnection()
+    public function getConnection($database = null)
     {
-        switch (config('prequel.database.connection')) {
-            case 'mysql':
-                $className = 'MySql';
-                break;
-            case 'pgsql':
-                $className = 'PostgreSql';
-                break;
-            default:
-                $className = 'error';
-                break;
-        }
-
-        if($className === 'error') throw new \Exception("Connection couldn't be established due to unsupported database. (".config('prequel.database.connection').")");
-
+        $className = ucfirst(config('prequel.database.connection')) . 'Connection';
         $class = 'Protoqol\\Prequel\\Classes\\Database\\' . $className;
 
-        $this->connection = new Connection((new $class)->getPdo());
-
-        return $this->connection;
-    }
-
-    /**
-     * @param string $database Database name
-     * @return \PDO
-     */
-    private function getPdo(string $database = '')
-    {
-        $dsn  = $this->constructDsn($database);
-        $user = config('prequel.database.username');
-        $pass = config('prequel.database.password');
-
-        return new PDO($dsn, $user, $pass);
-    }
-
-    /**
-     * @param string $database Database name
-     * @return string
-     */
-    private function constructDsn(string $database = '')
-    {
-        if(empty($database)){
-            $database = config('prequel.database.database');
+        if($database) {
+            $this->connection = (new $class)->getConnection($database);
+        } else {
+            $this->connection = (new $class)->getConnection();
         }
 
-        $connection = config('prequel.database.connection');
-        $host       = config('prequel.database.host');
-        $port       = config('prequel.database.port');
-
-        return $connection . ':dbname=' . $database . ';host=' . $host . ';port=' . $port;
+        return $this->connection;
     }
 }

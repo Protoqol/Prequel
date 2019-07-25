@@ -43,6 +43,9 @@ class SequelAdapterTest extends TestCase
         ];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testShowDatabasesThrowsExceptionForUnsupported(): void
     {
         // $this->expectException(\Exception::class);

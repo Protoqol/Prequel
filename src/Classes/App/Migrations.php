@@ -17,6 +17,9 @@ class Migrations
 
     private $connection;
 
+    /**
+     * Migrations constructor.
+     */
     public function __construct()
     {
         $this->connection = (new DatabaseConnector())->getConnection();
@@ -50,11 +53,7 @@ class Migrations
             FilesystemIterator::SKIP_DOTS
         ));
 
-        if(config('prequel.database.connection') === "pgsql"){
-            $migrationTableCount = count($this->connection->select('SELECT id FROM migrations;'));
-        } else {
-            $migrationTableCount = count($this->connection->select('SELECT `id` FROM `migrations`;'));
-        }
+        $migrationTableCount = count($this->connection->select('SELECT id FROM migrations;'));
 
         $pending = $migrationFileCount - $migrationTableCount;
 

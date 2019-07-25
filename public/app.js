@@ -12147,16 +12147,20 @@ __webpack_require__.r(__webpack_exports__);
       var suggestionCollection = [];
       var userPort = parseInt(this.$props.env.port);
       var connection = this.$props.env.connection;
+      var supportedConnectionTypeLength = this.standards.supportedConnectionTypes.length;
+      var connectionErrorCounter = false;
 
       if (userPort !== this.standards.port && connection === 'mysql') {
         suggestionCollection.push("You're using an irregular port number, usually the port is 3306. (Yours is: ".concat(userPort, ")"));
       }
 
-      for (var i = 0; i < this.standards.supportedConnectionTypes.length; i++) {
-        console.log(this.standards.supportedConnectionTypes);
-
+      for (var i = 0; i < supportedConnectionTypeLength; i++) {
         if (this.standards.supportedConnectionTypes[i] !== connection) {
-          suggestionCollection.push("Your database connection might not be supported yet, currently supported: 'mysql'. (Yours is: '".concat(connection, "')."));
+          connectionErrorCounter++;
+        }
+
+        if (i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength) {
+          suggestionCollection.push("Your database connection might not be supported yet, currently supported: '".concat(this.standards.supportedConnectionTypes.join(', '), "'. (Yours is: '").concat(connection, "')."));
         }
       }
 

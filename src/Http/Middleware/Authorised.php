@@ -53,8 +53,6 @@ class Authorised
      */
     private function databaseConnectionCheck()
     {
-        $connection = [];
-
         try {
             $conn       = (new DatabaseConnector())->getConnection();
             $connection = [
@@ -62,8 +60,6 @@ class Authorised
                 'detailed'  => $conn->getPdo(),
             ];
         } catch (\Exception $exception) {
-            print_r('<pre>'.$exception.'</pre>');
-            die;
             $connection = [
                 'connected' => false,
                 'detailed'  => 'Could not create a valid database connection.',
