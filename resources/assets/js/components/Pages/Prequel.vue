@@ -1,3 +1,5 @@
+<!-- @NOTE This is the root Prequel Vue instance -->
+
 <template>
     <!--
         Order of element attributes:
@@ -25,10 +27,10 @@
                 @collapseSideBar="sideBarCollapseHandler"/>
 
         <Paginator
-                v-if="table.currentActiveName.length !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"
-                :currentPage="table.pagination.currentPage"
-                :numberOfPages="table.pagination.numberOfPages"
-                @pageChange="changePage($event)"/>
+            v-if="table.currentActiveName.length !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"
+            :currentPage="table.pagination.currentPage"
+            :numberOfPages="table.pagination.numberOfPages"
+            @pageChange="changePage($event)"/>
 
         <div v-else class="block w-1 h-1 my-2"></div>
 
@@ -64,15 +66,15 @@
 
 <script>
   import axios        from 'axios';
-  import Header       from './components/Header/Header';
-  import SideBar      from './components/SideBar/SideBar';
-  import MainContent  from './components/MainContent/MainContent';
-  import PrequelError from './components/Elements/PrequelError';
-  import Paginator    from './components/MainContent/Table/Paginator';
-  import SwitchMode   from './components/Elements/SwitchMode';
+  import Header       from '../Header/Header';
+  import SideBar      from '../SideBar/SideBarWrapper';
+  import MainContent  from '../MainContent/ContentWrapper';
+  import PrequelError from './PrequelError';
+  import Paginator    from '../MainContent/BrowseMode/Table/Paginator';
+  import SwitchMode   from '../Elements/SwitchMode';
 
   export default {
-    name      : 'App',
+    name      : 'Prequel',
     components: {
       SwitchMode,
       Paginator,
@@ -87,7 +89,7 @@
 
         /**
          |---------------------------------------------
-         | Holds data that comes directly from Prequel.
+         | Holds data that comes directly from the back-end.
          |---------------------------------------------
          */
         prequel: {
@@ -96,7 +98,7 @@
           data         : window.Prequel.data,        // Object
           env          : window.Prequel.env,         // Object
           flat         : window.Prequel.flat,        // Array
-          lang         : window.Prequel.i18n,
+          lang         : window.Prequel.i18n,        // Object
           api          : {
             database: '',
           },

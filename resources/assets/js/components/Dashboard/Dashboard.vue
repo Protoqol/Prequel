@@ -1,17 +1,14 @@
 <template>
-    <div class="welcome">
-        <div class="img-wrapper">
-            <img class="no-drag" width="250" alt="Laravel Prequel" :src="$root.prequel.asset.prequel">
-        </div>
+    <div class="dashboard">
         <Management/>
     </div>
 </template>
 
 <script>
-  import Management from '../MainContent/ManageDatabase/Management';
+  import Management from './DashboardElements/Management';
 
   export default {
-    name      : 'Welcome',
+    name      : 'Dashboard',
     components: {Management},
     data() {
       return {
@@ -22,9 +19,7 @@
 </script>
 
 <style scoped lang="scss">
-    .welcome {
-        @apply mt-2;
-
+    .dashboard {
         .img-wrapper {
             @apply w-full;
             @apply flex;
