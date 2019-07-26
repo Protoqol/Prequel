@@ -121,7 +121,7 @@ return [
             'run_migrations'      => 'Run :number migration(s)',
             'no_run_migrations'   => 'Nincs függőben lévő migrations',
             'reset_migrations'    => 'Reset :number migration(s)',
-            'no_reset_migrations' => 'Nincs előz migrations',
+            'no_reset_migrations' => 'Nincs előző migrations',
         ],
         'avg_query_speed'    => [
             'header' => 'Átlag kérés másodpercenként',
