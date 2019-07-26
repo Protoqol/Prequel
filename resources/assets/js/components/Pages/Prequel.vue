@@ -247,8 +247,16 @@
           // Menu header with database name
           let databaseEl = document.querySelector(`li[value=${this.view.params.get('database')}]`);
 
-          // Menu item with table name
-          let tableEl = document.querySelector(`li[value=${this.view.params.get('table')}]`);
+          // Menu items with table name
+          let tableElements = document.querySelectorAll(`li[value=${this.view.params.get('table')}]`);
+          let tableEl;
+
+          tableElements.forEach((tableElement) => {
+              let tableName = `${this.view.params.get('database')}.${this.view.params.get('table')}`;
+              if(tableElement.title === tableName) {
+                  tableEl = tableElement;
+              }
+          });
 
           // All 'li' elements
           let menuItemElements = document.getElementsByTagName('li');
