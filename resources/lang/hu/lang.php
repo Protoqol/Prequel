@@ -8,12 +8,12 @@ return [
      */
     'general'      => [
         'home'       => 'Otthon',
-        'good'       => 'J�',
-        'neutral'    => 'Semleges',
+        'good'       => 'Jó',
+        'neutral'    => 'Átlagos',
         'critical'   => 'Kritikus',
         'warning'    => 'Vigyázat',
         'migrations' => 'Migrations',
-        'length'     => 'Length',
+        'length'     => 'Hosszúság',
         'tables'     => 'Táblák',
     ],
 
@@ -22,10 +22,10 @@ return [
      */
     'error_page'   => [
         'oops'               => 'Oops...',
-        'tried_connecting'   => 'Csatlakozás megkis�rl�se.',
+        'tried_connecting'   => 'Csatlakozás megkísérlése.',
         'example_connection' => 'connection://user@host:port/database',
-        'no_suggestions'     => 'Az el�zm�ny nem javasolhat jav�t�sokat.',
-        'disabled'           => 'Az el�zm�ny le van tiltva.',
+        'no_suggestions'     => 'Prequel nem tudott javasolni javításokat.',
+        'disabled'           => 'Prequel le van tiltva.',
     ],
 
     /**
@@ -33,12 +33,12 @@ return [
      */
     'switch_mode'  => [
         'browse' => [
-            'title' => 'Browse mode',
-            'text'  => 'Keres',
+            'title' => 'Keresési mód',
+            'text'  => 'Keresés',
         ],
         'manage' => [
-            'title' => 'Manage mode',
-            'text'  => 'Kezel',
+            'title' => 'Kezelői mód',
+            'text'  => 'Kezelő',
         ],
     ],
 
@@ -46,20 +46,20 @@ return [
      * Header/Header.vue
      */
     'header'       => [
-        'column'  => 'Column...',
-        'value'   => 'Value...',
-        'records' => 'Feljegyz�sek',
+        'column'  => 'Oszlop',
+        'value'   => 'Érték',
+        'records' => 'Sorok',
         'buttons' => [
-            'dark_mode'   => 'S�t�t m�d',
-            'readability' => 'Readability',
-            'side_bar'    => 'Side Bar',
+            'dark_mode'   => 'Sötét mód',
+            'readability' => 'Olvashatóság',
+            'side_bar'    => 'Oldalsó menü',
             'get'         => [
-                'title' => 'Run query (ENTER)',
-                'text'  => 'Get',
+                'title' => 'Kérés futtatása (ENTER)',
+                'text'  => 'Mehet',
             ],
             'reset'       => [
-                'title' => 'Reset query (ESC)',
-                'text'  => 'reset',
+                'title' => 'Kérés visszaállítása (ESC)',
+                'text'  => 'Visszaállítás',
             ],
         ],
     ],
@@ -68,31 +68,31 @@ return [
      * MainContent/Table/Table.vue
      */
     'table'        => [
-        'quick_actions' => 'Quick actions',
-        'inspect_row'   => 'Inspect row',
-        'item_empty'    => 'Az eszk�z �res',
-        'nothing'       => 'Nothing here',
+        'quick_actions' => 'Gyors akciók',
+        'inspect_row'   => 'Sor megtekintése',
+        'item_empty'    => 'Az eszköz üres',
+        'nothing'       => 'Üres',
     ],
 
     /**
      * MainContent/Table/TableEmpty.vue
      */
     'table_empty'  => [
-        'no_results' => 'This query did not yield any result',
-        'col_key'    => 'Column Key',
-        'col_field'  => 'Column Field',
-        'col_def'    => 'Column Default',
-        'col_type'   => 'Column Type',
-        'not_set'    => 'Not Set',
+        'no_results' => 'Ez a keresés nem hozott eredményt.',
+        'col_key'    => 'Oszlop Kulcs',
+        'col_field'  => 'Oszlop Neve',
+        'col_def'    => 'Alapértelmezett Érték',
+        'col_type'   => 'Oszlop Típusa',
+        'not_set'    => 'Nincs beállítva',
     ],
 
     /**
      * MainContent/Table/TableStatus.vue
      */
     'table_status' => [
-        'loading_data'        => 'Loading table data...',
-        'error_occurred'      => 'There was an error while loading this table. See the following:',
-        'could_not_resolve'   => 'Could not resolve error',
+        'loading_data'        => 'Adatok betöltése...',
+        'error_occurred'      => 'Hiba történt az adatok betöltésekor. Lásd az alábbiakat:',
+        'could_not_resolve'   => 'Ismeretlen hiba lépett fel',
         'prequel_suggestions' => 'Prequel suggests looking at the following points',
     ],
 
@@ -100,51 +100,51 @@ return [
      * SideBar/SideBarWrapper.vue
      */
     'side_bar'     => [
-        'look_for_table' => 'Look for table...',
+        'look_for_table' => 'Keresés...',
     ],
 
     /**
      * SideBar/TableMenu.vue
      */
     'table_menu'   => [
-        'empty_table' => 'This database does not contain any tables',
+        'empty_table' => 'Ez az adatbázis nem tartalmaz táblát',
     ],
 
     /**
      * MainContent/ManageDatabase
      */
     'dashboard'    => [
-        'overview'           => '�ttekint�s',
-        'settings'           => 'Beállit�sok',
-        'could_not_retrieve' => 'Could not retrieve this...',
+        'overview'           => 'Áttekintés',
+        'settings'           => 'Beállitások',
+        'could_not_retrieve' => 'Nem sikerült lekérni...',
         'migrations'         => [
             'run_migrations'      => 'Run :number migration(s)',
-            'no_run_migrations'   => 'No pending migrations',
+            'no_run_migrations'   => 'Nincs függőben lévő migrations',
             'reset_migrations'    => 'Reset :number migration(s)',
-            'no_reset_migrations' => 'No existing migrations',
+            'no_reset_migrations' => 'Nincs előz migrations',
         ],
         'avg_query_speed'    => [
-            'header' => 'Avg. Queries Per Second',
-            'unit'   => 'queries per second',
+            'header' => 'Átlag kérés másodpercenként',
+            'unit'   => 'kérés per másodperc',
         ],
         'active_threads'     => [
-            'header' => 'Active Threads',
-            'unit'   => 'threads',
+            'header' => 'Aktív Szál',
+            'unit'   => 'szál',
         ],
         'open_tables'        => [
-            'header' => 'Open Tables',
-            'unit'   => 'táblák',
+            'header' => 'Nyitott táblák',
+            'unit'   => 'tábla',
         ],
         'uptime_hours'       => [
-            'header' => 'Uptime in hours',
+            'header' => 'Futási idő órában',
             'unit'   => 'óra',
         ],
         'uptime_minutes'     => [
-            'header' => 'Uptime in minutes',
+            'header' => 'Futási idő percben',
             'unit'   => 'perc',
         ],
         'uptime_seconds'     => [
-            'header' => 'Uptime in seconds',
+            'header' => 'Futási idő másodpercben',
             'unit'   => 'másodperc',
         ],
     ],

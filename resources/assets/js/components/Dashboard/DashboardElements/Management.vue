@@ -7,8 +7,8 @@
 
                 <StatusDisplay v-if="app.serverInfo"
                                :header="trans('dashboard.avg_query_speed.header')"
-                               :value="app.serverInfo.QUERIES_PER_SECOND_AVG "
-                               :unit="trans('dashboard.avg_query_speed.unit')">
+                               :value="app.serverInfo.QUERIES_PER_SECOND_AVG ? app.serverInfo.QUERIES_PER_SECOND_AVG : trans('dashboard.could_not_retrieve')"
+                               :unit="app.serverInfo.QUERIES_PER_SECOND_AVG ? trans('dashboard.avg_query_speed.unit') : ''">
 
                     <slot v-if="app.serverInfo.QUERIES_PER_SECOND_AVG" ref="alert">
                         <Badge type='neutral' :text="trans('general.neutral')"/>
@@ -17,8 +17,8 @@
 
                 <StatusDisplay v-if="app.serverInfo"
                                :header="trans('dashboard.active_threads.header')"
-                               :value="app.serverInfo.THREADS ? app.serverInfo.THREADS : 'Could not retrieve...'"
-                               :unit="trans('dashboard.active_threads.unit')">
+                               :value="app.serverInfo.THREADS ? app.serverInfo.THREADS : trans('dashboard.could_not_retrieve')"
+                               :unit="app.serverInfo.THREADS ? trans('dashboard.active_threads.unit') : ''">
                     <slot v-if="app.serverInfo.THREADS" ref="alert">
                         <Badge v-if="app.serverInfo.THREADS && app.serverInfo.THREADS > 0"
                                type='good' :text="trans('general.good')"/>
@@ -28,8 +28,8 @@
 
                 <StatusDisplay v-if="app.serverInfo"
                                :header="trans('dashboard.open_tables.header')"
-                               :value="app.serverInfo.OPEN_TABLES ? app.serverInfo.OPEN_TABLES : 'Could not retrieve...'"
-                               :unit="trans('dashboard.open_tables.unit')">
+                               :value="app.serverInfo.OPEN_TABLES ? app.serverInfo.OPEN_TABLES : trans('dashboard.could_not_retrieve')"
+                               :unit="app.serverInfo.OPEN_TABLES ? trans('dashboard.open_tables.unit') : ''">
                     <slot v-if="app.serverInfo.OPEN_TABLES" ref="alert">
                         <Badge type="neutral" :text="trans('general.neutral')"/>
                     </slot>
@@ -41,8 +41,8 @@
 
                 <StatusDisplay v-if="app.serverInfo"
                                :header="trans('dashboard.uptime_hours.header')"
-                               :value="app.serverInfo.UPTIME ? secsToHours(app.serverInfo.UPTIME) : 'Could not retrieve...'"
-                               :unit="trans('dashboard.uptime_hours.unit')">
+                               :value="app.serverInfo.UPTIME ? secsToHours(app.serverInfo.UPTIME) : trans('dashboard.could_not_retrieve')"
+                               :unit="app.serverInfo.UPTIME ? trans('dashboard.uptime_hours.unit'): ''">
                     <slot v-if="app.serverInfo.UPTIME" ref="alert">
                         <Badge type="neutral" :text="trans('general.neutral')"/>
                     </slot>
@@ -50,8 +50,8 @@
 
                 <StatusDisplay v-if="app.serverInfo"
                                :header="trans('dashboard.uptime_minutes.header')"
-                               :value="app.serverInfo.UPTIME ? secsToMins(app.serverInfo.UPTIME) : 'Could not retrieve...'"
-                               :unit="trans('dashboard.uptime_minutes.unit')">
+                               :value="app.serverInfo.UPTIME ? secsToMins(app.serverInfo.UPTIME) : trans('dashboard.could_not_retrieve')"
+                               :unit="app.serverInfo.UPTIME ? trans('dashboard.uptime_minutes.unit') : ''">
                     <slot v-if="app.serverInfo.UPTIME" ref="alert">
                         <Badge type="neutral" :text="trans('general.neutral')"/>
                     </slot>
@@ -59,8 +59,8 @@
 
                 <StatusDisplay v-if="app.serverInfo"
                                :header="trans('dashboard.uptime_seconds.header')"
-                               :value="app.serverInfo.UPTIME ? app.serverInfo.UPTIME : 'Could not retrieve...'"
-                               :unit="trans('dashboard.uptime_seconds.unit')">
+                               :value="app.serverInfo.UPTIME ? app.serverInfo.UPTIME : trans('dashboard.could_not_retrieve')"
+                               :unit="app.serverInfo.UPTIME ? trans('dashboard.uptime_seconds.unit'): ''">
                     <slot v-if="app.serverInfo.UPTIME" ref="alert">
                         <Badge type="neutral" :text="trans('general.neutral')"/>
                     </slot>

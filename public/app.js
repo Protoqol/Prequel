@@ -58475,8 +58475,12 @@ var render = function() {
                 {
                   attrs: {
                     header: _vm.trans("dashboard.avg_query_speed.header"),
-                    value: _vm.app.serverInfo.QUERIES_PER_SECOND_AVG,
-                    unit: _vm.trans("dashboard.avg_query_speed.unit")
+                    value: _vm.app.serverInfo.QUERIES_PER_SECOND_AVG
+                      ? _vm.app.serverInfo.QUERIES_PER_SECOND_AVG
+                      : _vm.trans("dashboard.could_not_retrieve"),
+                    unit: _vm.app.serverInfo.QUERIES_PER_SECOND_AVG
+                      ? _vm.trans("dashboard.avg_query_speed.unit")
+                      : ""
                   }
                 },
                 [
@@ -58503,8 +58507,10 @@ var render = function() {
                     header: _vm.trans("dashboard.active_threads.header"),
                     value: _vm.app.serverInfo.THREADS
                       ? _vm.app.serverInfo.THREADS
-                      : "Could not retrieve...",
-                    unit: _vm.trans("dashboard.active_threads.unit")
+                      : _vm.trans("dashboard.could_not_retrieve"),
+                    unit: _vm.app.serverInfo.THREADS
+                      ? _vm.trans("dashboard.active_threads.unit")
+                      : ""
                   }
                 },
                 [
@@ -58539,8 +58545,10 @@ var render = function() {
                     header: _vm.trans("dashboard.open_tables.header"),
                     value: _vm.app.serverInfo.OPEN_TABLES
                       ? _vm.app.serverInfo.OPEN_TABLES
-                      : "Could not retrieve...",
-                    unit: _vm.trans("dashboard.open_tables.unit")
+                      : _vm.trans("dashboard.could_not_retrieve"),
+                    unit: _vm.app.serverInfo.OPEN_TABLES
+                      ? _vm.trans("dashboard.open_tables.unit")
+                      : ""
                   }
                 },
                 [
@@ -58574,8 +58582,10 @@ var render = function() {
                     header: _vm.trans("dashboard.uptime_hours.header"),
                     value: _vm.app.serverInfo.UPTIME
                       ? _vm.secsToHours(_vm.app.serverInfo.UPTIME)
-                      : "Could not retrieve...",
-                    unit: _vm.trans("dashboard.uptime_hours.unit")
+                      : _vm.trans("dashboard.could_not_retrieve"),
+                    unit: _vm.app.serverInfo.UPTIME
+                      ? _vm.trans("dashboard.uptime_hours.unit")
+                      : ""
                   }
                 },
                 [
@@ -58602,8 +58612,10 @@ var render = function() {
                     header: _vm.trans("dashboard.uptime_minutes.header"),
                     value: _vm.app.serverInfo.UPTIME
                       ? _vm.secsToMins(_vm.app.serverInfo.UPTIME)
-                      : "Could not retrieve...",
-                    unit: _vm.trans("dashboard.uptime_minutes.unit")
+                      : _vm.trans("dashboard.could_not_retrieve"),
+                    unit: _vm.app.serverInfo.UPTIME
+                      ? _vm.trans("dashboard.uptime_minutes.unit")
+                      : ""
                   }
                 },
                 [
@@ -58630,8 +58642,10 @@ var render = function() {
                     header: _vm.trans("dashboard.uptime_seconds.header"),
                     value: _vm.app.serverInfo.UPTIME
                       ? _vm.app.serverInfo.UPTIME
-                      : "Could not retrieve...",
-                    unit: _vm.trans("dashboard.uptime_seconds.unit")
+                      : _vm.trans("dashboard.could_not_retrieve"),
+                    unit: _vm.app.serverInfo.UPTIME
+                      ? _vm.trans("dashboard.uptime_seconds.unit")
+                      : ""
                   }
                 },
                 [
