@@ -7,14 +7,14 @@ return [
      * General
      */
     'general'      => [
-        'home'       => 'Home',
-        'good'       => 'good',
-        'neutral'    => 'neutral',
-        'critical'   => 'critical',
-        'warning'    => 'warning',
+        'home'       => 'Otthon',
+        'good'       => 'J�',
+        'neutral'    => 'Semleges',
+        'critical'   => 'Kritikus',
+        'warning'    => 'Vigyázat',
         'migrations' => 'Migrations',
         'length'     => 'Length',
-        'tables'     => 'tables',
+        'tables'     => 'Táblák',
     ],
 
     /**
@@ -22,10 +22,10 @@ return [
      */
     'error_page'   => [
         'oops'               => 'Oops...',
-        'tried_connecting'   => 'Tried connecting through',
+        'tried_connecting'   => 'Csatlakozás megkis�rl�se.',
         'example_connection' => 'connection://user@host:port/database',
-        'no_suggestions'     => 'Prequel could not suggest any fixes.',
-        'disabled'           => 'Prequel has been disabled.',
+        'no_suggestions'     => 'Az el�zm�ny nem javasolhat jav�t�sokat.',
+        'disabled'           => 'Az el�zm�ny le van tiltva.',
     ],
 
     /**
@@ -34,11 +34,11 @@ return [
     'switch_mode'  => [
         'browse' => [
             'title' => 'Browse mode',
-            'text'  => 'Browse',
+            'text'  => 'Keres',
         ],
         'manage' => [
             'title' => 'Manage mode',
-            'text'  => 'Manage',
+            'text'  => 'Kezel',
         ],
     ],
 
@@ -48,9 +48,9 @@ return [
     'header'       => [
         'column'  => 'Column...',
         'value'   => 'Value...',
-        'records' => 'records',
+        'records' => 'Feljegyz�sek',
         'buttons' => [
-            'dark_mode'   => 'Dark Mode',
+            'dark_mode'   => 'S�t�t m�d',
             'readability' => 'Readability',
             'side_bar'    => 'Side Bar',
             'get'         => [
@@ -59,7 +59,7 @@ return [
             ],
             'reset'       => [
                 'title' => 'Reset query (ESC)',
-                'text'  => 'Reset',
+                'text'  => 'reset',
             ],
         ],
     ],
@@ -70,7 +70,7 @@ return [
     'table'        => [
         'quick_actions' => 'Quick actions',
         'inspect_row'   => 'Inspect row',
-        'item_empty'    => 'This item is empty',
+        'item_empty'    => 'Az eszk�z �res',
         'nothing'       => 'Nothing here',
     ],
 
@@ -114,8 +114,8 @@ return [
      * MainContent/ManageDatabase
      */
     'dashboard'    => [
-        'overview'           => 'Overview',
-        'settings'           => 'Settings',
+        'overview'           => '�ttekint�s',
+        'settings'           => 'Beállit�sok',
         'could_not_retrieve' => 'Could not retrieve this...',
         'migrations'         => [
             'run_migrations'      => 'Run :number migration(s)',
@@ -133,19 +133,19 @@ return [
         ],
         'open_tables'        => [
             'header' => 'Open Tables',
-            'unit'   => 'tables',
+            'unit'   => 'táblák',
         ],
         'uptime_hours'       => [
             'header' => 'Uptime in hours',
-            'unit'   => 'hours',
+            'unit'   => 'óra',
         ],
         'uptime_minutes'     => [
             'header' => 'Uptime in minutes',
-            'unit'   => 'minutes',
+            'unit'   => 'perc',
         ],
         'uptime_seconds'     => [
             'header' => 'Uptime in seconds',
-            'unit'   => 'seconds',
+            'unit'   => 'másodperc',
         ],
     ],
 
