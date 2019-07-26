@@ -3,10 +3,6 @@
 
 namespace Protoqol\Prequel\Classes\App;
 
-use FilesystemIterator;
-use Illuminate\Database\Console\Migrations\MigrateCommand;
-use Illuminate\Database\Migrations\Migration;
-use PDO;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
 
@@ -29,6 +25,9 @@ class AppStatus
      */
     private $traverser;
 
+    /**
+     * AppStatus constructor.
+     */
     public function __construct()
     {
         $this->traverser  = new DatabaseTraverser();
@@ -36,7 +35,6 @@ class AppStatus
     }
 
     /**
-     * Get general status.
      * @return array
      */
     public function getStatus(): array
@@ -54,25 +52,7 @@ class AppStatus
      */
     private function serverInfo(): array
     {
-        if($this->connection->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql') {
-            $query = 'select extract(epoch from current_timestamp - pg_postmaster_start_time())';
-            $serverInfoArray    = [
-                'UPTIME'    => intval($this->connection->getPdo()->query($query)->fetch()[0])
-            ];
-        } else {
-            $serverInfo         = $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_INFO);
-
-            $explodedServerInfo = explode('  ', $serverInfo);
-            $serverInfoArray    = [];
-
-            foreach ($explodedServerInfo as $attr) {
-                $split                 = explode(': ', $attr);
-                $key                   = strtoupper(str_replace(' ', '_', str_replace(':', '', $split[0])));
-                $serverInfoArray[$key] = $split[1];
-            }
-        }
-
-        return $serverInfoArray;
+        return $this->connection->getServerInfo();
     }
 
     /**
@@ -81,12 +61,8 @@ class AppStatus
      */
     public function userPermissions(): array
     {
-        //PostgreSQL
-        if(config('prequel.database.connection') === 'pgsql') {
-            $grants      = (array)$this->connection->select('SELECT grantee, privilege_type FROM information_schema.role_table_grants;')[0];
-        } else {
-            $grants      = (array)$this->connection->select('SHOW GRANTS FOR CURRENT_USER();')[0];
-        }
+
+        $grants      = $this->connection->getGrants();
         $privs       = (string)array_values($grants)[0];
         $permissions = [];
 

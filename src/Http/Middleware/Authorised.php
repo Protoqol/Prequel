@@ -6,6 +6,7 @@ namespace Protoqol\Prequel\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Protoqol\Prequel\Classes\Database\DatabaseConnector;
 
 /**
@@ -41,6 +42,7 @@ class Authorised
                     'port'       => config('prequel.database.port'),
                     'user'       => config('prequel.database.username'),
                 ],
+                'lang' => Lang::get('Prequel::lang', [], (string)config('prequel.locale')),
             ], 503);
         }
 
@@ -53,8 +55,6 @@ class Authorised
      */
     private function databaseConnectionCheck()
     {
-        $connection = [];
-
         try {
             $conn       = (new DatabaseConnector())->getConnection();
             $connection = [
@@ -62,8 +62,6 @@ class Authorised
                 'detailed'  => $conn->getPdo(),
             ];
         } catch (\Exception $exception) {
-            print_r('<pre>'.$exception.'</pre>');
-            die;
             $connection = [
                 'connected' => false,
                 'detailed'  => 'Could not create a valid database connection.',
