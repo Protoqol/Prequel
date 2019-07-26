@@ -92,6 +92,10 @@
             @apply rounded-l;
             @apply cursor-pointer;
             @apply text-left;
+
+            svg {
+                color: #c3cbd7;
+            }
         }
 
 

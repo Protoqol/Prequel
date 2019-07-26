@@ -20,8 +20,8 @@
 </template>
 
 <script>
-  import Accordion from './Accordion';
-  import TableMenu from './TableMenu';
+  import Accordion from './Menu/Accordion';
+  import TableMenu from './Menu/TableMenu';
 
   export default {
     name      : 'SideBar',
