@@ -1,8 +1,10 @@
 
 ![Prequel](assets/prequel_v1.png)  
-  
-# Prequel v1.13
+
 <p align="center">
+    <a href="https://packagist.org/packages/protoqol/prequel">	
+       <img alt="Packagist Version" src="https://img.shields.io/packagist/v/protoqol/prequel.svg">
+    </a>
     <a href="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev">
 	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=master"/>	
     </a>
