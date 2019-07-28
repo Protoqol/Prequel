@@ -12,7 +12,7 @@ return [
         'neutral'    => 'Átlagos',
         'critical'   => 'Kritikus',
         'warning'    => 'Vigyázat',
-        'migrations' => 'Migrations',
+        'migrations' => 'Migrációk',
         'length'     => 'Hosszúság',
         'tables'     => 'Táblák',
     ],
@@ -93,7 +93,7 @@ return [
         'loading_data'        => 'Adatok betöltése...',
         'error_occurred'      => 'Hiba történt az adatok betöltésekor. Lásd az alábbiakat:',
         'could_not_resolve'   => 'Ismeretlen hiba lépett fel',
-        'prequel_suggestions' => 'Prequel suggests looking at the following points',
+        'prequel_suggestions' => 'Prequel ajánlja a következő problémák ellenőrzését',
     ],
 
     /**
@@ -118,10 +118,10 @@ return [
         'settings'           => 'Beállitások',
         'could_not_retrieve' => 'Nem sikerült lekérni...',
         'migrations'         => [
-            'run_migrations'      => 'Run :number migration(s)',
-            'no_run_migrations'   => 'Nincs függőben lévő migrations',
-            'reset_migrations'    => 'Reset :number migration(s)',
-            'no_reset_migrations' => 'Nincs előző migrations',
+            'run_migrations'      => ':number migráció futtatása',
+            'no_run_migrations'   => 'Nincs függőben lévő migráció',
+            'reset_migrations'    => ':number migrűció visszaállítása',
+            'no_reset_migrations' => 'Nincs előző migráció',
         ],
         'avg_query_speed'    => [
             'header' => 'Átlag kérés másodpercenként',
