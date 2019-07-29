@@ -12,3 +12,4 @@ mix-manifest.json
 todo.md
 /public/phpmd.html
 phpunit-watcher.yml
+webpack.mix.js

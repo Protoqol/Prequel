@@ -1,4 +1,4 @@
-<!-- @NOTE This is the root Prequel Vue instance -->
+<!-- NOTE This is the root Prequel Vue instance -->
 
 <template>
     <!--
@@ -14,6 +14,7 @@
 
         <Header :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
+                :showFilter="view.modus.mode !== view.modus.enum.MANAGE"
                 :tableStructure="table.structure"
                 :env="prequel.env"
                 :loading="table.loading"
@@ -154,8 +155,8 @@
           welcomeShown: false,
           params      : new URLSearchParams(window.location.search),
           menu        : {
-            active_header_color: '#5a67d8',
-            active_item_color  : '#7f9cf5',
+            active_header_color: 'rgb(90,103,216)',
+            active_item_color  : 'rgb(127,156,245)',
           },
         },
       };
@@ -221,7 +222,7 @@
        */
       readabilityEnhancer: function() {
         this.view.readability = (!this.view.readability);
-        window.localStorage.setItem('readability', (!this.view.readability) + '');
+        localStorage.setItem('readability', (!this.view.readability) + '');
       },
 
       /**
@@ -252,10 +253,10 @@
           let tableEl;
 
           tableElements.forEach((tableElement) => {
-              let tableName = `${this.view.params.get('database')}.${this.view.params.get('table')}`;
-              if(tableElement.title === tableName) {
-                  tableEl = tableElement;
-              }
+            let tableName = `${this.view.params.get('database')}.${this.view.params.get('table')}`;
+            if (tableElement.title === tableName) {
+              tableEl = tableElement;
+            }
           });
 
           // All 'li' elements
@@ -316,7 +317,13 @@
         this.view.params.set('mode', this.view.modus.mode === this.view.modus.enum.BROWSE ? 'browse' : 'manage');
         this.view.params.set('database', this.table.database);
         this.view.params.set('table', this.table.table);
-        this.view.params.set('page', this.table.pagination.currentPage);
+
+        if (this.view.modus.mode === this.view.modus.enum.BROWSE) {
+          this.view.params.set('page', this.table.pagination.currentPage);
+        }
+        else {
+          this.view.params.delete('page');
+        }
 
         let baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
         let url     = baseUrl + '?' + this.view.params.toString();
@@ -334,6 +341,7 @@
        | @param databaseTable Should be formatted as `database.table`.
        | @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
        | @returns {Promise<boolean>}
+       | @TODO Shorten function.
        */
       getTableData: async function(
           databaseTable = `${this.table.database}.${this.table.table}`, dynamicLoad = true,

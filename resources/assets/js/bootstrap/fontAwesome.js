@@ -13,11 +13,13 @@ import {
     faWrench,
     faRunning,
     faExclamationTriangle,
+    faPlus,
+    faArrowAltCircleUp
 }                        from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 library.add(faDatabase, faTable, faChevronCircleUp, faSearchPlus, faTools,
     faGlasses, faAsterisk, faAdjust, faExclamationTriangle, faEye, faWrench,
-    faRunning);
+    faRunning, faPlus, faArrowAltCircleUp);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
