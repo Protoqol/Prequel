@@ -3,7 +3,7 @@
     <div class="prequel-error">
         <h1>
             <font-awesome-icon icon="exclamation-triangle"></font-awesome-icon>
-            {{trans('error_page.oops')}}
+            {{ trans('error_page.oops') }}
         </h1>
         <h2>
             {{ errorDetailed.detailed }}
@@ -43,6 +43,9 @@
           port                    : 3306,
           supportedConnectionTypes: ['mysql', 'pgsql'],
         },
+        prequel: {
+          lang: window.Prequel.i18n
+        }
       };
     },
     methods: {
@@ -72,7 +75,7 @@
         }
 
         if (suggestionCollection.length === 0) {
-          suggestionCollection.push(trans('error_page.no_suggestions'));
+          suggestionCollection.push('Prequel could not suggest any fixes.');
         }
 
         return suggestionCollection;

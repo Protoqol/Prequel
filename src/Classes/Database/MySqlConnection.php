@@ -7,12 +7,12 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Processors\MySqlProcessor;
 use Illuminate\Database\Query\Grammars\MySqlGrammar;
 
-class MysqlConnection extends Connection
+class MySqlConnection extends Connection
 {
     protected $connection;
 
     /**
-     * MysqlConnection constructor.
+     * MySqlConnection constructor.
      */
     public function __construct()
     {
@@ -21,9 +21,9 @@ class MysqlConnection extends Connection
     }
 
     /**
-     * @return MysqlConnection
+     * @return MySqlConnection
      */
-    public function getConnection(): MysqlConnection
+    public function getConnection()
     {
         return $this;
     }
@@ -32,7 +32,7 @@ class MysqlConnection extends Connection
      * Called getCustomPdo() so it doesn't override the Connection::getPdo function.
      * @return \PDO
      */
-    public function getPdo(): \PDO
+    public function getPdo()
     {
         $connection = config('prequel.database.connection');
         $host       = config('prequel.database.host');
@@ -58,7 +58,7 @@ class MysqlConnection extends Connection
     /**
      * @return MySqlGrammar
      */
-    public function getGrammar(): MySqlGrammar
+    public function getGrammar()
     {
         return new MySqlGrammar();
     }
@@ -66,7 +66,7 @@ class MysqlConnection extends Connection
     /**
      * @return MySqlProcessor
      */
-    public function getProcessor(): MySqlProcessor
+    public function getProcessor()
     {
         return new MySqlProcessor();
     }

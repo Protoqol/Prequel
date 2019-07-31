@@ -7,12 +7,12 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Processors\PostgresProcessor;
 use Illuminate\Database\Query\Grammars\PostgresGrammar;
 
-class PgsqlConnection extends Connection
+class PostgresConnection extends Connection
 {
     protected $connection;
 
     /**
-     * PgsqlConnection constructor.
+     * PostgresConnection constructor.
      * @param null $database
      */
     public function __construct($database = null)
@@ -22,9 +22,9 @@ class PgsqlConnection extends Connection
     }
 
     /**
-     * @return PgsqlConnection
+     * @return PostgresConnection
      */
-    public function getConnection(): PgsqlConnection
+    public function getConnection()
     {
         return $this;
     }
@@ -34,7 +34,7 @@ class PgsqlConnection extends Connection
      * @param mixed $database Database name
      * @return \PDO
      */
-    public function getPdo($database = null): \PDO
+    public function getPdo($database = null)
     {
         $connection = config('prequel.database.connection');
         $host       = config('prequel.database.host');
@@ -60,7 +60,7 @@ class PgsqlConnection extends Connection
     /**
      * @return PostgresGrammar
      */
-    public function getGrammar(): PostgresGrammar
+    public function getGrammar()
     {
         return new PostgresGrammar();
     }
@@ -68,7 +68,7 @@ class PgsqlConnection extends Connection
     /**
      * @return PostgresProcessor
      */
-    public function getProcessor(): PostgresProcessor
+    public function getProcessor()
     {
         return new PostgresProcessor();
     }

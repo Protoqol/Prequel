@@ -17,7 +17,18 @@ class DatabaseConnector
      */
     public function getConnection($database = null)
     {
-        $className = ucfirst(config('prequel.database.connection')) . 'Connection';
+        switch (config('prequel.database.connection')) {
+            case 'mysql':
+                $className = 'MySqlConnection';
+                break;
+            case 'pgsql':
+                $className = 'PostgresConnection';
+                break;
+            default:
+
+                break;
+        }
+
         $class = 'Protoqol\\Prequel\\Classes\\Database\\' . $className;
 
         if($database) {

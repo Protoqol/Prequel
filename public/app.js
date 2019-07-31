@@ -13215,6 +13215,9 @@ __webpack_require__.r(__webpack_exports__);
       standards: {
         port: 3306,
         supportedConnectionTypes: ['mysql', 'pgsql']
+      },
+      prequel: {
+        lang: window.Prequel.i18n
       }
     };
   },
@@ -13243,7 +13246,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (suggestionCollection.length === 0) {
-        suggestionCollection.push(trans('error_page.no_suggestions'));
+        suggestionCollection.push('Prequel could not suggest any fixes.');
       }
 
       return suggestionCollection;
