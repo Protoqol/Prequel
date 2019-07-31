@@ -37,8 +37,6 @@
     },
 
     created() {
-      this.readability = JSON.parse(localStorage.getItem('readability')) || false;
-
       this.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false;
       this.changeTheme();
     },

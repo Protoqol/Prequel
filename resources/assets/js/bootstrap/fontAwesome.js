@@ -14,12 +14,31 @@ import {
     faRunning,
     faExclamationTriangle,
     faPlus,
-    faArrowAltCircleUp
+    faSave,
+    faIndustry,
+    faBirthdayCake,
+    faSeedling
 }                        from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faDatabase, faTable, faChevronCircleUp, faSearchPlus, faTools,
-    faGlasses, faAsterisk, faAdjust, faExclamationTriangle, faEye, faWrench,
-    faRunning, faPlus, faArrowAltCircleUp);
+library.add(
+    faDatabase,
+    faTable,
+    faChevronCircleUp,
+    faSearchPlus,
+    faTools,
+    faGlasses,
+    faAsterisk,
+    faAdjust,
+    faExclamationTriangle,
+    faEye,
+    faWrench,
+    faRunning,
+    faPlus,
+    faSave,
+    faIndustry,
+    faBirthdayCake,
+    faSeedling
+);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
