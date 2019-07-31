@@ -3,7 +3,7 @@
     <div class="prequel-error">
         <h1>
             <font-awesome-icon icon="exclamation-triangle"></font-awesome-icon>
-            {{trans('error_page.oops')}}
+            {{ trans('error_page.oops') }}
         </h1>
         <h2>
             {{ errorDetailed.detailed }}
@@ -43,6 +43,9 @@
           port                    : 3306,
           supportedConnectionTypes: ['mysql', 'pgsql'],
         },
+        prequel: {
+          lang: window.Prequel.i18n
+        }
       };
     },
     methods: {
@@ -51,22 +54,28 @@
         let userPort             = parseInt(this.$props.env.port);
         let connection           = this.$props.env.connection;
 
-        // @TODO More suggestions
+        let supportedConnectionTypeLength = this.standards.supportedConnectionTypes.length;
+        let connectionErrorCounter = false;
 
+        // @TODO More suggestions
         if (userPort !== this.standards.port && connection === 'mysql') {
           suggestionCollection.push(
               `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
         }
 
-        for (let i = 0; i < this.standards.supportedConnectionTypes.length; i++) {
+        for (let i = 0; i < supportedConnectionTypeLength; i++) {
           if (this.standards.supportedConnectionTypes[i] !== connection) {
+            connectionErrorCounter++;
+          }
+
+          if(i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength){
             suggestionCollection.push(
-                `Your database connection might not be supported yet, currently supported: 'mysql', 'pgsql'. (Yours is: '${connection}').`);
+                `Your database connection might not be supported yet, currently supported: ${this.standards.supportedConnectionTypes.map(type => `'${type}'`).join(', ')}. (Yours is: '${connection}').`);
           }
         }
 
         if (suggestionCollection.length === 0) {
-          suggestionCollection.push(trans('error_page.no_suggestions'));
+          suggestionCollection.push('Prequel could not suggest any fixes.');
         }
 
         return suggestionCollection;
