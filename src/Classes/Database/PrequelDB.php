@@ -22,18 +22,9 @@ class PrequelDB extends Model
      */
     public function create(string $database, string $table)
     {
-        $tableName = $database . "." . $table;
-
-        if (config('prequel.database.connection') === "pgsql") {
-            $connection = (new DatabaseConnector())->getConnection($database);
-            $grammar    = new PostgresGrammar();
-            $tableName  = $table;
-        } else {
-            $connection = (new DatabaseConnector())->getConnection();
-            $grammar    = new MySqlGrammar();
-        }
-
-        $builder = new Builder($connection, $grammar);
+        $connection = (new DatabaseConnector())->getConnection($database);
+        $tableName = $connection->formatTableName($database, $table);
+        $builder = new Builder($connection, $connection->getGrammar(), $connection->getProcessor());
 
         $builder->from($tableName);
 

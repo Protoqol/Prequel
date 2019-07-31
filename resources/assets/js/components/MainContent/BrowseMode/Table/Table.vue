@@ -103,6 +103,9 @@
       },
 
       resetFocus: function(ev) {
+      	if(this.view.cell.editing){
+      		this.saveModifiedData(ev)
+        }
         ev.target.classList.remove('bg-white', 'border', 'cursor-text');
         ev.target.classList.add('ellipsis', 'hover:bg-gray-300');
         ev.target.contentEditable = false;
@@ -114,7 +117,8 @@
        *
        * @TODO
        */
-      saveModifiedData: function() {
+      saveModifiedData: function(el) {
+      	console.log(el)
         this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
         this.view.cell.selected.classList.add('ellipsis', 'hover:bg-gray-300');
         this.view.cell.selected.contentEditable = false;
