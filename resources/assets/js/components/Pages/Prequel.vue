@@ -105,7 +105,7 @@
           },
           asset        : {
             logo   : '/vendor/prequel/favicon.png',
-            prequel: '/vendor/prequel/prequel.png',
+            prequel: '/vendor/prequel/prequel_v1.png',
             loader : '/vendor/prequel/loader.gif',
           },
         },
