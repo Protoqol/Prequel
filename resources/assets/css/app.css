@@ -81,6 +81,10 @@
     outline     : none !important;
 }
 
+.prequel-swal-title {
+    color: red;
+}
+
 :focus {
     outline : 0;
 }

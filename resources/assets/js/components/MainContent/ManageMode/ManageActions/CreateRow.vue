@@ -1,23 +1,27 @@
+<!-- @WIP -->
+
 <template>
     <div class="new-row-tab-wrapper">
-        <form class="new-row-form">
+        <form class="new-row-form" @submit.prevent="saveRow($event)">
             <h2>Creating row in '{{database}}.{{table}}'</h2>
             <label v-for="struct in structure">
-                <h1>{{ struct.Field }}</h1> <small>{{struct.Type}}</small>
-                <input :type="resolveType(struct)"
+                <h1>{{ enhanceReadability(struct.Field) }}</h1> <small>{{struct.Type}}</small>
+                <input step=”any”
+                       :type="resolveType(struct)"
                        :name="struct.Field"
                        :required="struct.Null !== 'YES'"
                        :maxlength="resolveMaxLength(struct.Type)"
                        :placeholder="struct.Extra || struct.Field"/>
             </label>
             <div class="buttons">
-                <button class="new" @click.prevent="insertNewRow">
+                <!--@TODO Support multiple forms-->
+                <!--<button class="new" @click.prevent="insertNewRow">
                     <font-awesome-icon class="mr-1" icon="plus"/>
                     Insert another row
-                </button>
+                </button>-->
                 <button class="create" type="submit">
                     <font-awesome-icon class="mr-1" icon="save"/>
-                    Create row
+                    Save row
                 </button>
             </div>
         </form>
@@ -27,20 +31,20 @@
                 <div class="buttons">
                     <button title="Create new factory">
                         <font-awesome-icon class="fa" icon="industry"/>
-                        <p>Generate new factory</p>
+                        <p>Generate factory</p>
                     </button>
                     <button title="Create new seeder">
                         <font-awesome-icon class="fa" icon="seedling"/>
-                        <p>Generate new seeder</p>
+                        <p>Generate seeder</p>
                     </button>
                     <button title="Insert fake data">
                         <font-awesome-icon class="fa" icon="birthday-cake"/>
-                        <p>Generate fake data</p>
+                        <p>Mock data</p>
                     </button>
                 </div>
                 <div class="buttons">
                     <button class="runnable" disabled>
-                        No factory exists for this table
+                        No existing factories
                     </button>
                     <button class="runnable">
                         Run seeder <label>
@@ -54,12 +58,13 @@
 </template>
 
 <script>
-  import api from 'axios';
+  import api from 'axios'
 
   export default {
     name : 'CreateRow',
     props: ['structure'],
-    data() {
+
+    data () {
       return {
         database: '',
         table   : '',
@@ -68,56 +73,99 @@
           timestamp  : '',
           seederCount: 5,
         },
-      };
+      }
     },
 
-    mounted() {
-      let url       = new URLSearchParams(window.location.search);
-      this.database = url.get('database');
-      this.table    = url.get('table');
+    mounted () {
+      let url       = new URLSearchParams(window.location.search)
+      this.database = url.get('database')
+      this.table    = url.get('table')
     },
 
-    updated() {
-      this.getDefaults();
+    updated () {
+      this.getDefaults()
     },
 
     methods: {
-      saveRow: function() {
-        // Save all forms
+
+      /**
+       | Save form in current database table
+       */
+      saveRow: function (form) {
+        let data = {}
+
+        // Build data object containing correct key => value scheme
+        for (let input of form.target) {
+          if (input.type !== 'submit') {
+            data[input.name] = input.value
+          }
+        }
+
+        api.post(`/database/insert/${this.database}/${this.table}`, { data: data }).
+          then(res => {
+            if (!res.data.success) {
+              throw new Error('Could not insert this data')
+            }
+
+            form.target.reset()
+
+            PrequelSuccessToast.fire({
+              text: `Inserted row into ${this.table}`,
+            }).finally(() => {
+              this.$forceUpdate()
+            })
+          }).
+          catch(err => {
+            PrequelErrorToast.fire({
+              text: err,
+            })
+          })
       },
 
-      setDefaults: function() {
+      /**
+       | Set retrieved defaults in form
+       */
+      setDefaults: function () {
         document.querySelectorAll('.new-row-form input').forEach((inputEl) => {
           if (inputEl.type === 'datetime-local') {
-            inputEl.value = this.default.timestamp;
+            inputEl.value = this.default.timestamp
           }
-          if (inputEl.type === 'number') {
-            inputEl.value = this.default.id;
+          if (inputEl.name.includes('id')) {
+            inputEl.value = this.default.id
           }
-        });
+        })
       },
 
-      getDefaults: function() {
-        this.default.id        = 1;
-        this.default.timestamp = '';
+      /**
+       | Get defaults for table
+       */
+      getDefaults: function () {
+        this.default.id        = 1
+        this.default.timestamp = ''
 
         api.get(`/database/defaults/${this.database}/${this.table}`).then(res => {
-          this.default.id        = parseInt(res.data.id);
-          this.default.timestamp = res.data.current_date + '';
+          this.default.id        = parseInt(res.data.id)
+          this.default.timestamp = res.data.current_date + ''
         }).catch(err => {
           //
         }).finally(() => {
-          this.setDefaults();
-        });
+          this.setDefaults()
+        })
       },
 
-      insertNewRow: function() {
-        // Duplicate form
+      /**
+       | Add a new form to save multiple rows/forms at once
+       */
+      insertNewRow: function () {
+        // @TODO Duplicate form
       },
 
-      resolveType: function({Field, Type}) {
-        let type         = Type + '';
-        let resolvedType = '';
+      /**
+       | Translate column type to a HTML input type
+       */
+      resolveType: function ({ Field, Type }) {
+        let type         = Type + ''
+        let resolvedType = ''
 
         // Numeric types
         if (type.includes('int')
@@ -126,36 +174,53 @@
             || type.includes('numeric')
             || type.includes('float')
             || type.includes('real')) {
-          resolvedType = 'number';
+          resolvedType = 'number'
         }
 
         // Textual types
         if (type.includes('char') || type.includes('text') || type.includes('string')) {
-          resolvedType = 'text';
+          resolvedType = 'text'
         }
 
         // Date(time) types
         if (type.includes('date') || type.includes('time') || type.includes('year')) {
-          resolvedType = 'datetime-local';
+          resolvedType = 'datetime-local'
         }
 
         // Email type
         if (Field === 'email') {
-          resolvedType = 'email';
+          resolvedType = 'email'
         }
 
-        return resolvedType;
+        return resolvedType
       },
 
-      resolveMaxLength: function(type) {
+      /**
+       | Get max length from column type
+       */
+      resolveMaxLength: function (type) {
 
         return type.substring(
-            type.lastIndexOf('(') + 1,
-            type.lastIndexOf(')'),
-        );
+          type.lastIndexOf('(') + 1,
+          type.lastIndexOf(')'),
+        )
+      },
+
+      /**
+       | Enhance readability for column names.
+       |
+       | @param str
+       | @returns {string}
+       */
+      enhanceReadability: function (str) {
+        if (!this.$root.view.readability) {
+          return str
+        }
+
+        return prettifyName(str)
       },
     },
-  };
+  }
 </script>
 
 <style scoped lang="scss">
@@ -176,12 +241,17 @@
             @apply border-b-4;
             @apply border-indigo-700;
 
+            transition       : all .2s;
+
             &:hover {
+                transition       : all .2s;
                 background-color : var(--button-background-hover);
             }
 
             &:active {
+                transition       : all .2s;
                 background-color : var(--button-background-active);
+                @apply border-transparent;
                 @apply shadow-none;
             }
 
@@ -195,6 +265,10 @@
                 &:hover {
                     background-color : var(--button-background-hover);
                 }
+            }
+
+            @media (min-width : 700px) and (max-width : 1500px) {
+                @apply text-sm;
             }
         }
 
@@ -217,13 +291,16 @@
                 @apply flex;
                 @apply items-center;
                 @apply justify-between;
-                @apply uppercase;
                 @apply font-semibold;
                 @apply text-gray-700;
                 @apply mb-2;
 
                 h1 {
                     @apply w-1/4;
+
+                    @media (min-width : 700px) and (max-width : 1500px) {
+                        @apply text-sm;
+                    }
                 }
 
                 small {
@@ -251,12 +328,12 @@
                 @apply flex;
 
                 .create {
-                    @apply w-full;
+                    @apply w-1/2;
                     @apply ml-3;
                 }
 
                 .new {
-                    @apply w-1/3;
+                    @apply w-1/2;
                 }
             }
         }
@@ -276,7 +353,7 @@
                 @apply w-full;
 
                 .buttons {
-                    height: fit-content;
+                    height : fit-content;
                     @apply w-1/2;
                     @apply flex;
                     @apply flex-col;

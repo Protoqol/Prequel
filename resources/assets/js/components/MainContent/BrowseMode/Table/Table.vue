@@ -45,18 +45,18 @@
 </template>
 
 <script>
-  import TableEmpty from './TableEmpty';
+  import TableEmpty from './TableEmpty'
 
   export default {
     name      : 'Table',
-    components: {TableEmpty},
+    components: { TableEmpty },
     props     : ['structure', 'data', 'readability'],
 
-    mounted() {
-      this.checkTableOverflow();
+    mounted () {
+      this.checkTableOverflow()
     },
 
-    data() {
+    data () {
       return {
 
         /**
@@ -77,36 +77,36 @@
         ENUM: {
           PREQUEL_UNDEFINED: 'PREQUEL_UNDEFINED',
         },
-      };
+      }
     },
 
     methods: {
 
-      checkTableOverflow: function() {
-        let tableContainer = document.getElementById('top-horizontal-scroll');
+      checkTableOverflow: function () {
+        let tableContainer = document.getElementById('top-horizontal-scroll')
 
         if (tableContainer.clientWidth === tableContainer.scrollWidth) {
-          tableContainer.style.overflowX = 'unset';
+          tableContainer.style.overflowX = 'unset'
         }
         else {
-          tableContainer.style.overflowX = 'auto';
+          tableContainer.style.overflowX = 'auto'
         }
       },
 
-      seeCompleteData: function(ev) {
+      seeCompleteData: function (ev) {
         if (ev.target.classList.contains('ellipsis') && ev.target.contentEditable === 'false') {
-          ev.target.classList.remove('ellipsis');
+          ev.target.classList.remove('ellipsis')
         }
         else if (ev.target.contentEditable === 'false') {
-          ev.target.classList.add('ellipsis');
+          ev.target.classList.add('ellipsis')
         }
       },
 
-      resetFocus: function(ev) {
-        ev.target.classList.remove('bg-white', 'border', 'cursor-text');
-        ev.target.classList.add('ellipsis', 'hover:bg-gray-300');
-        ev.target.contentEditable = false;
-        this.view.cell.selected   = {};
+      resetFocus: function (ev) {
+        ev.target.classList.remove('bg-white', 'border', 'cursor-text')
+        ev.target.classList.add('ellipsis', 'hover:bg-gray-300')
+        ev.target.contentEditable = false
+        this.view.cell.selected   = {}
       },
 
       /**
@@ -114,25 +114,25 @@
        *
        * @TODO
        */
-      saveModifiedData: function() {
-        this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
-        this.view.cell.selected.classList.add('ellipsis', 'hover:bg-gray-300');
-        this.view.cell.selected.contentEditable = false;
-        this.view.cell.selected                 = {};
+      saveModifiedData: function () {
+        this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text')
+        this.view.cell.selected.classList.add('ellipsis', 'hover:bg-gray-300')
+        this.view.cell.selected.contentEditable = false
+        this.view.cell.selected                 = {}
       },
 
       /**
        * At right click, open contextmenu to edit data.
        * @param ev $event
        */
-      dataModifier: function(ev) {
-        this.view.cell.selected = ev.target;
-        this.view.cell.editing  = true;
+      dataModifier: function (ev) {
+        this.view.cell.selected = ev.target
+        this.view.cell.editing  = true
 
-        this.view.cell.selected.contentEditable = true;
-        this.view.cell.selected.classList.remove('ellipsis', 'hover:underline', 'hover:bg-gray-300');
-        this.view.cell.selected.classList.add('bg-white', 'border', 'cursor-text');
-        this.view.cell.selected.focus();
+        this.view.cell.selected.contentEditable = true
+        this.view.cell.selected.classList.remove('ellipsis', 'hover:underline', 'hover:bg-gray-300')
+        this.view.cell.selected.classList.add('bg-white', 'border', 'cursor-text')
+        this.view.cell.selected.focus()
       },
 
       /**
@@ -141,40 +141,29 @@
        * @param str
        * @returns {string}
        */
-      enhanceReadability: function(str) {
+      enhanceReadability: function (str) {
         if (!this.$props.readability) {
-          return str;
+          return str
         }
 
-        let words    = str.split(/[!@#$%^&*(),.?":{}|<>_-]/);
-        let readable = '';
-
-        for (let i = 0; i < words.length; i++) {
-          readable += capitalise(words[i].toLowerCase());
-
-          if (i !== (words.length - 1)) {
-            readable += ' ';
-          }
-        }
-
-        return readable;
+        return prettifyName(str)
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss">
     #top-horizontal-scroll {
-        transform: rotateX(180deg);
+        transform : rotateX(180deg);
     }
 
     .ellipsis {
-        width: 250px;
-        max-width: 250px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        transition: all .5s ease;
+        width         : 250px;
+        max-width     : 250px;
+        white-space   : nowrap;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+        transition    : all .5s ease;
     }
 
     .table-wrapper {
@@ -185,13 +174,13 @@
 
             thead {
                 @apply border-b;
-                border-color: var(--border-color);
+                border-color : var(--border-color);
                 @apply rounded;
                 @apply bg-tableColumn;
 
                 .table-th {
                     @apply border;
-                    border-color: var(--column-border);
+                    border-color : var(--column-border);
                     @apply p-1;
                     @apply whitespace-no-wrap;
                     @apply text-sm;
@@ -207,7 +196,7 @@
 
                 .table-th-actions {
                     @apply border;
-                    border-color: var(--column-border);
+                    border-color : var(--column-border);
                     @apply p-2;
                     @apply text-sm;
                     @apply text-secondary;
@@ -253,7 +242,7 @@
                 }
             }
 
-            transform: rotateX(180deg);
+            transform : rotateX(180deg);
         }
 
     }

@@ -22,7 +22,7 @@
         'error_page'       => [
             'oops'               => 'Oops...',
             'tried_connecting'   => 'Tried connecting through',
-            'example_connection' => 'connection://user@host:port/database',
+            'example_connection' => 'driver://user@host:port/database',
             'no_suggestions'     => 'Prequel could not suggest any fixes.',
             'disabled'           => 'Prequel has been disabled.',
         ],
@@ -69,7 +69,7 @@
         'table'            => [
             'quick_actions' => 'Quick actions',
             'inspect_row'   => 'Inspect row',
-            'item_empty'    => 'This item is empty',
+            'item_empty'    => 'Nothing here',
             'nothing'       => 'Nothing here',
         ],
         

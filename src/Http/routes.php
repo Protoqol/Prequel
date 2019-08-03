@@ -37,15 +37,19 @@
              Route::get('status', 'DatabaseActionController@status');
         
              Route::prefix('database')->group(function () {
+            
+                 // Data retrieval
                  Route::get('get/{database}/{table}', 'DatabaseController@getTableData');
                  Route::get('count/{database}/{table}', 'DatabaseController@countTableRecords');
                  Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
             
+                 // Artisan actions
                  Route::get('migrations/run', 'DatabaseActionController@runMigrations');
                  Route::get('migrations/reset', 'DatabaseActionController@resetMigrations');
-                 
-                 Route::get('defaults/{database}/{table}', 'DatabaseActionController@getDefaultsForTable');
             
+                 // New row action
+                 Route::get('defaults/{database}/{table}', 'DatabaseActionController@getDefaultsForTable');
+                 Route::post('insert/{database}/{table}', 'DatabaseActionController@insertNewRow');
              });
         
          });
