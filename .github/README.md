@@ -17,9 +17,13 @@
     <a href="https://github.com/badges/shields/pulse" alt="Activity">
         <img src="https://img.shields.io/github/commit-activity/m/badges/shields.svg" />
     </a>
+    <a href="https://discord.gg/kxkUYqX">
+        <img src="https://img.shields.io/discord/602520001123188757?logo=discord"
+            alt="Join our Discord">
+    </a>
     <a href="https://twitter.com/intent/follow?screen_name=Protoqol_XYZ">
         <img src="https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social"
-            alt="follow on Twitter">
+            alt="Follow Protoqol on Twitter">
     </a>
 </p>
 
