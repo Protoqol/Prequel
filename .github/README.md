@@ -17,11 +17,17 @@
     <a href="https://github.com/badges/shields/pulse" alt="Activity">
         <img src="https://img.shields.io/github/commit-activity/m/badges/shields.svg" />
     </a>
+    <a href="https://discord.gg/kxkUYqX">
+        <img src="https://img.shields.io/discord/602520001123188757?logo=discord"
+            alt="Join our Discord">
+    </a>
     <a href="https://twitter.com/intent/follow?screen_name=Protoqol_XYZ">
         <img src="https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social"
-            alt="follow on Twitter">
+            alt="Follow Protoqol on Twitter">
     </a>
 </p>
+
+#### [TL;DR? Test Prequel here!](https://prequel.protoqol.xyz/prequel)
 
 #### What is Prequel exactly?  
 Prequel is meant to be a database management tool for Laravel to replace the need for separate standalone database tools like phpMyAdmin, Sequel Pro or MySQL Workbench. With its (hopefully) clear and concise UI, Prequel is to be a modern and lightweight database browser/tool ready for the web of the future. Prequel's design is purposefully based on that of [Laravel Telescope](https://github.com/laravel/telescope) because (web-)developers today have enough to learn and master already, so let's help eachother out and make sure to not add anything virtually useless to that huge pile of knowledge.   
