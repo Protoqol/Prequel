@@ -19,60 +19,38 @@
                     <font-awesome-icon class="mr-1" icon="plus"/>
                     Insert another row
                 </button>-->
+                <button class="new" title="Insert fake data">
+                    <font-awesome-icon class="mr-1" icon="birthday-cake"/>
+                    <p>Fake data</p>
+                </button>
                 <button class="create" type="submit">
                     <font-awesome-icon class="mr-1" icon="save"/>
                     Save row
                 </button>
             </div>
         </form>
-        <div class="button-actions">
-            <h2>Actions</h2>
-            <div class="button-wrapper">
-                <div class="buttons">
-                    <button title="Create new factory">
-                        <font-awesome-icon class="fa" icon="industry"/>
-                        <p>Generate factory</p>
-                    </button>
-                    <button title="Create new seeder">
-                        <font-awesome-icon class="fa" icon="seedling"/>
-                        <p>Generate seeder</p>
-                    </button>
-                    <button title="Insert fake data">
-                        <font-awesome-icon class="fa" icon="birthday-cake"/>
-                        <p>Mock data</p>
-                    </button>
-                </div>
-                <div class="buttons">
-                    <button class="runnable" disabled>
-                        No existing factories
-                    </button>
-                    <button class="runnable">
-                        Run seeder <label>
-                        <input type="number" v-model="this.default.seederCount" name="seedercount">
-                    </label> time(s)
-                    </button>
-                </div>
-            </div>
-        </div>
+        <BackendActions :tableHasModel="tableHasModel"/>
     </div>
 </template>
 
 <script>
-  import api from 'axios'
+  import api            from 'axios'
+  import BackendActions from './BackendActions'
 
   export default {
-    name : 'CreateRow',
-    props: ['structure'],
+    name      : 'CreateRow',
+    components: { BackendActions },
+    props     : ['structure'],
 
     data () {
       return {
-        database: '',
-        table   : '',
-        default : {
-          id         : 1,
-          timestamp  : '',
-          seederCount: 5,
+        database     : '',
+        table        : '',
+        default      : {
+          id       : 1,
+          timestamp: '',
         },
+        tableHasModel: false,
       }
     },
 
@@ -83,6 +61,9 @@
     },
 
     updated () {
+      let url       = new URLSearchParams(window.location.search)
+      this.database = url.get('database')
+      this.table    = url.get('table')
       this.getDefaults()
     },
 
@@ -130,7 +111,8 @@
           if (inputEl.type === 'datetime-local') {
             inputEl.value = this.default.timestamp
           }
-          if (inputEl.name.includes('id')) {
+
+          if (inputEl.name === 'id' || inputEl.placeholder.includes('auto_increment')) {
             inputEl.value = this.default.id
           }
         })
@@ -146,8 +128,9 @@
         api.get(`/database/defaults/${this.database}/${this.table}`).then(res => {
           this.default.id        = parseInt(res.data.id)
           this.default.timestamp = res.data.current_date + ''
+          this.tableHasModel     = res.data.tableHasModel
         }).catch(err => {
-          //
+          console.error(err)
         }).finally(() => {
           this.setDefaults()
         })
@@ -256,15 +239,11 @@
             }
 
             &:disabled, &[disabled] {
-                background-color : var(--button-background-hover);
+                @apply bg-gray-400;
                 @apply shadow-none;
                 @apply cursor-default;
                 @apply border-b-4;
-                @apply border-indigo-600;
-
-                &:hover {
-                    background-color : var(--button-background-hover);
-                }
+                @apply border-gray-400;
             }
 
             @media (min-width : 700px) and (max-width : 1500px) {
@@ -354,44 +333,79 @@
 
                 .buttons {
                     height : fit-content;
-                    @apply w-1/2;
+                    @apply w-full;
                     @apply flex;
                     @apply flex-col;
                     @apply justify-center;
                     @apply items-center;
 
-                    .runnable, h3 {
+                    .action {
                         @apply w-full;
-                        @apply rounded;
-                        @apply m-auto;
-                        @apply p-1;
-                        @apply mt-4;
-                        @apply text-center;
-
-                        input {
-                            @apply w-10;
-                            @apply px-1;
-                            @apply mx-2;
-                            @apply text-center;
-                            @apply rounded;
-                            @apply bg-indigo-300;
-                        }
-                    }
-
-                    button {
                         @apply flex;
                         @apply flex-row;
-                        @apply w-5/6;
-                        @apply px-2;
-                        @apply ml-0;
+                        @apply justify-between;
+                        @apply items-center;
+                        @apply mt-4;
 
-                        .fa {
-                            @apply w-1/4;
+                        .runnable, h3 {
+                            margin-top : 0 !important;
+                            width      : 55%;
+                            @apply rounded-full;
+                            @apply m-auto;
+                            @apply p-1;
+                            @apply mt-4;
+                            @apply text-center;
+
+                            input {
+                                @apply w-10;
+                                @apply px-1;
+                                @apply mx-2;
+                                @apply text-center;
+                                @apply rounded;
+                                @apply bg-indigo-300;
+                            }
                         }
 
-                        p {
-                            @apply text-left;
-                            @apply w-3/4;
+                        button {
+                            @apply mt-0;
+                            @apply flex;
+                            @apply flex-row;
+                            @apply w-2/5;
+                            @apply px-2;
+                            @apply ml-0;
+
+                            .fa {
+                                @apply w-1/4;
+                            }
+
+                            p {
+                                @apply text-left;
+                                @apply w-3/4;
+                            }
+                        }
+
+                        .pill-green {
+                            width            : 55%;
+                            background-color : #65ead2;
+                            @apply text-white;
+                            @apply rounded-full;
+                            @apply border;
+
+                            @media (min-width : 700px) and (max-width : 1500px) {
+                                @apply text-sm;
+                            }
+                        }
+
+                        .pill-red {
+                            width            : 55%;
+                            background-color : #eaa165;
+                            @apply text-white;
+                            @apply rounded-full;
+                            @apply border;
+
+                            @media (min-width : 700px) and (max-width : 1500px) {
+                                @apply text-sm;
+                            }
                         }
                     }
                 }

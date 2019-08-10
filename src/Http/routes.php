@@ -50,6 +50,9 @@
                  // New row action
                  Route::get('defaults/{database}/{table}', 'DatabaseActionController@getDefaultsForTable');
                  Route::post('insert/{database}/{table}', 'DatabaseActionController@insertNewRow');
+            
+                 // Seeding
+                 Route::get('seed/{database}/{table}', 'DatabaseActionController@runSeederFor');
              });
         
          });

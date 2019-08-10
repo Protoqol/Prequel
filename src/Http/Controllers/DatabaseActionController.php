@@ -2,13 +2,17 @@
     
     namespace Protoqol\Prequel\Http\Controllers;
     
+    use Exception;
     use Carbon\Carbon;
+    use Illuminate\Support\Str;
     use Illuminate\Http\Request;
     use Illuminate\Routing\Controller;
+    use Illuminate\Support\Facades\Artisan;
     use Protoqol\Prequel\Classes\App\AppStatus;
     use Protoqol\Prequel\Classes\App\Migrations;
     use Protoqol\Prequel\Facades\PDB;
     use Protoqol\Prequel\Classes\Database\DatabaseAction;
+    use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
     
     /**
      * Class DatabaseActionController
@@ -28,8 +32,9 @@
         public function getDefaultsForTable(string $database, string $table): array
         {
             return [
-                'id'           => ((int)PDB::create($database, $table)->count() + 1),
-                'current_date' => Carbon::now()->format('Y-m-d\TH:i'),
+                'id'            => ((int)PDB::create($database, $table)->count() + 1),
+                'current_date'  => Carbon::now()->format('Y-m-d\TH:i'),
+                'tableHasModel' => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
             ];
         }
         
@@ -97,6 +102,22 @@
         
         public function generateFactory(string $database, string $table)
         {
+            // Artisan create factory
+        }
         
+        public function runSeederFor(string $database, string $table)
+        {
+            $table = Str::singular($table);
+            $table = Str::studly($table);
+            $table .= 'Seeder';
+            
+            if (!class_exists($table)) {
+                throw new Exception('Seeder could not be found or seeder does not follow Laravel naming convention (suffix Seeder).', 401);
+            }
+            
+            return Artisan::call('db:seed', [
+                '--class'    => $table,
+                '--database' => $database,
+            ]);
         }
     }
