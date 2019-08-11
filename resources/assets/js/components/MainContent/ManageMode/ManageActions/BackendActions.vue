@@ -9,28 +9,34 @@
                         <p>{{ tableHasModel ? 'Model exists' : 'Generate Model'}}</p>
                     </button>
                     <div class="runnable pill-green">
-                        <p>{{ tableHasModel ? tableHasModel + '.php' : 'No existing model' }}</p>
+                        <p>{{ tableHasModel ? tableHasModel : 'No existing model' }}</p>
                     </div>
                 </div>
                 <div class="action">
                     <button title="Generate new factory">
                         <font-awesome-icon class="fa" icon="industry"/>
-                        <p>Generate factory</p>
+                        <p>{{ tableHasFactory ? 'Factory exists' : 'Generate Factory'}}</p>
                     </button>
                     <div class="runnable pill-red">
                         <p>No existing factory</p>
                     </div>
                 </div>
                 <div class="action">
-                    <button title="Generate new seeder" disabled>
+                    <button title="Generate new seeder" :disabled="tableHasSeeder !== false" @click="generateSeeder">
                         <font-awesome-icon class="fa" icon="seedling"/>
-                        <p>Seeder exists</p>
+                        <p>{{ tableHasSeeder ? 'Seeder exists' : 'Generate Seeder'}}</p>
                     </button>
-                    <button class="runnable" @click="runSeeder">
+                    <button v-if="tableHasSeeder !== false" class="runnable" :disabled="tableHasSeeder === false"
+                            @click="runSeeder">
                         Run seeder <label>
-                        <input type="number" v-model="seederCount" name="seedercount" @click.stop>
+                        <input type="number" :disabled="tableHasSeeder === false" v-model="seederCount"
+                               name="seedercount"
+                               @click.stop>
                     </label> time{{seederCount > 1 ? 's' : ''}}
                     </button>
+                    <div v-else class="runnable pill-red">
+                        <p>No existing seeder</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,20 +53,27 @@
   import api from 'axios'
 
   export default {
-    name : 'BackendActions',
-    props: ['tableHasModel'],
+    name: 'BackendActions',
 
     data () {
       return {
-        tableHasModel: false,
-        seederCount  : 5,
-        log          : [
+        tableHasModel  : false,
+        tableHasFactory: false,
+        tableHasSeeder : false,
+        seederCount    : 5,
+        log            : [
           '',
         ],
       }
     },
 
+    updated () {
+      this.getInfo()
+    },
+
     created () {
+      this.getInfo()
+
       // @TODO Find a more elegant solution to automatically scroll to bottom after a new log entry.
       let self = this
       setInterval(function () {
@@ -69,6 +82,20 @@
     },
 
     methods: {
+      generateSeeder: async function () {
+        this.clog(`Generating seeder for ${this.tableHasModel}...`)
+
+        await api.get(`/database/seed/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
+          if (res) {
+            this.clog(`Seeder generation for ${this.$root.table.table} completed successfully`)
+          }
+        }).catch(err => {
+          this.clog(`${err.response.data.message}`, 'error')
+        }).finally(() => {
+          this.getInfo()
+        })
+      },
+
       runSeeder: async function () {
         let seederCountLock = this.seederCount
 
@@ -76,12 +103,12 @@
           this.clog(`Running seeder for ${this.$root.table.table} ${seederCountLock} times...`)
         }
         else {
-          this.clog(`Running seeder for ${this.$props.tableHasModel} ${seederCountLock} time...`)
+          this.clog(`Running seeder for ${this.tableHasModel} ${seederCountLock} time...`)
         }
 
         let ranIntoError = false
         for (let i = 1; i <= seederCountLock; i++) {
-          await api.get(`database/seed/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
+          await api.get(`database/seed/${this.$root.table.database}/${this.$root.table.table}/run`).then(res => {
             if (res) {
               this.clog(`Seeding request #${i} complete`)
             }
@@ -98,14 +125,26 @@
       },
 
       generateModel: async function () {
+        this.clog(`Generating model for ${this.$root.table.table}...`)
+
         await api.get(`/database/model/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
           if (res) {
-            this.clog(`Request for ${this.$root.table.table} model generation complete`)
+            this.clog(`Model generation for ${this.$root.table.table} completed successfully`)
           }
         }).catch(err => {
           this.clog(`${err.response.data.message}`, 'error')
         }).finally(() => {
+          this.getInfo()
+        })
+      },
 
+      getInfo: function () {
+        api.get(`/database/info/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
+          this.tableHasModel   = res.data.model
+          this.tableHasFactory = res.data.factory
+          this.tableHasSeeder  = res.data.seeder
+        }).catch(err => {
+          console.error(err)
         })
       },
 

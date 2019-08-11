@@ -29,7 +29,7 @@
                 </button>
             </div>
         </form>
-        <BackendActions :tableHasModel="tableHasModel"/>
+        <BackendActions/>
     </div>
 </template>
 
@@ -44,13 +44,12 @@
 
     data () {
       return {
-        database     : '',
-        table        : '',
-        default      : {
+        database: '',
+        table   : '',
+        default : {
           id       : 1,
           timestamp: '',
         },
-        tableHasModel: false,
       }
     },
 
@@ -128,7 +127,6 @@
         api.get(`/database/defaults/${this.database}/${this.table}`).then(res => {
           this.default.id        = parseInt(res.data.id)
           this.default.timestamp = res.data.current_date + ''
-          this.tableHasModel     = res.data.tableHasModel
         }).catch(err => {
           console.error(err)
         }).finally(() => {

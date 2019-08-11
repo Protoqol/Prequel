@@ -48,7 +48,7 @@
                  Route::get('migrations/reset', 'DatabaseActionController@resetMigrations');
             
                  // Get information related to management functionality, ex. has model/factory/seeder etc.
-                 Route::get('info/{database}/{table}', 'DatabaseActionController@getDefaultsForTable');
+                 Route::get('info/{database}/{table}', 'DatabaseActionController@getInfoAboutTable');
             
                  // Get default values for new row form, ex. next AI-ID, date-times etc.
                  Route::get('defaults/{database}/{table}', 'DatabaseActionController@getDefaultsForTable');
@@ -57,9 +57,10 @@
                  Route::post('insert/{database}/{table}', 'DatabaseActionController@insertNewRow');
             
                  // Seeding
-                 Route::get('seed/{database}/{table}', 'DatabaseActionController@runSeederFor');
+                 Route::get('seed/{database}/{table}/generate', 'DatabaseActionController@generateSeeder');
+                 Route::get('seed/{database}/{table}/run', 'DatabaseActionController@runSeeder');
             
-                 // Model generation
+                 // Model
                  Route::get('model/{database}/{table}', 'DatabaseActionController@generateModel');
              });
         

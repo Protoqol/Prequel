@@ -38,19 +38,26 @@
         }
         
         /**
-         * Get some information about the table regarding management functionality.
+         * Get some basic information about the table regarding management functionality.
          *
          * @param string $database
          * @param string $table
          *
          * @return array
+         * @throws \Exception
          */
         public function getInfoAboutTable(string $database, string $table): array
         {
+            try {
+                $seeder = $this->checkAndGetSeederName($table);
+            } catch (Exception $e) {
+                $seeder = false;
+            }
+            
             return [
-                'tableHasModel'   => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
-                'tableHasSeeder'  => true,
-                'tableHasFactory' => true,
+                'model'   => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
+                'seeder'  => $seeder,
+                'factory' => true,
             ];
         }
         
@@ -80,17 +87,19 @@
         }
         
         /**
-         *
+         * @param string $database
+         * @param string $table
          */
-        public function import()
+        public function import(string $database, string $table)
         {
             //
         }
         
         /**
-         *
+         * @param string $database
+         * @param string $table
          */
-        public function export()
+        public function export(string $database, string $table)
         {
             //
         }
@@ -123,6 +132,8 @@
         }
         
         /**
+         * Generate factory.
+         *
          * @param string $database
          * @param string $table
          */
@@ -132,13 +143,30 @@
         }
         
         /**
+         * Generate seeder.
+         *
+         * @param string $database
+         * @param string $table
+         *
+         * @return int
+         */
+        public function generateSeeder(string $database, string $table)
+        {
+            return Artisan::call('make:seeder', [
+                'name' => $this->generateClassName($table) . 'Seeder',
+            ]);
+        }
+        
+        /**
+         * Run specified seeder.
+         *
          * @param string $database
          * @param string $table
          *
          * @return int
          * @throws \Exception
          */
-        public function runSeederFor(string $database, string $table)
+        public function runSeeder(string $database, string $table)
         {
             return Artisan::call('db:seed', [
                 '--class'    => $this->checkAndGetSeederName($table),
@@ -146,26 +174,49 @@
             ]);
         }
         
+        /**
+         * Resolve and check seeder for table.
+         *
+         * @param string $table
+         *
+         * @return string
+         * @throws \Exception
+         */
         public function checkAndGetSeederName(string $table)
         {
-            $table = Str::singular($table);
-            $table = Str::studly($table);
-            $table .= 'Seeder';
+            $seederClass = $this->generateClassName($table) . 'Seeder';
             
-            if (!class_exists($table)) {
-                throw new Exception($table . ' could not be found or your seeder does not follow naming convention');
+            if (!class_exists($seederClass)) {
+                throw new Exception($seederClass . ' could not be found or your seeder does not follow naming convention');
             }
             
-            return $table;
+            return $seederClass;
         }
         
+        /**
+         * Generate model.
+         *
+         * @param string $database
+         * @param string $table
+         *
+         * @return int
+         */
         public function generateModel(string $database, string $table)
         {
-            $table = Str::singular($table);
-            $table = Str::studly($table);
-            
             return Artisan::call('make:model', [
-                'name' => $table,
+                'name' => $this->generateClassName($table),
             ]);
+        }
+        
+        /**
+         * Generate SingularStudlyClassName.
+         *
+         * @param string $classname
+         *
+         * @return string
+         */
+        public function generateClassName(string $classname)
+        {
+            return Str::studly(Str::singular($classname));
         }
     }
