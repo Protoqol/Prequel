@@ -38,21 +38,29 @@
         
              Route::prefix('database')->group(function () {
             
-                 // Data retrieval
+                 // Default data retrieval
                  Route::get('get/{database}/{table}', 'DatabaseController@getTableData');
                  Route::get('count/{database}/{table}', 'DatabaseController@countTableRecords');
                  Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
             
-                 // Artisan actions
+                 // Migrations, run or reset
                  Route::get('migrations/run', 'DatabaseActionController@runMigrations');
                  Route::get('migrations/reset', 'DatabaseActionController@resetMigrations');
             
-                 // New row action
+                 // Get information related to management functionality, ex. has model/factory/seeder etc.
+                 Route::get('info/{database}/{table}', 'DatabaseActionController@getDefaultsForTable');
+            
+                 // Get default values for new row form, ex. next AI-ID, date-times etc.
                  Route::get('defaults/{database}/{table}', 'DatabaseActionController@getDefaultsForTable');
+            
+                 // Insert new row
                  Route::post('insert/{database}/{table}', 'DatabaseActionController@insertNewRow');
             
                  // Seeding
                  Route::get('seed/{database}/{table}', 'DatabaseActionController@runSeederFor');
+            
+                 // Model generation
+                 Route::get('model/{database}/{table}', 'DatabaseActionController@generateModel');
              });
         
          });

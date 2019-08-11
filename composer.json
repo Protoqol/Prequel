@@ -12,7 +12,8 @@
   "minimum-stability": "beta",
   "require": {
     "php": "^7.2",
-    "laravel/framework": "^5.6"
+    "laravel/framework": "^5.6",
+    "ext-pdo": "*"
   },
   "extra": {
     "laravel": {

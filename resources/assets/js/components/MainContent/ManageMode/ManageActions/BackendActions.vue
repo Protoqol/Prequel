@@ -4,7 +4,7 @@
         <div class="button-wrapper">
             <div class="buttons">
                 <div class="action">
-                    <button title="Generate new model" :disabled="tableHasModel">
+                    <button title="Generate new model" :disabled="tableHasModel" @click="generateModel">
                         <font-awesome-icon class="fa" icon="table"/>
                         <p>{{ tableHasModel ? 'Model exists' : 'Generate Model'}}</p>
                     </button>
@@ -52,8 +52,9 @@
 
     data () {
       return {
-        seederCount: 5,
-        log        : [
+        tableHasModel: false,
+        seederCount  : 5,
+        log          : [
           '',
         ],
       }
@@ -68,24 +69,62 @@
     },
 
     methods: {
-      runSeeder: function () {
-        this.clog(`Running seeder for ${this.$props.tableHasModel} ${this.seederCount} time(s)...`)
+      runSeeder: async function () {
+        let seederCountLock = this.seederCount
 
-        for (let i = 1; i <= this.seederCount; i++) {
-          api.get(`database/seed/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
+        if (seederCountLock > 1) {
+          this.clog(`Running seeder for ${this.$root.table.table} ${seederCountLock} times...`)
+        }
+        else {
+          this.clog(`Running seeder for ${this.$props.tableHasModel} ${seederCountLock} time...`)
+        }
+
+        let ranIntoError = false
+        for (let i = 1; i <= seederCountLock; i++) {
+          await api.get(`database/seed/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
             if (res) {
               this.clog(`Seeding request #${i} complete`)
             }
           }).catch(err => {
-            if (err.statusCode === 401) {
-              this.clog(`${err.messageerror}`)
-            }
+            this.clog(`${err.response.data.message}`, 'error')
+            ranIntoError = true
           })
+
+          if (ranIntoError === true) {
+            this.clog('Your request was halted because of the error stated above.', 'info')
+            break
+          }
         }
       },
 
-      clog: function (str) {
-        this.log.push('> ' + str + '<br>')
+      generateModel: async function () {
+        await api.get(`/database/model/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
+          if (res) {
+            this.clog(`Request for ${this.$root.table.table} model generation complete`)
+          }
+        }).catch(err => {
+          this.clog(`${err.response.data.message}`, 'error')
+        }).finally(() => {
+
+        })
+      },
+
+      /**
+       * Pseudo console log
+       * @param str
+       * @param type
+       */
+      clog: function (str, type = 'neutral') {
+        if (type === 'neutral') {
+          this.log.push(`> ${str}<br>`)
+        }
+        if (type === 'error') {
+          this.log.push(`><span class="text-red-400"> ERROR: ${str}<br></span>`)
+        }
+        if (type === 'info') {
+          this.log.push(`><span class="text-orange-400"> INFO: ${str}<br></span>`)
+        }
+
         this.logScrollBottom()
       },
 
@@ -174,6 +213,10 @@
                 display       : inline-block;
                 animation     : blink 2s linear infinite alternate
             }
+        }
+
+        @media (min-width : 700px) and (max-width : 1500px) {
+            @apply text-sm;
         }
     }
 

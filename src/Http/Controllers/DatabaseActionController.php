@@ -8,11 +8,11 @@
     use Illuminate\Http\Request;
     use Illuminate\Routing\Controller;
     use Illuminate\Support\Facades\Artisan;
-    use Protoqol\Prequel\Classes\App\AppStatus;
-    use Protoqol\Prequel\Classes\App\Migrations;
+    use Protoqol\Prequel\App\AppStatus;
+    use Protoqol\Prequel\App\Migrations;
     use Protoqol\Prequel\Facades\PDB;
-    use Protoqol\Prequel\Classes\Database\DatabaseAction;
-    use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
+    use Protoqol\Prequel\Database\DatabaseAction;
+    use Protoqol\Prequel\Database\DatabaseTraverser;
     
     /**
      * Class DatabaseActionController
@@ -32,9 +32,25 @@
         public function getDefaultsForTable(string $database, string $table): array
         {
             return [
-                'id'            => ((int)PDB::create($database, $table)->count() + 1),
-                'current_date'  => Carbon::now()->format('Y-m-d\TH:i'),
-                'tableHasModel' => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
+                'id'           => ((int)PDB::create($database, $table)->count() + 1),
+                'current_date' => Carbon::now()->format('Y-m-d\TH:i'),
+            ];
+        }
+        
+        /**
+         * Get some information about the table regarding management functionality.
+         *
+         * @param string $database
+         * @param string $table
+         *
+         * @return array
+         */
+        public function getInfoAboutTable(string $database, string $table): array
+        {
+            return [
+                'tableHasModel'   => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
+                'tableHasSeeder'  => true,
+                'tableHasFactory' => true,
             ];
         }
         
@@ -63,11 +79,17 @@
             return (string)PDB::create($database, $table)->statement($query);
         }
         
+        /**
+         *
+         */
         public function import()
         {
             //
         }
         
+        /**
+         *
+         */
         public function export()
         {
             //
@@ -100,24 +122,50 @@
             return (new Migrations())->reset();
         }
         
+        /**
+         * @param string $database
+         * @param string $table
+         */
         public function generateFactory(string $database, string $table)
         {
             // Artisan create factory
         }
         
+        /**
+         * @param string $database
+         * @param string $table
+         *
+         * @return int
+         * @throws \Exception
+         */
         public function runSeederFor(string $database, string $table)
+        {
+            return Artisan::call('db:seed', [
+                '--class'    => $this->checkAndGetSeederName($table),
+                '--database' => $database,
+            ]);
+        }
+        
+        public function checkAndGetSeederName(string $table)
         {
             $table = Str::singular($table);
             $table = Str::studly($table);
             $table .= 'Seeder';
             
             if (!class_exists($table)) {
-                throw new Exception('Seeder could not be found or seeder does not follow Laravel naming convention (suffix Seeder).', 401);
+                throw new Exception($table . ' could not be found or your seeder does not follow naming convention');
             }
             
-            return Artisan::call('db:seed', [
-                '--class'    => $table,
-                '--database' => $database,
+            return $table;
+        }
+        
+        public function generateModel(string $database, string $table)
+        {
+            $table = Str::singular($table);
+            $table = Str::studly($table);
+            
+            return Artisan::call('make:model', [
+                'name' => $table,
             ]);
         }
     }

@@ -1,6 +1,6 @@
 <?php
     
-    namespace Protoqol\Prequel\Classes\Database;
+    namespace Protoqol\Prequel\Database;
     
     use Protoqol\Prequel\Facades\PDB;
     

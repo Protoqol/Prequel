@@ -4,7 +4,7 @@
     
     use Exception;
     use Illuminate\Foundation\Http\FormRequest;
-    use Protoqol\Prequel\Classes\Database\DatabaseTraverser;
+    use Protoqol\Prequel\Database\DatabaseTraverser;
     
     /**
      * Class PrequelDatabaseRequest

@@ -1,16 +1,16 @@
 <?php
 
 
-namespace Protoqol\Prequel\Classes\App;
+namespace Protoqol\Prequel\App;
 
 use FilesystemIterator;
 use Illuminate\Support\Facades\Artisan;
-use Protoqol\Prequel\Classes\Database\DatabaseConnector;
+use Protoqol\Prequel\Connection\DatabaseConnector;
 
 /**
  * Class Migrations
  *
- * @package Protoqol\Prequel\Classes\App
+ * @package Protoqol\Prequel\App
  */
 class Migrations
 {

@@ -1,17 +1,14 @@
 <?php
     
-    declare(strict_types = 1);
+    namespace Protoqol\Prequel\Database;
     
-    namespace Protoqol\Prequel\Classes\Database;
-    
-    use  Illuminate\Database\Eloquent\Model;
     use Illuminate\Support\Arr;
-    use  Illuminate\Support\Str;
-    
+    use Illuminate\Support\Str;
+    use Protoqol\Prequel\Connection\DatabaseConnector;
     
     /**
      * Class DatabaseTraverser
-     * @package Protoqol\Prequel\Classes\Database
+     * @package Protoqol\Prequel\Database
      */
     class DatabaseTraverser
     {
@@ -24,7 +21,7 @@
         
         /**
          * Query collection based on $DB_CONN
-         * @var \Protoqol\Prequel\Classes\Database\SequelAdapter $databaseQueries
+         * @var \Protoqol\Prequel\Database\SequelAdapter $databaseQueries
          */
         private $databaseQueries;
         
@@ -38,8 +35,8 @@
          * DatabaseTraverser constructor.
          *
          * @param string|null $databaseType
-         *
-        */public function __construct(?string $databaseType = null)
+         */
+        public function __construct(?string $databaseType = null)
         {
             $this->databaseConn    = $databaseType
                 ?: config('prequel.database.connection');
@@ -181,7 +178,7 @@
         public function getTableData(string $database, string $table): array
         {
             return $this->connection->getTableData($database, $table);
-            }
+        }
         
         /**
          * Get all tables from database
