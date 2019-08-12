@@ -25,13 +25,13 @@
 
 <script>
 
-  import PrequelLogo    from './HeaderSections/PrequelLogo';
-  import TableFilter    from './HeaderSections/TableFilter';
-  import SettingButtons from './HeaderSections/SettingButtons';
+  import PrequelLogo    from './HeaderSections/PrequelLogo'
+  import TableFilter    from './HeaderSections/TableFilter'
+  import SettingButtons from './HeaderSections/SettingButtons'
 
   export default {
     name      : 'Header',
-    components: {SettingButtons, TableFilter, PrequelLogo},
+    components: { SettingButtons, TableFilter, PrequelLogo },
     props     : [
       'error',
       'activeTable',
@@ -45,20 +45,38 @@
     ],
 
     methods: {
-      changeTheme: function(ev) {
+      changeTheme: function (ev) {
         if (ev) {
-          document.body.className += ' ' + 'theme-dark';
+          document.body.className += ' ' + 'theme-dark'
         }
         else {
-          document.body.classList.remove('theme-dark');
+          document.body.classList.remove('theme-dark')
         }
       },
     },
-  };
+  }
 </script>
 
 
 <style lang="scss">
+    @keyframes color-rotate {
+        0% {
+            @apply border-red-300;
+        }
+        25% {
+            @apply border-indigo-500;
+        }
+        50% {
+            @apply border-blue-700;
+        }
+        75% {
+            @apply border-green-500;
+        }
+        100% {
+            @apply border-indigo-300;
+        }
+    }
+
     /**
         Header - Container
     */
@@ -70,6 +88,7 @@
         @apply pt-5;
         @apply border-t-4;
         @apply border-indigo-500;
+        animation : color-rotate 5s linear infinite alternate;
 
         .header-flexbox {
             @apply flex;

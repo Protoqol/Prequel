@@ -57,7 +57,7 @@
             return [
                 'model'   => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
                 'seeder'  => $seeder,
-                'factory' => true,
+                'factory' => false,
             ];
         }
         

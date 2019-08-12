@@ -344,8 +344,9 @@
        | @TODO Shorten function.
        */
       getTableData: async function (
-        databaseTable = `${this.table.database}.${this.table.table}`, dynamicLoad = true,
-        updateUrlHistory                                                          = true) {
+        databaseTable    = `${this.table.database}.${this.table.table}`,
+        dynamicLoad      = true,
+        updateUrlHistory = true) {
 
         if (!databaseTable.target && dynamicLoad) {
           return false

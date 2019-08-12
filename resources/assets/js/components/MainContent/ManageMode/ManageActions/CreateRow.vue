@@ -29,7 +29,7 @@
                 </button>
             </div>
         </form>
-        <BackendActions/>
+        <BackendActions ref="actions" :structure="structure"/>
     </div>
 </template>
 
@@ -57,6 +57,7 @@
       let url       = new URLSearchParams(window.location.search)
       this.database = url.get('database')
       this.table    = url.get('table')
+      this.$refs.actions.getInfo()
     },
 
     updated () {
@@ -64,6 +65,7 @@
       this.database = url.get('database')
       this.table    = url.get('table')
       this.getDefaults()
+      this.$refs.actions.getInfo()
     },
 
     methods: {

@@ -8,7 +8,7 @@
                         <font-awesome-icon class="fa" icon="table"/>
                         <p>{{ tableHasModel ? 'Model exists' : 'Generate Model'}}</p>
                     </button>
-                    <div class="runnable pill-green">
+                    <div class="runnable" :class="tableHasModel ? 'pill-green' : 'pill-red'">
                         <p>{{ tableHasModel ? tableHasModel : 'No existing model' }}</p>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <font-awesome-icon class="fa" icon="industry"/>
                         <p>{{ tableHasFactory ? 'Factory exists' : 'Generate Factory'}}</p>
                     </button>
-                    <div class="runnable pill-red">
+                    <div class="runnable" :class="tableHasFactory ? 'pill-green' : 'pill-red'">
                         <p>No existing factory</p>
                     </div>
                 </div>
@@ -53,7 +53,8 @@
   import api from 'axios'
 
   export default {
-    name: 'BackendActions',
+    name : 'BackendActions',
+    props: ['structure'],
 
     data () {
       return {
@@ -67,11 +68,7 @@
       }
     },
 
-    updated () {
-      this.getInfo()
-    },
-
-    created () {
+    mounted () {
       this.getInfo()
 
       // @TODO Find a more elegant solution to automatically scroll to bottom after a new log entry.
@@ -345,8 +342,8 @@
                     }
 
                     .pill-green {
-                        width            : 55%;
-                        background-color : #65ead2;
+                        width : 55%;
+                        @apply bg-green-500;
                         @apply text-white;
                         @apply rounded-full;
                         @apply border;
@@ -358,7 +355,7 @@
 
                     .pill-red {
                         width            : 55%;
-                        background-color : #eaa165;
+                        background-color : #ec6368;
                         @apply text-white;
                         @apply rounded-full;
                         @apply border;
