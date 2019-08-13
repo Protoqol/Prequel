@@ -82,18 +82,11 @@
 }
 
 .prequel-swal-title {
-    color: red;
+    color : red;
 }
 
 :focus {
     outline : 0;
-}
-
-::-webkit-scrollbar-track {
-    -webkit-box-shadow : inset 0 0 2px rgba(0, 0, 0, 0.3);
-    background-color   : var(--scroll-track);
-    border-radius      : 1px;
-    transition         : .2s ease;
 }
 
 ::-webkit-scrollbar {
@@ -101,6 +94,13 @@
     height           : 5px;
     background-color : rgb(245, 245, 245);
     transition       : .2s ease;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow : inset 0 0 2px rgba(0, 0, 0, 0.3);
+    background-color   : var(--scroll-track);
+    border-radius      : 1px;
+    transition         : .2s ease;
 }
 
 ::-webkit-scrollbar-thumb {

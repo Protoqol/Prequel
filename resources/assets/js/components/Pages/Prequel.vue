@@ -11,6 +11,7 @@
     -->
     <div v-cloak>
         <SwitchMode :modus="view.modus.mode" @switchMode="switchMode($event)"/>
+        <Version/>
 
         <Header :error="prequel.errorDetailed"
                 :activeTable="table.currentActiveName"
@@ -73,10 +74,12 @@
   import PrequelError from './PrequelError'
   import Paginator    from '../MainContent/BrowseMode/Table/Paginator'
   import SwitchMode   from '../Elements/SwitchMode'
+  import Version      from '../Elements/Version'
 
   export default {
     name      : 'Prequel',
     components: {
+      Version,
       SwitchMode,
       Paginator,
       PrequelError,

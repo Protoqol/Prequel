@@ -54,6 +54,7 @@
                 $seeder = false;
             }
             
+            
             return [
                 'model'   => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
                 'seeder'  => $seeder,
@@ -148,13 +149,23 @@
          * @param string $database
          * @param string $table
          *
-         * @return int
+         * @return int|string
+         * @throws \Exception
          */
         public function generateSeeder(string $database, string $table)
         {
-            return Artisan::call('make:seeder', [
+            Artisan::call('make:seeder', [
                 'name' => $this->generateClassName($table) . 'Seeder',
             ]);
+            
+            // Assumes a lot about the user's environment.
+            exec('composer dump-autoload');
+            
+            try {
+                return $this->checkAndGetSeederName($table) ?? 0;
+            } catch (Exception $e) {
+                return 0;
+            }
         }
         
         /**

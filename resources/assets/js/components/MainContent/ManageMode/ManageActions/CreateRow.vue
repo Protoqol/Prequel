@@ -44,31 +44,32 @@
 
     data () {
       return {
-        database: '',
-        table   : '',
-        default : {
+        database     : '',
+        table        : '',
+        requestHasRun: false,
+        default      : {
           id       : 1,
           timestamp: '',
         },
       }
     },
 
-    mounted () {
-      let url       = new URLSearchParams(window.location.search)
-      this.database = url.get('database')
-      this.table    = url.get('table')
-      this.$refs.actions.getInfo()
-    },
-
     updated () {
-      let url       = new URLSearchParams(window.location.search)
-      this.database = url.get('database')
-      this.table    = url.get('table')
-      this.getDefaults()
-      this.$refs.actions.getInfo()
+      this.getUrl()
     },
 
     methods: {
+
+      getUrl: async function () {
+        let url       = new URLSearchParams(window.location.search)
+        this.database = url.get('database')
+        this.table    = url.get('table')
+
+        if (this.database !== url.get('database') || this.table !== url.get('table')) {
+          await this.getDefaults()
+          await this.$refs.actions.getInfo()
+        }
+      },
 
       /**
        | Save form in current database table
@@ -123,6 +124,7 @@
        | Get defaults for table
        */
       getDefaults: function () {
+        // Reset
         this.default.id        = 1
         this.default.timestamp = ''
 

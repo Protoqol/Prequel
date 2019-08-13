@@ -26,6 +26,11 @@
                     {{trans('table_management.export')}}
                 </a>
             </li>
+            <li :title="trans('table_management.export')" @click.prevent="setActiveTab($event)">
+                <a id="tab-log" :class="this.inactiveClassName">
+                    {{trans('table_management.log')}}
+                </a>
+            </li>
         </ul>
     </div>
 </template>

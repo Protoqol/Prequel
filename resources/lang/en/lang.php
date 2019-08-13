@@ -154,8 +154,9 @@
         'table_management' => [
             'insert_new_row' => 'Insert New Row',
             'view_structure' => 'View Structure',
-            'run_sql' => 'Run SQL',
-            'import' => 'Import',
-            'export' => 'Export',
+            'run_sql'        => 'Run SQL',
+            'import'         => 'Import',
+            'export'         => 'Export',
+            'log'            => 'Log',
         ],
     ];

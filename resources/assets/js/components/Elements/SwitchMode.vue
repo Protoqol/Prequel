@@ -18,18 +18,18 @@
     name : 'SwitchMode',
     props: ['modus'],
 
-    mounted() {
-      this.mode = this.$props.modus;
-      let url   = new URLSearchParams(window.location.search);
+    mounted () {
+      this.mode = this.$props.modus
+      let url   = new URLSearchParams(window.location.search)
 
       if (url.has('mode')) {
-        this.mode = url.get('mode') === 'browse' ? 0 : 1;
+        this.mode = url.get('mode') === 'browse' ? 0 : 1
       }
 
-      this.checkMode();
+      this.checkMode()
     },
 
-    data() {
+    data () {
       return {
         // Make Vue accessible enum version
         enum: {
@@ -39,7 +39,7 @@
 
         // Default to browsing mode.
         mode: 0,
-      };
+      }
     },
 
     methods: {
@@ -47,24 +47,24 @@
       /**
        * Resolve what mode is active and set tab-active class for the active mode.
        */
-      checkMode: function() {
-        let browseSwitch = document.getElementById(this.enum.BROWSE + '');
-        let querySwitch  = document.getElementById(this.enum.MANAGE + '');
+      checkMode: function () {
+        let browseSwitch = document.getElementById(this.enum.BROWSE + '')
+        let querySwitch  = document.getElementById(this.enum.MANAGE + '')
 
         if (this.mode === this.enum.BROWSE) {
           if (!browseSwitch.classList.contains('tab-active')) {
-            browseSwitch.classList.add('tab-active');
+            browseSwitch.classList.add('tab-active')
             if (querySwitch.classList.contains('tab-active')) {
-              querySwitch.classList.remove('tab-active');
+              querySwitch.classList.remove('tab-active')
             }
           }
         }
 
         if (this.mode === this.enum.MANAGE) {
           if (!querySwitch.classList.contains('tab-active')) {
-            querySwitch.classList.add('tab-active');
+            querySwitch.classList.add('tab-active')
             if (browseSwitch.classList.contains('tab-active')) {
-              browseSwitch.classList.remove('tab-active');
+              browseSwitch.classList.remove('tab-active')
             }
           }
         }
@@ -75,23 +75,23 @@
        * When clicking on the query switch button.
        * Emit switchMode event, set current mode to query.
        */
-      querySwitchHandler: function() {
-        this.mode = this.enum.MANAGE;
-        this.checkMode();
-        this.$emit('switchMode', this.mode);
+      querySwitchHandler: function () {
+        this.mode = this.enum.MANAGE
+        this.checkMode()
+        this.$emit('switchMode', this.mode)
       },
 
       /**
        * When clicking on the browse switch button.
        * Emit switchMode event, set current mode to browse.
        */
-      browseSwitchHandler: function() {
-        this.mode = this.enum.BROWSE;
-        this.checkMode();
-        this.$emit('switchMode', this.mode);
+      browseSwitchHandler: function () {
+        this.mode = this.enum.BROWSE
+        this.checkMode()
+        this.$emit('switchMode', this.mode)
       },
     },
-  };
+  }
 </script>
 
 
@@ -104,43 +104,44 @@
         .switch {
             @apply flex;
             @apply flex-row;
-            @media (min-width: 1401px) {
+            @media (min-width : 1401px) {
                 @apply mx-2;
             }
 
             .tab {
+                color      : var(--header-text-color);
+                max-width  : 3rem;
+                transition : .2s ease;
                 @apply flex;
                 @apply flex-col;
                 @apply items-center;
                 @apply justify-center;
                 @apply bg-transparent;
-                color: var(--header-text-color);
                 @apply py-2;
                 @apply px-2;
                 @apply w-12;
                 @apply rounded-b;
                 @apply cursor-pointer;
-                max-width: 3rem;
-                transition: .2s ease;
+
 
                 small {
-                    z-index: 5;
-                    color: var(--header-text-color);
+                    z-index : 5;
+                    color   : var(--header-text-color);
                     @apply text-xs;
                 }
 
                 &:hover {
+                    transition : .2s ease;
                     @apply bg-indigo-400;
                     @apply shadow-none;
-                    transition: .2s ease;
                 }
             }
 
             .tab-active {
-                @apply bg-indigo-500;
+                transition       : .2s ease;
+                background-color : var(--button-background);
                 @apply text-gray-300;
                 @apply shadow;
-                transition: .2s ease;
 
                 small {
                     @apply text-gray-300;

@@ -1,5 +1,5 @@
 <template>
-    <div class="database-management">
+    <div id="dbManagement" class="database-management">
         <div class="overview">
             <h1>{{trans('dashboard.overview')}}</h1>
             <div class="status-cards" v-cloak>
@@ -75,38 +75,34 @@
 </template>
 
 <script>
-  import api           from 'axios';
-  import Migrations    from './Migrations';
-  import StatusDisplay from './StatusDisplay';
-  import Badge         from '../../Elements/Badge';
-  import Settings      from './Settings';
+  import Migrations    from './Migrations'
+  import StatusDisplay from './StatusDisplay'
+  import Badge         from '../../Elements/Badge'
+  import Settings      from './Settings'
 
   export default {
     name      : 'Management',
-    components: {Settings, Badge, StatusDisplay, Migrations},
-    data() {
+    components: { Settings, Badge, StatusDisplay, Migrations },
+    data () {
       return {
         app: {},
-      };
+      }
     },
 
-    created() {
-      let self = this;
-      this.getData();
-
-      setInterval(function() {
-        self.getData();
-      }, 10000);
+    mounted () {
+      if (document.getElementById('dbManagement') !== null) {
+        this.getData()
+      }
     },
 
     methods: {
+
       /**
-       * Get status data
+       * Get status data: server info, user privileges and migrations
        */
-      getData: function() {
-        api.get('status').then(res => {
-          this.app = res.data;
-        });
+      getData: function () {
+        let res  = HTTPoll('status', 10000)
+        this.app = res.data
       },
 
       /**
@@ -114,7 +110,7 @@
        * Create readable string from array
        * @param privs
        */
-      readableArray: function(privs) {
+      readableArray: function (privs) {
         // if (privs.HAS_ALL) {
         //   return 'User has all permissions';
         // }
@@ -133,21 +129,21 @@
       /**
        * Seconds to hours
        */
-      secsToHours: function(str) {
-        let secs = parseFloat(str);
-        return Math.round(secs / 60 / 60);
+      secsToHours: function (str) {
+        let secs = parseFloat(str)
+        return Math.round(secs / 60 / 60)
       },
 
       /**
        * Seconds to hours
        */
-      secsToMins: function(str) {
-        let secs = parseFloat(str);
-        return Math.round(secs / 60);
+      secsToMins: function (str) {
+        let secs = parseFloat(str)
+        return Math.round(secs / 60)
       },
 
     },
-  };
+  }
 </script>
 
 <style scoped lang="scss">
@@ -161,7 +157,7 @@
             @apply pt-1;
             @apply pl-2;
             @apply border-t;
-            border-color: var(--border-color);
+            border-color : var(--border-color);
             @apply rounded;
         }
 
@@ -174,8 +170,9 @@
                 @apply bg-gray-100;
                 @apply border-t;
                 @apply border-b;
-                border-color: var(--border-color);
+                border-color : var(--border-color);
             }
+
             .button-wrapper {
                 @apply flex;
                 @apply justify-center;

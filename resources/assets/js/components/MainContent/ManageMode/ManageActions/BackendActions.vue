@@ -53,8 +53,7 @@
   import api from 'axios'
 
   export default {
-    name : 'BackendActions',
-    props: ['structure'],
+    name: 'BackendActions',
 
     data () {
       return {
@@ -79,6 +78,10 @@
     },
 
     methods: {
+
+      /**
+       * Generate a seeder
+       */
       generateSeeder: async function () {
         this.clog(`Generating seeder for ${this.tableHasModel}...`)
 
@@ -93,6 +96,9 @@
         })
       },
 
+      /**
+       * Run the seeder
+       */
       runSeeder: async function () {
         let seederCountLock = this.seederCount
 
@@ -121,6 +127,9 @@
         }
       },
 
+      /**
+       * Generate a model
+       */
       generateModel: async function () {
         this.clog(`Generating model for ${this.$root.table.table}...`)
 
@@ -135,6 +144,9 @@
         })
       },
 
+      /**
+       * Get laravel specific information about table
+       */
       getInfo: function () {
         api.get(`/database/info/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
           this.tableHasModel   = res.data.model
@@ -151,27 +163,32 @@
        * @param type
        */
       clog: function (str, type = 'neutral') {
-        if (type === 'neutral') {
-          this.log.push(`> ${str}<br>`)
-        }
-        if (type === 'error') {
-          this.log.push(`><span class="text-red-400"> ERROR: ${str}<br></span>`)
-        }
-        if (type === 'info') {
-          this.log.push(`><span class="text-orange-400"> INFO: ${str}<br></span>`)
+
+        switch (type) {
+          case 'neutral':
+            this.log.push(`> ${str}<br>`)
+            break
+          case 'error':
+            this.log.push(`><span class="text-red-400"> ERROR: ${str}<br></span>`)
+            break
+          case 'info':
+            this.log.push(`><span class="text-orange-400"> INFO: ${str}<br></span>`)
+            break
         }
 
         this.logScrollBottom()
       },
 
+      /**
+       * Empty the log
+       */
       logEmpty: function () {
         this.log = []
       },
 
-      logTaskDone: function () {
-        this.clog('Waiting patiently for input...')
-      },
-
+      /**
+       * Scroll to bottom in the log
+       */
       logScrollBottom: function () {
         let log       = document.getElementById('logUtil')
         log.scrollTop = log.scrollHeight

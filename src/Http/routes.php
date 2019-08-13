@@ -34,8 +34,13 @@
          ->name('prequel.')
          ->group(function () {
         
+             // Get database status, includes nr of migrations, avg. queries per second, open tables etc.
              Route::get('status', 'DatabaseActionController@status');
         
+             // Get latest Prequel version
+             Route::get('version', 'PrequelController@version');
+        
+             // Database related routes
              Route::prefix('database')->group(function () {
             
                  // Default data retrieval
