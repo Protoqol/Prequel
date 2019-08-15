@@ -45,7 +45,7 @@
             
                  // Default data retrieval
                  Route::get('get/{database}/{table}', 'DatabaseController@getTableData');
-                 Route::get('count/{database}/{table}', 'DatabaseController@countTableRecords');
+                 Route::get('count/{database}/{table}', 'DatabaseController@count');
                  Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
             
                  // Migrations, run or reset
@@ -60,6 +60,10 @@
             
                  // Insert new row
                  Route::post('insert/{database}/{table}', 'DatabaseActionController@insertNewRow');
+            
+                 // Factory
+                 Route::get('factory/{database}/{table}/generate', 'DatabaseActionController@generateFactory');
+                 Route::get('factory/{database}/{table}/run', 'DatabaseActionController@runFactory');
             
                  // Seeding
                  Route::get('seed/{database}/{table}/generate', 'DatabaseActionController@generateSeeder');

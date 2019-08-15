@@ -70,19 +70,19 @@
         public function getTableData()
         {
             // If Model exists
-            /*   if ($this->model && $this->databaseName === config('database.connections.mysql.database')) {
-                   $paginated = $this->model->paginate(config('prequel.pagination'));
-                   $paginated->setCollection($paginated->getCollection()->each->setHidden([])->each->setVisible([]));
-                   
-                   return [
-                       "table"     => $this->qualifiedName,
-                       "data"      => $paginated,
-                       "structure" => app(DatabaseTraverser::class)->getTableStructure(
-                           $this->databaseName,
-                           $this->tableName
-                       ),
-                   ];
-               }*/
+            if ($this->model && $this->databaseName === config('database.connections.mysql.database')) {
+                $paginated = $this->model->paginate(config('prequel.pagination'));
+                $paginated->setCollection($paginated->getCollection()->each->setHidden([])->each->setVisible([]));
+                
+                return [
+                    "table"     => $this->qualifiedName,
+                    "data"      => $paginated,
+                    "structure" => app(DatabaseTraverser::class)->getTableStructure(
+                        $this->databaseName,
+                        $this->tableName
+                    ),
+                ];
+            }
             
             return [
                 "table"     => $this->tableName,
@@ -117,6 +117,17 @@
         public function status()
         {
             return (new AppStatus())->getStatus();
+        }
+        
+        /**
+         * Count number of records in the given table
+         * @return array
+         */
+        public function count()
+        {
+            return [
+                'count' => $this->model ? $this->model->count() : PDB::create($this->databaseName, $this->tableName)->count(),
+            ];
         }
         
         /**

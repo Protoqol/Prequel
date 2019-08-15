@@ -39,24 +39,11 @@
         }
         
         /**
-         * Get latest Prequel version, uses Curl instead of Guzzle because adding a dependency just for version checking is a bit much.
+         * Auto update Prequel.
          * @return void
          */
-        public function version()
+        public function autoUpdate()
         {
-            header('Content-Type: application/json', true);
-            
-            $ch = curl_init('https://api.github.com/repos/protoqol/prequel/tags');
-            
-            curl_setopt_array($ch, [
-                CURLOPT_USERAGENT      => 'Protoqol-Prequel',
-                CURLOPT_RETURNTRANSFER => 1,
-            ]);
-            
-            $output = curl_exec($ch);
-            
-            curl_close($ch);
-            
-            echo json_encode($output);
+            // @TODO Try an auto-update running: composer require protoqol/prequel && php artisan prequel:update
         }
     }

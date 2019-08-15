@@ -1,7 +1,8 @@
 <template>
-    <div id="version" title="Current version (v1.13)">
-        <div class="notification" title="There's a new version available">!</div>
-        <p>v1.13</p>
+    <div id="version" :class="newVersionAvailable !== 0 ? 'cursor-pointer' : ''"
+         :title="`Current version (${currentVersion})`" @click="autoUpdater">
+        <div v-if="newVersionAvailable !== 0" class="notification" title="There's a new version available">!</div>
+        <p :class="newVersionAvailable !== 0 ? 'text-red-300' : 'text-gray-400'">{{ currentVersion }}</p>
     </div>
 </template>
 
@@ -10,20 +11,37 @@
 
   export default {
     name: 'Version',
+    data () {
+      return {
+        newVersionAvailable: 0,
+        currentVersion     : 'v1.13',
+      }
+    },
+
     mounted () {
       this.checkVersion()
     },
 
     methods: {
       checkVersion: function () {
-        let currentVersion = 1.13
-
-        api.get('/version').then(res => {
-          // console.log(res)
+        api.get('https://prequel.protoqol.xyz/api/prequel-version').then(res => {
+          if (this.currentVersion !== res.data.newest_version) {
+            this.newVersionAvailable = res.data.newest_version
+          }
         }).catch(err => {
-          // console.log(err)
+          //
         })
+      },
 
+      autoUpdater: function () {
+        // @TODO @TODO!!
+        Swal.fire({
+          title             : 'There\'s a new version available!',
+          text              : `Try updating to ${this.newVersionAvailable} with the auto-updater!`,
+          confirmButtonText : 'Try auto-update',
+          confirmButtonColor: '#657eea',
+          showCancelButton  : true,
+        })
       },
     },
   }
@@ -39,14 +57,14 @@
         }
         50% {
             @apply bg-blue-700;
-            opacity: 0;
+            opacity : 0;
         }
         75% {
             @apply bg-green-500;
         }
         100% {
             @apply bg-indigo-300;
-            opacity: 1;
+            opacity : 1;
         }
     }
 
@@ -56,22 +74,21 @@
         right : 17px;
 
         .notification {
-            animation : color-rotate 5s linear infinite alternate;
-            position      : absolute;
-            top           : -2px;
-            right         : -13px;
-            font-size     : 8px;
-            font-weight   : bolder;
-            color         : white;
-            width         : 12px;
-            height        : 12px;
-            text-align    : center;
-            padding       : 1px;
-            border-radius : 100%;
+            animation   : color-rotate 5s linear infinite reverse;
+            top         : -2px;
+            right       : -13px;
+            font-size   : 8px;
+            font-weight : bolder;
+            color       : white;
+            width       : 12px;
+            height      : 12px;
+            padding     : 1px;
+            @apply absolute;
+            @apply text-center;
+            @apply rounded-full;
         }
 
         p {
-            color     : #c3c8ca;
             font-size : 13px;
         }
     }

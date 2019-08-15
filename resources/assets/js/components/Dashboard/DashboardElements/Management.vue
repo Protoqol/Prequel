@@ -1,11 +1,11 @@
 <template>
-    <div id="dbManagement" class="database-management">
-        <div class="overview">
+    <div v-cloak v-if="app" id="dbManagement" class="database-management">
+        <div class="overview" v-if="app.serverInfo">
             <h1>{{trans('dashboard.overview')}}</h1>
             <div class="status-cards" v-cloak>
                 <Migrations/>
 
-                <StatusDisplay v-if="app.serverInfo"
+                <StatusDisplay v-if="app.serverInfo.QUERIES_PER_SECOND_AVG"
                                :header="trans('dashboard.avg_query_speed.header')"
                                :value="app.serverInfo.QUERIES_PER_SECOND_AVG "
                                :unit="trans('dashboard.avg_query_speed.unit')">
@@ -15,7 +15,7 @@
                     </slot>
                 </StatusDisplay>
 
-                <StatusDisplay v-if="app.serverInfo"
+                <StatusDisplay v-if="app.serverInfo.THREADS"
                                :header="trans('dashboard.active_threads.header')"
                                :value="app.serverInfo.THREADS ? app.serverInfo.THREADS : 'Could not retrieve...'"
                                :unit="trans('dashboard.active_threads.unit')">
@@ -26,7 +26,7 @@
                     </slot>
                 </StatusDisplay>
 
-                <StatusDisplay v-if="app.serverInfo"
+                <StatusDisplay v-if="app.serverInfo.OPEN_TABLES"
                                :header="trans('dashboard.open_tables.header')"
                                :value="app.serverInfo.OPEN_TABLES ? app.serverInfo.OPEN_TABLES : 'Could not retrieve...'"
                                :unit="trans('dashboard.open_tables.unit')">
@@ -39,7 +39,7 @@
                 <!--            <StatusDisplay :header="`Permissions for user '${$root.prequel.env.user}'`"-->
                 <!--                           :value="readableArray(app.permissions)"/>-->
 
-                <StatusDisplay v-if="app.serverInfo"
+                <StatusDisplay v-if="app.serverInfo.UPTIME"
                                :header="trans('dashboard.uptime_hours.header')"
                                :value="app.serverInfo.UPTIME ? secsToHours(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                                :unit="trans('dashboard.uptime_hours.unit')">
@@ -48,7 +48,7 @@
                     </slot>
                 </StatusDisplay>
 
-                <StatusDisplay v-if="app.serverInfo"
+                <StatusDisplay v-if="app.serverInfo.UPTIME"
                                :header="trans('dashboard.uptime_minutes.header')"
                                :value="app.serverInfo.UPTIME ? secsToMins(app.serverInfo.UPTIME) : 'Could not retrieve...'"
                                :unit="trans('dashboard.uptime_minutes.unit')">
@@ -57,7 +57,7 @@
                     </slot>
                 </StatusDisplay>
 
-                <StatusDisplay v-if="app.serverInfo"
+                <StatusDisplay v-if="app.serverInfo.UPTIME"
                                :header="trans('dashboard.uptime_seconds.header')"
                                :value="app.serverInfo.UPTIME ? app.serverInfo.UPTIME : 'Could not retrieve...'"
                                :unit="trans('dashboard.uptime_seconds.unit')">
@@ -67,14 +67,24 @@
                 </StatusDisplay>
             </div>
         </div>
-        <div class="settings">
-            <h1>{{trans('dashboard.settings')}}</h1>
-            <Settings/>
-        </div>
+        <!-- @TODO Edit settings here -->
+        <!--
+                <div class="settings">
+                    <h1>{{trans('dashboard.settings')}}</h1>
+                    <Settings/>
+                </div>
+        -->
+    </div>
+    <div v-else id="error">
+        <h2>Oops! Could not retrieve any server info</h2>
+        <p>No worries though, Prequel itself will probably work fine</p>
+        <img alt="" width="200"
+             src="https://media0.giphy.com/media/2A75RyXVzzSI2bx4Gj/giphy.gif?cid=790b7611fc2ac78e65ba7de785530e810a8dcbee0b4065c8&rid=giphy.gif"/>
     </div>
 </template>
 
 <script>
+  import api           from 'axios'
   import Migrations    from './Migrations'
   import StatusDisplay from './StatusDisplay'
   import Badge         from '../../Elements/Badge'
@@ -101,8 +111,9 @@
        * Get status data: server info, user privileges and migrations
        */
       getData: function () {
-        let res  = HTTPoll('status', 10000)
-        this.app = res.data
+        api.get('/status').then(res => {
+          this.app = res.data
+        })
       },
 
       /**
@@ -147,6 +158,31 @@
 </script>
 
 <style scoped lang="scss">
+
+    #error {
+        @apply flex;
+        @apply flex-col;
+        @apply justify-center;
+        @apply items-center;
+        @apply mt-2;
+
+        h2 {
+            @apply text-center;
+            @apply text-2xl;
+        }
+
+        p {
+            @apply mt-2;
+            @apply text-gray-700;
+            @apply text-center;
+        }
+
+        img {
+            @apply my-4;
+            @apply rounded;
+        }
+    }
+
     .database-management {
 
         h1 {

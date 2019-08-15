@@ -11,6 +11,7 @@
     use Protoqol\Prequel\App\AppStatus;
     use Protoqol\Prequel\App\Migrations;
     use Protoqol\Prequel\Facades\PDB;
+    use Symfony\Component\Filesystem\Filesystem;
     use Protoqol\Prequel\Database\DatabaseAction;
     use Protoqol\Prequel\Database\DatabaseTraverser;
     
@@ -48,17 +49,24 @@
          */
         public function getInfoAboutTable(string $database, string $table): array
         {
+            
             try {
                 $seeder = $this->checkAndGetSeederName($table);
             } catch (Exception $e) {
                 $seeder = false;
             }
             
+            try {
+                $factory = $this->checkAndGetFactoryName($table);
+            } catch (Exception $e) {
+                $factory = false;
+            }
+            
             
             return [
                 'model'   => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
                 'seeder'  => $seeder,
-                'factory' => false,
+                'factory' => $factory,
             ];
         }
         
@@ -137,10 +145,31 @@
          *
          * @param string $database
          * @param string $table
+         *
+         * @return int|string
          */
         public function generateFactory(string $database, string $table)
         {
-            // Artisan create factory
+            Artisan::call('make:factory', [
+                'name' => $this->generateClassName($table) . 'Factory',
+            ]);
+            
+            // Assumes a lot about the user's environment.
+            exec('composer dump-autoload');
+            
+            try {
+                return $this->checkAndGetFactoryName($table) ?? 0;
+            } catch (Exception $e) {
+                return 0;
+            }
+        }
+        
+        public function runFactory(string $database, string $table)
+        {
+            return Artisan::call('db:seed', [
+                '--class'    => $this->checkAndGetSeederName($table),
+                '--database' => $database,
+            ]);
         }
         
         /**
@@ -202,6 +231,25 @@
             }
             
             return $seederClass;
+        }
+        
+        /**
+         * Resolve and check seeder for table.
+         *
+         * @param string $table
+         *
+         * @return string
+         * @throws \Exception
+         */
+        public function checkAndGetFactoryName(string $table)
+        {
+            $factoryFile = $this->generateClassName($table) . 'Factory';
+            
+            if (!file_exists(base_path('database/factories/' . $factoryFile . '.php'))) {
+                throw new Exception($factoryFile . ' could not be found or your factory does not follow naming convention');
+            }
+            
+            return $factoryFile;
         }
         
         /**

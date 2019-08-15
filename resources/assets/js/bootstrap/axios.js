@@ -6,7 +6,29 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN']     = document.head.querySe
 window.axios.defaults.baseURL                            = `${window.location.origin}/prequel-api`
 
 // Abstracted method to poll API.
-async function HTTPoll (url, time = 1500, method = 'get', options = {}) {
+function HTTPoll (url, time = 1500, method = 'get', options = {}) {
+  let validUrl = url.charAt(0) !== '/' ? window.axios.defaults.baseURL + '/' + url : window.axios.defaults.baseURL + url
+
+  let request  = new Request(validUrl)
+  let response = {}
+
+  if (method === 'get') {
+    request.poll(time).get(res => {
+      response = res.data
+    }, options)
+  }
+
+  if (method === 'post') {
+    request.poll(time).post(res => {
+      response = res.data
+    }, options)
+  }
+
+  return response
+}
+
+// Asynchronous abstracted method to poll API.
+async function HTTPollAsync (url, time = 1500, method = 'get', options = {}) {
   let validUrl = url.charAt(0) !== '/' ? window.axios.defaults.baseURL + '/' + url : window.axios.defaults.baseURL + url
 
   let request  = new Request(validUrl)
@@ -25,4 +47,5 @@ async function HTTPoll (url, time = 1500, method = 'get', options = {}) {
   }
 }
 
-window.HTTPoll = HTTPoll
+window.HTTPoll      = HTTPoll
+window.HTTPollAsync = HTTPollAsync

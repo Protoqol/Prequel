@@ -29,7 +29,7 @@
                 </button>
             </div>
         </form>
-        <BackendActions ref="actions" :structure="structure"/>
+        <BackendActions ref="actions"/>
     </div>
 </template>
 
@@ -54,6 +54,10 @@
       }
     },
 
+    mounted () {
+      this.getUrl()
+    },
+
     updated () {
       this.getUrl()
     },
@@ -61,11 +65,10 @@
     methods: {
 
       getUrl: async function () {
-        let url       = new URLSearchParams(window.location.search)
-        this.database = url.get('database')
-        this.table    = url.get('table')
+        if (this.database !== this.$root.table.database || this.$root.table.table) {
+          this.database = this.$root.table.database
+          this.table    = this.$root.table.table
 
-        if (this.database !== url.get('database') || this.table !== url.get('table')) {
           await this.getDefaults()
           await this.$refs.actions.getInfo()
         }

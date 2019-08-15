@@ -13,12 +13,36 @@
                     </div>
                 </div>
                 <div class="action">
-                    <button title="Generate new factory">
+                    <button title="Generate Controller" :disabled="tableHasController !== false"
+                            @click="generateSeeder">
+                        <font-awesome-icon class="fa" icon="hat-wizard"/>
+                        <p>{{ tableHasController ? 'Controller exists' : 'Generate Controller'}}</p>
+                    </button>
+                    <div class="runnable" :class="tableHasController ? 'pill-green' : 'pill-red'">
+                        {{ tableHasController ? tableHasController : 'No existing controller' }}
+                    </div>
+                </div>
+                <div class="action">
+                    <button title="Generate Resource" :disabled="tableHasResource !== false"
+                            @click="generateSeeder">
+                        <font-awesome-icon class="fa" icon="stream"/>
+                        <p>{{ tableHasResource ? 'Resource exists' : 'Generate Resource'}}</p>
+                    </button>
+                    <div class="runnable" :class="tableHasResource ? 'pill-green' : 'pill-red'">
+                        {{ tableHasResource ? tableHasResource : 'No existing resource' }}
+                    </div>
+                </div>
+                <div class="action">
+                    <button title="Generate new factory" :disabled="tableHasFactory" @click="generateFactory">
                         <font-awesome-icon class="fa" icon="industry"/>
                         <p>{{ tableHasFactory ? 'Factory exists' : 'Generate Factory'}}</p>
                     </button>
+                    <!-- <button v-if="tableHasFactory !== false" class="runnable" :disabled="tableHasFactory === false"
+                            @click="runFactory">
+                        Run {{tableHasFactory}}
+                    </button> -->
                     <div class="runnable" :class="tableHasFactory ? 'pill-green' : 'pill-red'">
-                        <p>No existing factory</p>
+                        {{ tableHasFactory ? tableHasFactory : 'No existing factory' }}
                     </div>
                 </div>
                 <div class="action">
@@ -29,22 +53,22 @@
                     <button v-if="tableHasSeeder !== false" class="runnable" :disabled="tableHasSeeder === false"
                             @click="runSeeder">
                         Run seeder <label>
-                        <input type="number" :disabled="tableHasSeeder === false" v-model="seederCount"
-                               name="seedercount"
+                        <input name="seedercount" type="number" min="1"
+                               :disabled="tableHasSeeder === false"
+                               v-model="seederCount"
                                @click.stop>
                     </label> time{{seederCount > 1 ? 's' : ''}}
                     </button>
                     <div v-else class="runnable pill-red">
-                        <p>No existing seeder</p>
+                        {{ tableHasSeeder ? tableHasSeeder : 'No existing seeder' }}
                     </div>
                 </div>
             </div>
         </div>
 
-        <h2 class="mt-20 text-left" @click="logEmpty">Log</h2>
         <div id="logUtil" class="logger">
             <span v-for="log in log" v-html="log"></span>
-            <span>> </span>
+            <span>> {{ inAction ? 'Working...' : '' }} </span>
         </div>
     </div>
 </template>
@@ -57,11 +81,14 @@
 
     data () {
       return {
-        tableHasModel  : false,
-        tableHasFactory: false,
-        tableHasSeeder : false,
-        seederCount    : 5,
-        log            : [
+        tableHasModel     : false,
+        tableHasFactory   : false,
+        tableHasSeeder    : false,
+        tableHasResource  : false,
+        tableHasController: false,
+        inAction          : false,
+        seederCount       : 5,
+        log               : [
           '',
         ],
       }
@@ -80,10 +107,73 @@
     methods: {
 
       /**
+       * Generate a model
+       */
+      generateModel: async function () {
+        this.clog(`Generating model for ${this.$root.table.table}...`, 'start')
+
+        await api.get(`/database/model/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
+          if (res) {
+            this.clog(`Model generation for ${this.$root.table.table} completed successfully`)
+          }
+        }).catch(err => {
+          this.clog(`${err.response.data.message}`, 'error')
+        }).finally(() => {
+          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+          this.inAction = true
+          this.getInfo()
+        })
+      },
+
+      /**
+       * Generate a factory
+       */
+      generateFactory: async function () {
+        this.clog(`Generating factory for ${this.$root.table.table}...`, 'start')
+
+        await api.get(`/database/factory/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
+          if (res) {
+            this.clog(`Factory generation for ${this.$root.table.table} completed successfully`)
+          }
+        }).catch(err => {
+          this.clog(`${err.response.data.message}`, 'error')
+        }).finally(() => {
+          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+          this.inAction = true
+          this.getInfo()
+        })
+      },
+
+      /**
+       * Run the seeder
+       */
+      runFactory: async function () {
+
+        this.clog(
+          `Running ${this.tableHasFactory}...`,
+          'start')
+        this.inAction = true
+
+        await api.get(`database/factory/${this.$root.table.database}/${this.$root.table.table}/run`).then(res => {
+          if (res) {
+            this.clog(`Factory has ran`)
+          }
+        }).catch(err => {
+          this.clog(`${err.response.data.message}`, 'error')
+          this.clog('Your request was halted because of the error stated above.', 'info')
+          this.inAction = false
+        }).finally(() => {
+          this.clog(`Factory run completed`, 'info')
+          this.inAction = false
+        })
+      },
+
+      /**
        * Generate a seeder
        */
       generateSeeder: async function () {
-        this.clog(`Generating seeder for ${this.tableHasModel}...`)
+        this.clog(`Generating seeder for ${this.tableHasModel}...`, 'start')
+        this.inAction = true
 
         await api.get(`/database/seed/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
           if (res) {
@@ -92,6 +182,8 @@
         }).catch(err => {
           this.clog(`${err.response.data.message}`, 'error')
         }).finally(() => {
+          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+          this.inAction = true
           this.getInfo()
         })
       },
@@ -100,20 +192,22 @@
        * Run the seeder
        */
       runSeeder: async function () {
+        // Prevent user from adding additional seeder while in runtime
         let seederCountLock = this.seederCount
 
-        if (seederCountLock > 1) {
-          this.clog(`Running seeder for ${this.$root.table.table} ${seederCountLock} times...`)
-        }
-        else {
-          this.clog(`Running seeder for ${this.tableHasModel} ${seederCountLock} time...`)
-        }
+        this.clog(
+          `Running seeder for ${this.$root.table.table} ${seederCountLock} time${seederCountLock > 1 ? 's' : ''}...`,
+          'start')
 
         let ranIntoError = false
         for (let i = 1; i <= seederCountLock; i++) {
           await api.get(`database/seed/${this.$root.table.database}/${this.$root.table.table}/run`).then(res => {
             if (res) {
               this.clog(`Seeding request #${i} complete`)
+
+              if (i === seederCountLock) {
+                this.clog(`Seeding completed`, 'info')
+              }
             }
           }).catch(err => {
             this.clog(`${err.response.data.message}`, 'error')
@@ -128,23 +222,6 @@
       },
 
       /**
-       * Generate a model
-       */
-      generateModel: async function () {
-        this.clog(`Generating model for ${this.$root.table.table}...`)
-
-        await api.get(`/database/model/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
-          if (res) {
-            this.clog(`Model generation for ${this.$root.table.table} completed successfully`)
-          }
-        }).catch(err => {
-          this.clog(`${err.response.data.message}`, 'error')
-        }).finally(() => {
-          this.getInfo()
-        })
-      },
-
-      /**
        * Get laravel specific information about table
        */
       getInfo: function () {
@@ -154,6 +231,8 @@
           this.tableHasSeeder  = res.data.seeder
         }).catch(err => {
           console.error(err)
+        }).finally(() => {
+          this.inAction = false
         })
       },
 
@@ -174,6 +253,9 @@
           case 'info':
             this.log.push(`><span class="text-orange-400"> INFO: ${str}<br></span>`)
             break
+          case 'start':
+            this.log.push(`><span class="text-green-400"> START: ${str}<br></span>`)
+            break
         }
 
         this.logScrollBottom()
@@ -190,8 +272,10 @@
        * Scroll to bottom in the log
        */
       logScrollBottom: function () {
-        let log       = document.getElementById('logUtil')
-        log.scrollTop = log.scrollHeight
+        let log = document.getElementById('logUtil')
+        if (log) {
+          log.scrollTop = log.scrollHeight
+        }
       },
     },
   }
@@ -243,14 +327,13 @@
         @apply text-xl;
         @apply font-semibold;
         @apply text-gray-800;
-        @apply mb-3;
     }
 
     .logger {
+        @apply mt-4;
         @apply w-full;
         @apply h-48;
         @apply overflow-auto;
-        @apply -mt-2;
         @apply p-2;
         @apply rounded;
         @apply bg-gray-900;
@@ -296,7 +379,8 @@
         @apply rounded;
         @apply w-2/5;
         @apply p-5;
-        @apply m-2;
+        @apply mx-2;
+        @apply mb-2;
         @apply flex;
         @apply flex-col;
 
@@ -319,11 +403,11 @@
                     @apply flex-row;
                     @apply justify-between;
                     @apply items-center;
-                    @apply mt-4;
+                    @apply mt-3;
 
                     .runnable, h3 {
                         margin-top : 0 !important;
-                        width      : 55%;
+                        width      : 47%;
                         @apply rounded-full;
                         @apply m-auto;
                         @apply p-1;
@@ -341,10 +425,10 @@
                     }
 
                     button {
+                        width : 50%;
                         @apply mt-0;
                         @apply flex;
                         @apply flex-row;
-                        @apply w-2/5;
                         @apply px-2;
                         @apply ml-0;
 
@@ -359,10 +443,10 @@
                     }
 
                     .pill-green {
-                        width : 55%;
+                        width : 47%;
                         @apply bg-green-500;
                         @apply text-white;
-                        @apply rounded-full;
+                        @apply rounded;
                         @apply border;
 
                         @media (min-width : 700px) and (max-width : 1500px) {
@@ -371,10 +455,10 @@
                     }
 
                     .pill-red {
-                        width            : 55%;
+                        width            : 47%;
                         background-color : #ec6368;
                         @apply text-white;
-                        @apply rounded-full;
+                        @apply rounded;
                         @apply border;
 
                         @media (min-width : 700px) and (max-width : 1500px) {
