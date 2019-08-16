@@ -34,7 +34,7 @@
          ->name('prequel.')
          ->group(function () {
         
-             // Get database status, includes nr of migrations, avg. queries per second, open tables etc.
+             // Get database status, includes number of migrations, avg. queries per second, open tables etc.
              Route::get('status', 'DatabaseActionController@status');
         
              // Get latest Prequel version
@@ -61,16 +61,22 @@
                  // Insert new row
                  Route::post('insert/{database}/{table}', 'DatabaseActionController@insertNewRow');
             
-                 // Factory
-                 Route::get('factory/{database}/{table}/generate', 'DatabaseActionController@generateFactory');
-                 Route::get('factory/{database}/{table}/run', 'DatabaseActionController@runFactory');
+                 
+                 // Controller Actions
+                 Route::get('controller/{database}/{table}/generate', 'DatabaseActionController@generateController');
             
-                 // Seeding
+                 // Factory Actions
+                 Route::get('factory/{database}/{table}/generate', 'DatabaseActionController@generateFactory');
+            
+                 // Model Actions
+                 Route::get('model/{database}/{table}/generate', 'DatabaseActionController@generateModel');
+            
+                 // Resource Actions
+                 Route::get('resource/{database}/{table}/generate', 'DatabaseActionController@generateResource');
+            
+                 // Seeder Actions
                  Route::get('seed/{database}/{table}/generate', 'DatabaseActionController@generateSeeder');
                  Route::get('seed/{database}/{table}/run', 'DatabaseActionController@runSeeder');
-            
-                 // Model
-                 Route::get('model/{database}/{table}', 'DatabaseActionController@generateModel');
              });
         
          });

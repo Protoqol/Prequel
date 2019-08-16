@@ -4,15 +4,20 @@
     
     use Exception;
     use Carbon\Carbon;
-    use Illuminate\Support\Str;
     use Illuminate\Http\Request;
+    use Protoqol\Prequel\App\ModelAction;
+    use Protoqol\Prequel\App\SeederAction;
+    use Protoqol\Prequel\App\FactoryAction;
     use Illuminate\Routing\Controller;
     use Illuminate\Support\Facades\Artisan;
     use Protoqol\Prequel\App\AppStatus;
     use Protoqol\Prequel\App\Migrations;
     use Protoqol\Prequel\Facades\PDB;
-    use Symfony\Component\Filesystem\Filesystem;
+    use Protoqol\Prequel\App\ResourceAction;
+    use Protoqol\Prequel\Traits\resolveClass;
+    use Protoqol\Prequel\App\ControllerAction;
     use Protoqol\Prequel\Database\DatabaseAction;
+    use phpDocumentor\Reflection\DocBlock\Tags\See;
     use Protoqol\Prequel\Database\DatabaseTraverser;
     
     /**
@@ -39,7 +44,7 @@
         }
         
         /**
-         * Get some basic information about the table regarding management functionality.
+         * Check and return all Laravel specific assets for table (Model, Seeder, Controller etc.).
          *
          * @param string $database
          * @param string $table
@@ -49,28 +54,48 @@
          */
         public function getInfoAboutTable(string $database, string $table): array
         {
+            try {
+                $controller = (new ControllerAction())->getName($database, $table);
+            } catch (Exception $e) {
+                $controller = false;
+            }
             
             try {
-                $seeder = $this->checkAndGetSeederName($table);
+                $resource = (new ResourceAction())->getName($database, $table);
+            } catch (Exception $e) {
+                $resource = false;
+            }
+            
+            try {
+                $model = (new ModelAction())->getName($database, $table);
+            } catch (Exception $e) {
+                $model = false;
+            }
+            
+            try {
+                $seeder = (new SeederAction())->getName($database, $table);
             } catch (Exception $e) {
                 $seeder = false;
             }
             
             try {
-                $factory = $this->checkAndGetFactoryName($table);
+                $factory = (new FactoryAction())->getName($database, $table);
             } catch (Exception $e) {
                 $factory = false;
             }
             
-            
             return [
-                'model'   => (new DatabaseTraverser())->getModel($table)['namespace'] ?? false,
-                'seeder'  => $seeder,
-                'factory' => $factory,
+                'controller' => $controller,
+                'resource'   => $resource,
+                'model'      => $model,
+                'seeder'     => $seeder,
+                'factory'    => $factory,
             ];
         }
         
         /**
+         * Insert row in table.
+         *
          * @param \Illuminate\Http\Request $request
          *
          * @return array
@@ -84,6 +109,8 @@
         }
         
         /**
+         * Run raw SQL query.
+         *
          * @param string $database
          * @param string $table
          * @param string $query
@@ -141,6 +168,19 @@
         }
         
         /**
+         * Generate controller.
+         *
+         * @param string $database
+         * @param string $table
+         *
+         * @return mixed
+         */
+        public function generateController(string $database, string $table)
+        {
+            return (new ControllerAction())->generate($database, $table);
+        }
+        
+        /**
          * Generate factory.
          *
          * @param string $database
@@ -150,26 +190,33 @@
          */
         public function generateFactory(string $database, string $table)
         {
-            Artisan::call('make:factory', [
-                'name' => $this->generateClassName($table) . 'Factory',
-            ]);
-            
-            // Assumes a lot about the user's environment.
-            exec('composer dump-autoload');
-            
-            try {
-                return $this->checkAndGetFactoryName($table) ?? 0;
-            } catch (Exception $e) {
-                return 0;
-            }
+            return (new FactoryAction())->generate($database, $table);
         }
         
-        public function runFactory(string $database, string $table)
+        /**
+         * Generate model.
+         *
+         * @param string $database
+         * @param string $table
+         *
+         * @return int
+         */
+        public function generateModel(string $database, string $table)
         {
-            return Artisan::call('db:seed', [
-                '--class'    => $this->checkAndGetSeederName($table),
-                '--database' => $database,
-            ]);
+            return (new ModelAction())->generate($database, $table);
+        }
+        
+        /**
+         * Generate resource.
+         *
+         * @param string $database
+         * @param string $table
+         *
+         * @return mixed
+         */
+        public function generateResource(string $database, string $table)
+        {
+            return (new ResourceAction())->generate($database, $table);
         }
         
         /**
@@ -183,22 +230,11 @@
          */
         public function generateSeeder(string $database, string $table)
         {
-            Artisan::call('make:seeder', [
-                'name' => $this->generateClassName($table) . 'Seeder',
-            ]);
-            
-            // Assumes a lot about the user's environment.
-            exec('composer dump-autoload');
-            
-            try {
-                return $this->checkAndGetSeederName($table) ?? 0;
-            } catch (Exception $e) {
-                return 0;
-            }
+            return (new SeederAction())->generate($database, $table);
         }
         
         /**
-         * Run specified seeder.
+         * Run seeder.
          *
          * @param string $database
          * @param string $table
@@ -208,74 +244,6 @@
          */
         public function runSeeder(string $database, string $table)
         {
-            return Artisan::call('db:seed', [
-                '--class'    => $this->checkAndGetSeederName($table),
-                '--database' => $database,
-            ]);
-        }
-        
-        /**
-         * Resolve and check seeder for table.
-         *
-         * @param string $table
-         *
-         * @return string
-         * @throws \Exception
-         */
-        public function checkAndGetSeederName(string $table)
-        {
-            $seederClass = $this->generateClassName($table) . 'Seeder';
-            
-            if (!class_exists($seederClass)) {
-                throw new Exception($seederClass . ' could not be found or your seeder does not follow naming convention');
-            }
-            
-            return $seederClass;
-        }
-        
-        /**
-         * Resolve and check seeder for table.
-         *
-         * @param string $table
-         *
-         * @return string
-         * @throws \Exception
-         */
-        public function checkAndGetFactoryName(string $table)
-        {
-            $factoryFile = $this->generateClassName($table) . 'Factory';
-            
-            if (!file_exists(base_path('database/factories/' . $factoryFile . '.php'))) {
-                throw new Exception($factoryFile . ' could not be found or your factory does not follow naming convention');
-            }
-            
-            return $factoryFile;
-        }
-        
-        /**
-         * Generate model.
-         *
-         * @param string $database
-         * @param string $table
-         *
-         * @return int
-         */
-        public function generateModel(string $database, string $table)
-        {
-            return Artisan::call('make:model', [
-                'name' => $this->generateClassName($table),
-            ]);
-        }
-        
-        /**
-         * Generate SingularStudlyClassName.
-         *
-         * @param string $classname
-         *
-         * @return string
-         */
-        public function generateClassName(string $classname)
-        {
-            return Str::studly(Str::singular($classname));
+            return (new SeederAction())->run($database, $table);
         }
     }

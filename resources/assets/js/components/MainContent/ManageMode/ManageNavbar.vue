@@ -31,6 +31,11 @@
                     {{trans('table_management.log')}}
                 </a>
             </li>
+            <li :title="trans('table_management.export')" @click.prevent="setActiveTab($event)">
+                <a id="tab-settings" :class="this.inactiveClassName">
+                    {{trans('table_management.settings')}}
+                </a>
+            </li>
         </ul>
     </div>
 </template>
@@ -38,35 +43,35 @@
 <script>
   export default {
     name: 'ManageNavbar',
-    data() {
+    data () {
       return {
         'activeTabId'      : 'tab-newRow',
         'activeClassName'  : 'active',
         'inactiveClassName': 'inactive',
-      };
+      }
     },
 
     methods: {
-      setActiveTab: function(e) {
-        let el     = e.srcElement;
-        let prevEl = document.getElementById(this.activeTabId);
+      setActiveTab: function (e) {
+        let el     = e.srcElement
+        let prevEl = document.getElementById(this.activeTabId)
 
         if (prevEl.classList.contains(this.activeClassName)) {
-          prevEl.classList.remove(this.activeClassName);
-          prevEl.classList.add(this.inactiveClassName);
+          prevEl.classList.remove(this.activeClassName)
+          prevEl.classList.add(this.inactiveClassName)
         }
 
         if (el.classList.contains(this.inactiveClassName)) {
-          el.classList.remove(this.inactiveClassName);
-          el.classList.add(this.activeClassName);
+          el.classList.remove(this.inactiveClassName)
+          el.classList.add(this.activeClassName)
         }
 
-        this.activeTabId = el.id;
+        this.activeTabId = el.id
 
-        this.$emit('changeTab', el);
+        this.$emit('changeTab', el)
       },
     },
-  };
+  }
 </script>
 
 <style scoped lang="scss">

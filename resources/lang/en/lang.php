@@ -158,5 +158,6 @@
             'import'         => 'Import',
             'export'         => 'Export',
             'log'            => 'Log',
+            'settings'       => 'Settings',
         ],
     ];
