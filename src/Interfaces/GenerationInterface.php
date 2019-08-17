@@ -7,7 +7,7 @@
     {
         
         /**
-         * Generate
+         * Generate $generator
          *
          * @param string $database
          * @param string $table

@@ -4,13 +4,13 @@
     
     use Exception;
     use Illuminate\Support\Facades\Artisan;
-    use Protoqol\Prequel\Traits\resolveClass;
+    use Protoqol\Prequel\Traits\classResolver;
     use Protoqol\Prequel\Interfaces\GenerationInterface;
     
     class SeederAction implements GenerationInterface
     {
         
-        use resolveClass;
+        use classResolver;
         
         /**
          * Generate seeder.
@@ -26,15 +26,14 @@
             Artisan::call('make:seeder', [
                 'name' => $this->generateClassName($table) . 'Seeder',
             ]);
+    
+            $this->dumpAutoload();
             
-            // Assumes a lot about the user's environment.
-            exec('composer dump-autoload');
-            
-            return $this->getName($database, $table);
+            return (string)$this->getName($database, $table);
         }
         
         /**
-         * Run specified seeder.
+         * Run seeder.
          *
          * @param string $database
          * @param string $table
@@ -64,7 +63,7 @@
             try {
                 return $this->checkAndGetSeederName($table);
             } catch (Exception $e) {
-                return $e;
+                return false;
             }
         }
         
@@ -76,7 +75,7 @@
          * @return string
          * @throws \Exception
          */
-        public function checkAndGetSeederName(string $table)
+        private function checkAndGetSeederName(string $table)
         {
             $seederClass = $this->generateSeederName($table);
             

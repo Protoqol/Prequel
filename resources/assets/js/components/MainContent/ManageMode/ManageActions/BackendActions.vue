@@ -4,7 +4,7 @@
         <div class="button-wrapper">
             <div class="buttons">
                 <div class="action">
-                    <button title="Generate new model" :disabled="tableHasModel" @click="generateModel">
+                    <button title="Generate new model" :disabled="tableHasModel" @click="generate('model')">
                         <font-awesome-icon class="fa" icon="table"/>
                         <p>{{ tableHasModel ? 'Model exists' : 'Generate Model'}}</p>
                     </button>
@@ -14,7 +14,7 @@
                 </div>
                 <div class="action">
                     <button title="Generate Controller" :disabled="tableHasController !== false"
-                            @click="generateController">
+                            @click="generate('controller')">
                         <font-awesome-icon class="fa" icon="hat-wizard"/>
                         <p>{{ tableHasController ? 'Controller exists' : 'Generate Controller'}}</p>
                     </button>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="action">
                     <button title="Generate Resource" :disabled="tableHasResource !== false"
-                            @click="generateResource">
+                            @click="generate('resource')">
                         <font-awesome-icon class="fa" icon="stream"/>
                         <p>{{ tableHasResource ? 'Resource exists' : 'Generate Resource'}}</p>
                     </button>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="action">
-                    <button title="Generate new factory" :disabled="tableHasFactory" @click="generateFactory">
+                    <button title="Generate new factory" :disabled="tableHasFactory" @click="generate('factory')">
                         <font-awesome-icon class="fa" icon="industry"/>
                         <p>{{ tableHasFactory ? 'Factory exists' : 'Generate Factory'}}</p>
                     </button>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="action">
-                    <button title="Generate new seeder" :disabled="tableHasSeeder !== false" @click="generateSeeder">
+                    <button title="Generate new seeder" :disabled="tableHasSeeder !== false" @click="generate('seeder')">
                         <font-awesome-icon class="fa" icon="seedling"/>
                         <p>{{ tableHasSeeder ? 'Seeder exists' : 'Generate Seeder'}}</p>
                     </button>
@@ -103,12 +103,36 @@
     methods: {
 
       /**
+       * Generate `generator` ex. 'model', 'controller', 'resource' etc.
+       */
+      generate: async function (generator) {
+        this.clog(`Generating ${generator} for ${this.$root.table.table}...`, 'start')
+        this.inAction = true
+
+        await api.get(`/database/${generator}/${this.$root.table.database}/${this.$root.table.table}/generate`).
+          then(res => {
+            if (res) {
+              this.clog(`${capitalise(generator)} generation for ${this.$root.table.table} completed successfully`)
+            }
+          }).
+          catch(err => {
+            this.clog(`${err.response.data.message}`, 'error')
+          }).
+          finally(() => {
+            this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+            this.inAction = true
+            this.getInfo()
+          })
+      },
+
+      /**
        * Generate a model
        */
       generateModel: async function () {
         this.clog(`Generating model for ${this.$root.table.table}...`, 'start')
+        this.inAction = true
 
-        await api.get(`/database/model/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
+        await api.get(`/database/model/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
           if (res) {
             this.clog(`Model generation for ${this.$root.table.table} completed successfully`)
           }
@@ -126,18 +150,22 @@
        */
       generateController: async function () {
         this.clog(`Generating controller for ${this.$root.table.table}...`, 'start')
+        this.inAction = true
 
-        await api.get(`/database/controller/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
-          if (res) {
-            this.clog(`Controller generation for ${this.$root.table.table} completed successfully`)
-          }
-        }).catch(err => {
-          this.clog(`${err.response.data.message}`, 'error')
-        }).finally(() => {
-          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-          this.inAction = true
-          this.getInfo()
-        })
+        await api.get(`/database/controller/${this.$root.table.database}/${this.$root.table.table}/generate`).
+          then(res => {
+            if (res) {
+              this.clog(`Controller generation for ${this.$root.table.table} completed successfully`)
+            }
+          }).
+          catch(err => {
+            this.clog(`${err.response.data.message}`, 'error')
+          }).
+          finally(() => {
+            this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+            this.inAction = true
+            this.getInfo()
+          })
       },
 
       /**
@@ -145,18 +173,22 @@
        */
       generateResource: async function () {
         this.clog(`Generating resource for ${this.$root.table.table}...`, 'start')
+        this.inAction = true
 
-        await api.get(`/database/resource/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
-          if (res) {
-            this.clog(`Resource generation for ${this.$root.table.table} completed successfully`)
-          }
-        }).catch(err => {
-          this.clog(`${err.response.data.message}`, 'error')
-        }).finally(() => {
-          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-          this.inAction = true
-          this.getInfo()
-        })
+        await api.get(`/database/resource/${this.$root.table.database}/${this.$root.table.table}/generate`).
+          then(res => {
+            if (res) {
+              this.clog(`Resource generation for ${this.$root.table.table} completed successfully`)
+            }
+          }).
+          catch(err => {
+            this.clog(`${err.response.data.message}`, 'error')
+          }).
+          finally(() => {
+            this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+            this.inAction = true
+            this.getInfo()
+          })
       },
 
       /**
@@ -164,6 +196,7 @@
        */
       generateFactory: async function () {
         this.clog(`Generating factory for ${this.$root.table.table}...`, 'start')
+        this.inAction = true
 
         await api.get(`/database/factory/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
           if (res) {
@@ -208,6 +241,7 @@
         this.clog(
           `Running seeder for ${this.$root.table.table} ${seederCountLock} time${seederCountLock > 1 ? 's' : ''}...`,
           'start')
+        this.inAction = true
 
         let ranIntoError = false
         for (let i = 1; i <= seederCountLock; i++) {
@@ -226,6 +260,7 @@
 
           if (ranIntoError === true) {
             this.clog('Your request was halted because of the error stated above.', 'info')
+            this.inAction = false
             break
           }
         }

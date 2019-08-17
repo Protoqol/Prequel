@@ -7,7 +7,7 @@
     use Illuminate\Routing\Controller;
     use Illuminate\Support\Facades\Route;
     use Protoqol\Prequel\App\AppStatus;
-    use Protoqol\Prequel\App\Migrations;
+    use Protoqol\Prequel\App\MigrationAction;
     use Protoqol\Prequel\Connection\DatabaseConnector;
     use Protoqol\Prequel\Database\DatabaseTraverser;
     use Protoqol\Prequel\Facades\PDB;
@@ -136,7 +136,7 @@
          */
         public function runMigrations()
         {
-            return (new Migrations())->run();
+            return (new MigrationAction())->run();
         }
         
         /**
@@ -145,6 +145,6 @@
          */
         public function resetMigrations()
         {
-            return (new Migrations())->reset();
+            return (new MigrationAction())->reset();
         }
     }

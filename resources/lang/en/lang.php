@@ -11,7 +11,7 @@
             'neutral'    => 'neutral',
             'critical'   => 'critical',
             'warning'    => 'warning',
-            'migrations' => 'Migrations',
+            'migrations' => 'MigrationAction',
             'length'     => 'Length',
             'tables'     => 'tables',
         ],

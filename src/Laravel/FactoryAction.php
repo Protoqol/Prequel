@@ -1,18 +1,16 @@
 <?php
     
-    
     namespace Protoqol\Prequel\App;
-    
     
     use Exception;
     use Illuminate\Support\Facades\Artisan;
-    use Protoqol\Prequel\Traits\resolveClass;
+    use Protoqol\Prequel\Traits\classResolver;
     use Protoqol\Prequel\Interfaces\GenerationInterface;
     
     class FactoryAction implements GenerationInterface
     {
         
-        use resolveClass;
+        use classResolver;
         
         /**
          * Generate factory.
@@ -21,6 +19,7 @@
          * @param string $table
          *
          * @return int|string
+         * @throws \Exception
          */
         public function generate(string $database, string $table)
         {
@@ -28,14 +27,9 @@
                 'name' => $this->generateFactoryName($table),
             ]);
             
-            // Assumes a lot about the user's environment.
-            exec('composer dump-autoload');
+            $this->dumpAutoload();
             
-            try {
-                return $this->checkAndGetFactoryName($table) ?? 0;
-            } catch (Exception $e) {
-                return 0;
-            }
+            return (string)$this->getName($database, $table);
         }
         
         /**
@@ -52,7 +46,7 @@
             try {
                 return $this->checkAndGetFactoryName($table);
             } catch (Exception $e) {
-                return $e;
+                return false;
             }
         }
         

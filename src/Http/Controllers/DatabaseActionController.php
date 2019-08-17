@@ -11,10 +11,10 @@
     use Illuminate\Routing\Controller;
     use Illuminate\Support\Facades\Artisan;
     use Protoqol\Prequel\App\AppStatus;
-    use Protoqol\Prequel\App\Migrations;
+    use Protoqol\Prequel\App\MigrationAction;
     use Protoqol\Prequel\Facades\PDB;
     use Protoqol\Prequel\App\ResourceAction;
-    use Protoqol\Prequel\Traits\resolveClass;
+    use Protoqol\Prequel\Traits\classResolver;
     use Protoqol\Prequel\App\ControllerAction;
     use Protoqol\Prequel\Database\DatabaseAction;
     use phpDocumentor\Reflection\DocBlock\Tags\See;
@@ -54,42 +54,12 @@
          */
         public function getInfoAboutTable(string $database, string $table): array
         {
-            try {
-                $controller = (new ControllerAction())->getName($database, $table);
-            } catch (Exception $e) {
-                $controller = false;
-            }
-            
-            try {
-                $resource = (new ResourceAction())->getName($database, $table);
-            } catch (Exception $e) {
-                $resource = false;
-            }
-            
-            try {
-                $model = (new ModelAction())->getName($database, $table);
-            } catch (Exception $e) {
-                $model = false;
-            }
-            
-            try {
-                $seeder = (new SeederAction())->getName($database, $table);
-            } catch (Exception $e) {
-                $seeder = false;
-            }
-            
-            try {
-                $factory = (new FactoryAction())->getName($database, $table);
-            } catch (Exception $e) {
-                $factory = false;
-            }
-            
             return [
-                'controller' => $controller,
-                'resource'   => $resource,
-                'model'      => $model,
-                'seeder'     => $seeder,
-                'factory'    => $factory,
+                'controller' => (new ControllerAction())->getName($database, $table),
+                'resource'   => (new ResourceAction())->getName($database, $table),
+                'model'      => (new ModelAction())->getName($database, $table),
+                'seeder'     => (new SeederAction())->getName($database, $table),
+                'factory'    => (new FactoryAction())->getName($database, $table),
             ];
         }
         
@@ -155,7 +125,7 @@
          */
         public function runMigrations()
         {
-            return (new Migrations())->run();
+            return (new MigrationAction())->run();
         }
         
         /**
@@ -164,7 +134,7 @@
          */
         public function resetMigrations()
         {
-            return (new Migrations())->reset();
+            return (new MigrationAction())->reset();
         }
         
         /**
@@ -174,6 +144,7 @@
          * @param string $table
          *
          * @return mixed
+         * @throws \Exception
          */
         public function generateController(string $database, string $table)
         {

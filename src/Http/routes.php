@@ -48,7 +48,7 @@
                  Route::get('count/{database}/{table}', 'DatabaseController@count');
                  Route::get('find/{database}/{table}/{column}/{type}/{value}', 'DatabaseController@findInTable');
             
-                 // Migrations, run or reset
+                 // MigrationAction, run or reset
                  Route::get('migrations/run', 'DatabaseActionController@runMigrations');
                  Route::get('migrations/reset', 'DatabaseActionController@resetMigrations');
             
@@ -75,8 +75,8 @@
                  Route::get('resource/{database}/{table}/generate', 'DatabaseActionController@generateResource');
             
                  // Seeder Actions
-                 Route::get('seed/{database}/{table}/generate', 'DatabaseActionController@generateSeeder');
-                 Route::get('seed/{database}/{table}/run', 'DatabaseActionController@runSeeder');
+                 Route::get('seeder/{database}/{table}/generate', 'DatabaseActionController@generateSeeder');
+                 Route::get('seeder/{database}/{table}/run', 'DatabaseActionController@runSeeder');
              });
         
          });

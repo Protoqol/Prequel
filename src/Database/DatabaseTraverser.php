@@ -4,6 +4,7 @@
     
     use Illuminate\Support\Arr;
     use Illuminate\Support\Str;
+    use Protoqol\Prequel\Traits\classResolver;
     use Protoqol\Prequel\Connection\DatabaseConnector;
     
     /**
@@ -12,6 +13,8 @@
      */
     class DatabaseTraverser
     {
+        
+        use classResolver;
         
         /**
          * Type of database e.g. mysql, postgres, sqlite or sql server
@@ -101,11 +104,12 @@
                 return false;
             }
             
-            $rootNamespace = app()->getNamespace();
-            $modelName     = Str::studly(Str::singular($tableName));
+            $rootNamespace   = app()->getNamespace();
+            $configNamespace = $this->configNamespaceResolver('model');
+            $modelName       = Str::studly(Str::singular($tableName));
             
-            foreach (['', 'Model\\', 'Models\\'] as $subNamespace) {
-                $model = $rootNamespace . $subNamespace . $modelName;
+            foreach (['', 'Model\\', 'Models\\', $configNamespace->namespace] as $subNamespace) {
+                $model = $rootNamespace . $subNamespace . $modelName . $configNamespace->suffix;
                 if (class_exists($model)) {
                     return [
                         'model'     => new $model,

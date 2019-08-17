@@ -1,17 +1,16 @@
 <?php
     
-    
     namespace Protoqol\Prequel\App;
     
     use Exception;
     use Illuminate\Support\Facades\Artisan;
-    use Protoqol\Prequel\Traits\resolveClass;
+    use Protoqol\Prequel\Traits\classResolver;
     use Protoqol\Prequel\Interfaces\GenerationInterface;
     
     class ControllerAction implements GenerationInterface
     {
         
-        use resolveClass;
+        use classResolver;
         
         /**
          * Generate
@@ -28,7 +27,9 @@
                 'name' => $this->generateControllerName($table),
             ]);
             
-            return $this->getName($database, $table);
+            $this->dumpAutoload();
+            
+            return (string)$this->getName($database, $table);
         }
         
         /**
@@ -45,7 +46,7 @@
             try {
                 return $this->checkAndGetControllerName($table);
             } catch (Exception $e) {
-                return $e;
+                return false;
             }
         }
         
