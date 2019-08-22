@@ -26,7 +26,8 @@
                 @resetSearchInTable="checkUrlParameters"
                 @shouldBeLoading="table.loading = true"
                 @enhanceReadability="readabilityEnhancer"
-                @collapseSideBar="sideBarCollapseHandler"/>
+                @collapseSideBar="sideBarCollapseHandler"
+                @refresh="getTableData(`${table.database}.${table.table}`, false, true)"/>
 
         <Paginator
                 v-if="table.currentActiveName.length !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"

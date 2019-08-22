@@ -5,6 +5,7 @@
     
     use FilesystemIterator;
     use Illuminate\Support\Facades\Artisan;
+    use Protoqol\Prequel\Traits\classResolver;
     use Protoqol\Prequel\Connection\DatabaseConnector;
     use Protoqol\Prequel\Interfaces\GenerationInterface;
     
@@ -15,13 +16,33 @@
     class MigrationAction implements GenerationInterface
     {
         
+        use classResolver;
+        
+        /**
+         * @var string $database
+         */
+        private $database;
+        
+        /**
+         * @var string $table
+         */
+        private $table;
+        
+        /**
+         * @var $connection
+         */
         private $connection;
         
         /**
-         * MigrationAction constructor.
+         * ControllerAction constructor.
+         *
+         * @param string $database
+         * @param string $table
          */
-        public function __construct()
+        public function __construct(string $database, string $table)
         {
+            $this->database   = $database;
+            $this->table      = $table;
             $this->connection = (new DatabaseConnector())->getConnection();
         }
         
@@ -64,27 +85,37 @@
         
         /**
          * Generate $generator
-         *
-         * @param string $database
-         * @param string $table
-         *
          * @return mixed
          */
-        public function generate(string $database, string $table)
+        public function generate()
         {
             // TODO: Implement generate() method.
         }
         
         /**
-         * Get class name, when possible with namespace
-         *
-         * @param string $database
-         * @param string $table
-         *
+         * Get fully qualified class name
          * @return mixed
          */
-        public function getName(string $database, string $table)
+        public function getQualifiedName()
         {
-            // TODO: Implement getName() method.
+            // TODO: Implement getQualifiedName() method.
+        }
+        
+        /**
+         * Get class name
+         * @return mixed
+         */
+        public function getClassname()
+        {
+            // TODO: Implement getClassname() method.
+        }
+        
+        /**
+         * Get class namespace
+         * @return mixed
+         */
+        public function getNamespace()
+        {
+            // TODO: Implement getNamespace() method.
         }
     }

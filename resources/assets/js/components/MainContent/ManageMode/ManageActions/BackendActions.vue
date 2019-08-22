@@ -6,19 +6,19 @@
                 <div class="action">
                     <button title="Generate new model" :disabled="tableHasModel" @click="generate('model')">
                         <font-awesome-icon class="fa" icon="table"/>
-                        <p>{{ tableHasModel ? 'Model exists' : 'Generate Model'}}</p>
+                        <span>{{ tableHasModel ? 'Model exists' : 'Generate Model'}}</span>
                     </button>
-                    <div class="runnable" :class="tableHasModel ? 'pill-green' : 'pill-red'">
-                        <p>{{ tableHasModel ? tableHasModel : 'No existing model' }}</p>
+                    <div class="runnable ellipseLeft" :class="tableHasModel ? 'pill-green' : 'pill-red'">
+                        <span>{{ tableHasModel ? tableHasModel : 'No existing model' }}</span>
                     </div>
                 </div>
                 <div class="action">
                     <button title="Generate Controller" :disabled="tableHasController !== false"
                             @click="generate('controller')">
                         <font-awesome-icon class="fa" icon="hat-wizard"/>
-                        <p>{{ tableHasController ? 'Controller exists' : 'Generate Controller'}}</p>
+                        <span>{{ tableHasController ? 'Controller exists' : 'Generate Controller'}}</span>
                     </button>
-                    <div class="runnable" :class="tableHasController ? 'pill-green' : 'pill-red'">
+                    <div class="runnable ellipseLeft" :class="tableHasController ? 'pill-green' : 'pill-red'">
                         {{ tableHasController ? tableHasController : 'No existing controller' }}
                     </div>
                 </div>
@@ -26,25 +26,26 @@
                     <button title="Generate Resource" :disabled="tableHasResource !== false"
                             @click="generate('resource')">
                         <font-awesome-icon class="fa" icon="stream"/>
-                        <p>{{ tableHasResource ? 'Resource exists' : 'Generate Resource'}}</p>
+                        <span>{{ tableHasResource ? 'Resource exists' : 'Generate Resource'}}</span>
                     </button>
-                    <div class="runnable" :class="tableHasResource ? 'pill-green' : 'pill-red'">
+                    <div class="runnable ellipseLeft" :class="tableHasResource ? 'pill-green' : 'pill-red'">
                         {{ tableHasResource ? tableHasResource : 'No existing resource' }}
                     </div>
                 </div>
                 <div class="action">
                     <button title="Generate new factory" :disabled="tableHasFactory" @click="generate('factory')">
                         <font-awesome-icon class="fa" icon="industry"/>
-                        <p>{{ tableHasFactory ? 'Factory exists' : 'Generate Factory'}}</p>
+                        <span>{{ tableHasFactory ? 'Factory exists' : 'Generate Factory'}}</span>
                     </button>
-                    <div class="runnable" :class="tableHasFactory ? 'pill-green' : 'pill-red'">
+                    <div class="runnable ellipseLeft" :class="tableHasFactory ? 'pill-green' : 'pill-red'">
                         {{ tableHasFactory ? tableHasFactory : 'No existing factory' }}
                     </div>
                 </div>
                 <div class="action">
-                    <button title="Generate new seeder" :disabled="tableHasSeeder !== false" @click="generate('seeder')">
+                    <button title="Generate new seeder" :disabled="tableHasSeeder !== false"
+                            @click="generate('seeder')">
                         <font-awesome-icon class="fa" icon="seedling"/>
-                        <p>{{ tableHasSeeder ? 'Seeder exists' : 'Generate Seeder'}}</p>
+                        <span>{{ tableHasSeeder ? 'Seeder exists' : 'Generate Seeder'}}</span>
                     </button>
                     <button v-if="tableHasSeeder !== false" class="runnable" :disabled="tableHasSeeder === false"
                             @click="runSeeder">
@@ -106,129 +107,23 @@
        * Generate `generator` ex. 'model', 'controller', 'resource' etc.
        */
       generate: async function (generator) {
-        this.clog(`Generating ${generator} for ${this.$root.table.table}...`, 'start')
+        this.conslog(`Generating ${generator} for ${this.$root.table.table}...`, 'start')
         this.inAction = true
 
         await api.get(`/database/${generator}/${this.$root.table.database}/${this.$root.table.table}/generate`).
           then(res => {
             if (res) {
-              this.clog(`${capitalise(generator)} generation for ${this.$root.table.table} completed successfully`)
+              this.conslog(`${capitalise(generator)} generation for ${this.$root.table.table} completed successfully`)
             }
           }).
           catch(err => {
-            this.clog(`${err.response.data.message}`, 'error')
+            this.conslog(`${err.response.data.message}`, 'error')
           }).
           finally(() => {
-            this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+            this.conslog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
             this.inAction = true
             this.getInfo()
           })
-      },
-
-      /**
-       * Generate a model
-       */
-      generateModel: async function () {
-        this.clog(`Generating model for ${this.$root.table.table}...`, 'start')
-        this.inAction = true
-
-        await api.get(`/database/model/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
-          if (res) {
-            this.clog(`Model generation for ${this.$root.table.table} completed successfully`)
-          }
-        }).catch(err => {
-          this.clog(`${err.response.data.message}`, 'error')
-        }).finally(() => {
-          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-          this.inAction = true
-          this.getInfo()
-        })
-      },
-
-      /**
-       * Generate a controller
-       */
-      generateController: async function () {
-        this.clog(`Generating controller for ${this.$root.table.table}...`, 'start')
-        this.inAction = true
-
-        await api.get(`/database/controller/${this.$root.table.database}/${this.$root.table.table}/generate`).
-          then(res => {
-            if (res) {
-              this.clog(`Controller generation for ${this.$root.table.table} completed successfully`)
-            }
-          }).
-          catch(err => {
-            this.clog(`${err.response.data.message}`, 'error')
-          }).
-          finally(() => {
-            this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-            this.inAction = true
-            this.getInfo()
-          })
-      },
-
-      /**
-       * Generate a resource controller
-       */
-      generateResource: async function () {
-        this.clog(`Generating resource for ${this.$root.table.table}...`, 'start')
-        this.inAction = true
-
-        await api.get(`/database/resource/${this.$root.table.database}/${this.$root.table.table}/generate`).
-          then(res => {
-            if (res) {
-              this.clog(`Resource generation for ${this.$root.table.table} completed successfully`)
-            }
-          }).
-          catch(err => {
-            this.clog(`${err.response.data.message}`, 'error')
-          }).
-          finally(() => {
-            this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-            this.inAction = true
-            this.getInfo()
-          })
-      },
-
-      /**
-       * Generate a factory
-       */
-      generateFactory: async function () {
-        this.clog(`Generating factory for ${this.$root.table.table}...`, 'start')
-        this.inAction = true
-
-        await api.get(`/database/factory/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
-          if (res) {
-            this.clog(`Factory generation for ${this.$root.table.table} completed successfully`)
-          }
-        }).catch(err => {
-          this.clog(`${err.response.data.message}`, 'error')
-        }).finally(() => {
-          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-          this.inAction = true
-          this.getInfo()
-        })
-      },
-
-      /**
-       * Generate a seeder
-       */
-      generateSeeder: async function () {
-        this.clog(`Generating seeder for ${this.tableHasModel}...`, 'start')
-        this.inAction = true
-
-        await api.get(`/database/seed/${this.$root.table.database}/${this.$root.table.table}/generate`).then(res => {
-          if (res) {
-            this.clog(`Seeder generation for ${this.$root.table.table} completed successfully`)
-          }
-        }).catch(err => {
-          this.clog(`${err.response.data.message}`, 'error')
-        }).finally(() => {
-          this.clog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-          this.inAction = true
-          this.getInfo()
-        })
       },
 
       /**
@@ -238,32 +133,36 @@
         // Prevent user from adding additional seeder while in runtime
         let seederCountLock = this.seederCount
 
-        this.clog(
+        this.conslog(
           `Running seeder for ${this.$root.table.table} ${seederCountLock} time${seederCountLock > 1 ? 's' : ''}...`,
           'start')
+
         this.inAction = true
 
         let ranIntoError = false
         for (let i = 1; i <= seederCountLock; i++) {
-          await api.get(`database/seed/${this.$root.table.database}/${this.$root.table.table}/run`).then(res => {
+          await api.get(`database/seeder/${this.$root.table.database}/${this.$root.table.table}/run`).then(res => {
             if (res) {
-              this.clog(`Seeding request #${i} complete`)
+              this.conslog(`Seeding request #${i} complete`)
 
               if (i === seederCountLock) {
-                this.clog(`Seeding completed`, 'info')
+                this.conslog(`Seeding completed`, 'info')
               }
             }
           }).catch(err => {
-            this.clog(`${err.response.data.message}`, 'error')
+            this.conslog(`${err.response.data.message}`, 'error')
             ranIntoError = true
           })
 
           if (ranIntoError === true) {
-            this.clog('Your request was halted because of the error stated above.', 'info')
+            this.conslog('Your request was halted because of the error stated above.', 'info')
             this.inAction = false
             break
           }
         }
+
+        this.conslog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
+        this.getInfo()
       },
 
       /**
@@ -288,20 +187,20 @@
        * @param str
        * @param type
        */
-      clog: function (str, type = 'neutral') {
+      conslog: function (str, type = 'neutral') {
 
         switch (type) {
           case 'neutral':
             this.log.push(`> ${str}<br>`)
             break
           case 'error':
-            this.log.push(`><span class="text-red-400"> ERROR: ${str}<br></span>`)
+            this.log.push(`><span class="monospaced text-red-400"> ERROR: ${str}<br></span>`)
             break
           case 'info':
-            this.log.push(`><span class="text-orange-400"> INFO: ${str}<br></span>`)
+            this.log.push(`><span class="monospaced text-orange-400"> INFO: ${str}<br></span>`)
             break
           case 'start':
-            this.log.push(`><span class="text-green-400"> START: ${str}<br></span>`)
+            this.log.push(`><span class="monospaced text-green-400"> START: ${str}<br></span>`)
             break
         }
 
@@ -329,6 +228,7 @@
 </script>
 
 <style scoped lang="scss">
+
     button {
         @apply m-auto;
         @apply py-1;
@@ -374,6 +274,13 @@
         @apply text-xl;
         @apply font-semibold;
         @apply text-gray-800;
+    }
+
+    .ellipseLeft {
+        white-space   : nowrap;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+        direction     : rtl;
     }
 
     .logger {
@@ -483,7 +390,7 @@
                             @apply w-1/4;
                         }
 
-                        p {
+                        span {
                             @apply text-left;
                             @apply w-3/4;
                         }

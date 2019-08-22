@@ -6,11 +6,10 @@
             <font-awesome-icon class="ml-1" icon="glasses"/>&nbsp;
         </button>
 
-        <button
-            class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
-            :title="trans('header.buttons.dark_mode')"
-            :class="darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
-            @click="darkModeButtonHandler">
+        <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+                :title="trans('header.buttons.dark_mode')"
+                :class="darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
+                @click="darkModeButtonHandler">
             <font-awesome-icon class="ml-1" icon="adjust"/>&nbsp;
         </button>
 
@@ -21,24 +20,30 @@
                                :class="showSideBar ? 'chevron-point-left' : 'chevron-point-right'"
                                icon="chevron-circle-up"/>&nbsp;
         </button>
+
+        <button class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+                :title="trans('header.buttons.refresh')"
+                @click="refreshButtonHandler">
+            <font-awesome-icon class="ml-1" icon="sync-alt"/>&nbsp;
+        </button>
     </div>
 </template>
 
 <script>
   export default {
     name: 'SettingButtons',
-    data() {
+    data () {
       return {
         sideBarStatusText: 'Collapse',
         showSideBar      : false,
         readability      : true,
         darkMode         : false,
-      };
+      }
     },
 
-    created() {
-      this.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false;
-      this.changeTheme();
+    created () {
+      this.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false
+      this.changeTheme()
     },
 
     methods: {
@@ -47,63 +52,68 @@
        | Handles config changes.
        | Holds data like readability or side bar preferences in localStorage
        */
-      configHandler: function() {
+      configHandler: function () {
         if (window.localStorage.getItem('readability')) {
-          this.readability = (window.localStorage.getItem('readability') === 'true');
+          this.readability = (window.localStorage.getItem('readability') === 'true')
         }
         else {
-          window.localStorage.setItem('readability', 'true');
+          window.localStorage.setItem('readability', 'true')
         }
 
         if (window.localStorage.getItem('showSidebar')) {
-          this.showSideBar = (window.localStorage.getItem('showSidebar') === 'false');
+          this.showSideBar = (window.localStorage.getItem('showSidebar') === 'false')
         }
         else {
-          window.localStorage.setItem('showSidebar', 'false');
+          window.localStorage.setItem('showSidebar', 'false')
         }
+      },
+
+      refreshButtonHandler: function () {
+        console.log('refreshing...')
+        this.$emit('refresh')
       },
 
       /**
        | Handles collapse button action
        | Emits event to collapse/expand sidebar.
        */
-      sideBarButtonHandler: function() {
-        this.showSideBar       = !this.showSideBar;
-        this.sideBarStatusText = this.showSideBar ? 'Collapse' : 'Expand';
-        this.$emit('collapseSideBar');
+      sideBarButtonHandler: function () {
+        this.showSideBar       = !this.showSideBar
+        this.sideBarStatusText = this.showSideBar ? 'Collapse' : 'Expand'
+        this.$emit('collapseSideBar')
       },
 
       /**
        | Handles readability button actions.
        | Emits event to change readability globally.
        */
-      readabilityButtonHandler: function() {
-        this.readability = !this.readability;
-        this.$emit('enhanceReadability');
+      readabilityButtonHandler: function () {
+        this.readability = !this.readability
+        this.$emit('enhanceReadability')
       },
 
       /**
        | Handles dark mode button actions.
        */
-      darkModeButtonHandler: function() {
-        this.darkMode = !this.darkMode;
-        localStorage.setItem('dark-mode', JSON.stringify(this.darkMode));
-        this.changeTheme();
+      darkModeButtonHandler: function () {
+        this.darkMode = !this.darkMode
+        localStorage.setItem('dark-mode', JSON.stringify(this.darkMode))
+        this.changeTheme()
       },
 
       /**
        | Change theme to dark mode
        */
-      changeTheme: function() {
+      changeTheme: function () {
         if (this.darkMode) {
-          document.body.classList.add('theme-dark');
+          document.body.classList.add('theme-dark')
         }
         else {
-          document.body.classList.remove('theme-dark');
+          document.body.classList.remove('theme-dark')
         }
       },
     },
-  };
+  }
 </script>
 
 <style scoped lang="scss">

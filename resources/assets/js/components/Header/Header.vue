@@ -17,7 +17,8 @@
             <SettingButtons v-if="!error.error" class="header-right"
                             @collapseSideBar="$emit('collapseSideBar')"
                             @enhanceReadability="$emit('enhanceReadability')"
-                            @setDarkMode="changeTheme($event)"/>
+                            @setDarkMode="changeTheme($event)"
+                            @refresh="$emit('refresh')"/>
         </div>
         <span class="header-bottom"></span>
     </div>

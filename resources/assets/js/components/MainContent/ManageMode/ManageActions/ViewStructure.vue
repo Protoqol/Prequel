@@ -6,22 +6,22 @@
                     <thead>
                     <tr>
                         <th class="table-th">
-                            <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
+                            <p @click.prevent>
                                 {{trans('table_empty.col_key')}}
                             </p>
                         </th>
                         <th class="table-th">
-                            <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
+                            <p @click.prevent>
                                 {{trans('table_empty.col_field')}}
                             </p>
                         </th>
                         <th class="table-th">
-                            <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
+                            <p @click.prevent>
                                 {{trans('table_empty.col_def')}}
                             </p>
                         </th>
                         <th class="table-th">
-                            <p class="text-xs font-light text-secondary -mt-1" @click.prevent>
+                            <p @click.prevent>
                                 {{trans('table_empty.col_type')}}
                             </p>
                         </th>
@@ -53,7 +53,7 @@
   export default {
     name : 'ViewStructure',
     props: ['structure'],
-  };
+  }
 </script>
 
 <style scoped lang="scss">
@@ -105,6 +105,13 @@
                             @apply text-sm;
                             @apply mx-10;
                             @apply text-center;
+
+                            p {
+                                @apply text-xs;
+                                @apply font-light;
+                                @apply text-secondary;
+                                @apply -mt-1;
+                            }
                         }
                     }
 

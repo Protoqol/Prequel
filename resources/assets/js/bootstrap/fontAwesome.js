@@ -17,7 +17,7 @@ import {
   faSave,
   faIndustry,
   faBirthdayCake,
-  faSeedling, faStream, faHatWizard,
+  faSeedling, faStream, faHatWizard, faSyncAlt, faSync,
 }                          from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -41,6 +41,8 @@ library.add(
   faSeedling,
   faStream,
   faHatWizard,
+  faSyncAlt,
+  faSync,
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

@@ -40,7 +40,7 @@
         public function getStatus(): array
         {
             return [
-                'migrations'  => (new MigrationAction())->pending(),
+                'migrations'  => (new MigrationAction('', ''))->pending(),
                 'serverInfo'  => $this->serverInfo(),
                 'permissions' => $this->userPermissions(),
             ];

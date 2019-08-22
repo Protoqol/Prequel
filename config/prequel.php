@@ -40,7 +40,7 @@
         
         'path' => 'prequel',
         
-        		
+        
         /*
         |--------------------------------------------------------------------------
         | Laravel asset generation suffix and namespace definition
@@ -49,22 +49,23 @@
         | Here you can define your preferred asset suffixes and directory/namespaces.
         | Separate with a double backwards slash to define namespace and directory
         | location. Everything after the last '\\' will be treated as a suffix.
+        | Note that the backslash needs to be escaped with an extra backslash
         |
         | For example
         |
         |  Configuration
         |     'suffixes' => [
         |           'model'  => 'Models\\Model',
-        |           'seeder' => 'MyMadeUpSeederPrefix'
+        |           'seeder' => 'MyMadeUpSeederSuffix'
         |       ]
         |
         |  When generating for `users` table
         |     (directory) app/models/UserModel.php
-        |     (qualified class) App\\Models\\UserModel
-        |     (directory) database/seeds/UserMyMadeUpSeederPrefix.php
+        |     (qualified class) App\Models\UserModel
+        |     (directory) database/seeds/UserMyMadeUpSeederSuffix.php
         |
         */
-                
+        
         'suffixes' => [
             'model'      => 'Models\\',
             'seeder'     => 'Seeder',

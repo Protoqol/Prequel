@@ -2,6 +2,7 @@
     
     namespace Protoqol\Prequel\App;
     
+    use Exception;
     use Carbon\Carbon;
     use Illuminate\Support\Facades\Artisan;
     use Protoqol\Prequel\Traits\classResolver;
@@ -14,37 +15,42 @@
         use classResolver;
         
         /**
-         * Generate
+         * @var string $database
+         */
+        private $database;
+        
+        /**
+         * @var string $table
+         */
+        private $table;
+        
+        /**
+         * ControllerAction constructor.
          *
          * @param string $database
          * @param string $table
-         *
-         * @return mixed
          */
-        public function generate(string $database, string $table)
+        public function __construct(string $database, string $table)
         {
-            Artisan::call('make:model', [
-                'name' => $this->generateModelName($table),
-            ]);
-            
-            $this->setActualTable($table, (bool)($this->configNamespaceResolver('model')->suffix === ''));
-            
-            $this->dumpAutoload();
-            
-            return (string)$this->getName($database, $table);
+            $this->database = $database;
+            $this->table    = $table;
         }
         
         /**
-         * Get class name, when possible with namespace
-         *
-         * @param string $database
-         * @param string $table
-         *
+         * Generate
          * @return mixed
          */
-        public function getName(string $database, string $table)
+        public function generate()
         {
-            return (new DatabaseTraverser())->getModel($table)['namespace'] ?? false;
+            Artisan::call('make:model', [
+                'name' => $this->generateModelName($this->table),
+            ]);
+            
+            $this->setActualTable($this->table, (bool)($this->configNamespaceResolver('model')->suffix === ''));
+            
+            $this->dumpAutoload();
+            
+            return (string)$this->getQualifiedName();
         }
         
         /**
@@ -85,5 +91,62 @@
         public function setActualConnection()
         {
             // STUB
+        }
+        
+        /**
+         * Get fully qualified class name
+         * @return mixed
+         */
+        public function getQualifiedName()
+        {
+            try {
+                return $this->generateModelName($this->table);
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+        
+        /**
+         * Get class name
+         * @return mixed
+         */
+        public function getClassname()
+        {
+            $class = $this->getQualifiedName();
+            
+            if (!$class) {
+                return false;
+            }
+            
+            $arr   = explode("\\", $class);
+            $count = count($arr);
+            
+            return $arr[$count - 1];
+        }
+        
+        /**
+         * Get class namespace
+         * @return mixed
+         */
+        public function getNamespace()
+        {
+            $class = $this->getQualifiedName();
+            
+            if (!$class) {
+                return false;
+            }
+            
+            $arr       = explode("\\", $class);
+            $count     = count($arr);
+            $namespace = "";
+            
+            for ($i = 0; $i < $count; $i++) {
+                if ($i === ($count - 1)) {
+                    break;
+                }
+                $namespace .= (string)$arr[$i] . "\\";
+            }
+            
+            return $namespace;
         }
     }

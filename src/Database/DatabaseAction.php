@@ -19,7 +19,7 @@
         
         public function insertNewRow(array $data)
         {
-            return (string)PDB::create($this->database, $this->table)->insert($data);
+            return PDB::create($this->database, $this->table)->insert($data);
         }
         
     }

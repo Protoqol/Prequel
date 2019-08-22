@@ -1,5 +1,5 @@
 <template>
-    <div v-cloak v-if="app" id="dbManagement" class="database-management">
+    <div v-cloak v-if="app && app.length" id="dbManagement" class="database-management">
         <div class="overview" v-if="app.serverInfo">
             <h1>{{trans('dashboard.overview')}}</h1>
             <div class="status-cards" v-cloak>

@@ -55,11 +55,11 @@
         public function getInfoAboutTable(string $database, string $table): array
         {
             return [
-                'controller' => (new ControllerAction())->getName($database, $table),
-                'resource'   => (new ResourceAction())->getName($database, $table),
-                'model'      => (new ModelAction())->getName($database, $table),
-                'seeder'     => (new SeederAction())->getName($database, $table),
-                'factory'    => (new FactoryAction())->getName($database, $table),
+                'controller' => (new ControllerAction($database, $table))->getQualifiedName(),
+                'resource'   => (new ResourceAction($database, $table))->getQualifiedName(),
+                'model'      => (new ModelAction($database, $table))->getQualifiedName(),
+                'seeder'     => (new SeederAction($database, $table))->getQualifiedName(),
+                'factory'    => (new FactoryAction($database, $table))->getQualifiedName(),
             ];
         }
         
@@ -72,9 +72,14 @@
          */
         public function insertNewRow(Request $request): array
         {
+            try {
+                $res = (new DatabaseAction($request->database, $request->table))->insertNewRow($request->post('data'));
+            } catch (Exception $e) {
+                throw new $e;
+            }
+            
             return [
-                'success' => (string)(new DatabaseAction($request->database, $request->table))
-                    ->insertNewRow($request->post('data')),
+                'success' => $res,
             ];
         }
         
@@ -121,20 +126,28 @@
         
         /**
          * Run pending migrations.
+         *
+         * @param string $database
+         * @param string $table
+         *
          * @return int
          */
-        public function runMigrations()
+        public function runMigrations(string $database, string $table)
         {
-            return (new MigrationAction())->run();
+            return (new MigrationAction($database, $table))->run();
         }
         
         /**
          * Reset latest migrations.
+         *
+         * @param string $database
+         * @param string $table
+         *
          * @return int
          */
-        public function resetMigrations()
+        public function resetMigrations(string $database, string $table)
         {
-            return (new MigrationAction())->reset();
+            return (new MigrationAction($database, $table))->reset();
         }
         
         /**
@@ -148,7 +161,7 @@
          */
         public function generateController(string $database, string $table)
         {
-            return (new ControllerAction())->generate($database, $table);
+            return (new ControllerAction($database, $table))->generate();
         }
         
         /**
@@ -158,10 +171,11 @@
          * @param string $table
          *
          * @return int|string
+         * @throws \Exception
          */
         public function generateFactory(string $database, string $table)
         {
-            return (new FactoryAction())->generate($database, $table);
+            return (new FactoryAction($database, $table))->generate();
         }
         
         /**
@@ -174,7 +188,7 @@
          */
         public function generateModel(string $database, string $table)
         {
-            return (new ModelAction())->generate($database, $table);
+            return (new ModelAction($database, $table))->generate();
         }
         
         /**
@@ -184,10 +198,11 @@
          * @param string $table
          *
          * @return mixed
+         * @throws \Exception
          */
         public function generateResource(string $database, string $table)
         {
-            return (new ResourceAction())->generate($database, $table);
+            return (new ResourceAction($database, $table))->generate();
         }
         
         /**
@@ -201,7 +216,7 @@
          */
         public function generateSeeder(string $database, string $table)
         {
-            return (new SeederAction())->generate($database, $table);
+            return (new SeederAction($database, $table))->generate();
         }
         
         /**
@@ -215,6 +230,6 @@
          */
         public function runSeeder(string $database, string $table)
         {
-            return (new SeederAction())->run($database, $table);
+            return (new SeederAction($database, $table))->run();
         }
     }

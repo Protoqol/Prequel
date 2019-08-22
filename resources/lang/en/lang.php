@@ -52,6 +52,7 @@
                 'dark_mode'   => 'Dark Mode',
                 'readability' => 'Readability',
                 'side_bar'    => 'Side Bar',
+                'refresh'     => 'Refresh',
                 'get'         => [
                     'title' => 'Run query (ENTER)',
                     'text'  => 'Get',

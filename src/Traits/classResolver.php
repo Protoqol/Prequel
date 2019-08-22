@@ -113,7 +113,7 @@
         {
             $config = $this->configNamespaceResolver('model');
             
-            return $config->namespace . $this->generateClassName($classname) . $config->suffix;
+            return app()->getNamespace() . $config->namespace . $this->generateClassName($classname) . $config->suffix;
         }
         
         /**

@@ -5,7 +5,7 @@
         <form class="new-row-form" @submit.prevent="saveRow($event)">
             <h2>Creating row in '{{database}}.{{table}}'</h2>
             <label v-for="struct in structure">
-                <h1>{{ enhanceReadability(struct.Field) }}</h1> <small>{{struct.Type}}</small>
+                <span>{{ enhanceReadability(struct.Field) }}</span> <small>{{struct.Type}}</small>
                 <input step=”any”
                        :type="resolveType(struct)"
                        :name="struct.Field"
@@ -19,10 +19,11 @@
                     <font-awesome-icon class="mr-1" icon="plus"/>
                     Insert another row
                 </button>-->
-                <button class="new" title="Insert fake data">
-                    <font-awesome-icon class="mr-1" icon="birthday-cake"/>
-                    <p>Fake data</p>
-                </button>
+                <!-- @TODO Insert fake data -->
+                <!-- <button class="new" title="Insert fake data">
+                          <font-awesome-icon class="mr-1" icon="birthday-cake"/>
+                          <p>Fake data</p>
+                    </button>-->
                 <button class="create" type="submit">
                     <font-awesome-icon class="mr-1" icon="save"/>
                     Save row
@@ -89,7 +90,7 @@
 
         api.post(`/database/insert/${this.database}/${this.table}`, { data: data }).
           then(res => {
-            if (!res.data.success) {
+            if (!res.data.success || res.data.success === '') {
               throw new Error('Could not insert this data')
             }
 
@@ -98,10 +99,13 @@
             PrequelSuccessToast.fire({
               text: `Inserted row into ${this.table}`,
             }).finally(() => {
+              this.$refs.actions.conslog(`Inserted row into ${this.table}`)
               this.$forceUpdate()
             })
+
           }).
           catch(err => {
+            this.$refs.actions.conslog(err, 'error')
             PrequelErrorToast.fire({
               text: err,
             })
@@ -279,7 +283,7 @@
                 @apply text-gray-700;
                 @apply mb-2;
 
-                h1 {
+                span {
                     @apply w-1/4;
 
                     @media (min-width : 700px) and (max-width : 1500px) {
@@ -313,106 +317,10 @@
 
                 .create {
                     @apply w-1/2;
-                    @apply ml-3;
                 }
 
                 .new {
                     @apply w-1/2;
-                }
-            }
-        }
-
-        .button-actions {
-            @apply bg-gray-200;
-            @apply rounded;
-            @apply w-2/5;
-            @apply p-5;
-            @apply m-2;
-            @apply flex;
-            @apply flex-col;
-
-            .button-wrapper {
-                @apply flex;
-                @apply flex-row;
-                @apply w-full;
-
-                .buttons {
-                    height : fit-content;
-                    @apply w-full;
-                    @apply flex;
-                    @apply flex-col;
-                    @apply justify-center;
-                    @apply items-center;
-
-                    .action {
-                        @apply w-full;
-                        @apply flex;
-                        @apply flex-row;
-                        @apply justify-between;
-                        @apply items-center;
-                        @apply mt-4;
-
-                        .runnable, h3 {
-                            margin-top : 0 !important;
-                            width      : 55%;
-                            @apply rounded-full;
-                            @apply m-auto;
-                            @apply p-1;
-                            @apply mt-4;
-                            @apply text-center;
-
-                            input {
-                                @apply w-10;
-                                @apply px-1;
-                                @apply mx-2;
-                                @apply text-center;
-                                @apply rounded;
-                                @apply bg-indigo-300;
-                            }
-                        }
-
-                        button {
-                            @apply mt-0;
-                            @apply flex;
-                            @apply flex-row;
-                            @apply w-2/5;
-                            @apply px-2;
-                            @apply ml-0;
-
-                            .fa {
-                                @apply w-1/4;
-                            }
-
-                            p {
-                                @apply text-left;
-                                @apply w-3/4;
-                            }
-                        }
-
-                        .pill-green {
-                            width            : 55%;
-                            background-color : #65ead2;
-                            @apply text-white;
-                            @apply rounded-full;
-                            @apply border;
-
-                            @media (min-width : 700px) and (max-width : 1500px) {
-                                @apply text-sm;
-                            }
-                        }
-
-                        .pill-red {
-                            width            : 55%;
-                            background-color : #eaa165;
-                            @apply text-white;
-                            @apply rounded-full;
-                            @apply border;
-
-                            @media (min-width : 700px) and (max-width : 1500px) {
-                                @apply text-sm;
-                            }
-                        }
-                    }
                 }
             }
         }
