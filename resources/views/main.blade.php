@@ -18,6 +18,7 @@
 <script>
   // Pass initial data to JavaScript
   window.Prequel       = {};
+  window.Prequel.i18n = @json($lang);
   window.Prequel.env   = @json($env);
   window.Prequel.error = {
     error   : false,

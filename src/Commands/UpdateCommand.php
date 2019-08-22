@@ -38,8 +38,6 @@ class UpdateCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
@@ -60,6 +58,12 @@ class UpdateCommand extends Command
         $this->comment('Updating Prequel Config...');
         $this->callSilent('vendor:publish', [
             '--tag'   => 'prequel-config',
+            '--force' => true,
+        ]);
+
+        $this->comment('Updating Prequel Translations...');
+        $this->callSilent('vendor:publish', [
+            '--tag'   => 'prequel-lang',
             '--force' => true,
         ]);
 

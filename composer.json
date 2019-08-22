@@ -11,8 +11,12 @@
   ],
   "minimum-stability": "beta",
   "require": {
-    "php": "^7.2",
-    "laravel/framework": "^5.6"
+    "php": "^7.1",
+    "composer/composer": "dev-master",
+    "laravel/framework": "^5.6",
+    "ext-pdo": "*",
+    "ext-curl": "*",
+    "ext-json": "*"
   },
   "extra": {
     "laravel": {
