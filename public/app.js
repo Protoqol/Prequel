@@ -15823,20 +15823,21 @@ __webpack_require__.r(__webpack_exports__);
      * Create readable string from array
      * @param privs
      */
-    readableArray: function readableArray(privs) {// if (privs.HAS_ALL) {
-      //   return 'User has all permissions';
-      // }
-      //
-      // let readableString = '';
-      //
-      // for (let priv in privs) {
-      //   if (priv === true) {
-      //     readableString += priv;
-      //   }
-      // }
-      //
-      // return readableString;
-    },
+    // readableArray: function (privs) {
+    // if (privs.HAS_ALL) {
+    //   return 'User has all permissions';
+    // }
+    //
+    // let readableString = '';
+    //
+    // for (let priv in privs) {
+    //   if (priv === true) {
+    //     readableString += priv;
+    //   }
+    // }
+    //
+    // return readableString;
+    // },
 
     /**
      * Seconds to hours
@@ -18825,7 +18826,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes color-rotate-data-v-b8753452 {\n0% {\n    background-color: #feb2b2;\n}\n25% {\n    background-color: #667eea;\n}\n50% {\n    background-color: #2b6cb0;\n    opacity: 0;\n}\n75% {\n    background-color: #48bb78;\n}\n100% {\n    background-color: #a3bffa;\n    opacity: 1;\n}\n}\n@keyframes color-rotate-data-v-b8753452 {\n0% {\n    background-color: #feb2b2;\n}\n25% {\n    background-color: #667eea;\n}\n50% {\n    background-color: #2b6cb0;\n    opacity: 0;\n}\n75% {\n    background-color: #48bb78;\n}\n100% {\n    background-color: #a3bffa;\n    opacity: 1;\n}\n}\n#version[data-v-b8753452] {\n  position: absolute;\n  top: 10px;\n  right: 17px;\n}\n#version .notification[data-v-b8753452] {\n  animation: color-rotate-data-v-b8753452 5s linear infinite reverse;\n  top: -2px;\n  right: -13px;\n  font-size: 8px;\n  font-weight: bolder;\n  color: white;\n  width: 12px;\n  height: 12px;\n  padding: 1px;\n  position: absolute;\n  text-align: center;\n  border-radius: 9999px;\n}\n#version p[data-v-b8753452] {\n  font-size: 13px;\n}", ""]);
+exports.push([module.i, "@-webkit-keyframes color-rotate-data-v-b8753452 {\n0% {\n    background-color: #feb2b2;\n}\n25% {\n    background-color: #667eea;\n}\n50% {\n    background-color: #2b6cb0;\n}\n75% {\n    background-color: #48bb78;\n}\n100% {\n    background-color: #a3bffa;\n}\n}\n@keyframes color-rotate-data-v-b8753452 {\n0% {\n    background-color: #feb2b2;\n}\n25% {\n    background-color: #667eea;\n}\n50% {\n    background-color: #2b6cb0;\n}\n75% {\n    background-color: #48bb78;\n}\n100% {\n    background-color: #a3bffa;\n}\n}\n#version[data-v-b8753452] {\n  position: absolute;\n  top: 10px;\n  right: 17px;\n}\n#version .notification[data-v-b8753452] {\n  animation: color-rotate-data-v-b8753452 5s linear infinite reverse;\n  top: -2px;\n  right: -13px;\n  font-size: 8px;\n  font-weight: bolder;\n  color: white;\n  width: 12px;\n  height: 12px;\n  padding: 1px;\n  position: absolute;\n  text-align: center;\n  border-radius: 9999px;\n}\n#version p[data-v-b8753452] {\n  font-size: 13px;\n}", ""]);
 
 // exports
 
@@ -19015,7 +19016,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "button[data-v-56bc11de] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  color: #fff;\n  align-items: center;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n  border-bottom-width: 4px;\n  border-color: #4c51bf;\n  transition: all 0.2s;\n}\nbutton[data-v-56bc11de]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\nbutton[data-v-56bc11de]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  box-shadow: none;\n}\nbutton[data-v-56bc11de]:disabled, button[disabled][data-v-56bc11de] {\n  background-color: #cbd5e0;\n  box-shadow: none;\n  cursor: default;\n  border-bottom-width: 4px;\n  border-color: #cbd5e0;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\nbutton[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}\nh2[data-v-56bc11de] {\n  font-size: 1.25rem;\n  font-weight: 600;\n  color: #2d3748;\n}\n.ellipseLeft[data-v-56bc11de] {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  direction: rtl;\n}\n.logger[data-v-56bc11de] {\n  margin-top: 1rem;\n  width: 100%;\n  height: 12rem;\n  overflow: auto;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  background-color: #1a202c;\n  color: #65ead2;\n}\n.logger[data-v-56bc11de]:last-child:after {\n  content: \">   \";\n  height: 20px;\n  margin-bottom: -4px;\n  background: #65ead2;\n  opacity: 0;\n  display: inline-block;\n  -webkit-animation: blink-data-v-56bc11de 2s linear infinite alternate;\n          animation: blink-data-v-56bc11de 2s linear infinite alternate;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.logger[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}\n@-webkit-keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n.button-actions[data-v-56bc11de] {\n  background-color: #edf2f7;\n  border-radius: 0.25rem;\n  width: 40%;\n  padding: 1.25rem;\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  margin-bottom: 0.5rem;\n  display: flex;\n  flex-direction: column;\n}\n.button-actions .button-wrapper[data-v-56bc11de] {\n  display: flex;\n  flex-direction: row;\n  width: 100%;\n}\n.button-actions .button-wrapper .buttons[data-v-56bc11de] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.button-actions .button-wrapper .buttons .action[data-v-56bc11de] {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  margin-top: 0.75rem;\n}\n.button-actions .button-wrapper .buttons .action .runnable[data-v-56bc11de], .button-actions .button-wrapper .buttons .action h3[data-v-56bc11de] {\n  margin-top: 0 !important;\n  width: 47%;\n  border-radius: 9999px;\n  margin: auto;\n  padding: 0.25rem;\n  margin-top: 1rem;\n  text-align: center;\n}\n.button-actions .button-wrapper .buttons .action .runnable input[data-v-56bc11de], .button-actions .button-wrapper .buttons .action h3 input[data-v-56bc11de] {\n  width: 2.5rem;\n  padding-left: 0.25rem;\n  padding-right: 0.25rem;\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  text-align: center;\n  border-radius: 0.25rem;\n  background-color: #a3bffa;\n}\n.button-actions .button-wrapper .buttons .action button[data-v-56bc11de] {\n  width: 50%;\n  margin-top: 0;\n  display: flex;\n  flex-direction: row;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  margin-left: 0;\n}\n.button-actions .button-wrapper .buttons .action button .fa[data-v-56bc11de] {\n  width: 25%;\n}\n.button-actions .button-wrapper .buttons .action button span[data-v-56bc11de] {\n  text-align: left;\n  width: 75%;\n}\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n  width: 47%;\n  background-color: #48bb78;\n  color: #fff;\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n  width: 47%;\n  background-color: #ec6368;\n  color: #fff;\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}", ""]);
+exports.push([module.i, "button[data-v-56bc11de] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  color: #fff;\n  align-items: center;\n  border-radius: 0.25rem;\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);\n  border-bottom-width: 4px;\n  border-color: #4c51bf;\n  transition: all 0.2s;\n}\nbutton[data-v-56bc11de]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\nbutton[data-v-56bc11de]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  box-shadow: none;\n}\nbutton[data-v-56bc11de]:disabled, button[disabled][data-v-56bc11de] {\n  background-color: #cbd5e0;\n  box-shadow: none;\n  cursor: default;\n  border-bottom-width: 4px;\n  border-color: #cbd5e0;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\nbutton[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}\nh2[data-v-56bc11de] {\n  font-size: 1.25rem;\n  font-weight: 600;\n  color: #2d3748;\n}\n.ellipseLeft[data-v-56bc11de] {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  direction: rtl;\n}\n.logger[data-v-56bc11de] {\n  margin-top: 1rem;\n  width: 100%;\n  height: 12rem;\n  overflow: auto;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  background-color: #1a202c;\n  color: #65ead2;\n}\n.logger[data-v-56bc11de]:last-child:after {\n  content: \">   \";\n  height: 20px;\n  margin-bottom: -4px;\n  background: #65ead2;\n  opacity: 0;\n  display: inline-block;\n  -webkit-animation: blink-data-v-56bc11de 2s linear infinite alternate;\n          animation: blink-data-v-56bc11de 2s linear infinite alternate;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.logger[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}\n@-webkit-keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n.button-actions[data-v-56bc11de] {\n  background-color: #edf2f7;\n  border-radius: 0.25rem;\n  width: 40%;\n  padding: 1.25rem;\n  margin: 0.5rem;\n  display: flex;\n  flex-direction: column;\n}\n.button-actions .button-wrapper[data-v-56bc11de] {\n  display: flex;\n  flex-direction: row;\n  width: 100%;\n}\n.button-actions .button-wrapper .buttons[data-v-56bc11de] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.button-actions .button-wrapper .buttons .action[data-v-56bc11de] {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  margin-top: 0.75rem;\n}\n.button-actions .button-wrapper .buttons .action .runnable[data-v-56bc11de], .button-actions .button-wrapper .buttons .action h3[data-v-56bc11de] {\n  margin-top: 0 !important;\n  width: 47%;\n  border-radius: 9999px;\n  margin: auto;\n  padding: 0.25rem;\n  margin-top: 1rem;\n  text-align: center;\n}\n.button-actions .button-wrapper .buttons .action .runnable input[data-v-56bc11de], .button-actions .button-wrapper .buttons .action h3 input[data-v-56bc11de] {\n  width: 2.5rem;\n  padding-left: 0.25rem;\n  padding-right: 0.25rem;\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  text-align: center;\n  border-radius: 0.25rem;\n  background-color: #a3bffa;\n}\n.button-actions .button-wrapper .buttons .action button[data-v-56bc11de] {\n  width: 50%;\n  margin-top: 0;\n  display: flex;\n  flex-direction: row;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  margin-left: 0;\n}\n.button-actions .button-wrapper .buttons .action button .fa[data-v-56bc11de] {\n  width: 25%;\n}\n.button-actions .button-wrapper .buttons .action button span[data-v-56bc11de] {\n  text-align: left;\n  width: 75%;\n}\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n  width: 47%;\n  background-color: #48bb78;\n  color: #fff;\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n  width: 47%;\n  background-color: #ec6368;\n  color: #fff;\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n    font-size: 0.875rem;\n}\n}", ""]);
 
 // exports
 
@@ -66995,7 +66996,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.app && _vm.app.length
+  return _vm.app
     ? _c(
         "div",
         { staticClass: "database-management", attrs: { id: "dbManagement" } },
@@ -68663,7 +68664,7 @@ var render = function() {
             {
               attrs: {
                 title: "Generate new model",
-                disabled: _vm.tableHasModel
+                disabled: _vm.tableHasModel !== false
               },
               on: {
                 click: function($event) {

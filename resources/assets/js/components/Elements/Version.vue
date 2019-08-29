@@ -57,14 +57,12 @@
         }
         50% {
             @apply bg-blue-700;
-            opacity : 0;
         }
         75% {
             @apply bg-green-500;
         }
         100% {
             @apply bg-indigo-300;
-            opacity : 1;
         }
     }
 

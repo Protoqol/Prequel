@@ -1,5 +1,5 @@
 <template>
-    <div v-cloak v-if="app && app.length" id="dbManagement" class="database-management">
+    <div v-cloak v-if="app" id="dbManagement" class="database-management">
         <div class="overview" v-if="app.serverInfo">
             <h1>{{trans('dashboard.overview')}}</h1>
             <div class="status-cards" v-cloak>
@@ -121,21 +121,21 @@
        * Create readable string from array
        * @param privs
        */
-      readableArray: function (privs) {
-        // if (privs.HAS_ALL) {
-        //   return 'User has all permissions';
-        // }
-        //
-        // let readableString = '';
-        //
-        // for (let priv in privs) {
-        //   if (priv === true) {
-        //     readableString += priv;
-        //   }
-        // }
-        //
-        // return readableString;
-      },
+      // readableArray: function (privs) {
+      // if (privs.HAS_ALL) {
+      //   return 'User has all permissions';
+      // }
+      //
+      // let readableString = '';
+      //
+      // for (let priv in privs) {
+      //   if (priv === true) {
+      //     readableString += priv;
+      //   }
+      // }
+      //
+      // return readableString;
+      // },
 
       /**
        * Seconds to hours

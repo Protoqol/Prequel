@@ -130,13 +130,11 @@
          */
         public function getNamespace()
         {
-            $class = $this->getQualifiedName();
-            
-            if (!$class) {
+            if (!$this->getQualifiedName()) {
                 return false;
             }
             
-            $arr       = explode("\\", $class);
+            $arr       = explode("\\", $this->getQualifiedName());
             $count     = count($arr);
             $namespace = "";
             

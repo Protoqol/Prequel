@@ -4,7 +4,7 @@
         <div class="button-wrapper">
             <div class="buttons">
                 <div class="action">
-                    <button title="Generate new model" :disabled="tableHasModel" @click="generate('model')">
+                    <button title="Generate new model" :disabled="tableHasModel !== false" @click="generate('model')">
                         <font-awesome-icon class="fa" icon="table"/>
                         <span>{{ tableHasModel ? 'Model exists' : 'Generate Model'}}</span>
                     </button>
@@ -333,8 +333,7 @@
         @apply rounded;
         @apply w-2/5;
         @apply p-5;
-        @apply mx-2;
-        @apply mb-2;
+        @apply m-2;
         @apply flex;
         @apply flex-col;
 

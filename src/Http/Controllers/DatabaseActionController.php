@@ -55,7 +55,7 @@
         public function getInfoAboutTable(string $database, string $table): array
         {
             return [
-                'controller' => (new ControllerAction($database, $table))->getQualifiedName(),
+                'controller' => (new ControllerAction($database, $table))->getQualifiedName() ?? false,
                 'resource'   => (new ResourceAction($database, $table))->getQualifiedName(),
                 'model'      => (new ModelAction($database, $table))->getQualifiedName(),
                 'seeder'     => (new SeederAction($database, $table))->getQualifiedName(),

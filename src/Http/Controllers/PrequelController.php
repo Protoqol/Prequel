@@ -5,6 +5,7 @@
     
     use Illuminate\Routing\Controller;
     use Illuminate\Support\Facades\Lang;
+    use Illuminate\Foundation\ComposerScripts;
     use Protoqol\Prequel\Database\DatabaseTraverser;
     
     /**
@@ -44,6 +45,6 @@
          */
         public function autoUpdate()
         {
-            // @TODO Try an auto-update running: composer require protoqol/prequel && php artisan prequel:update
+        
         }
     }
