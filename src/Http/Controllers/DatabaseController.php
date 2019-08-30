@@ -83,6 +83,12 @@ class DatabaseController extends Controller
             ];
         }
 
+        if(config('database.connections.mysql.prefix'))
+        {
+            config(['database.connections.mysql.prefix' => '']);
+            \Illuminate\Support\Facades\DB::purge();
+        }
+
         // Usage of the DB facade should be avoided since this uses the default config, and not the prequel config. @TODO refactor
         return [
             "table"     => $this->qualifiedName,
