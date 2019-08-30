@@ -1,7 +1,7 @@
 <?php
-    
+
     namespace Protoqol\Prequel\Http\Controllers;
-    
+
     use Exception;
     use Carbon\Carbon;
     use Illuminate\Http\Request;
@@ -19,14 +19,14 @@
     use Protoqol\Prequel\Database\DatabaseAction;
     use phpDocumentor\Reflection\DocBlock\Tags\See;
     use Protoqol\Prequel\Database\DatabaseTraverser;
-    
+
     /**
      * Class DatabaseActionController
      * @package Protoqol\Prequel\Http\Controllers
      */
     class DatabaseActionController extends Controller
     {
-        
+
         /**
          * Get defaults for 'Insert new row' action form inputs.
          *
@@ -38,11 +38,11 @@
         public function getDefaultsForTable(string $database, string $table): array
         {
             return [
-                'id'           => ((int)PDB::create($database, $table)->count() + 1),
+                'id'           => ((int)PDB::create($database, $table)->builder()->count() + 1),
                 'current_date' => Carbon::now()->format('Y-m-d\TH:i'),
             ];
         }
-        
+
         /**
          * Check and return all Laravel specific assets for table (Model, Seeder, Controller etc.).
          *
@@ -62,7 +62,7 @@
                 'factory'    => (new FactoryAction())->getName($database, $table),
             ];
         }
-        
+
         /**
          * Insert row in table.
          *
@@ -77,21 +77,26 @@
                     ->insertNewRow($request->post('data')),
             ];
         }
-        
+
         /**
          * Run raw SQL query.
          *
+         * @param Request $request
          * @param string $database
          * @param string $table
-         * @param string $query
          *
          * @return string
          */
-        public function runSql(string $database, string $table, string $query): string
+        public function runSql(Request $request, string $database, string $table): string
         {
-            return (string)PDB::create($database, $table)->statement($query);
+
+            $queries = explode(';', $request->get('query'));
+
+            dd(PDB::create($database, $table)->statement($queries));
+
+            return (string)PDB::create($database, $table)->statement($queries);
         }
-        
+
         /**
          * @param string $database
          * @param string $table
@@ -100,7 +105,7 @@
         {
             //
         }
-        
+
         /**
          * @param string $database
          * @param string $table
@@ -109,7 +114,7 @@
         {
             //
         }
-        
+
         /**
          * Get database status.
          * @return array
@@ -118,7 +123,7 @@
         {
             return (new AppStatus())->getStatus();
         }
-        
+
         /**
          * Run pending migrations.
          * @return int
@@ -127,7 +132,7 @@
         {
             return (new MigrationAction())->run();
         }
-        
+
         /**
          * Reset latest migrations.
          * @return int
@@ -136,7 +141,7 @@
         {
             return (new MigrationAction())->reset();
         }
-        
+
         /**
          * Generate controller.
          *
@@ -150,7 +155,7 @@
         {
             return (new ControllerAction())->generate($database, $table);
         }
-        
+
         /**
          * Generate factory.
          *
@@ -163,7 +168,7 @@
         {
             return (new FactoryAction())->generate($database, $table);
         }
-        
+
         /**
          * Generate model.
          *
@@ -176,7 +181,7 @@
         {
             return (new ModelAction())->generate($database, $table);
         }
-        
+
         /**
          * Generate resource.
          *
@@ -189,7 +194,7 @@
         {
             return (new ResourceAction())->generate($database, $table);
         }
-        
+
         /**
          * Generate seeder.
          *
@@ -203,7 +208,7 @@
         {
             return (new SeederAction())->generate($database, $table);
         }
-        
+
         /**
          * Run seeder.
          *

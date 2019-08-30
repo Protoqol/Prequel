@@ -117,8 +117,7 @@
        *
        * @TODO
        */
-      saveModifiedData: function(el) {
-      	console.log(el)
+      saveModifiedData: function() {
         this.view.cell.selected.classList.remove('bg-white', 'border', 'cursor-text');
         this.view.cell.selected.classList.add('ellipsis', 'hover:bg-gray-300');
         this.view.cell.selected.contentEditable = false;
