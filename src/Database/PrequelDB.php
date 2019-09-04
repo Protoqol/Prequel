@@ -56,12 +56,11 @@
 
             foreach ($queries as $query) {
                 if(empty($query)) continue;
-                //if(Str::startsWith(strtolower($query), 'select')) {
-//                (new \PDO())->query()->execute()
-                    $queryResponse[] = $this->dbConnection->getPdo()->query($query)->fetch();
-                //} else {
-                //    $queryResponse[] = $this->builder->raw($query);
-                //}
+                if(Str::startsWith(strtolower($query), 'select')) {
+                    $queryResponse[] = $this->dbConnection->getPdo()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+                } else {
+                    $queryResponse[] = ($this->dbConnection->getPdo()->query($query) !== false);
+                }
             }
 
             return $queryResponse;
