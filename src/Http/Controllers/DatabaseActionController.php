@@ -92,8 +92,6 @@
 
             $queries = explode(';', $request->get('query'));
 
-            dd(PDB::create($database, $table)->statement($queries));
-
             return (string)PDB::create($database, $table)->statement($queries);
         }
 
