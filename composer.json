@@ -9,12 +9,11 @@
       "email": "quinten@protoqol.xyz"
     }
   ],
-  "minimum-stability": "beta",
+  "minimum-stability": "stable",
   "require": {
     "php": "^7.1",
     "composer/composer": "dev-master",
     "laravel/framework": "^5.6",
-    "phpmyadmin/sql-parser": "^5.0",
     "ext-pdo": "*",
     "ext-curl": "*",
     "ext-json": "*"

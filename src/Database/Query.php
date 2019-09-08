@@ -52,14 +52,15 @@
             $iteration = 0;
             foreach ($this->queries as $query) {
                 $query   = trim($query);
-                $results = Arr::collapse($this->run($query));
-                $rows    = $this->getRows($results);
+                $type    = $this->getType($query);
+                $results = ($type === 'dql') ? Arr::collapse($this->run($query)) : [[$this->run($query)]];
+                $rows    = $this->getRows($results, ($type === 'dql'));
                 
                 $arr[$iteration] = [
                     'query'   => $query,
                     'columns' => $rows,
-                    'data'    => $results,
-                    'type'    => $this->getType($query),
+                    'data'    => ($type === 'dql') ? $results : $results[0],
+                    'type'    => $type,
                 ];
                 
                 $iteration++;
@@ -140,25 +141,33 @@
         /**
          * Get key names of results
          *
-         * @param $results
+         * @param array $results
+         * @param bool  $select
          *
          * @return array|bool
          */
-        private function getRows($results)
+        private function getRows(array $results, bool $select = true)
         {
-            if (!$results || empty($results)) {
-                return false;
+            $keys = [];
+            
+            if (!$select) {
+                $keys[] = [
+                    'Key'   => 'Rows affected',
+                    'Field' => 'Rows affected',
+                    'Type'  => '...',
+                ];
             }
             
-            $sample = (array)$results[0];
-            $keys   = [];
-            
-            foreach ($sample as $key => $value) {
-                $keys[] = [
-                    'Key'   => $key,
-                    'Field' => $key,
-                    'Type'  => $key,
-                ];
+            if ($select && $results && !empty($results)) {
+                $sample = (array)$results[0];
+                
+                foreach ($sample as $key => $value) {
+                    $keys[] = [
+                        'Key'   => $key,
+                        'Field' => $key,
+                        'Type'  => $key,
+                    ];
+                }
             }
             
             return $keys;

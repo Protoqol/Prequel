@@ -61,8 +61,10 @@
                 }
                 if (Str::startsWith(strtolower($query), 'select')) {
                     $queryResponse[] = $this->dbConnection->getPdo()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+                } elseif (Str::startsWith(strtolower($query), 'update') || Str::startsWith(strtolower($query), 'delete')) {
+                    $queryResponse[] = $this->dbConnection->getPdo()->query($query)->rowCount();
                 } else {
-                    $queryResponse[] = ($this->dbConnection->getPdo()->query($query) !== false);
+                    $queryResponse[] = $this->dbConnection->getPdo()->query($query);
                 }
             }
             

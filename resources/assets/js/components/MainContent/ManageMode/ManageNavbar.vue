@@ -16,7 +16,8 @@
                     {{trans('table_management.run_sql')}}
                 </a>
             </li>
-            <li :title="trans('table_management.import')" @click.prevent="setActiveTab($event)">
+            <!-- @TODO Implement -->
+<!--            <li :title="trans('table_management.import')" @click.prevent="setActiveTab($event)">
                 <a id="tab-import" :class="this.inactiveClassName">
                     {{trans('table_management.import')}}
                 </a>
@@ -35,7 +36,7 @@
                 <a id="tab-settings" :class="this.inactiveClassName">
                     {{trans('table_management.settings')}}
                 </a>
-            </li>
+            </li>-->
         </ul>
     </div>
 </template>

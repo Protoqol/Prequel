@@ -2,45 +2,53 @@
 
 <template>
     <div class="new-row-tab-wrapper">
-        <form class="new-row-form" @submit.prevent="saveRow($event)">
-            <h2>Creating row in '{{database}}.{{table}}'</h2>
-            <label v-for="struct in structure">
-                <span>{{ enhanceReadability(struct.Field) }}</span> <small>{{struct.Type}}</small>
-                <input step=”any”
-                       :type="resolveType(struct)"
-                       :name="struct.Field"
-                       :required="struct.Null !== 'YES'"
-                       :maxlength="resolveMaxLength(struct.Type)"
-                       :placeholder="struct.Extra || struct.Field"/>
-            </label>
-            <div class="buttons">
-                <!--@TODO Support multiple forms-->
-                <!--<button class="new" @click.prevent="insertNewRow">
-                    <font-awesome-icon class="mr-1" icon="plus"/>
-                    Insert another row
-                </button>-->
-                <!-- @TODO Insert fake data -->
-                <!-- <button class="new" title="Insert fake data">
-                          <font-awesome-icon class="mr-1" icon="birthday-cake"/>
-                          <p>Fake data</p>
+        <div class="action-wrapper">
+            <ActionInfo class="w-3/5" title="Insert new row"
+                        description="Fill in your data and create a new row"></ActionInfo>
+            <ActionInfo class="w-2/5" title="Laravel Actions" description="Generate everything!"></ActionInfo>
+        </div>
+        <div class="action-wrapper">
+            <form class="new-row-form" @submit.prevent="saveRow($event)">
+                <h2>Creating row in '{{database}}.{{table}}'</h2>
+                <label v-for="struct in structure">
+                    <span>{{ enhanceReadability(struct.Field) }}</span> <small>{{struct.Type}}</small>
+                    <input step=”any”
+                           :type="resolveType(struct)"
+                           :name="struct.Field"
+                           :required="struct.Null !== 'YES'"
+                           :maxlength="resolveMaxLength(struct.Type)"
+                           :placeholder="struct.Extra || struct.Field"/>
+                </label>
+                <div class="buttons">
+                    <!--@TODO Support multiple forms-->
+                    <!--<button class="new" @click.prevent="insertNewRow">
+                        <font-awesome-icon class="mr-1" icon="plus"/>
+                        Insert another row
                     </button>-->
-                <button class="create" type="submit">
-                    <font-awesome-icon class="mr-1" icon="save"/>
-                    Save row
-                </button>
-            </div>
-        </form>
-        <BackendActions ref="actions"/>
+                    <!-- @TODO Insert fake data -->
+                    <!-- <button class="new" title="Insert fake data">
+                              <font-awesome-icon class="mr-1" icon="birthday-cake"/>
+                              <p>Fake data</p>
+                        </button>-->
+                    <button class="create" type="submit">
+                        <font-awesome-icon class="mr-1" icon="save"/>
+                        Save row
+                    </button>
+                </div>
+            </form>
+            <BackendActions ref="actions"/>
+        </div>
     </div>
 </template>
 
 <script>
   import api            from 'axios'
   import BackendActions from './BackendActions'
+  import ActionInfo     from './ActionInfo'
 
   export default {
     name      : 'CreateRow',
-    components: { BackendActions },
+    components: { BackendActions, ActionInfo },
     props     : ['structure'],
 
     data () {
@@ -99,15 +107,15 @@
             PrequelSuccessToast.fire({
               text: `Inserted row into ${this.table}`,
             }).finally(() => {
-              this.$refs.actions.conslog(`Inserted row into ${this.table}`)
+              this.$refs.actions.conslog(`SUCCESS: Inserted row into ${this.table}`)
               this.$forceUpdate()
             })
 
           }).
           catch(err => {
-            this.$refs.actions.conslog(err, 'error')
+            this.$refs.actions.conslog(err.response.data.message, 'error')
             PrequelErrorToast.fire({
-              text: err,
+              text: err.response.data.exception,
             })
           })
       },
@@ -218,109 +226,115 @@
 <style scoped lang="scss">
     .new-row-tab-wrapper {
         @apply flex;
+        @apply flex-col;
 
-        button {
-            @apply m-auto;
-            @apply py-1;
-            @apply mt-4;
+        .action-wrapper {
             @apply flex;
-            @apply justify-center;
-            background-color : var(--button-background);
-            @apply text-white;
-            @apply items-center;
-            @apply rounded;
-            @apply shadow;
-            @apply border-b-4;
-            @apply border-indigo-700;
+            @apply flex-row;
 
-            transition       : all .2s;
-
-            &:hover {
-                transition       : all .2s;
-                background-color : var(--button-background-hover);
-            }
-
-            &:active {
-                transition       : all .2s;
-                background-color : var(--button-background-active);
-                @apply border-transparent;
-                @apply shadow-none;
-            }
-
-            &:disabled, &[disabled] {
-                @apply bg-gray-400;
-                @apply shadow-none;
-                @apply cursor-default;
-                @apply border-b-4;
-                @apply border-gray-400;
-            }
-
-            @media (min-width : 700px) and (max-width : 1500px) {
-                @apply text-sm;
-            }
-        }
-
-        h2 {
-            @apply text-xl;
-            @apply font-semibold;
-            @apply text-gray-800;
-            @apply mb-3;
-            @apply text-center;
-        }
-
-        .new-row-form {
-            @apply bg-gray-200;
-            @apply rounded;
-            @apply w-3/5;
-            @apply p-5;
-            @apply m-2;
-
-            label {
+            button {
+                @apply m-auto;
+                @apply py-1;
+                @apply mt-4;
                 @apply flex;
+                @apply justify-center;
+                background-color : var(--button-background);
+                @apply text-white;
                 @apply items-center;
-                @apply justify-between;
+                @apply rounded;
+                @apply shadow;
+                @apply border-b-4;
+                @apply border-indigo-700;
+
+                transition       : all .2s;
+
+                &:hover {
+                    transition       : all .2s;
+                    background-color : var(--button-background-hover);
+                }
+
+                &:active {
+                    transition       : all .2s;
+                    background-color : var(--button-background-active);
+                    @apply border-transparent;
+                    @apply shadow-none;
+                }
+
+                &:disabled, &[disabled] {
+                    @apply bg-gray-400;
+                    @apply shadow-none;
+                    @apply cursor-default;
+                    @apply border-b-4;
+                    @apply border-gray-400;
+                }
+
+                @media (min-width : 700px) and (max-width : 1500px) {
+                    @apply text-sm;
+                }
+            }
+
+            h2 {
+                color : var(--text-secondary-color);
+                @apply text-xl;
                 @apply font-semibold;
-                @apply text-gray-700;
-                @apply mb-2;
+                @apply mb-3;
+                @apply text-center;
+            }
 
-                span {
-                    @apply w-1/4;
+            .new-row-form {
+                background-color : var(--manage-navbar-bg);
+                @apply rounded;
+                @apply w-3/5;
+                @apply p-5;
+                @apply m-2;
 
-                    @media (min-width : 700px) and (max-width : 1500px) {
-                        @apply text-sm;
+                label {
+                    @apply flex;
+                    @apply items-center;
+                    @apply justify-between;
+                    @apply font-semibold;
+                    color : var(--text-secondary-color);
+                    @apply mb-2;
+
+                    span {
+                        @apply w-1/4;
+
+                        @media (min-width : 700px) and (max-width : 1500px) {
+                            @apply text-sm;
+                        }
+                    }
+
+                    small {
+                        @apply font-thin;
+                        @apply lowercase;
+                        @apply ml-2;
+                        @apply w-1/4;
+                    }
+
+                    input {
+                        @apply w-1/2;
+                        @apply bg-gray-400;
+                        @apply block;
+                        @apply tracking-wide;
+                        @apply text-gray-700;
+                        @apply text-xs;
+                        @apply font-bold;
+                        @apply p-2;
+                        @apply rounded;
+                        @apply mb-2;
                     }
                 }
 
-                small {
-                    @apply font-thin;
-                    @apply lowercase;
-                    @apply ml-2;
-                    @apply w-1/4;
-                }
+                .buttons {
+                    @apply flex;
 
-                input {
-                    @apply w-1/2;
-                    @apply bg-gray-400;
-                    @apply block;
-                    @apply tracking-wide;
-                    @apply text-gray-700;
-                    @apply text-xs;
-                    @apply font-bold;
-                    @apply p-2;
-                    @apply rounded;
-                    @apply mb-2;
-                }
-            }
+                    .create {
+                        @apply w-1/2;
+                    }
 
-            .buttons {
-                @apply flex;
-
-                .create {
-                    @apply w-1/2;
-                }
-
-                .new {
-                    @apply w-1/2;
+                    .new {
+                        @apply w-1/2;
+                    }
                 }
             }
         }

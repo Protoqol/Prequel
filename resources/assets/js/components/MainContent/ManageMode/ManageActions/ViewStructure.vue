@@ -1,5 +1,8 @@
 <template>
     <div id="structure-view">
+        <ActionInfo class="mb-2"
+                    :title="`Table Structure for \`${$root.table.table}\``"
+                    description="Check your table structure and setup"></ActionInfo>
         <div class="column-overview">
             <div class="columns-wrapper">
                 <table>
@@ -50,9 +53,12 @@
 </template>
 
 <script>
+  import ActionInfo from './ActionInfo'
+
   export default {
-    name : 'ViewStructure',
-    props: ['structure'],
+    name      : 'ViewStructure',
+    components: { ActionInfo },
+    props     : ['structure'],
   }
 </script>
 

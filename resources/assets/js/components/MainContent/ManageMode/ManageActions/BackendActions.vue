@@ -329,7 +329,8 @@
     }
 
     .button-actions {
-        @apply bg-gray-200;
+        background-color : var(--manage-navbar-bg);
+        color            : var(--text-secondary-color);
         @apply rounded;
         @apply w-2/5;
         @apply p-5;

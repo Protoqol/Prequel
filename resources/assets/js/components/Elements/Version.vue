@@ -1,8 +1,8 @@
 <template>
-    <div id="version" :class="newVersionAvailable !== 0 ? 'cursor-pointer' : ''"
+    <div v-if="newVersionAvailable !== '0'" id="version" :class="newVersionAvailable !== '0' ? 'cursor-pointer' : ''"
          :title="`Current version (${currentVersion})`" @click="autoUpdater">
-        <div v-if="newVersionAvailable !== 0" class="notification" title="There's a new version available">!</div>
-        <p :class="newVersionAvailable !== 0 ? 'text-red-300' : 'text-gray-400'">{{ currentVersion }}</p>
+        <div v-if="newVersionAvailable !== '0'" class="notification" title="There's a new version available">!</div>
+        <p :class="newVersionAvailable !== '0' ? 'text-red-300' : 'text-gray-400'">{{ currentVersion }}</p>
     </div>
 </template>
 
@@ -13,8 +13,8 @@
     name: 'Version',
     data () {
       return {
-        newVersionAvailable: 0,
-        currentVersion     : 'v1.13',
+        newVersionAvailable: '0',
+        currentVersion     : 'v1.22',
       }
     },
 
@@ -34,13 +34,31 @@
       },
 
       autoUpdater: function () {
-        // @TODO @TODO!!
+        let data = {
+          'newest_version' : this.newVersionAvailable,
+          'current_version': this.current_version,
+        }
+
         Swal.fire({
           title             : 'There\'s a new version available!',
           text              : `Try updating to ${this.newVersionAvailable} with the auto-updater!`,
           confirmButtonText : 'Try auto-update',
           confirmButtonColor: '#657eea',
           showCancelButton  : true,
+          preConfirm        : () => {
+            return api.post('update', data).then(res => {
+              if (res) {
+                return res.data
+              }
+            })
+          },
+        }).then(res => {
+          if (res.value) {
+            Swal.fire({
+              title: `Auto-updater logs`,
+              text : `${res.value.log}`,
+            })
+          }
         })
       },
     },

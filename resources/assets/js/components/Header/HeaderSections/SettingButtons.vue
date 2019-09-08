@@ -69,7 +69,6 @@
       },
 
       refreshButtonHandler: function () {
-        console.log('refreshing...')
         this.$emit('refresh')
       },
 
@@ -96,7 +95,8 @@
        | Handles dark mode button actions.
        */
       darkModeButtonHandler: function () {
-        this.darkMode = !this.darkMode
+        this.darkMode            = !this.darkMode
+        this.$root.view.darkMode = this.darkMode
         localStorage.setItem('dark-mode', JSON.stringify(this.darkMode))
         this.changeTheme()
       },

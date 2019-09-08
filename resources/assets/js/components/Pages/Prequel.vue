@@ -157,6 +157,7 @@
           },
           collapsed   : false,
           readability : true,
+          darkMode    : false,
           welcomeShown: false,
           params      : new URLSearchParams(window.location.search),
           menu        : {

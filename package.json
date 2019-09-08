@@ -31,8 +31,9 @@
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "axios-request-handler": "^1.0.4",
-    "highlight.js": "^9.15.8",
+    "monaco-editor-webpack-plugin": "^1.7.0",
     "sweetalert2": "^8.15.0",
+    "vue-monaco": "^1.1.0",
     "vuejs-paginate": "^2.1.0"
   }
 }

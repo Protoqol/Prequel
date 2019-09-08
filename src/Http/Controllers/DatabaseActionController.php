@@ -2,25 +2,20 @@
     
     namespace Protoqol\Prequel\Http\Controllers;
     
-    use Exception;
     use Carbon\Carbon;
-    use Illuminate\Support\Arr;
     use Illuminate\Http\Request;
+    use Protoqol\Prequel\Facades\PDB;
+    use Illuminate\Routing\Controller;
+    use Protoqol\Prequel\App\AppStatus;
     use Protoqol\Prequel\Database\Query;
     use Protoqol\Prequel\App\ModelAction;
     use Protoqol\Prequel\App\SeederAction;
     use Protoqol\Prequel\App\FactoryAction;
-    use Illuminate\Routing\Controller;
-    use Illuminate\Support\Facades\Artisan;
-    use Protoqol\Prequel\App\AppStatus;
-    use Protoqol\Prequel\App\MigrationAction;
-    use Protoqol\Prequel\Facades\PDB;
+    use Illuminate\Database\QueryException;
     use Protoqol\Prequel\App\ResourceAction;
-    use Protoqol\Prequel\Traits\classResolver;
+    use Protoqol\Prequel\App\MigrationAction;
     use Protoqol\Prequel\App\ControllerAction;
     use Protoqol\Prequel\Database\DatabaseAction;
-    use phpDocumentor\Reflection\DocBlock\Tags\See;
-    use Protoqol\Prequel\Database\DatabaseTraverser;
     
     /**
      * Class DatabaseActionController
@@ -32,15 +27,14 @@
         /**
          * Get defaults for 'Insert new row' action form inputs.
          *
-         * @param string $database
-         * @param string $table
+         * @param \Illuminate\Http\Request $request
          *
          * @return array
          */
-        public function getDefaultsForTable(string $database, string $table): array
+        public function getDefaultsForTable(Request $request): array
         {
             return [
-                'id'           => ((int)PDB::create($database, $table)->builder()->count() + 1),
+                'id'           => ((int)PDB::create($request->database, $request->table)->builder()->count() + 1),
                 'current_date' => Carbon::now()->format('Y-m-d\TH:i'),
             ];
         }
@@ -75,13 +69,14 @@
         public function insertNewRow(Request $request): array
         {
             try {
-                $res = (new DatabaseAction($request->database, $request->table))->insertNewRow($request->post('data'));
-            } catch (Exception $e) {
-                throw new $e;
+                // PDB::create($request->database, $request->table)->builder()->insert($request->post('data'));
+            } catch (\Exception $e) {
+                dd($e);
             }
             
             return [
-                'success' => $res,
+                'success' => (bool)(new DatabaseAction($request->database, $request->table))
+                    ->insertNewRow($request->post('data')),
             ];
         }
         

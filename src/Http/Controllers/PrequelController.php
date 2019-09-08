@@ -3,9 +3,9 @@
     
     namespace Protoqol\Prequel\Http\Controllers;
     
+    use Illuminate\Http\Request;
     use Illuminate\Routing\Controller;
     use Illuminate\Support\Facades\Lang;
-    use Illuminate\Foundation\ComposerScripts;
     use Protoqol\Prequel\Database\DatabaseTraverser;
     
     /**
@@ -41,10 +41,28 @@
         
         /**
          * Auto update Prequel.
-         * @return void
+         *
+         * @param \Illuminate\Http\Request $request
+         *
+         * @return array
          */
-        public function autoUpdate()
+        public function autoUpdate(Request $request)
         {
-        
+            $newestVersion = $request->post('newest_version');
+            
+            $script = [
+                "cd " . base_path(),
+                "composer require protoqol/prequel:{$newestVersion} 2>&1",
+                "php artisan prequel:update 2>&1",
+            ];
+            
+            $prepared = implode(" && ", $script);
+            exec($prepared, $out, $return);
+            
+            return [
+                'log'    => $out,
+                'return' => $return,
+                'script' => $prepared,
+            ];
         }
     }

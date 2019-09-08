@@ -7,7 +7,7 @@
 
         <div v-if="tableLoadError && !loading" class="table-status-error">
             <h1>{{trans('table_status.error_occurred')}}</h1>
-            <pre v-highlightjs>
+            <pre>
                 <code class="sql">
                     {{tableErrorDetailed ? tableErrorDetailed : trans('table_status.could_not_resolve')}}
                 </code>
