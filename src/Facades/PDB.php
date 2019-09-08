@@ -8,6 +8,7 @@
      * Class PDB
      * @package Protoqol\Prequel\Facades
      * @method static create(string $database, string $table)
+     * @method statement
      */
     class PDB extends Facade
     {

@@ -147,6 +147,7 @@
          |---------------------------------------------
          */
         view: {
+          tab         : 'tab-newRow',
           modus       : {
             enum: {
               BROWSE: 0,
@@ -310,6 +311,10 @@
 
         if (this.view.params.has('mode')) {
           this.view.modus.mode = (this.view.params.get('mode') === 'browse') ? 0 : 1
+
+          if (this.view.params.has('tab')) {
+            this.view.tab = this.view.params.get('tab')
+          }
         }
 
       },
@@ -326,6 +331,7 @@
           this.view.params.set('page', this.table.pagination.currentPage)
         }
         else {
+          this.view.params.set('tab', this.view.tab)
           this.view.params.delete('page')
         }
 

@@ -51,6 +51,10 @@
       }
     },
 
+    mounted () {
+      this.getActiveTab()
+    },
+
     methods: {
       setActiveTab: function (e) {
         let el     = e.srcElement
@@ -70,6 +74,13 @@
 
         this.$emit('changeTab', el)
       },
+
+      getActiveTab: function () {
+        let e        = {}
+        e.srcElement = document.getElementById((new URLSearchParams(window.location.search)).get('tab'))
+        this.setActiveTab(e)
+      },
+
     },
   }
 </script>

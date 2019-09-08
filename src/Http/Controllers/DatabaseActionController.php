@@ -4,7 +4,9 @@
     
     use Exception;
     use Carbon\Carbon;
+    use Illuminate\Support\Arr;
     use Illuminate\Http\Request;
+    use Protoqol\Prequel\Database\Query;
     use Protoqol\Prequel\App\ModelAction;
     use Protoqol\Prequel\App\SeederAction;
     use Protoqol\Prequel\App\FactoryAction;
@@ -38,7 +40,7 @@
         public function getDefaultsForTable(string $database, string $table): array
         {
             return [
-                'id'           => ((int)PDB::create($database, $table)->count() + 1),
+                'id'           => ((int)PDB::create($database, $table)->builder()->count() + 1),
                 'current_date' => Carbon::now()->format('Y-m-d\TH:i'),
             ];
         }
@@ -86,15 +88,13 @@
         /**
          * Run raw SQL query.
          *
-         * @param string $database
-         * @param string $table
-         * @param string $query
+         * @param Request $request
          *
-         * @return string
+         * @return array|\Protoqol\Prequel\Database\Query
          */
-        public function runSql(string $database, string $table, string $query): string
+        public function runSql(Request $request)
         {
-            return (string)PDB::create($database, $table)->statement($query);
+            return (new Query($request))->get();
         }
         
         /**
