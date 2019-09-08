@@ -1,15 +1,10 @@
+require('./bootstrap/bootstrap');
+
 window.Vue = require('vue');
-require('./bootstrap');
 
-/**
- * Main component
- */
-import App from './App.vue';
+import Prequel from './components/Pages/Prequel.vue';
 
-/**
- * Vue instance
- */
 new Vue({
-  el: '#prequel',
-  ...App,
+    el: '#prequel',
+    ...Prequel,
 });
