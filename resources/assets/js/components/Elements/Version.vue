@@ -14,7 +14,7 @@
     data () {
       return {
         newVersionAvailable: '0',
-        currentVersion     : 'v1.22',
+        currentVersion     : 'v1.22.1',
       }
     },
 
