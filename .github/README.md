@@ -12,7 +12,7 @@
 	    <img src="https://img.shields.io/badge/php-%5E7.1-lightblue.svg"/>	
     </a>
     <a href="https://laravel.com/">
-	    <img src="https://img.shields.io/badge/laravel-%5E5.6-lightblue.svg"/>	
+	    <img src="https://img.shields.io/badge/laravel-=>5.6-lightblue.svg"/>	
     </a>
     <a href="https://github.com/badges/shields/pulse" alt="Activity">
         <img src="https://img.shields.io/github/commit-activity/m/badges/shields.svg" />
