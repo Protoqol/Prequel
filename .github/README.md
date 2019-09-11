@@ -49,7 +49,7 @@ composer require protoqol/prequel:v1.2
 ```
 
 #### When using Prequel 1.2 and up you can try and use the auto updater!
-#####And else to update you can use the command specified below.
+##### And else to update you can use the command specified below.
 ```bash
 $ php artisan prequel:update
 ```
