@@ -4,6 +4,7 @@
     
     
     use Illuminate\Database\Connection;
+    use Protoqol\Prequel\Database\SequelAdapter;
     use Illuminate\Database\Query\Processors\PostgresProcessor;
     use Illuminate\Database\Query\Grammars\PostgresGrammar;
     
