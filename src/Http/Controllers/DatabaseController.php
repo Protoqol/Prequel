@@ -94,6 +94,24 @@
             ];
         }
 
+        if (config('database.connections.mysql.prefix')) {
+                config(['database.connections.mysql.prefix' => '']);
+                \Illuminate\Support\Facades\DB::purge();
+         }
+
+        // Usage of the DB facade should be avoided since this uses the default config, and not the prequel config. @TODO refactor
+        return [
+             "table"     => $this->qualifiedName,
+             "structure" => app(DatabaseTraverser::class)->getTableStructure(
+                 $this->databaseName,
+                 $this->tableName
+              ),
+             "data"      => DB::table($this->qualifiedName)->paginate(config('prequel.pagination')),
+        ];
+      
+        }
+
+
         /**
          * Find given value in given column with given operator.
          * @return mixed
