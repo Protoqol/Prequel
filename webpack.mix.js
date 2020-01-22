@@ -17,6 +17,7 @@ mix.setResourceRoot('packages/protoqol/prequel').
     plugins: [
       new MonacoEditorPlugin({
         languages: ['sql'],
+        features: ['!gotoSymbol']
       }),
     ],
   }).
