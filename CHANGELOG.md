@@ -1,4 +1,47 @@
-## Prequel 1.11.11-beta
+## Latest stable version: Prequel v1.22
+
+### Prequel v1.22
+
+##### Definitive for next release
+ -  Import
+ -  Export
+ -  Log
+ -  Settings
+ -  Maintenance 
+
+### Refactored
+- [REFACTOR] Code structure is now better organised
+
+### Functionality
+- [FEATURE] PostgresSQL support 
+- [FEATURE] i18n, Prequel is now multilingual! 
+- [FEATURE] Management-mode (5)
+    - Insert row
+    - Laravel specific actions (generating assets)
+    - View structure
+    - Write and run raw SQL within the Monaco Editor (same as the vscode editor)
+    - Monaco editor for writing queries
+- [FEATURE] Define your own suffix and namespace/directory when generating assets with the Laravel actions in config
+- [FEATURE] Auto updater for Prequel
+
+### Fixed
+- [FIX] Assets 
+- [FIX] Custom path not working when multiple were selected
+- [FIX] $visible model properties were not returning 
+- [FIX] Style fixes
+
+___
+
+### Prequel v1.13  - Out of beta
+
+### Functionality
+- [FEATURE] Defining your own middleware for Prequel in config
+- [FEATURE] Partial PGSQL Support
+
+###### Fixes and refactors were omitted
+___
+
+### Prequel v1.11.11-beta
 
 ##### Definitive for next release
 - Add support for postgres.
@@ -36,3 +79,7 @@
 
 ### Readme
 - [README] Added config docs to readme, fixing issue #28. 
+
+___
+
+Start of changelog

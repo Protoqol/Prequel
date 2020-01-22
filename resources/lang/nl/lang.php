@@ -24,7 +24,7 @@ return [
     'error_page'   => [
         'oops'               => 'Oeps...',
         'tried_connecting'   => 'Geprobeerd te verbinden met...',
-        'example_connection' => 'verbinding://gebruiker@host:poort/database',
+        'example_connection' => 'driver://gebruiker@host:poort/database',
         'no_suggestions'     => 'Prequel kon geen oplossingen vinden.',
         'disabled'           => 'Prequel is uitgeschakeld.',
     ],

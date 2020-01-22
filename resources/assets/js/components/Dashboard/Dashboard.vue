@@ -5,17 +5,13 @@
 </template>
 
 <script>
-  import Management from './DashboardElements/Management';
+  import Management from './DashboardElements/Management'
 
   export default {
     name      : 'Dashboard',
-    components: {Management},
-    data() {
-      return {
-        //
-      };
-    },
-  };
+    components: { Management },
+  }
+
 </script>
 
 <style scoped lang="scss">

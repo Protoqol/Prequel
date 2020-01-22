@@ -17,8 +17,9 @@
                    :structure="structure"
                    @columnSelect="$emit('columnSelect', $event)"/>
         </div>
+
         <div v-if="mode === $root.view.modus.enum.MANAGE">
-            <ManageTable/>
+            <ManageTable :data="data" :structure="structure"/>
         </div>
     </div>
 </template>
