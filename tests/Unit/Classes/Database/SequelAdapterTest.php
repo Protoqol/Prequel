@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+
 
 namespace Protoqol\Prequel\Tests\Unit\Classes\Database;
 
-use Protoqol\Prequel\Classes\Database\SequelAdapter;
+use Protoqol\Prequel\Database\SequelAdapter;
 use Protoqol\Prequel\Tests\TestCase;
 
 /**
@@ -43,6 +43,9 @@ class SequelAdapterTest extends TestCase
         ];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testShowDatabasesThrowsExceptionForUnsupported(): void
     {
         // $this->expectException(\Exception::class);
