@@ -1,0 +1,54 @@
+{
+  "name": "protoqol/prequel",
+  "description": "Clear and concise database management.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Quinten Schorsij",
+      "email": "quinten@protoqol.xyz"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.1",
+    "laravel/framework": ">=5.6"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Protoqol\\Prequel\\PrequelServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^3.7",
+    "phpmd/phpmd": "^2.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Protoqol\\Prequel\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Protoqol\\Prequel\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "phpins": [
+      "./vendor/bin/phpinsights"
+    ],
+    "phpmd": [
+      "phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
+    ],
+    "test": [
+      "phpunit"
+    ]
+  },
+  "scripts-descriptions": {
+    "phpins": "Runs nunomaduro's PHPInsights. This gives you a report about the current code quality.",
+    "phpmd": "Runs PHPMD based on original configuration.  You can find the new mess detector report at http://localhost/vendor/prequel/phpmd.html Note that 'Avoid using static access to class' errors should be ignored.",
+    "test": "Runs the default PHPUnit test suite configured in phpunit.xml"
+  }
+}

@@ -1,0 +1,15 @@
+source
+/node_modules
+/vendor
+/.idea
+.DS_STORE
+composer.lock
+package-lock.json
+npm-debug.log
+yarn-error.log
+.phpunit.result.cache
+mix-manifest.json
+todo.md
+/public/phpmd.html
+phpunit-watcher.yml
+webpack.mix.js

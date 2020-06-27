@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --scroll-track                          : rgb(245, 245, 245);
+    --scroll-bar                            : rgb(102, 126, 234);
+    --main-content                          : rgb(255, 255, 255);
+    --column-border                         : rgba(0, 0, 0, 0);
+    --table-item-overview                   : rgba(0, 0, 0, 0);
+    --table-item-text                       : rgb(113, 128, 150);
+    --list-header-text                      : rgb(74, 85, 104);
+    --border-color                          : rgb(226, 232, 240);
+    --button-background                     : rgb(102, 126, 234);
+    --button-background-hover               : rgb(105, 136, 247);
+    --button-background-active              : rgb(102, 126, 234);
+    --button-background-light               : rgb(151, 179, 237);
+    --button-background-light-hover         : rgb(163, 191, 249);
+    --button-background-light-active        : rgb(167, 195, 255);
+
+    --manage-navbar-bg                      : rgb(247, 250, 252);
+    --manage-navbar-inactive-text-color     : rgb(163, 191, 250);
+    --manage-navbar-inactive-bg-hover-color : rgb(235, 244, 255);
+
+    --page-background-color                 : rgb(237, 241, 243);
+    --component-background-color            : rgb(255, 255, 255);
+    --logo-text-color                       : rgb(0, 0, 0);
+    --table-column-background-color         : rgb(226, 232, 240);
+    --table-row-even-background-color       : rgb(237, 242, 247);
+    --table-row-odd-background-color        : rgb(247, 250, 252);
+    --table-header-text-color               : rgb(45, 55, 72);
+    --table-hover-background-color          : rgb(226, 232, 240);
+    --header-text-color                     : rgb(0, 0, 0);
+    --input-background-color                : rgb(255, 255, 255);
+    --input-border                          : '';
+    --dropdown-background-color             : var(--input-background-color);
+    --text-secondary-color                  : rgb(74, 85, 104);
+    --text-secondary-color-invert           : rgb(255, 255, 255);
+}
+
+.theme-dark {
+    --scroll-track                          : rgb(28, 28, 28);
+    --scroll-bar                            : rgb(90, 103, 216);
+    --main-content                          : rgb(66, 66, 66);
+    --column-border                         : rgb(74, 85, 104);
+    --table-item-overview                   : rgb(45, 45, 45);
+    --table-item-text                       : rgb(161, 178, 205);
+    --list-header-text                      : rgb(212, 223, 230);
+    --border-color                          : rgb(84, 84, 84);
+    --button-background                     : rgb(57, 79, 177);
+    --button-background-hover               : rgb(60, 82, 202);
+    --button-background-active              : rgb(66, 91, 192);
+    --button-background-light               : rgb(97, 118, 161);
+    --button-background-light-hover         : rgb(108, 132, 180);
+    --button-background-light-active        : rgb(107, 133, 184);
+
+    --manage-navbar-bg                      : rgb(103, 103, 103);
+    --manage-navbar-inactive-text-color     : rgb(208, 208, 208);
+    --manage-navbar-inactive-bg-hover-color : rgb(130, 130, 130);
+
+    --logo-text-color                       : rgb(226, 237, 244);
+    --page-background-color                 : rgb(28, 28, 28);
+    --component-background-color            : rgb(38, 37, 37);
+    --table-column-background-color         : rgb(24, 24, 24);
+    --table-row-even-background-color       : rgb(51, 50, 50);
+    --table-row-odd-background-color        : rgb(38, 37, 37);
+    --table-hover-background-color          : rgb(60, 60, 60);
+    --header-text-color                     : rgb(226, 237, 244);
+    --input-background-color                : rgb(36, 36, 36);
+    --dropdown-background-color             : var(--input-background-color);
+    --input-border                          : border-none;
+    --table-header-text-color               : rgb(226, 237, 244);
+    --text-secondary-color                  : rgb(226, 237, 244);
+    --text-secondary-color-invert           : rgb(74, 85, 104);
+
+}
+
+* {
+    transition  : .150ms ease;
+    font-family : Nunito, serif;
+    outline     : none !important;
+}
+
+.prequel-swal-title {
+    color : red;
+}
+
+:focus {
+    outline : 0;
+}
+
+::-webkit-scrollbar {
+    width            : 5px;
+    height           : 5px;
+    background-color : rgb(245, 245, 245);
+    transition       : .2s ease;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow : inset 0 0 2px rgba(0, 0, 0, 0.3);
+    background-color   : var(--scroll-track);
+    border-radius      : 1px;
+    transition         : .2s ease;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius : 10px;
+    background    : var(--scroll-bar);
+    transition    : .2s ease;
+}
+
+.no-drag {
+    user-select         : none;
+    -moz-user-select    : none;
+    -webkit-user-drag   : none;
+    -webkit-user-select : none;
+    -ms-user-select     : none;
+}
