@@ -106,11 +106,13 @@
         */
         
         'ignored' => [
+            '#mysql50#lost+found' => ['*'],
+            
+            // -- Frequently ignored tables --
             // 'information_schema'  => ['*'],
             // 'sys'                 => ['*'],
             // 'performance_schema'  => ['*'],
             // 'mysql'               => ['*'],
-            '#mysql50#lost+found' => ['*'],
         ],
         
         

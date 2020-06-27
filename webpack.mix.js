@@ -1,5 +1,5 @@
-const mix                = require('laravel-mix')
-const MonacoEditorPlugin = require('monaco-editor-webpack-plugin')
+const mix                = require('laravel-mix');
+const MonacoEditorPlugin = require('monaco-editor-webpack-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,20 +13,20 @@ const MonacoEditorPlugin = require('monaco-editor-webpack-plugin')
  */
 
 mix.setResourceRoot('packages/protoqol/prequel').
-  webpackConfig({
-    plugins: [
-      new MonacoEditorPlugin({
-        languages: ['sql'],
-        features: ['!gotoSymbol']
-      }),
-    ],
-  }).
-  postCss('resources/assets/css/app.css', 'public', [
-    require('tailwindcss'),
-  ]).
-  js('resources/assets/js/app.js', 'public').
-  copy('public', '../../../public/vendor/prequel').
-  copy('resources/lang', '../../../resources/lang/vendor/prequel').
-  options({
-    purifyCss: true,
-  })
+    webpackConfig({
+      plugins: [
+        new MonacoEditorPlugin({
+          languages: ['sql'],
+          features:  ['!gotoSymbol'],
+        }),
+      ],
+    }).
+    postCss('resources/assets/css/app.css', 'public', [
+      require('tailwindcss'),
+    ]).
+    js('resources/assets/js/app.js', 'public').
+    copy('public', '../../../public/vendor/prequel').
+    copy('resources/lang', '../../../resources/lang/vendor/prequel').
+    options({
+      purifyCss: true,
+    });

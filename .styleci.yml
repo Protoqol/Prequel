@@ -1,3 +1,4 @@
+# To be configured correctly
 php:
   preset: laravel
   disabled:

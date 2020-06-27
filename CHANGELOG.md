@@ -1,6 +1,6 @@
-## Latest stable version: Prequel v1.22
+## Latest stable version: Prequel v1.22.4
 
-### Prequel v1.22
+### Prequel v1.22.4
 
 ##### Definitive for next release
  -  Import
