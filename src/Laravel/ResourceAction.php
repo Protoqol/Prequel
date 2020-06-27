@@ -25,37 +25,36 @@
         /**
          * ControllerAction constructor.
          *
-         * @param string $database
-         * @param string $table
+         * @param  string  $database
+         * @param  string  $table
          */
-        public function __construct(string $database, string $table)
-        {
+        public function __construct(string $database, string $table) {
             $this->database = $database;
             $this->table    = $table;
         }
         
         /**
          * Generate resource
+         *
          * @return mixed
          */
-        public function generate()
-        {
+        public function generate() {
             Artisan::call('make:resource', [
                 'name' => $this->generateResourceName($this->table),
             ]);
             
             $this->dumpAutoload();
             
-            return (string)$this->getQualifiedName();
+            return (string) $this->getQualifiedName();
         }
         
         /**
          * Resolve and check resource for table.
+         *
          * @return string
          * @throws \Exception
          */
-        private function checkAndGetResourceName()
-        {
+        private function checkAndGetResourceName() {
             $resourceClass = "App\\Http\\Resources\\" . $this->generateResourceName($this->table);
             
             if (!$this->classExists($resourceClass)) {
@@ -67,10 +66,10 @@
         
         /**
          * Get fully qualified class name
+         *
          * @return mixed
          */
-        public function getQualifiedName()
-        {
+        public function getQualifiedName() {
             try {
                 return $this->checkAndGetResourceName();
             } catch (Exception $e) {
@@ -80,10 +79,10 @@
         
         /**
          * Get class name
+         *
          * @return mixed
          */
-        public function getClassname()
-        {
+        public function getClassname() {
             $class = $this->getQualifiedName();
             
             if (!$class) {
@@ -93,15 +92,15 @@
             $arr   = explode("\\", $class);
             $count = count($arr);
             
-            return $arr[$count - 1];
+            return $arr[ $count - 1 ];
         }
         
         /**
          * Get class namespace
+         *
          * @return mixed
          */
-        public function getNamespace()
-        {
+        public function getNamespace() {
             $class = $this->getQualifiedName();
             
             if (!$class) {
@@ -116,7 +115,7 @@
                 if ($i === ($count - 1)) {
                     break;
                 }
-                $namespace .= (string)$arr[$i] . "\\";
+                $namespace .= (string) $arr[ $i ] . "\\";
             }
             
             return $namespace;

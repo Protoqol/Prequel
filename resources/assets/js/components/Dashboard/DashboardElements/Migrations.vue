@@ -29,7 +29,7 @@
       return {
         migrations: {
           pending: 0,
-          total  : 0,
+          total:   0,
         },
       };
     },

@@ -11,6 +11,7 @@
     
     /**
      * Class PrequelDB
+     *
      * @package Protoqol\Prequel\Database
      */
     class PrequelDB extends Model
@@ -22,13 +23,12 @@
         protected $builder, $dbConnection;
         
         /**
-         * @param string $database Database name
-         * @param string $table    Table name
+         * @param  string  $database  Database name
+         * @param  string  $table     Table name
          *
          * @return PrequelDB
          */
-        public function create(string $database, string $table)
-        {
+        public function create(string $database, string $table) {
             $this->dbConnection = (new DatabaseConnector())->getConnection($database);
             $tableName          = $this->dbConnection->formatTableName($database, $table);
             $this->builder      = new Builder($this->dbConnection, $this->dbConnection->getGrammar(), $this->dbConnection->getProcessor());
@@ -41,18 +41,16 @@
         /**
          * @return Builder
          */
-        public function builder()
-        {
+        public function builder() {
             return $this->builder;
         }
         
         /**
-         * @param array $queries
+         * @param  array  $queries
          *
          * @return array
          */
-        public function statement(array $queries)
-        {
+        public function statement(array $queries) {
             $queryResponse = [];
             
             foreach ($queries as $query) {

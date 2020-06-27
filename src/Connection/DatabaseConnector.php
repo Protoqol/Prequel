@@ -4,6 +4,7 @@
     
     /**
      * Class DatabaseConnector
+     *
      * @package Protoqol\Prequel\Database
      */
     class DatabaseConnector
@@ -12,12 +13,12 @@
         public $connection;
         
         /**
-         * @param null $database Database name
+         * @param  null  $database  Database name
          *
          * @return mixed
          */
-        public function getConnection($database = null)
-        {
+        public function getConnection($database = null) {
+            
             switch (config('prequel.database.connection')) {
                 case 'mysql':
                     $className = 'MySqlConnection';

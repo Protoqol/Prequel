@@ -24,8 +24,16 @@
     class ConfigWriter
     {
         
-        public function toFile(string $filePath, array $newValues, bool $useValidation = true): string
-        {
+        /**
+         * Write to config file
+         *
+         * @param  string  $filePath
+         * @param  array   $newValues
+         * @param  bool    $useValidation
+         *
+         * @return string
+         */
+        public function toFile(string $filePath, array $newValues, bool $useValidation = true) : string {
             $contents = file_get_contents($filePath);
             
             try {
@@ -38,8 +46,7 @@
             return $contents;
         }
         
-        public function toContent(string $contents, array $newValues, bool $useValidation = true): string
-        {
+        public function toContent(string $contents, array $newValues, bool $useValidation = true) : string {
             $contents = $this->parseContent($contents, $newValues);
             
             if (!$useValidation) {
@@ -57,7 +64,7 @@
                         throw new Exception(sprintf('Unable to rewrite key "%s" in config, does it exist?', $key));
                     }
                     
-                    $array = $array[$part];
+                    $array = $array[ $part ];
                 }
                 $actualValue = $array;
                 
@@ -69,8 +76,7 @@
             return $contents;
         }
         
-        protected function parseContent(string $contents, array $newValues): string
-        {
+        protected function parseContent(string $contents, array $newValues) : string {
             $result = $contents;
             
             foreach ($newValues as $path => $value) {
@@ -80,8 +86,7 @@
             return $result;
         }
         
-        protected function parseContentValue(string $contents, string $path, $value): string
-        {
+        protected function parseContentValue(string $contents, string $path, $value) : string {
             $result       = $contents;
             $items        = explode('.', $path);
             $key          = array_pop($items);
@@ -105,8 +110,8 @@
             return $result;
         }
         
-        protected function writeValueToPhp($value): string
-        {
+        protected function writeValueToPhp($value) : string {
+            
             if (is_string($value) && strpos($value, "'") === false) {
                 $replaceValue = "'" . $value . "'";
             } elseif (is_string($value) && strpos($value, '"') === false) {
@@ -126,8 +131,7 @@
             return $replaceValue;
         }
         
-        protected function writeArrayToPhp(array $array): array
-        {
+        protected function writeArrayToPhp(array $array) : array {
             $result = [];
             
             foreach ($array as $value) {
@@ -141,8 +145,7 @@
             return $result;
         }
         
-        protected function buildStringExpression(string $targetKey, array $arrayItems = [], string $quoteChar = "'"): string
-        {
+        protected function buildStringExpression(string $targetKey, array $arrayItems = [], string $quoteChar = "'") : string {
             $expression = [];
             
             // Opening expression for array items ($1)
@@ -163,8 +166,7 @@
         /**
          * Common constants only (true, false, null, integers)
          */
-        protected function buildConstantExpression(string $targetKey, array $arrayItems = []): string
-        {
+        protected function buildConstantExpression(string $targetKey, array $arrayItems = []) : string {
             $expression = [];
             
             // Opening expression for array items ($1)
@@ -182,8 +184,7 @@
         /**
          * Single level arrays only
          */
-        protected function buildArrayExpression(string $targetKey, array $arrayItems = []): string
-        {
+        protected function buildArrayExpression(string $targetKey, array $arrayItems = []) : string {
             $expression = [];
             
             // Opening expression for array items ($1)
@@ -198,8 +199,7 @@
             return '/' . implode('', $expression) . '/';
         }
         
-        protected function buildArrayOpeningExpression(array $arrayItems): string
-        {
+        protected function buildArrayOpeningExpression(array $arrayItems) : string {
             if (count($arrayItems)) {
                 $itemOpen = [];
                 foreach ($arrayItems as $item) {

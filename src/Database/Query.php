@@ -9,6 +9,7 @@
     
     /**
      * Class Query
+     *
      * @package Protoqol\Prequel\Database
      */
     class Query
@@ -32,10 +33,9 @@
         /**
          * Query constructor.
          *
-         * @param \Illuminate\Http\Request $request
+         * @param  \Illuminate\Http\Request  $request
          */
-        public function __construct(Request $request)
-        {
+        public function __construct(Request $request) {
             $this->database = $request->database;
             $this->table    = $request->table;
             $this->queries  = $this->collector($request->all('query'));
@@ -43,10 +43,10 @@
         
         /**
          * General purpose query runner with all information packed in response
+         *
          * @return array
          */
-        public function get()
-        {
+        public function get() {
             $arr = [];
             
             $iteration = 0;
@@ -56,7 +56,7 @@
                 $results = ($type === 'dql') ? Arr::collapse($this->run($query)) : [[$this->run($query)]];
                 $rows    = $this->getRows($results, ($type === 'dql'));
                 
-                $arr[$iteration] = [
+                $arr[ $iteration ] = [
                     'query'   => $query,
                     'columns' => $rows,
                     'data'    => ($type === 'dql') ? $results : $results[0],
@@ -76,8 +76,7 @@
          *
          * @return mixed
          */
-        public function run(string $query)
-        {
+        public function run(string $query) {
             $realQuery = [$query];
             
             try {
@@ -90,17 +89,16 @@
         /**
          * Collect array with all queries
          *
-         * @param array $queryString
+         * @param  array  $queryString
          *
          * @return array
          */
-        private function collector(array $queryString)
-        {
+        private function collector(array $queryString) {
             $queries = explode(';', $queryString['query']);
             
             foreach ($queries as $key => $query) {
                 if (!$query || empty($query) || $query === '') {
-                    unset($queries[$key]);
+                    unset($queries[ $key ]);
                 }
             }
             
@@ -110,14 +108,13 @@
         /**
          * Get simple query type
          *
-         * @param string $query
+         * @param  string  $query
          *
          * @return bool|string
          */
-        private function getType(string $query)
-        {
+        private function getType(string $query) {
             $str   = strtolower($query);
-            $types = (object)[
+            $types = (object) [
                 'ddl' => ['create', 'alter', 'rename', 'drop', 'truncate'],
                 'dml' => ['insert', 'delete', 'update', 'lock', 'merge'],
                 'dcl' => ['grant', 'revoke'],
@@ -141,13 +138,12 @@
         /**
          * Get key names of results
          *
-         * @param array $results
-         * @param bool  $select
+         * @param  array  $results
+         * @param  bool   $select
          *
          * @return array|bool
          */
-        private function getRows(array $results, bool $select = true)
-        {
+        private function getRows(array $results, bool $select = true) {
             $keys = [];
             
             if (!$select) {
@@ -159,7 +155,7 @@
             }
             
             if ($select && $results && !empty($results)) {
-                $sample = (array)$results[0];
+                $sample = (array) $results[0];
                 
                 foreach ($sample as $key => $value) {
                     $keys[] = [
@@ -176,12 +172,11 @@
         /**
          * Check if valid SQL @TODO
          *
-         * @param string $query
+         * @param  string  $query
          *
          * @return bool
          */
-        private function isValid(string $query)
-        {
+        private function isValid(string $query) {
             return true;
         }
     }

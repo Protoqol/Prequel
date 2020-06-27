@@ -25,37 +25,36 @@
         /**
          * ControllerAction constructor.
          *
-         * @param string $database
-         * @param string $table
+         * @param  string  $database
+         * @param  string  $table
          */
-        public function __construct(string $database, string $table)
-        {
+        public function __construct(string $database, string $table) {
             $this->database = $database;
             $this->table    = $table;
         }
         
         /**
          * Generate seeder.
+         *
          * @return int|string
          */
-        public function generate()
-        {
+        public function generate() {
             Artisan::call('make:seeder', [
                 'name' => $this->generateClassName($this->table) . 'Seeder',
             ]);
             
             $this->dumpAutoload();
             
-            return (string)$this->getQualifiedName();
+            return (string) $this->getQualifiedName();
         }
         
         /**
          * Run seeder.
+         *
          * @return int
          * @throws \Exception
          */
-        public function run()
-        {
+        public function run() {
             return Artisan::call('db:seed', [
                 '--class'    => $this->checkAndGetSeederName(),
                 '--database' => $this->database,
@@ -64,11 +63,11 @@
         
         /**
          * Resolve and check seeder for table.
+         *
          * @return string
          * @throws \Exception
          */
-        private function checkAndGetSeederName()
-        {
+        private function checkAndGetSeederName() {
             $seederClass = $this->generateSeederName($this->table);
             
             if (!$this->classExists($seederClass)) {
@@ -80,10 +79,10 @@
         
         /**
          * Get fully qualified class name
+         *
          * @return mixed
          */
-        public function getQualifiedName()
-        {
+        public function getQualifiedName() {
             try {
                 return $this->checkAndGetSeederName();
             } catch (Exception $e) {
@@ -93,10 +92,10 @@
         
         /**
          * Get class name
+         *
          * @return mixed
          */
-        public function getClassname()
-        {
+        public function getClassname() {
             $class = $this->getQualifiedName();
             
             if (!$class) {
@@ -106,15 +105,15 @@
             $arr   = explode("\\", $class);
             $count = count($arr);
             
-            return $arr[$count - 1];
+            return $arr[ $count - 1 ];
         }
         
         /**
          * Get class namespace
+         *
          * @return mixed
          */
-        public function getNamespace()
-        {
+        public function getNamespace() {
             $class = $this->getQualifiedName();
             
             if (!$class) {
@@ -129,7 +128,7 @@
                 if ($i === ($count - 1)) {
                     break;
                 }
-                $namespace .= (string)$arr[$i] . "\\";
+                $namespace .= (string) $arr[ $i ] . "\\";
             }
             
             return $namespace;

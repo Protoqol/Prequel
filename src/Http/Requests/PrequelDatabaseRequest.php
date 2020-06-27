@@ -8,6 +8,7 @@
     
     /**
      * Class PrequelDatabaseRequest
+     *
      * @property mixed database
      * @property mixed table
      * @property mixed model
@@ -19,19 +20,19 @@
         
         /**
          * Determine if the user is authorized to make this request.
+         *
          * @return bool
          */
-        public function authorize()
-        {
+        public function authorize() {
             return true;
         }
         
         /**
          * Get the validation rules that apply to the request.
+         *
          * @return array
          */
-        public function rules()
-        {
+        public function rules() {
             return [
                 'database'      => 'string',
                 'table'         => 'string',
@@ -41,10 +42,10 @@
         
         /**
          * Get the validator instance for the request.
+         *
          * @return \Illuminate\Contracts\Validation\Validator
          */
-        public function getValidatorInstance()
-        {
+        public function getValidatorInstance() {
             $request = $this->validationData();
             
             try {
@@ -67,10 +68,10 @@
         
         /**
          * Get the error messages for the defined validation rules.
+         *
          * @return array
          */
-        public function messages()
-        {
+        public function messages() {
             return [
                 'database.required'      => 'Database name is required',
                 'table.required'         => 'Table name is required',

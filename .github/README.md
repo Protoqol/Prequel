@@ -27,8 +27,6 @@
     </a>
 </p>
 
-## Development temporarily on hold
-
 #### [TL;DR? Test Prequel here!](https://prequel.protoqol.xyz/prequel)
 
 #### What is Prequel exactly?  

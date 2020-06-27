@@ -12,6 +12,7 @@
     
     /**
      * Class PrequelServiceProvider
+     *
      * @package Protoqol\Prequel
      */
     class PrequelServiceProvider extends ServiceProvider
@@ -19,10 +20,10 @@
         
         /**
          * Register services.
+         *
          * @return void
          */
-        public function register()
-        {
+        public function register() {
             $this->app->singleton(DatabaseTraverser::class, function () {
                 return new DatabaseTraverser();
             });
@@ -36,7 +37,7 @@
                     return new DatabaseController($app['request']);
                 }
                 
-                return new DatabaseController($app[PrequelDatabaseRequest::class]);
+                return new DatabaseController($app[ PrequelDatabaseRequest::class ]);
             });
             
             $this->mergeConfigFrom(
@@ -47,10 +48,10 @@
         
         /**
          * Bootstrap services.
+         *
          * @return void
          */
-        public function boot()
-        {
+        public function boot() {
             $this->loadViewsFrom(dirname(__DIR__) . '/resources/views', 'Prequel');
             
             $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
@@ -58,24 +59,24 @@
             $this->loadTranslationsFrom(dirname(__DIR__) . '/resources/lang/', 'Prequel');
             
             $this->publishes([
-                dirname(__DIR__)
-                . '/resources/lang' => resource_path('lang/vendor/prequel'),
-            ], 'prequel-lang');
+                                 dirname(__DIR__)
+                                 . '/resources/lang' => resource_path('lang/vendor/prequel'),
+                             ], 'prequel-lang');
             
             $this->publishes([
-                dirname(__DIR__)
-                . '/config/prequel.php' => config_path('prequel.php'),
-            ], 'prequel-config');
+                                 dirname(__DIR__)
+                                 . '/config/prequel.php' => config_path('prequel.php'),
+                             ], 'prequel-config');
             
             $this->publishes([
-                dirname(__DIR__) . '/public' => public_path('vendor/prequel'),
-            ], 'prequel-assets');
+                                 dirname(__DIR__) . '/public' => public_path('vendor/prequel'),
+                             ], 'prequel-assets');
             
             if ($this->app->runningInConsole()) {
                 $this->commands([
-                    Commands\UpdateCommand::class,
-                    Commands\InstallCommand::class,
-                ]);
+                                    Commands\UpdateCommand::class,
+                                    Commands\InstallCommand::class,
+                                ]);
             }
         }
     }

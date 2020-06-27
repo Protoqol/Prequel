@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name : 'StatusDisplay',
+    name:  'StatusDisplay',
     props: ['header', 'value', 'unit'],
   };
 </script>

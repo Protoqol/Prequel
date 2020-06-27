@@ -10,6 +10,7 @@
     
     /**
      * Class PrequelController
+     *
      * @package Protoqol\Prequel\Http\Controllers
      */
     class PrequelController extends Controller
@@ -17,11 +18,11 @@
         
         /**
          * Get first entry data
+         *
          * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
          */
-        public function index()
-        {
-            $databaseData = (object)app(DatabaseTraverser::class)->getAll();
+        public function index() {
+            $databaseData = (object) app(DatabaseTraverser::class)->getAll();
             
             return view('Prequel::main', [
                 'env'  => [
@@ -35,19 +36,18 @@
                     'collection'          => $databaseData->collection,
                     'flatTableCollection' => $databaseData->flatTableCollection,
                 ],
-                'lang' => Lang::get('Prequel::lang', [], (string)config('prequel.locale')),
+                'lang' => Lang::get('Prequel::lang', [], (string) config('prequel.locale')),
             ]);
         }
         
         /**
          * Auto update Prequel.
          *
-         * @param \Illuminate\Http\Request $request
+         * @param  \Illuminate\Http\Request  $request
          *
          * @return array
          */
-        public function autoUpdate(Request $request)
-        {
+        public function autoUpdate(Request $request) {
             $newestVersion = $request->post('newest_version');
             
             $script = [

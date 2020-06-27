@@ -1,5 +1,5 @@
 <template>
-<!--     @TODO edit config -->
+    <!--     @TODO edit config -->
 </template>
 
 <script>
