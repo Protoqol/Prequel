@@ -21,42 +21,42 @@
 </template>
 
 <script>
-  import api from 'axios';
+import api from "axios";
 
-  export default {
-    name: 'Migrations',
+export default {
+    name: "Migrations",
     data() {
-      return {
-        migrations: {
-          pending: 0,
-          total:   0,
-        },
-      };
+        return {
+            migrations: {
+                pending: 0,
+                total:   0,
+            },
+        };
     },
 
     created() {
-      api.get('status').then(res => {
-        this.migrations.pending = res.data.migrations.pending;
-        this.migrations.total   = res.data.migrations.total;
-      });
+        api.get("status").then(res => {
+            this.migrations.pending = res.data.migrations.pending;
+            this.migrations.total   = res.data.migrations.total;
+        });
     },
 
     methods: {
-      runMigrations: function() {
-        api.get('database/migrations/run').then(res => {
-          if (res) {
-            window.location.reload();
-          }
-        });
-      },
+        runMigrations: function() {
+            api.get("database/migrations/run").then(res => {
+                if (res) {
+                    window.location.reload();
+                }
+            });
+        },
 
-      resetMigrations: function() {
-        api.get('database/migrations/reset').finally(() => {
-          window.location.reload();
-        });
-      },
+        resetMigrations: function() {
+            api.get("database/migrations/reset").finally(() => {
+                window.location.reload();
+            });
+        },
     },
-  };
+};
 </script>
 
 <style lang="scss">

@@ -16,23 +16,23 @@
 </template>
 
 <script>
-  import Paginate from 'vuejs-paginate/src/components/Paginate';
+import Paginate from "vuejs-paginate/src/components/Paginate";
 
-  export default {
-    name      : 'Paginator',
-    props     : ['currentPage', 'numberOfPages'],
+export default {
+    name      : "Paginator",
+    props     : ["currentPage", "numberOfPages"],
     components: {Paginate},
     watch     : {
-      currentPage(newValue) {
-        this.$refs.paginate.selected = newValue;
-      },
+        currentPage(newValue) {
+            this.$refs.paginate.selected = newValue;
+        },
     },
     methods   : {
-      pageChange: function(pageNum) {
-        this.$emit('pageChange', pageNum);
-      },
+        pageChange: function(pageNum) {
+            this.$emit("pageChange", pageNum);
+        },
     },
-  };
+};
 </script>
 
 <style lang="scss">

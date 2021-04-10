@@ -5,12 +5,12 @@
 </template>
 
 <script>
-  import ActionInfo from './ActionInfo'
+import ActionInfo from "./ActionInfo";
 
-  export default {
-    name      : 'Import',
+export default {
+    name      : "Import",
     components: { ActionInfo },
-  }
+};
 </script>
 
 <style scoped>

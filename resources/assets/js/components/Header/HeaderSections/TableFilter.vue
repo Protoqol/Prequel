@@ -42,102 +42,102 @@
 </template>
 
 <script>
-  export default {
-    name : 'TableFilter',
+export default {
+    name : "TableFilter",
     props: [
-      'activeTable',
-      'showFilter',
-      'tableLoading',
-      'loading',
-      'tableStructure',
-      'searchColumn',
-      'numberOfRecords',
+        "activeTable",
+        "showFilter",
+        "tableLoading",
+        "loading",
+        "tableStructure",
+        "searchColumn",
+        "numberOfRecords",
     ],
 
     data() {
-      return {
-        input: {
-          availableColumns: [],
-          column          : '',
-          value           : '',
-          queryType       : '=',
-        },
-      };
+        return {
+            input: {
+                availableColumns: [],
+                column          : "",
+                value           : "",
+                queryType       : "=",
+            },
+        };
     },
 
     methods: {
-      /**
+        /**
        | Reset input fields
        */
-      resetInputs: function() {
-        this.input.column    = '';
-        this.input.value     = '';
-        this.input.queryType = '=';
-      },
+        resetInputs: function() {
+            this.input.column    = "";
+            this.input.value     = "";
+            this.input.queryType = "=";
+        },
 
-      /**
+        /**
        | Reset query
        */
-      resetHandler: function() {
-        this.$emit('resetSearchInTable');
-        this.resetInputs();
-      },
+        resetHandler: function() {
+            this.$emit("resetSearchInTable");
+            this.resetInputs();
+        },
 
-      /**
+        /**
        | Handle input when searching for data inside a table
        */
-      searchHandler: function() {
-        let columnInputEl = document.querySelector('input[name=column]');
-        let valueInputEl  = document.querySelector('input[name=value]');
+        searchHandler: function() {
+            let columnInputEl = document.querySelector("input[name=column]");
+            let valueInputEl  = document.querySelector("input[name=value]");
 
-        if (this.input.column.length === 0) {
-          columnInputEl.classList.add('border-red-500');
+            if (this.input.column.length === 0) {
+                columnInputEl.classList.add("border-red-500");
 
-          setTimeout(function() {
-            columnInputEl.classList.remove('border-red-500');
-          }, 750);
-        }
+                setTimeout(function() {
+                    columnInputEl.classList.remove("border-red-500");
+                }, 750);
+            }
 
-        if (this.input.value.length === 0) {
-          valueInputEl.classList.add('border-red-500');
+            if (this.input.value.length === 0) {
+                valueInputEl.classList.add("border-red-500");
 
-          setTimeout(function() {
-            valueInputEl.classList.remove('border-red-500');
-          }, 750);
-        }
+                setTimeout(function() {
+                    valueInputEl.classList.remove("border-red-500");
+                }, 750);
+            }
 
-        if (this.input.value.length > 0 && this.input.column.length > 0) {
-          this.$emit('shouldBeLoading');
-          this.$emit('searchInTable', {
-            column   : this.input.column,
-            value    : this.input.value,
-            queryType: this.input.queryType,
-          });
-          return true;
-        }
+            if (this.input.value.length > 0 && this.input.column.length > 0) {
+                this.$emit("shouldBeLoading");
+                this.$emit("searchInTable", {
+                    column   : this.input.column,
+                    value    : this.input.value,
+                    queryType: this.input.queryType,
+                });
+                return true;
+            }
 
-        return false;
-      },
+            return false;
+        },
     },
 
     watch: {
-      searchColumn: function(newVal) {
-        this.input.column = newVal;
-      },
+        searchColumn: function(newVal) {
+            this.input.column = newVal;
+        },
 
-      tableStructure: function(newVal) {
-        this.input.availableColumns = newVal;
-      },
+        tableStructure: function(newVal) {
+            this.input.availableColumns = newVal;
+        },
 
-      activeTable: function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.input.column    = '';
-          this.input.value     = '';
-          this.input.queryType = '=';
-        }
-      },
+        activeTable: function(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                this.input.column    = "";
+                this.input.value     = "";
+                this.input.queryType = "=";
+            }
+        },
     },
-  };
+};
 </script>
 
 <style scoped lang="scss">

@@ -84,77 +84,76 @@
 </template>
 
 <script>
-  import api           from 'axios'
-  import Migrations    from './Migrations'
-  import StatusDisplay from './StatusDisplay'
-  import Badge         from '../../Elements/Badge'
-  import Settings      from './Settings'
+import api           from "axios";
+import Migrations    from "./Migrations";
+import StatusDisplay from "./StatusDisplay";
+import Badge         from "../../Elements/Badge";
 
-  export default {
-    name      : 'Management',
-    components: { Settings, Badge, StatusDisplay, Migrations },
+export default {
+    name      : "Management",
+    components: { Badge, StatusDisplay, Migrations },
     data () {
-      return {
-        app: {},
-      }
+        return {
+            app: {},
+        };
     },
 
     mounted () {
-      if (document.getElementById('dbManagement') !== null) {
-        this.getData()
-      }
+        if (document.getElementById("dbManagement") !== null) {
+            this.getData();
+        }
     },
 
     methods: {
 
-      /**
+        /**
        * Get status data: server info, user privileges and migrations
        */
-      getData: function () {
-        api.get('/status').then(res => {
-          this.app = res.data
-        })
-      },
+        getData: function () {
+            api.get("/status").then(res => {
+                this.app = res.data;
+            });
+        },
 
-      /**
+        /**
        * @TODO Check if user has enough privileges
        * Create readable string from array
        * @param privs
        */
-      // readableArray: function (privs) {
-      // if (privs.HAS_ALL) {
-      //   return 'User has all permissions';
-      // }
-      //
-      // let readableString = '';
-      //
-      // for (let priv in privs) {
-      //   if (priv === true) {
-      //     readableString += priv;
-      //   }
-      // }
-      //
-      // return readableString;
-      // },
+        // readableArray: function (privs) {
+        // if (privs.HAS_ALL) {
+        //   return 'User has all permissions';
+        // }
+        //
+        // let readableString = '';
+        //
+        // for (let priv in privs) {
+        //   if (priv === true) {
+        //     readableString += priv;
+        //   }
+        // }
+        //
+        // return readableString;
+        // },
 
-      /**
+        /**
        * Seconds to hours
        */
-      secsToHours: function (str) {
-        let secs = parseFloat(str)
-        return Math.round(secs / 60 / 60)
-      },
+        secsToHours: function (str) {
+            let secs = parseFloat(str);
+            return Math.round(secs / 60 / 60);
+        },
 
-      /**
+        /**
        * Seconds to hours
        */
-      secsToMins: function (str) {
-        let secs = parseFloat(str)
-        return Math.round(secs / 60)
-      },
+        secsToMins: function (str) {
+            let secs = parseFloat(str);
+            return Math.round(secs / 60);
+        },
 
     },
-  }
+};
 </script>
 
 <style scoped lang="scss">

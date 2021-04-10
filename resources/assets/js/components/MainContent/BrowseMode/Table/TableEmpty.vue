@@ -53,10 +53,10 @@
 </template>
 
 <script>
-  export default {
-    name : 'TableEmpty',
-    props: ['structure'],
-  };
+export default {
+    name : "TableEmpty",
+    props: ["structure"],
+};
 </script>
 
 <style lang="scss">

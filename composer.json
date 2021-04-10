@@ -1,53 +1,53 @@
 {
-  "name"                : "protoqol/prequel",
-  "description"         : "Clear and concise database management.",
-  "type"                : "library",
-  "license"             : "MIT",
-  "authors"             : [
+  "name": "protoqol/prequel",
+  "description": "Clear and concise database management.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
     {
-      "name" : "Quinten Schorsij",
+      "name": "Quinten Schorsij",
       "email": "quinten@protoqol.xyz"
     }
   ],
-  "minimum-stability"   : "stable",
-  "require"             : {
-    "php"              : "^7.1|^8.0",
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.1|^8.0",
     "laravel/framework": ">=5.6"
   },
-  "extra"               : {
+  "extra": {
     "laravel": {
       "providers": [
         "Protoqol\\Prequel\\PrequelServiceProvider"
       ]
     }
   },
-  "require-dev"         : {
+  "require-dev": {
     "orchestra/testbench": "^3.7",
-    "phpmd/phpmd"        : "^2.6"
+    "phpmd/phpmd": "^2.6"
   },
-  "autoload"            : {
+  "autoload": {
     "psr-4": {
       "Protoqol\\Prequel\\": "src"
     }
   },
-  "autoload-dev"        : {
+  "autoload-dev": {
     "psr-4": {
       "Protoqol\\Prequel\\Tests\\": "tests/"
     }
   },
-  "scripts"             : {
+  "scripts": {
     "phpins": [
       "./vendor/bin/phpinsights"
     ],
-    "phpmd" : [
+    "phpmd": [
       "phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
     ],
-    "test"  : [
+    "test": [
       "phpunit"
     ]
   },
   "scripts-descriptions": {
     "phpins": "Runs nunomaduro's PHPInsights. This gives you a report about the current code quality.",
-    "test"  : "Runs the default PHPUnit test suite configured in phpunit.xml"
+    "test": "Runs the default PHPUnit test suite configured in phpunit.xml"
   }
 }

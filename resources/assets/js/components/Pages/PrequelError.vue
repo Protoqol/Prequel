@@ -34,54 +34,54 @@
 </template>
 
 <script>
-  export default {
-    name   : 'PrequelError',
-    props  : ['errorDetailed', 'env'],
+export default {
+    name   : "PrequelError",
+    props  : ["errorDetailed", "env"],
     data() {
-      return {
-        standards: {
-          port                    : 3306,
-          supportedConnectionTypes: ['mysql', 'pgsql'],
-        },
-        prequel: {
-          lang: window.Prequel.i18n
-        }
-      };
+        return {
+            standards: {
+                port                    : 3306,
+                supportedConnectionTypes: ["mysql", "pgsql"],
+            },
+            prequel: {
+                lang: window.Prequel.i18n
+            }
+        };
     },
     methods: {
-      errorSuggestion: function() {
-        let suggestionCollection = [];
-        let userPort             = parseInt(this.$props.env.port);
-        let connection           = this.$props.env.connection;
+        errorSuggestion: function() {
+            let suggestionCollection = [];
+            let userPort             = parseInt(this.$props.env.port);
+            let connection           = this.$props.env.connection;
 
-        let supportedConnectionTypeLength = this.standards.supportedConnectionTypes.length;
-        let connectionErrorCounter = false;
+            let supportedConnectionTypeLength = this.standards.supportedConnectionTypes.length;
+            let connectionErrorCounter = false;
 
-        // @TODO More suggestions
-        if (userPort !== this.standards.port && connection === 'mysql') {
-          suggestionCollection.push(
-              `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
-        }
+            // @TODO More suggestions
+            if (userPort !== this.standards.port && connection === "mysql") {
+                suggestionCollection.push(
+                    `You're using an irregular port number, usually the port is 3306. (Yours is: ${userPort})`);
+            }
 
-        for (let i = 0; i < supportedConnectionTypeLength; i++) {
-          if (this.standards.supportedConnectionTypes[i] !== connection) {
-            connectionErrorCounter++;
-          }
+            for (let i = 0; i < supportedConnectionTypeLength; i++) {
+                if (this.standards.supportedConnectionTypes[i] !== connection) {
+                    connectionErrorCounter++;
+                }
 
-          if(i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength){
-            suggestionCollection.push(
-                `Your database connection might not be supported yet, currently supported: ${this.standards.supportedConnectionTypes.map(type => `'${type}'`).join(', ')}. (Yours is: '${connection}').`);
-          }
-        }
+                if(i === supportedConnectionTypeLength - 1 && connectionErrorCounter === supportedConnectionTypeLength){
+                    suggestionCollection.push(
+                        `Your database connection might not be supported yet, currently supported: ${this.standards.supportedConnectionTypes.map(type => `'${type}'`).join(", ")}. (Yours is: '${connection}').`);
+                }
+            }
 
-        if (suggestionCollection.length === 0) {
-          suggestionCollection.push('Prequel could not suggest any fixes.');
-        }
+            if (suggestionCollection.length === 0) {
+                suggestionCollection.push("Prequel could not suggest any fixes.");
+            }
 
-        return suggestionCollection;
-      },
+            return suggestionCollection;
+        },
     },
-  };
+};
 </script>
 
 <style lang="scss">

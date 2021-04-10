@@ -12,4 +12,3 @@ js:
     not-name:
       - webpack.mix.js
 css: true
- 

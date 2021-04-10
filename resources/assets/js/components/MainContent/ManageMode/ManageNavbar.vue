@@ -42,48 +42,48 @@
 </template>
 
 <script>
-  export default {
-    name: 'ManageNavbar',
+export default {
+    name: "ManageNavbar",
     data () {
-      return {
-        'activeTabId'      : 'tab-newRow',
-        'activeClassName'  : 'active',
-        'inactiveClassName': 'inactive',
-      }
+        return {
+            "activeTabId"      : "tab-newRow",
+            "activeClassName"  : "active",
+            "inactiveClassName": "inactive",
+        };
     },
 
     mounted () {
-      this.getActiveTab()
+        this.getActiveTab();
     },
 
     methods: {
-      setActiveTab: function (e) {
-        let el     = e.srcElement
-        let prevEl = document.getElementById(this.activeTabId)
+        setActiveTab: function (e) {
+            let el     = e.srcElement;
+            let prevEl = document.getElementById(this.activeTabId);
 
-        if (prevEl.classList.contains(this.activeClassName)) {
-          prevEl.classList.remove(this.activeClassName)
-          prevEl.classList.add(this.inactiveClassName)
-        }
+            if (prevEl.classList.contains(this.activeClassName)) {
+                prevEl.classList.remove(this.activeClassName);
+                prevEl.classList.add(this.inactiveClassName);
+            }
 
-        if (el.classList.contains(this.inactiveClassName)) {
-          el.classList.remove(this.inactiveClassName)
-          el.classList.add(this.activeClassName)
-        }
+            if (el.classList.contains(this.inactiveClassName)) {
+                el.classList.remove(this.inactiveClassName);
+                el.classList.add(this.activeClassName);
+            }
 
-        this.activeTabId = el.id
+            this.activeTabId = el.id;
 
-        this.$emit('changeTab', el)
-      },
+            this.$emit("changeTab", el);
+        },
 
-      getActiveTab: function () {
-        let e        = {}
-        e.srcElement = document.getElementById((new URLSearchParams(window.location.search)).get('tab'))
-        this.setActiveTab(e)
-      },
+        getActiveTab: function () {
+            let e        = {};
+            e.srcElement = document.getElementById((new URLSearchParams(window.location.search)).get("tab"));
+            this.setActiveTab(e);
+        },
 
     },
-  }
+};
 </script>
 
 <style scoped lang="scss">

@@ -26,36 +26,36 @@
 
 <script>
 
-  import PrequelLogo    from './HeaderSections/PrequelLogo'
-  import TableFilter    from './HeaderSections/TableFilter'
-  import SettingButtons from './HeaderSections/SettingButtons'
+import PrequelLogo    from "./HeaderSections/PrequelLogo";
+import TableFilter    from "./HeaderSections/TableFilter";
+import SettingButtons from "./HeaderSections/SettingButtons";
 
-  export default {
-    name      : 'Header',
+export default {
+    name      : "Header",
     components: { SettingButtons, TableFilter, PrequelLogo },
     props     : [
-      'error',
-      'activeTable',
-      'showFilter',
-      'env',
-      'loading',
-      'tableLoading',
-      'tableStructure',
-      'searchColumn',
-      'numberOfRecords',
+        "error",
+        "activeTable",
+        "showFilter",
+        "env",
+        "loading",
+        "tableLoading",
+        "tableStructure",
+        "searchColumn",
+        "numberOfRecords",
     ],
 
     methods: {
-      changeTheme: function (ev) {
-        if (ev) {
-          document.body.className += ' ' + 'theme-dark'
-        }
-        else {
-          document.body.classList.remove('theme-dark')
-        }
-      },
+        changeTheme: function (ev) {
+            if (ev) {
+                document.body.className += " " + "theme-dark";
+            }
+            else {
+                document.body.classList.remove("theme-dark");
+            }
+        },
     },
-  }
+};
 </script>
 
 

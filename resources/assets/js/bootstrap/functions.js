@@ -5,8 +5,8 @@
  * @returns {string}
  */
 window.capitalise = function (str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
 
 /**
  * Enhance readability.
@@ -15,19 +15,19 @@ window.capitalise = function (str) {
  * @returns {string}
  */
 window.prettifyName = function (str) {
-  let words    = str.split(/[!@#$%^&*(),.?":{}|<>_-]/)
-  let readable = ''
+    let words    = str.split(/[!@#$%^&*(),.?":{}|<>_-]/);
+    let readable = "";
 
-  for (let i = 0; i < words.length; i++) {
-    readable += capitalise(words[i].toLowerCase())
+    for (let i = 0; i < words.length; i++) {
+        readable += capitalise(words[i].toLowerCase());
 
-    if (i !== (words.length - 1)) {
-      readable += ' '
+        if (i !== (words.length - 1)) {
+            readable += " ";
+        }
     }
-  }
 
-  return readable
-}
+    return readable;
+};
 
 /**
  * Handle translations.
@@ -37,10 +37,10 @@ window.prettifyName = function (str) {
  * @returns {*}
  */
 Vue.prototype.trans = (string, args) => {
-  let value = _.get(window.Prequel.i18n, string)
+    let value = _.get(window.Prequel.i18n, string);
 
-  _.eachRight(args, (paramVal, paramKey) => {
-    value = _.replace(value, `:${paramKey}`, paramVal)
-  })
-  return value
-}
+    _.eachRight(args, (paramVal, paramKey) => {
+        value = _.replace(value, `:${paramKey}`, paramVal);
+    });
+    return value;
+};

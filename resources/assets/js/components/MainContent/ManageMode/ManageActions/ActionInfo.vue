@@ -6,10 +6,10 @@
 </template>
 
 <script>
-  export default {
-    name : 'ActionInfo',
-    props: ['title', 'description'],
-  }
+export default {
+    name : "ActionInfo",
+    props: ["title", "description"],
+};
 </script>
 
 <style scoped lang="scss">

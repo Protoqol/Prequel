@@ -21,41 +21,41 @@
 </template>
 
 <script>
-  export default {
-    name   : 'TableStatus',
-    props  : ['loading', 'tableErrorDetailed', 'tableLoadError'],
+export default {
+    name   : "TableStatus",
+    props  : ["loading", "tableErrorDetailed", "tableLoadError"],
     methods: {
-      errorResolver: function(errorMsg) {
-        let errorCollection = [];
+        errorResolver: function(errorMsg) {
+            let errorCollection = [];
 
-        // General error: 1370
-        if (errorMsg.includes('1370')) {
-          errorCollection.push(
-              'The current user might not have permission to look into this table.',
-          );
-          errorCollection.push(
-              'This table might be malformed OR this table is a view.',
-          );
-        }
+            // General error: 1370
+            if (errorMsg.includes("1370")) {
+                errorCollection.push(
+                    "The current user might not have permission to look into this table.",
+                );
+                errorCollection.push(
+                    "This table might be malformed OR this table is a view.",
+                );
+            }
 
-        // General error: 3167
-        if (errorMsg.includes('3167')) {
-          errorCollection.push(
-              'This feature might be disabled.',
-          );
-        }
+            // General error: 3167
+            if (errorMsg.includes("3167")) {
+                errorCollection.push(
+                    "This feature might be disabled.",
+                );
+            }
 
-        // If no suggestions were found.
-        if (errorCollection.length === 0) {
-          errorCollection.push(
-              'Prequel could not suggest any fixes.',
-          );
-        }
+            // If no suggestions were found.
+            if (errorCollection.length === 0) {
+                errorCollection.push(
+                    "Prequel could not suggest any fixes.",
+                );
+            }
 
-        return errorCollection;
-      },
+            return errorCollection;
+        },
     },
-  };
+};
 </script>
 
 <style lang="scss">
