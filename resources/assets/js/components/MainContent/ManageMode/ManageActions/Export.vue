@@ -3,12 +3,12 @@
 </template>
 
 <script>
-  import ActionInfo from './ActionInfo'
+import ActionInfo from "./ActionInfo";
 
-  export default {
-    name      : 'Export',
+export default {
+    name      : "Export",
     components: { ActionInfo },
-  }
+};
 </script>
 
 <style scoped>

@@ -16,35 +16,35 @@
 </template>
 
 <script>
-  // Component thanks to https://codepen.io/ktsn
-  export default {
-    name   : 'Accordion',
-    props  : ['theme'],
+// Component thanks to https://codepen.io/ktsn
+export default {
+    name   : "Accordion",
+    props  : ["theme"],
     data() {
-      return {
-        show  : false,
-        status: 'CLOSED',
-      };
+        return {
+            show  : false,
+            status: "CLOSED",
+        };
     },
     methods: {
-      toggle     : function() {
-        this.show   = !this.show;
-        this.status = this.show ? 'OPEN' : 'CLOSED';
-      },
-      beforeEnter: function(el) {
-        el.style.height = '0';
-      },
-      enter      : function(el) {
-        el.style.height = el.scrollHeight + 'px';
-      },
-      beforeLeave: function(el) {
-        el.style.height = el.scrollHeight + 'px';
-      },
-      leave      : function(el) {
-        el.style.height = '0';
-      },
+        toggle     : function() {
+            this.show   = !this.show;
+            this.status = this.show ? "OPEN" : "CLOSED";
+        },
+        beforeEnter: function(el) {
+            el.style.height = "0";
+        },
+        enter      : function(el) {
+            el.style.height = el.scrollHeight + "px";
+        },
+        beforeLeave: function(el) {
+            el.style.height = el.scrollHeight + "px";
+        },
+        leave      : function(el) {
+            el.style.height = "0";
+        },
     },
-  };
+};
 </script>
 
 <style lang="scss">

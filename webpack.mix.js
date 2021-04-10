@@ -1,5 +1,4 @@
 const mix                = require('laravel-mix');
-const MonacoEditorPlugin = require('monaco-editor-webpack-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,14 +12,6 @@ const MonacoEditorPlugin = require('monaco-editor-webpack-plugin');
  */
 
 mix.setResourceRoot('packages/protoqol/prequel').
-    webpackConfig({
-      plugins: [
-        new MonacoEditorPlugin({
-          languages: ['sql'],
-          features:  ['!gotoSymbol'],
-        }),
-      ],
-    }).
     postCss('resources/assets/css/app.css', 'public', [
       require('tailwindcss'),
     ]).

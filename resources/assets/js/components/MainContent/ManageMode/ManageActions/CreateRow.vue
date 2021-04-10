@@ -42,185 +42,185 @@
 </template>
 
 <script>
-  import api            from 'axios'
-  import BackendActions from './BackendActions'
-  import ActionInfo     from './ActionInfo'
+import api            from "axios";
+import BackendActions from "./BackendActions";
+import ActionInfo     from "./ActionInfo";
 
-  export default {
-    name      : 'CreateRow',
+export default {
+    name      : "CreateRow",
     components: { BackendActions, ActionInfo },
-    props     : ['structure'],
+    props     : ["structure"],
 
     data () {
-      return {
-        database     : '',
-        table        : '',
-        requestHasRun: false,
-        default      : {
-          id       : 1,
-          timestamp: '',
-        },
-      }
+        return {
+            database     : "",
+            table        : "",
+            requestHasRun: false,
+            default      : {
+                id       : 1,
+                timestamp: "",
+            },
+        };
     },
 
     mounted () {
-      this.getUrl()
+        this.getUrl();
     },
 
     updated () {
-      this.getUrl()
+        this.getUrl();
     },
 
     methods: {
 
-      getUrl: async function () {
-        if (this.database !== this.$root.table.database || this.$root.table.table) {
-          this.database = this.$root.table.database
-          this.table    = this.$root.table.table
+        getUrl: async function () {
+            if (this.database !== this.$root.table.database || this.$root.table.table) {
+                this.database = this.$root.table.database;
+                this.table    = this.$root.table.table;
 
-          await this.getDefaults()
-          await this.$refs.actions.getInfo()
-        }
-      },
+                await this.getDefaults();
+                await this.$refs.actions.getInfo();
+            }
+        },
 
-      /**
+        /**
        | Save form in current database table
        */
-      saveRow: function (form) {
-        let data = {}
+        saveRow: function (form) {
+            let data = {};
 
-        // Build data object containing correct key => value scheme
-        for (let input of form.target) {
-          if (input.type !== 'submit') {
-            data[input.name] = input.value
-          }
-        }
-
-        api.post(`/database/insert/${this.database}/${this.table}`, { data: data }).
-          then(res => {
-            if (!res.data.success || res.data.success === '') {
-              throw new Error('Could not insert this data')
+            // Build data object containing correct key => value scheme
+            for (let input of form.target) {
+                if (input.type !== "submit") {
+                    data[input.name] = input.value;
+                }
             }
 
-            form.target.reset()
+            api.post(`/database/insert/${this.database}/${this.table}`, { data: data }).
+                then(res => {
+                    if (!res.data.success || res.data.success === "") {
+                        throw new Error("Could not insert this data");
+                    }
 
-            PrequelSuccessToast.fire({
-              text: `Inserted row into ${this.table}`,
-            }).finally(() => {
-              this.$refs.actions.conslog(`SUCCESS: Inserted row into ${this.table}`)
-              this.$forceUpdate()
-            })
+                    form.target.reset();
 
-          }).
-          catch(err => {
-            this.$refs.actions.conslog(err.response.data.message, 'error')
-            PrequelErrorToast.fire({
-              text: err.response.data.exception,
-            })
-          })
-      },
+                    PrequelSuccessToast.fire({
+                        text: `Inserted row into ${this.table}`,
+                    }).finally(() => {
+                        this.$refs.actions.conslog(`SUCCESS: Inserted row into ${this.table}`);
+                        this.$forceUpdate();
+                    });
 
-      /**
+                }).
+                catch(err => {
+                    this.$refs.actions.conslog(err.response.data.message, "error");
+                    PrequelErrorToast.fire({
+                        text: err.response.data.exception,
+                    });
+                });
+        },
+
+        /**
        | Set retrieved defaults in form
        */
-      setDefaults: function () {
-        document.querySelectorAll('.new-row-form input').forEach((inputEl) => {
-          if (inputEl.type === 'datetime-local') {
-            inputEl.value = this.default.timestamp
-          }
+        setDefaults: function () {
+            document.querySelectorAll(".new-row-form input").forEach((inputEl) => {
+                if (inputEl.type === "datetime-local") {
+                    inputEl.value = this.default.timestamp;
+                }
 
-          if (inputEl.name === 'id' || inputEl.placeholder.includes('auto_increment')) {
-            inputEl.value = this.default.id
-          }
-        })
-      },
+                if (inputEl.name === "id" || inputEl.placeholder.includes("auto_increment")) {
+                    inputEl.value = this.default.id;
+                }
+            });
+        },
 
-      /**
+        /**
        | Get defaults for table
        */
-      getDefaults: function () {
+        getDefaults: function () {
         // Reset
-        this.default.id        = 1
-        this.default.timestamp = ''
+            this.default.id        = 1;
+            this.default.timestamp = "";
 
-        api.get(`/database/defaults/${this.database}/${this.table}`).then(res => {
-          this.default.id        = parseInt(res.data.id)
-          this.default.timestamp = res.data.current_date + ''
-        }).catch(err => {
-          console.error(err)
-        }).finally(() => {
-          this.setDefaults()
-        })
-      },
+            api.get(`/database/defaults/${this.database}/${this.table}`).then(res => {
+                this.default.id        = parseInt(res.data.id);
+                this.default.timestamp = res.data.current_date + "";
+            }).catch(err => {
+                console.error(err);
+            }).finally(() => {
+                this.setDefaults();
+            });
+        },
 
-      /**
+        /**
        | Add a new form to save multiple rows/forms at once
        */
-      insertNewRow: function () {
+        insertNewRow: function () {
         // @TODO Duplicate form
-      },
+        },
 
-      /**
+        /**
        | Translate column type to a HTML input type
        */
-      resolveType: function ({ Field, Type }) {
-        let type         = Type + ''
-        let resolvedType = ''
+        resolveType: function ({ Field, Type }) {
+            let type         = Type + "";
+            let resolvedType = "";
 
-        // Numeric types
-        if (type.includes('int')
-            || type.includes('bit')
-            || type.includes('decimal')
-            || type.includes('numeric')
-            || type.includes('float')
-            || type.includes('real')) {
-          resolvedType = 'number'
-        }
+            // Numeric types
+            if (type.includes("int")
+            || type.includes("bit")
+            || type.includes("decimal")
+            || type.includes("numeric")
+            || type.includes("float")
+            || type.includes("real")) {
+                resolvedType = "number";
+            }
 
-        // Textual types
-        if (type.includes('char') || type.includes('text') || type.includes('string')) {
-          resolvedType = 'text'
-        }
+            // Textual types
+            if (type.includes("char") || type.includes("text") || type.includes("string")) {
+                resolvedType = "text";
+            }
 
-        // Date(time) types
-        if (type.includes('date') || type.includes('time') || type.includes('year')) {
-          resolvedType = 'datetime-local'
-        }
+            // Date(time) types
+            if (type.includes("date") || type.includes("time") || type.includes("year")) {
+                resolvedType = "datetime-local";
+            }
 
-        // Email type
-        if (Field === 'email') {
-          resolvedType = 'email'
-        }
+            // Email type
+            if (Field === "email") {
+                resolvedType = "email";
+            }
 
-        return resolvedType
-      },
+            return resolvedType;
+        },
 
-      /**
+        /**
        | Get max length from column type
        */
-      resolveMaxLength: function (type) {
+        resolveMaxLength: function (type) {
 
-        return type.substring(
-          type.lastIndexOf('(') + 1,
-          type.lastIndexOf(')'),
-        )
-      },
+            return type.substring(
+                type.lastIndexOf("(") + 1,
+                type.lastIndexOf(")"),
+            );
+        },
 
-      /**
+        /**
        | Enhance readability for column names.
        |
        | @param str
        | @returns {string}
        */
-      enhanceReadability: function (str) {
-        if (!this.$root.view.readability) {
-          return str
-        }
+        enhanceReadability: function (str) {
+            if (!this.$root.view.readability) {
+                return str;
+            }
 
-        return prettifyName(str)
-      },
+            return prettifyName(str);
+        },
     },
-  }
+};
 </script>
 
 <style scoped lang="scss">

@@ -2,12 +2,12 @@
     <div class="sql-runner-wrapper">
         <ActionInfo title="SQL Query" description="Write and run a raw SQL query"/>
         <form>
-            <MonacoEditor class="editor"
-                          @keydown.meta.enter="runSql"
-                          @input="saveQuery"
-                          language="sql"
-                          :theme="$root.view.darkMode ? 'vs-dark' : ''"
-                          v-model="query"/>
+<!--            <MonacoEditor class="editor"-->
+<!--                          @keydown.meta.enter="runSql"-->
+<!--                          @input="saveQuery"-->
+<!--                          language="sql"-->
+<!--                          :theme="$root.view.darkMode ? 'vs-dark' : ''"-->
+<!--                          v-model="query"/>-->
             <div class="buttons">
                 <button @click.prevent="runSql">Run SQL</button>
                 <button @click.prevent="getLatestQuery">Get Previous Query</button>
@@ -33,12 +33,12 @@
 <script>
   import Table        from '../../BrowseMode/Table/Table'
   import ActionInfo   from './ActionInfo'
-  import MonacoEditor from 'vue-monaco'
+  //import MonacoEditor from 'vue-monaco'
   import api          from 'axios'
 
   export default {
     name      : 'RunSQL',
-    components: { Table, ActionInfo, MonacoEditor },
+    components: { Table, ActionInfo },
     data () {
       return {
         'query'    : 'SELECT * FROM `##database##`.`##table##` WHERE 1 LIMIT 15;',

@@ -14,84 +14,84 @@
 </template>
 
 <script>
-  export default {
-    name : 'SwitchMode',
-    props: ['modus'],
+export default {
+    name : "SwitchMode",
+    props: ["modus"],
 
     mounted () {
-      this.mode = this.$props.modus
-      let url   = new URLSearchParams(window.location.search)
+        this.mode = this.$props.modus;
+        let url   = new URLSearchParams(window.location.search);
 
-      if (url.has('mode')) {
-        this.mode = url.get('mode') === 'browse' ? 0 : 1
-      }
+        if (url.has("mode")) {
+            this.mode = url.get("mode") === "browse" ? 0 : 1;
+        }
 
-      this.checkMode()
+        this.checkMode();
     },
 
     data () {
-      return {
+        return {
         // Make Vue accessible enum version
-        enum: {
-          BROWSE: 0,
-          MANAGE: 1,
-        },
+            enum: {
+                BROWSE: 0,
+                MANAGE: 1,
+            },
 
-        // Default to browsing mode.
-        mode: 0,
-      }
+            // Default to browsing mode.
+            mode: 0,
+        };
     },
 
     methods: {
 
-      /**
+        /**
        * Resolve what mode is active and set tab-active class for the active mode.
        */
-      checkMode: function () {
-        let browseSwitch = document.getElementById(this.enum.BROWSE + '')
-        let querySwitch  = document.getElementById(this.enum.MANAGE + '')
+        checkMode: function () {
+            let browseSwitch = document.getElementById(this.enum.BROWSE + "");
+            let querySwitch  = document.getElementById(this.enum.MANAGE + "");
 
-        if (this.mode === this.enum.BROWSE) {
-          if (!browseSwitch.classList.contains('tab-active')) {
-            browseSwitch.classList.add('tab-active')
-            if (querySwitch.classList.contains('tab-active')) {
-              querySwitch.classList.remove('tab-active')
+            if (this.mode === this.enum.BROWSE) {
+                if (!browseSwitch.classList.contains("tab-active")) {
+                    browseSwitch.classList.add("tab-active");
+                    if (querySwitch.classList.contains("tab-active")) {
+                        querySwitch.classList.remove("tab-active");
+                    }
+                }
             }
-          }
-        }
 
-        if (this.mode === this.enum.MANAGE) {
-          if (!querySwitch.classList.contains('tab-active')) {
-            querySwitch.classList.add('tab-active')
-            if (browseSwitch.classList.contains('tab-active')) {
-              browseSwitch.classList.remove('tab-active')
+            if (this.mode === this.enum.MANAGE) {
+                if (!querySwitch.classList.contains("tab-active")) {
+                    querySwitch.classList.add("tab-active");
+                    if (browseSwitch.classList.contains("tab-active")) {
+                        browseSwitch.classList.remove("tab-active");
+                    }
+                }
             }
-          }
-        }
 
-      },
+        },
 
-      /**
+        /**
        * When clicking on the query switch button.
        * Emit switchMode event, set current mode to query.
        */
-      querySwitchHandler: function () {
-        this.mode = this.enum.MANAGE
-        this.checkMode()
-        this.$emit('switchMode', this.mode)
-      },
+        querySwitchHandler: function () {
+            this.mode = this.enum.MANAGE;
+            this.checkMode();
+            this.$emit("switchMode", this.mode);
+        },
 
-      /**
+        /**
        * When clicking on the browse switch button.
        * Emit switchMode event, set current mode to browse.
        */
-      browseSwitchHandler: function () {
-        this.mode = this.enum.BROWSE
-        this.checkMode()
-        this.$emit('switchMode', this.mode)
-      },
+        browseSwitchHandler: function () {
+            this.mode = this.enum.BROWSE;
+            this.checkMode();
+            this.$emit("switchMode", this.mode);
+        },
     },
-  }
+};
 </script>
 
 
