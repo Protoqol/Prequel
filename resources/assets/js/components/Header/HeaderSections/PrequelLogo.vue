@@ -25,25 +25,25 @@
 </template>
 
 <script>
-  export default {
-    name : 'PrequelLogo',
-    props: ['env'],
+export default {
+    name : "PrequelLogo",
+    props: ["env"],
 
     methods: {
 
-      /**
+        /**
        | Check length and cut down if too long.
        */
-      lenCheck: function(val) {
-        val = val + '';
-        if (val.length > 10) {
-          return val.substr(0, 7) + '...';
-        }
-        return val;
-      },
+        lenCheck: function(val) {
+            val = val + "";
+            if (val.length > 10) {
+                return val.substr(0, 7) + "...";
+            }
+            return val;
+        },
 
     },
-  };
+};
 </script>
 
 <style scoped lang="scss">

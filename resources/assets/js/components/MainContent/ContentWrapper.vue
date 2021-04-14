@@ -25,26 +25,25 @@
 </template>
 
 <script>
-  import Table       from './BrowseMode/Table/Table';
-  import TableStatus from './BrowseMode/Table/TableStatus';
-  import Dashboard   from '../Dashboard/Dashboard';
-  import Management  from '../Dashboard/DashboardElements/Management';
-  import ManageTable from './ManageMode/ManageTable';
+import Table       from "./BrowseMode/Table/Table";
+import TableStatus from "./BrowseMode/Table/TableStatus";
+import Dashboard   from "../Dashboard/Dashboard";
+import ManageTable from "./ManageMode/ManageTable";
 
-  export default {
-    name      : 'MainContent',
-    components: {ManageTable, Management, Dashboard, TableStatus, Table},
+export default {
+    name      : "MainContent",
+    components: {ManageTable, Dashboard, TableStatus, Table},
     props     : [
-      'structure',
-      'data',
-      'readability',
-      'loading',
-      'tableLoadError',
-      'tableErrorDetailed',
-      'welcomeShown',
-      'mode',
+        "structure",
+        "data",
+        "readability",
+        "loading",
+        "tableLoadError",
+        "tableErrorDetailed",
+        "welcomeShown",
+        "mode",
     ],
-  };
+};
 </script>
 
 <style lang="scss">

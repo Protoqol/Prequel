@@ -11,5 +11,8 @@ yarn-error.log
 mix-manifest.json
 todo.md
 /public/phpmd.html
+/public/mix-manifest.json
 phpunit-watcher.yml
 webpack.mix.js
+yarn.lock
+/fonts

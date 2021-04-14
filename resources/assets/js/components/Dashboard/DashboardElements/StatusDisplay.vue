@@ -11,10 +11,10 @@
 </template>
 
 <script>
-  export default {
-    name : 'StatusDisplay',
-    props: ['header', 'value', 'unit'],
-  };
+export default {
+    name:  "StatusDisplay",
+    props: ["header", "value", "unit"],
+};
 </script>
 
 <style scoped lang="scss">

@@ -20,14 +20,14 @@
 </template>
 
 <script>
-  import Accordion from './Menu/Accordion';
-  import TableMenu from './Menu/TableMenu';
+import Accordion from "./Menu/Accordion";
+import TableMenu from "./Menu/TableMenu";
 
-  export default {
-    name      : 'SideBar',
+export default {
+    name      : "SideBar",
     components: {TableMenu, Accordion},
-    props     : ['readability', 'tableData', 'tableFlat'],
-  };
+    props     : ["readability", "tableData", "tableFlat"],
+};
 </script>
 
 <style lang="scss">

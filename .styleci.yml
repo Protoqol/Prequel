@@ -1,3 +1,4 @@
+# To be configured correctly
 php:
   preset: laravel
   disabled:
@@ -11,4 +12,3 @@ js:
     not-name:
       - webpack.mix.js
 css: true
- 

@@ -30,90 +30,90 @@
 </template>
 
 <script>
-  export default {
-    name: 'SettingButtons',
+export default {
+    name: "SettingButtons",
     data () {
-      return {
-        sideBarStatusText: 'Collapse',
-        showSideBar      : false,
-        readability      : true,
-        darkMode         : false,
-      }
+        return {
+            sideBarStatusText: "Collapse",
+            showSideBar      : false,
+            readability      : true,
+            darkMode         : false,
+        };
     },
 
     created () {
-      this.darkMode = JSON.parse(localStorage.getItem('dark-mode')) || false
-      this.changeTheme()
+        this.darkMode = JSON.parse(localStorage.getItem("dark-mode")) || false;
+        this.changeTheme();
     },
 
     methods: {
 
-      /**
+        /**
        | Handles config changes.
        | Holds data like readability or side bar preferences in localStorage
        */
-      configHandler: function () {
-        if (window.localStorage.getItem('readability')) {
-          this.readability = (window.localStorage.getItem('readability') === 'true')
-        }
-        else {
-          window.localStorage.setItem('readability', 'true')
-        }
+        configHandler: function () {
+            if (window.localStorage.getItem("readability")) {
+                this.readability = (window.localStorage.getItem("readability") === "true");
+            }
+            else {
+                window.localStorage.setItem("readability", "true");
+            }
 
-        if (window.localStorage.getItem('showSidebar')) {
-          this.showSideBar = (window.localStorage.getItem('showSidebar') === 'false')
-        }
-        else {
-          window.localStorage.setItem('showSidebar', 'false')
-        }
-      },
+            if (window.localStorage.getItem("showSidebar")) {
+                this.showSideBar = (window.localStorage.getItem("showSidebar") === "false");
+            }
+            else {
+                window.localStorage.setItem("showSidebar", "false");
+            }
+        },
 
-      refreshButtonHandler: function () {
-        this.$emit('refresh')
-      },
+        refreshButtonHandler: function () {
+            this.$emit("refresh");
+        },
 
-      /**
+        /**
        | Handles collapse button action
        | Emits event to collapse/expand sidebar.
        */
-      sideBarButtonHandler: function () {
-        this.showSideBar       = !this.showSideBar
-        this.sideBarStatusText = this.showSideBar ? 'Collapse' : 'Expand'
-        this.$emit('collapseSideBar')
-      },
+        sideBarButtonHandler: function () {
+            this.showSideBar       = !this.showSideBar;
+            this.sideBarStatusText = this.showSideBar ? "Collapse" : "Expand";
+            this.$emit("collapseSideBar");
+        },
 
-      /**
+        /**
        | Handles readability button actions.
        | Emits event to change readability globally.
        */
-      readabilityButtonHandler: function () {
-        this.readability = !this.readability
-        this.$emit('enhanceReadability')
-      },
+        readabilityButtonHandler: function () {
+            this.readability = !this.readability;
+            this.$emit("enhanceReadability");
+        },
 
-      /**
+        /**
        | Handles dark mode button actions.
        */
-      darkModeButtonHandler: function () {
-        this.darkMode            = !this.darkMode
-        this.$root.view.darkMode = this.darkMode
-        localStorage.setItem('dark-mode', JSON.stringify(this.darkMode))
-        this.changeTheme()
-      },
+        darkModeButtonHandler: function () {
+            this.darkMode            = !this.darkMode;
+            this.$root.view.darkMode = this.darkMode;
+            localStorage.setItem("dark-mode", JSON.stringify(this.darkMode));
+            this.changeTheme();
+        },
 
-      /**
+        /**
        | Change theme to dark mode
        */
-      changeTheme: function () {
-        if (this.darkMode) {
-          document.body.classList.add('theme-dark')
-        }
-        else {
-          document.body.classList.remove('theme-dark')
-        }
-      },
+        changeTheme: function () {
+            if (this.darkMode) {
+                document.body.classList.add("theme-dark");
+            }
+            else {
+                document.body.classList.remove("theme-dark");
+            }
+        },
     },
-  }
+};
 </script>
 
 <style scoped lang="scss">

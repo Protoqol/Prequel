@@ -1,8 +1,10 @@
+# To be configured
+
 language: php
 
 php:
-  - '7.2'
-  - '7.3'
+  - "7.2"
+  - "7.3"
 env:
   - LARAVEL_VERSION=5.6.*
   - LARAVEL_VERSION=5.7.*

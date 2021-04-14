@@ -1,10 +1,14 @@
-require('./bootstrap/bootstrap');
+import Vue from "vue";
 
-window.Vue = require('vue');
+// eslint-disable-next-line no-undef
+require("./bootstrap/bootstrap");
 
-import Prequel from './components/Pages/Prequel.vue';
+// eslint-disable-next-line no-undef
+window.Vue = require("vue");
+
+import Prequel from "./components/Pages/Prequel.vue";
 
 new Vue({
-    el: '#prequel',
+    el: "#prequel",
     ...Prequel,
 });

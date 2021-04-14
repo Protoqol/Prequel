@@ -5,12 +5,12 @@
 </template>
 
 <script>
-  import Management from './DashboardElements/Management'
+import Management from "./DashboardElements/Management";
 
-  export default {
-    name      : 'Dashboard',
-    components: { Management },
-  }
+export default {
+    name:       "Dashboard",
+    components: {Management},
+};
 
 </script>
 

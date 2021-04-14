@@ -53,13 +53,13 @@
 </template>
 
 <script>
-  import ActionInfo from './ActionInfo'
+import ActionInfo from "./ActionInfo";
 
-  export default {
-    name      : 'ViewStructure',
+export default {
+    name      : "ViewStructure",
     components: { ActionInfo },
-    props     : ['structure'],
-  }
+    props     : ["structure"],
+};
 </script>
 
 <style scoped lang="scss">

@@ -71,160 +71,160 @@
 </template>
 
 <script>
-  import api from 'axios'
+import api from "axios";
 
-  export default {
-    name: 'BackendActions',
+export default {
+    name: "BackendActions",
 
     data () {
-      return {
-        tableHasModel     : false,
-        tableHasFactory   : false,
-        tableHasSeeder    : false,
-        tableHasResource  : false,
-        tableHasController: false,
-        inAction          : false,
-        seederCount       : 5,
-        log               : [
-          '',
-        ],
-      }
+        return {
+            tableHasModel     : false,
+            tableHasFactory   : false,
+            tableHasSeeder    : false,
+            tableHasResource  : false,
+            tableHasController: false,
+            inAction          : false,
+            seederCount       : 5,
+            log               : [
+                "",
+            ],
+        };
     },
 
     mounted () {
-      this.getInfo()
+        this.getInfo();
 
-      // @TODO Find a more elegant solution to automatically scroll to bottom after a new log entry.
-      let self = this
-      setInterval(function () {
-        self.logScrollBottom()
-      }, 250)
+        // @TODO Find a more elegant solution to automatically scroll to bottom after a new log entry.
+        let self = this;
+        setInterval(function () {
+            self.logScrollBottom();
+        }, 250);
     },
 
     methods: {
 
-      /**
+        /**
        * Generate `generator` ex. 'model', 'controller', 'resource' etc.
        */
-      generate: async function (generator) {
-        this.conslog(`Generating ${generator} for ${this.$root.table.table}...`, 'start')
-        this.inAction = true
+        generate: async function (generator) {
+            this.conslog(`Generating ${generator} for ${this.$root.table.table}...`, "start");
+            this.inAction = true;
 
-        await api.get(`/database/${generator}/${this.$root.table.database}/${this.$root.table.table}/generate`).
-          then(res => {
-            if (res) {
-              this.conslog(`${capitalise(generator)} generation for ${this.$root.table.table} completed successfully`)
-            }
-          }).
-          catch(err => {
-            this.conslog(`${err.response.data.message}`, 'error')
-          }).
-          finally(() => {
-            this.conslog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-            this.inAction = true
-            this.getInfo()
-          })
-      },
+            await api.get(`/database/${generator}/${this.$root.table.database}/${this.$root.table.table}/generate`).
+                then(res => {
+                    if (res) {
+                        this.conslog(`${capitalise(generator)} generation for ${this.$root.table.table} completed successfully`);
+                    }
+                }).
+                catch(err => {
+                    this.conslog(`${err.response.data.message}`, "error");
+                }).
+                finally(() => {
+                    this.conslog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, "info");
+                    this.inAction = true;
+                    this.getInfo();
+                });
+        },
 
-      /**
+        /**
        * Run the seeder
        */
-      runSeeder: async function () {
+        runSeeder: async function () {
         // Prevent user from adding additional seeder while in runtime
-        let seederCountLock = this.seederCount
+            let seederCountLock = this.seederCount;
 
-        this.conslog(
-          `Running seeder for ${this.$root.table.table} ${seederCountLock} time${seederCountLock > 1 ? 's' : ''}...`,
-          'start')
+            this.conslog(
+                `Running seeder for ${this.$root.table.table} ${seederCountLock} time${seederCountLock > 1 ? "s" : ""}...`,
+                "start");
 
-        this.inAction = true
+            this.inAction = true;
 
-        let ranIntoError = false
-        for (let i = 1; i <= seederCountLock; i++) {
-          await api.get(`database/seeder/${this.$root.table.database}/${this.$root.table.table}/run`).then(res => {
-            if (res) {
-              this.conslog(`Seeding request #${i} complete`)
+            let ranIntoError = false;
+            for (let i = 1; i <= seederCountLock; i++) {
+                await api.get(`database/seeder/${this.$root.table.database}/${this.$root.table.table}/run`).then(res => {
+                    if (res) {
+                        this.conslog(`Seeding request #${i} complete`);
 
-              if (i === seederCountLock) {
-                this.conslog(`Seeding completed`, 'info')
-              }
+                        if (i === seederCountLock) {
+                            this.conslog("Seeding completed", "info");
+                        }
+                    }
+                }).catch(err => {
+                    this.conslog(`${err.response.data.message}`, "error");
+                    ranIntoError = true;
+                });
+
+                if (ranIntoError === true) {
+                    this.conslog("Your request was halted because of the error stated above.", "info");
+                    this.inAction = false;
+                    break;
+                }
             }
-          }).catch(err => {
-            this.conslog(`${err.response.data.message}`, 'error')
-            ranIntoError = true
-          })
 
-          if (ranIntoError === true) {
-            this.conslog('Your request was halted because of the error stated above.', 'info')
-            this.inAction = false
-            break
-          }
-        }
+            this.conslog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, "info");
+            this.getInfo();
+        },
 
-        this.conslog(`Getting updated data for ${this.$root.table.database}.${this.$root.table.table}...`, 'info')
-        this.getInfo()
-      },
-
-      /**
+        /**
        * Get laravel specific information about table
        */
-      getInfo: function () {
-        api.get(`/database/info/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
-          this.tableHasModel      = res.data.model
-          this.tableHasFactory    = res.data.factory
-          this.tableHasSeeder     = res.data.seeder
-          this.tableHasController = res.data.controller
-          this.tableHasResource   = res.data.resource
-        }).catch(err => {
-          console.error(err)
-        }).finally(() => {
-          this.inAction = false
-        })
-      },
+        getInfo: function () {
+            api.get(`/database/info/${this.$root.table.database}/${this.$root.table.table}`).then(res => {
+                this.tableHasModel      = res.data.model;
+                this.tableHasFactory    = res.data.factory;
+                this.tableHasSeeder     = res.data.seeder;
+                this.tableHasController = res.data.controller;
+                this.tableHasResource   = res.data.resource;
+            }).catch(err => {
+                console.error(err);
+            }).finally(() => {
+                this.inAction = false;
+            });
+        },
 
-      /**
+        /**
        * Pseudo console log
        * @param str
        * @param type
        */
-      conslog: function (str, type = 'neutral') {
+        conslog: function (str, type = "neutral") {
 
-        switch (type) {
-          case 'neutral':
-            this.log.push(`> ${str}<br>`)
-            break
-          case 'error':
-            this.log.push(`><span class="monospaced text-red-400"> ERROR: ${str}<br></span>`)
-            break
-          case 'info':
-            this.log.push(`><span class="monospaced text-orange-400"> INFO: ${str}<br></span>`)
-            break
-          case 'start':
-            this.log.push(`><span class="monospaced text-green-400"> START: ${str}<br></span>`)
-            break
-        }
+            switch (type) {
+            case "neutral":
+                this.log.push(`> ${str}<br>`);
+                break;
+            case "error":
+                this.log.push(`><span class="monospaced text-red-400"> ERROR: ${str}<br></span>`);
+                break;
+            case "info":
+                this.log.push(`><span class="monospaced text-orange-400"> INFO: ${str}<br></span>`);
+                break;
+            case "start":
+                this.log.push(`><span class="monospaced text-green-400"> START: ${str}<br></span>`);
+                break;
+            }
 
-        this.logScrollBottom()
-      },
+            this.logScrollBottom();
+        },
 
-      /**
+        /**
        * Empty the log
        */
-      logEmpty: function () {
-        this.log = []
-      },
+        logEmpty: function () {
+            this.log = [];
+        },
 
-      /**
+        /**
        * Scroll to bottom in the log
        */
-      logScrollBottom: function () {
-        let log = document.getElementById('logUtil')
-        if (log) {
-          log.scrollTop = log.scrollHeight
-        }
-      },
+        logScrollBottom: function () {
+            let log = document.getElementById("logUtil");
+            if (log) {
+                log.scrollTop = log.scrollHeight;
+            }
+        },
     },
-  }
+};
 </script>
 
 <style scoped lang="scss">

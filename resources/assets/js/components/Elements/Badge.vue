@@ -5,10 +5,10 @@
 </template>
 
 <script>
-  export default {
-    name : 'Badge',
-    props: ['type', 'text'],
-  };
+export default {
+    name : "Badge",
+    props: ["type", "text"],
+};
 </script>
 
 <style scoped lang="scss">
