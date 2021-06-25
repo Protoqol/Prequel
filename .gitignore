@@ -16,3 +16,4 @@ phpunit-watcher.yml
 webpack.mix.js
 yarn.lock
 /fonts
+phpunit.xml
