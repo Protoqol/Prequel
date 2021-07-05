@@ -1,6 +1,5 @@
 <?php
 
-
 return [
 
     /**
@@ -53,6 +52,7 @@ return [
             'dark_mode'   => 'Modo escuro',
             'readability' => 'Legibilidade',
             'side_bar'    => 'Barra Lateral',
+            'refresh'     => 'Recarregar',
             'get'         => [
                 'title' => 'Executar Consulta (ENTER)',
                 'text'  => 'Pegar',
@@ -149,4 +149,16 @@ return [
         ],
     ],
 
+    /**
+     * components/MainContent/ManageMode/ManageTable.vue
+     */
+    'table_management' => [
+        'insert_new_row' => 'Inserir Nova Linha',
+        'view_structure' => 'Ver Estrutura',
+        'run_sql'        => 'Executar SQL',
+        'import'         => 'Importar',
+        'export'         => 'Exportar',
+        'log'            => 'Log',
+        'settings'       => 'Configurações',
+    ],
 ];
