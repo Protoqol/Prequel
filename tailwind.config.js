@@ -1,4 +1,8 @@
 module.exports = {
+  purge: [
+	'./**/*.vue'
+  ],
+
   theme:    {
     extend: {
       backgroundColor: {

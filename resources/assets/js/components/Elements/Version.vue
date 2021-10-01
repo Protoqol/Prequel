@@ -24,9 +24,9 @@ export default {
 
     methods: {
         checkVersion: function () {
-            api.get("https://prequel.protoqol.xyz/api/prequel-version").then(res => {
+            api.get("https://protoqol.nl/api/prequel-version").then(res => {
                 if (this.currentVersion !== res.data.newest_version) {
-                    this.newVersionAvailable = res.data.newest_version;
+	//  this.newVersionAvailable = res.data.newest_version;
                 }
             }).catch(err => {
                 //
