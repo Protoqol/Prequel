@@ -164,6 +164,7 @@ That configuration file looks something like this.
             'database'   => env('DB_DATABASE', 'homestead'),
             'username'   => env('DB_USERNAME', 'homestead'),
             'password'   => env('DB_PASSWORD', 'secret'),
+	    'socket' 	 => env('DB_SOCKET', ''),
         ],
 
 
