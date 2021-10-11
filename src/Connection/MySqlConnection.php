@@ -39,16 +39,16 @@ class MySqlConnection extends Connection
         $host = config("prequel.database.host");
         $port = config("prequel.database.port");
         $database = config("prequel.database.database");
-        $unix_socket = config("prequel.database.unix_socket");
+        $socket = config("prequel.database.socket");
 
         $dsn =
             $connection .
             ":dbname=" .
             $database;
         
-        if ($unix_socket){
+        if ($socket){
             $dsn .= 
-                ";unix_socket=".$unix_socket;
+                ";unix_socket=".$socket;
         }
         else
         {
