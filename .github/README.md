@@ -228,7 +228,7 @@ See [Contributing](CONTRIBUTING.md) to see how you can contribute to Prequel!
 
 ## Contributors
 
-- [Quinten Schorsij](https://github.com/QuintenJustus)
+- [Quinten Justus](https://github.com/QuintenJustus)
 - [Contributors](https://github.com/Protoqol/Prequel/graphs/contributors)
 
 ## License
