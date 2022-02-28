@@ -71,6 +71,7 @@ class Authorised
                 "detailed"  => $conn->getPdo(),
             ];
         } catch (Exception $exception) {
+            dd($exception);
             $connection = [
                 "connected" => false,
                 "detailed"  => "Could not create a valid database connection.",

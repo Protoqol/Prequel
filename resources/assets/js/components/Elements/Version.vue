@@ -17,51 +17,6 @@ export default {
             currentVersion     : "v1.22.1",
         };
     },
-
-    mounted () {
-        this.checkVersion();
-    },
-
-    methods: {
-        checkVersion: function () {
-            api.get("https://protoqol.nl/api/prequel-version").then(res => {
-                if (this.currentVersion !== res.data.newest_version) {
-	//  this.newVersionAvailable = res.data.newest_version;
-                }
-            }).catch(err => {
-                //
-            });
-        },
-
-        autoUpdater: function () {
-            let data = {
-                "newest_version" : this.newVersionAvailable,
-                "current_version": this.current_version,
-            };
-
-            Swal.fire({
-                title             : "There's a new version available!",
-                text              : `Try updating to ${this.newVersionAvailable} with the auto-updater!`,
-                confirmButtonText : "Try auto-update",
-                confirmButtonColor: "#657eea",
-                showCancelButton  : true,
-                preConfirm        : () => {
-                    return api.post("update", data).then(res => {
-                        if (res) {
-                            return res.data;
-                        }
-                    });
-                },
-            }).then(res => {
-                if (res.value) {
-                    Swal.fire({
-                        title: "Auto-updater logs",
-                        text : `${res.value.log}`,
-                    });
-                }
-            });
-        },
-    },
 };
 </script>
 

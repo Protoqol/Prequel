@@ -11,11 +11,11 @@
                     {{trans('table_management.view_structure')}}
                 </a>
             </li>
-            <li :title="trans('table_management.run_sql')" @click.prevent="setActiveTab($event)">
-                <a id="tab-query" :class="this.inactiveClassName">
-                    {{trans('table_management.run_sql')}}
-                </a>
-            </li>
+<!--            <li :title="trans('table_management.run_sql')" @click.prevent="setActiveTab($event)">-->
+<!--                <a id="tab-query" :class="this.inactiveClassName">-->
+<!--                    {{trans('table_management.run_sql')}}-->
+<!--                </a>-->
+<!--            </li>-->
             <!-- @TODO Implement -->
 <!--            <li :title="trans('table_management.import')" @click.prevent="setActiveTab($event)">
                 <a id="tab-import" :class="this.inactiveClassName">

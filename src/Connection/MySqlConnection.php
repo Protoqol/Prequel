@@ -23,41 +23,43 @@ class MySqlConnection extends Connection
     }
 
     /**
+     * Get this.
+     *
      * @return MySqlConnection
      */
-    public function getConnection()
+    public function getConnection(): MySqlConnection
     {
         return $this;
     }
 
     /**
+     * Get PDO.
+     *
      * @return PDO
      */
-    public function getPdo()
+    public function getPdo(): PDO
     {
         $connection = config("prequel.database.connection");
-        $host = config("prequel.database.host");
-        $port = config("prequel.database.port");
-        $database = config("prequel.database.database");
-        $socket = config("prequel.database.socket");
+        $host       = config("prequel.database.host");
+        $port       = config("prequel.database.port");
+        $database   = config("prequel.database.database");
+        $socket     = config("prequel.database.socket");
 
-        $dsn =
-            $connection .
-            ":dbname=" .
-            $database;
-        
-        if ($socket){
-            $dsn .= 
-                ";unix_socket=".$socket;
-        }
-        else
-        {
-            $dsn .=  
-                ";host=" .
+        $dsn = $connection;
+
+        if ($socket) {
+            $dsn .=
+                ":unix_socket=" . $socket;
+        } else {
+            $dsn .=
+                ":host=" .
                 $host .
                 ";port=" .
                 $port;
         }
+
+        $dsn .= ";dbname=" . $database;
+
         $user = config("prequel.database.username");
         $pass = config("prequel.database.password");
 
@@ -77,17 +79,21 @@ class MySqlConnection extends Connection
     }
 
     /**
+     * Get grammar.
+     *
      * @return MySqlGrammar
      */
-    public function getGrammar()
+    public function getGrammar(): MySqlGrammar
     {
         return new MySqlGrammar();
     }
 
     /**
+     * Get processor.
+     *
      * @return MySqlProcessor
      */
-    public function getProcessor()
+    public function getProcessor(): MySqlProcessor
     {
         return new MySqlProcessor();
     }
@@ -102,11 +108,11 @@ class MySqlConnection extends Connection
         $serverInfo = $this->getPdo()->getAttribute(PDO::ATTR_SERVER_INFO);
 
         $explodedServerInfo = explode("  ", $serverInfo);
-        $serverInfoArray = [];
+        $serverInfoArray    = [];
 
         foreach ($explodedServerInfo as $attr) {
-            $split = explode(": ", $attr);
-            $key = strtoupper(
+            $split                 = explode(": ", $attr);
+            $key                   = strtoupper(
                 str_replace(" ", "_", str_replace(":", "", $split[0]))
             );
             $serverInfoArray[$key] = $split[1];
@@ -117,7 +123,7 @@ class MySqlConnection extends Connection
 
     /**
      * @param string $database Database name
-     * @param string $table Table name
+     * @param string $table    Table name
      *
      * @return string
      */
@@ -128,7 +134,7 @@ class MySqlConnection extends Connection
 
     /**
      * @param string $database Database name
-     * @param string $table Table name
+     * @param string $table    Table name
      *
      * @return array
      */
@@ -139,7 +145,7 @@ class MySqlConnection extends Connection
 
     /**
      * @param string $database Database name
-     * @param string $table Table name
+     * @param string $table    Table name
      *
      * @return array
      */

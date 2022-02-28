@@ -63,11 +63,11 @@ class DatabaseController extends Controller
      */
     public function __construct($request)
     {
-        $this->tableName = $request->table;
-        $this->databaseName = $request->database;
+        $this->tableName     = $request->table;
+        $this->databaseName  = $request->database;
         $this->qualifiedName = $request->qualifiedName;
-        $this->model = $request->model;
-        $this->connection = (new DatabaseConnector())->getConnection();
+        $this->model         = $request->model;
+        $this->connection    = (new DatabaseConnector())->getConnection();
     }
 
     /**
@@ -78,11 +78,7 @@ class DatabaseController extends Controller
     public function getTableData()
     {
         // If Model exists
-        if (
-            $this->model &&
-            $this->databaseName ===
-            config("database.connections.mysql.database")
-        ) {
+        if ($this->model && $this->databaseName === config("database.connections.mysql.database")) {
             $paginated = $this->model->paginate(config("prequel.pagination"));
             $paginated->setCollection(
                 $paginated
@@ -101,16 +97,19 @@ class DatabaseController extends Controller
             ];
         }
 
+        $data = PDB::create($this->databaseName, $this->tableName)
+                   ->builder()
+                   ->paginate(config("prequel.pagination"));
+
         return [
             "table"     => $this->tableName,
             "structure" => app(DatabaseTraverser::class)->getTableStructure(
                 $this->databaseName,
                 $this->tableName
             ),
-            "data"      => PDB::create($this->databaseName, $this->tableName)
-                ->builder()
-                ->paginate(config("prequel.pagination")),
+            "data"      => json_decode(json_encode($data->toArray(), JSON_INVALID_UTF8_IGNORE), true),
         ];
+
         //
         //        if (config('database.connections.mysql.prefix')) {
         //                config(['database.connections.mysql.prefix' => '']);
@@ -136,15 +135,15 @@ class DatabaseController extends Controller
      */
     public function findInTable()
     {
-        $column = (string)Route::current()->parameter("column");
+        $column    = (string)Route::current()->parameter("column");
         $queryType = (string)Route::current()->parameter("type");
-        $value = (string)Route::current()->parameter("value");
-        $value = $queryType === "LIKE" ? "%" . $value . "%" : $value;
+        $value     = (string)Route::current()->parameter("value");
+        $value     = $queryType === "LIKE" ? "%" . $value . "%" : $value;
 
         return PDB::create($this->databaseName, $this->tableName)
-            ->builder()
-            ->where($column, $queryType, $value)
-            ->paginate(config("prequel.pagination"));
+                  ->builder()
+                  ->where($column, $queryType, $value)
+                  ->paginate(config("prequel.pagination"));
     }
 
     /**
@@ -168,8 +167,8 @@ class DatabaseController extends Controller
             "count" => $this->model
                 ? $this->model->count()
                 : PDB::create($this->databaseName, $this->tableName)
-                    ->builder()
-                    ->count(),
+                     ->builder()
+                     ->count(),
         ];
     }
 

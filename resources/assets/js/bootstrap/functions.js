@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 /**
  * Capitalise first letter of word
  *
@@ -44,3 +46,4 @@ Vue.prototype.trans = (string, args) => {
     });
     return value;
 };
+

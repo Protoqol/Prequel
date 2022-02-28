@@ -114,6 +114,19 @@ That configuration file looks something like this.
 
         /*
         |--------------------------------------------------------------------------
+        | Prequel base url
+        |--------------------------------------------------------------------------
+        |
+        | When present, this URL will be used instead of the default url.
+        | This should be a complete url excluding tailing slash.
+        | Example: 'https://protoqol.nl'
+        |
+        */
+        'baseUrl' => null,
+    
+
+        /*
+        |--------------------------------------------------------------------------
         | Laravel asset generation suffix and namespace definition
         |--------------------------------------------------------------------------
         |

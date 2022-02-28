@@ -313,7 +313,7 @@ export default {
 
                     input {
                         @apply w-1/2;
-                        @apply bg-gray-400;
+                        @apply bg-gray-200;
                         @apply block;
                         @apply tracking-wide;
                         @apply text-gray-700;

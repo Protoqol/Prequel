@@ -1,6 +1,6 @@
 <template>
     <div class="sql-runner-wrapper">
-        <ActionInfo title="SQL Query" description="Write and run a raw SQL query"/>
+        <ActionInfo title="SQL Query" description="Write and run a raw SQL query || Note: Disabled for now."/>
         <form>
 <!--            <MonacoEditor class="editor"-->
 <!--                          @keydown.meta.enter="runSql"-->

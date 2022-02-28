@@ -25,18 +25,19 @@ class PrequelController extends Controller
         $databaseData = (object)app(DatabaseTraverser::class)->getAll();
 
         return view("Prequel::main", [
-            "env"  => [
+            "env"    => [
                 "connection" => config("prequel.database.connection"),
                 "database"   => config("prequel.database.database"),
                 "host"       => config("prequel.database.host"),
                 "port"       => config("prequel.database.port"),
                 "user"       => config("prequel.database.username"),
+                'baseUrl'    => config("prequel.baseUrl"),
             ],
-            "data" => [
+            "data"   => [
                 "collection"          => $databaseData->collection,
                 "flatTableCollection" => $databaseData->flatTableCollection,
             ],
-            "lang" => Lang::get(
+            "lang"   => Lang::get(
                 "Prequel::lang",
                 [],
                 (string)config("prequel.locale")

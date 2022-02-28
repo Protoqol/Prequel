@@ -1,4 +1,6 @@
-const mix                = require('laravel-mix');
+let mix = require('laravel-mix');
+require('laravel-mix-purgecss');
+require('laravel-mix-tailwind');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,13 +13,12 @@ const mix                = require('laravel-mix');
  |
  */
 
-mix.setResourceRoot('packages/protoqol/prequel').
-    postCss('resources/assets/css/app.css', 'public', [
-      require('tailwindcss'),
-    ]).
-    js('resources/assets/js/app.js', 'public').
-    copy('public', '../../../public/vendor/prequel').
-    copy('resources/lang', '../../../resources/lang/vendor/prequel').
-    options({
-      purifyCss: true,
-    });
+mix.setResourceRoot('packages/protoqol/prequel')
+    .postCss('resources/assets/css/app.css', 'public')
+    .purgeCss()
+    .tailwind()
+    .js('resources/assets/js/app.js', 'public')
+    .vue({ version: 2 })
+    .copy('public', '../Prequel/public/vendor/prequel')
+    .copy('resources/lang', '../Prequel/resources/lang/vendor/prequel');
+

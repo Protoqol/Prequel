@@ -10,25 +10,22 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "@prettier/plugin-php": "^0.16.2",
     "axios": "^0.21",
-    "browser-sync": "^2.26.14",
-    "browser-sync-webpack-plugin": "2.0.1",
     "cross-env": "^5.2.1",
-    "eslint": "^7.24.0",
-    "eslint-plugin-vue": "^7.8.0",
-    "laravel-mix": "^4.1.4",
+    "laravel-mix": "^6.0.43",
+    "laravel-mix-purgecss": "^6.0.0",
+    "laravel-mix-tailwind": "^0.1.2",
     "lodash": "^4.17.21",
     "postcss-import": "^12.0.1",
     "prettier": "^2.2.1",
-    "purify-css": "^1.2.5",
-    "purifycss-webpack": "^0.7.0",
     "resolve-url-loader": "^2.3.1",
-    "sass": "^1.32.8",
-    "sass-loader": "^7.3.1",
-    "tailwindcss": "^1.9.6",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
+    "tailwindcss": "^3.0.23",
     "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12"
+    "vue-loader": "^15.9.8",
+    "vue-template-compiler": "^2.6.12",
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -36,6 +33,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "axios-request-handler": "^1.0.4",
     "sweetalert2": "^8.15.0",
-    "vuejs-paginate": "^2.1.0"
+    "vuejs-paginate": "^2.1.0",
+    "webpack": "^5.69.1"
   }
 }
