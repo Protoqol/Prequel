@@ -2,11 +2,11 @@
     <div class="switch-container">
         <div class="switch">
             <div id="0" class="tab" :title="trans('switch_mode.browse.title')" @click="browseSwitchHandler">
-                <font-awesome-icon icon="eye"/>
+                <i class="ri-eye-line"></i>
                 <small>{{trans('switch_mode.browse.text')}}</small>
             </div>
             <div id="1" class="tab" :title="trans('switch_mode.manage.title')" @click="querySwitchHandler">
-                <font-awesome-icon icon="wrench"/>
+                <i class="ri-pencil-fill"></i>
                 <small>{{trans('switch_mode.manage.text')}}</small>
             </div>
         </div>

@@ -18,7 +18,9 @@ class DatabaseConnector
      */
     public function getConnection($database = null)
     {
-        switch (config("prequel.database.connection")) {
+        $presumed = config("prequel.database.connection");
+
+        switch ($presumed) {
             case "mysql":
                 $className = "MySqlConnection";
                 break;
@@ -28,6 +30,22 @@ class DatabaseConnector
             default:
                 break;
         }
+
+        if (!isset($className)) {
+            $presumedCustomConnectionName = config("database.connections.$presumed.driver");
+
+            switch ($presumedCustomConnectionName) {
+                case "mysql":
+                    $className = "MySqlConnection";
+                    break;
+                case "pgsql":
+                    $className = "PostgresConnection";
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         $class = "Protoqol\\Prequel\\Connection\\" . $className;
 

@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Grammars\MySqlGrammar;
 use Illuminate\Database\Query\Processors\MySqlProcessor;
+use Illuminate\Support\Str;
 use PDO;
 use Protoqol\Prequel\Database\SequelAdapter;
 
@@ -40,10 +41,15 @@ class MySqlConnection extends Connection
     public function getPdo(): PDO
     {
         $connection = config("prequel.database.connection");
-        $host       = config("prequel.database.host");
-        $port       = config("prequel.database.port");
-        $database   = config("prequel.database.database");
-        $socket     = config("prequel.database.socket");
+
+        if (!Str::contains($connection, ['mysql', 'pgsql'])) {
+            $connection = config("database.connections.$connection.driver");
+        }
+
+        $host     = config("prequel.database.host");
+        $port     = config("prequel.database.port");
+        $database = config("prequel.database.database");
+        $socket   = config("prequel.database.socket");
 
         $dsn = $connection;
 

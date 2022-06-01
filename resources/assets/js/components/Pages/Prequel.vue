@@ -108,7 +108,7 @@ export default {
                     database: "",
                 },
                 asset        : {
-                    logo   : "/vendor/prequel/favicon.png",
+                    logo   : "/vendor/prequel/logo.svg",
                     prequel: "/vendor/prequel/prequel_v1.png",
                     loader : "/vendor/prequel/loader.gif",
                 },
@@ -280,12 +280,7 @@ export default {
                     }
                 }
 
-                // Only click if not already open as this causes it to be closed again.
-                if (databaseEl.parentElement.parentElement.title === "CLOSED") {
-                    databaseEl.click();
-                }
-
-                databaseEl.style.color = this.view.menu.active_header_color;
+                // databaseEl.style.color = this.view.menu.active_header_color;
                 tableEl.style.color    = this.view.menu.active_item_color;
             }
         },

@@ -110,7 +110,6 @@ export default {
      */
     getData: function () {
       api.get("/status").then(res => {
-        console.log('No data');
         this.app = res.data;
       });
     },

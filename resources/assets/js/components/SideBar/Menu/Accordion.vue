@@ -1,8 +1,5 @@
 <template>
   <div class="accordion">
-    <div class="header" :title="status" @click="toggle">
-      <slot name="header">HINT</slot>
-    </div>
     <transition name="accordion"
                 @before-enter="beforeEnter" @enter="enter"
                 @before-leave="beforeLeave" @leave="leave">
@@ -22,7 +19,7 @@ export default {
   props: ["theme"],
   data() {
     return {
-      show  : false,
+      show  : true,
       status: "CLOSED",
     };
   },
@@ -55,7 +52,7 @@ export default {
 }
 
 .accordion .body-inner {
-  padding: 0 8px 8px;
+  padding: 0 0 8px;
   overflow-wrap: break-word;
 }
 </style>

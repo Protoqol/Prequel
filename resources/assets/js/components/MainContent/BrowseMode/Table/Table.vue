@@ -5,7 +5,7 @@
             <tr>
                 <th class="table-th-actions"
                     :title="trans('table.quick_actions')">
-                    <font-awesome-icon icon="tools" />
+                    <i class="ri-tools-line"></i>
                 </th>
                 <th class="table-th"
                     :id="struct.Field"
@@ -24,7 +24,7 @@
             <tbody>
             <tr v-if="data" class="table-row" v-for="row in data">
                 <td class="table-td-actions" :title="trans('table.inspect_row')">
-                    <font-awesome-icon style="transform: rotate(90deg);" icon="search-plus" />&nbsp;
+                    <i class="ri-search-eye-line"></i>
                 </td>
                 <td class="ellipsis table-td"
                     :id="item ? item : ENUM.PREQUEL_UNDEFINED"

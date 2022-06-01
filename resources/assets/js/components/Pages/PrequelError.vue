@@ -2,7 +2,7 @@
     <!--    @TODO Better error resolving/suggestions -->
     <div class="prequel-error">
         <h1>
-            <font-awesome-icon icon="exclamation-triangle"></font-awesome-icon>
+            <i class="ri-alarm-warning-line"></i>
             {{ trans('error_page.oops') }}
         </h1>
         <h2>

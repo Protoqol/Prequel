@@ -27,9 +27,6 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@fortawesome/vue-fontawesome": "^0.1.10",
     "axios-request-handler": "^1.0.4",
     "mix-tailwindcss": "^1.3.0",
     "sweetalert2": "^11.4.0",
