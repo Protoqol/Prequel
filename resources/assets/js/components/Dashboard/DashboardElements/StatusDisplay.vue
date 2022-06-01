@@ -21,7 +21,7 @@ export default {
     .status {
         @apply flex-1;
         @apply w-40;
-        background-color: var(--table-item-overview);
+        background-color: white;
         @apply py-4;
         @apply px-2;
         @apply border-l;

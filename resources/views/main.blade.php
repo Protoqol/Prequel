@@ -6,7 +6,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-  <link rel="shortcut icon" href="{{ asset('vendor/prequel/favicon.png') }}">
+  <link rel="shortcut icon" href="{{ asset('vendor/prequel/favicon.ico') }}">
   <link rel="stylesheet" href="{{ asset('vendor/prequel/app.css') }}">
 
   <title>{{ (config('app.name')) }} Prequel</title>

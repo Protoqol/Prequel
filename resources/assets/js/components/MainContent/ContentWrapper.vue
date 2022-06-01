@@ -50,9 +50,8 @@ export default {
     .main-content-wrapper {
         @apply block;
         @apply h-full;
-        background-color: var(--main-content);
+        background-color: transparent;
         @apply rounded;
-        @apply shadow;
         @apply ml-1;
     }
 </style>

@@ -40,15 +40,15 @@ class MigrationAction implements GenerationInterface
      */
     public function __construct(string $database, string $table)
     {
-        $this->database = $database;
-        $this->table = $table;
+        $this->database   = $database;
+        $this->table      = $table;
         $this->connection = (new DatabaseConnector())->getConnection();
     }
 
     /**
      * @return int
      */
-    public function run()
+    public function run(): int
     {
         return Artisan::call("migrate");
     }
@@ -56,7 +56,7 @@ class MigrationAction implements GenerationInterface
     /**
      * @return int
      */
-    public function reset()
+    public function reset(): int
     {
         return Artisan::call("migrate:reset");
     }
@@ -68,21 +68,25 @@ class MigrationAction implements GenerationInterface
      */
     public function pending(): array
     {
-        $migrationFileCount = (int)iterator_count(
+        $migrationFileCount = iterator_count(
             new FilesystemIterator(
                 database_path("migrations"),
                 FilesystemIterator::SKIP_DOTS
             )
         );
 
-        $migrationTableCount = count(
-            $this->connection->select("SELECT id FROM migrations;")
-        );
+        try {
+            $migrationTableCount = count(
+                $this->connection->select("SELECT `id` FROM `migrations`;")
+            );
+        } catch (\Exception $e) {
+            $migrationTableCount = 0;
+        }
 
         $pending = $migrationFileCount - $migrationTableCount;
 
         return [
-            "pending" => $pending <= 0 ? 0 : $pending,
+            "pending" => max($pending, 0),
             "total"   => $migrationFileCount,
         ];
     }

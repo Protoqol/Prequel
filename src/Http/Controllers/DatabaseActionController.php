@@ -36,8 +36,8 @@ class DatabaseActionController extends Controller
         return [
             "id"           =>
                 (int)PDB::create($request->database, $request->table)
-                    ->builder()
-                    ->count() + 1,
+                        ->builder()
+                        ->count() + 1,
             "current_date" => Carbon::now()->format("Y-m-d\TH:i"),
         ];
     }
@@ -131,9 +131,9 @@ class DatabaseActionController extends Controller
      *
      * @return array
      */
-    public function status()
+    public function status(): array
     {
-        return (new AppStatus())->getStatus();
+        return (new AppStatus)->getStatus();
     }
 
     /**
@@ -144,7 +144,7 @@ class DatabaseActionController extends Controller
      *
      * @return int
      */
-    public function runMigrations(string $database, string $table)
+    public function runMigrations(string $database, string $table): int
     {
         return (new MigrationAction($database, $table))->run();
     }
@@ -157,7 +157,7 @@ class DatabaseActionController extends Controller
      *
      * @return int
      */
-    public function resetMigrations(string $database, string $table)
+    public function resetMigrations(string $database, string $table): int
     {
         return (new MigrationAction($database, $table))->reset();
     }
@@ -198,7 +198,7 @@ class DatabaseActionController extends Controller
      *
      * @return int
      */
-    public function generateModel(string $database, string $table)
+    public function generateModel(string $database, string $table): int
     {
         return (new ModelAction($database, $table))->generate();
     }
@@ -240,7 +240,7 @@ class DatabaseActionController extends Controller
      * @return int
      * @throws Exception
      */
-    public function runSeeder(string $database, string $table)
+    public function runSeeder(string $database, string $table): int
     {
         return (new SeederAction($database, $table))->run();
     }

@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.24 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -497,6 +497,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .table-row {
   display: table-row;
 }
+.grid {
+  display: grid;
+}
 .hidden {
   display: none;
 }
@@ -535,6 +538,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .resize {
   resize: both;
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .flex-row {
   flex-direction: row;
@@ -650,7 +656,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
-
 :root {
     --scroll-track                          : rgb(245, 245, 245);
     --scroll-bar                            : rgb(102, 126, 234);
@@ -686,7 +691,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     --text-secondary-color                  : rgb(74, 85, 104);
     --text-secondary-color-invert           : rgb(255, 255, 255);
 }
-
 .theme-dark {
     --scroll-track                          : rgb(28, 28, 28);
     --scroll-bar                            : rgb(90, 103, 216);
@@ -723,24 +727,20 @@ Ensure the default browser behavior of the `hidden` attribute.
     --text-secondary-color-invert           : rgb(74, 85, 104);
 
 }
-
 * {
     transition  : .150ms ease;
     font-family : Nunito, serif;
     outline     : none !important;
 }
-
 body {
     background: var(--page-background-color);
 }
 .prequel-swal-title {
     color : red;
 }
-
 :focus {
     outline : 0;
 }
-
 ::-webkit-scrollbar {
     width            : 5px;
     height           : 5px;
@@ -748,7 +748,6 @@ body {
     -webkit-transition       : .2s ease;
     transition       : .2s ease;
 }
-
 ::-webkit-scrollbar-track {
     -webkit-box-shadow : inset 0 0 2px rgba(0, 0, 0, 0.3);
     background-color   : var(--scroll-track);
@@ -756,14 +755,12 @@ body {
     -webkit-transition         : .2s ease;
     transition         : .2s ease;
 }
-
 ::-webkit-scrollbar-thumb {
     border-radius : 10px;
     background    : var(--scroll-bar);
     -webkit-transition    : .2s ease;
     transition    : .2s ease;
 }
-
 .no-drag {
     user-select         : none;
     -moz-user-select    : none;
@@ -771,32 +768,26 @@ body {
     -webkit-user-select : none;
     -ms-user-select     : none;
 }
-
 .hover\:bg-indigo-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(224 231 255 / var(--tw-bg-opacity));
 }
-
 .hover\:bg-gray-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
-
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-
 .hover\:text-gray-700:hover {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
-
 .hover\:underline:hover {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
 }
-
 .active\:bg-indigo-200:active {
   --tw-bg-opacity: 1;
   background-color: rgb(199 210 254 / var(--tw-bg-opacity));

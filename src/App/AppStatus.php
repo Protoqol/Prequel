@@ -3,8 +3,10 @@
 namespace Protoqol\Prequel\App;
 
 use Illuminate\Database\Connection;
+use Illuminate\Support\Facades\DB;
 use Protoqol\Prequel\Connection\DatabaseConnector;
 use Protoqol\Prequel\Database\DatabaseTraverser;
+use Protoqol\Prequel\Facades\PDB;
 
 /**
  * Class AppStatus
