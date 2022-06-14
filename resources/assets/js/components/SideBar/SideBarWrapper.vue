@@ -24,22 +24,19 @@ export default {
   @apply inline-block;
   min-width: 15%;
   width: 17%;
-  @apply bg-gray-300;
-  @apply pb-2 rounded;
+  @apply bg-page;
 
   .table-search-input {
-    @apply bg-input;
     border-style: var(--input-border);
     @apply appearance-none;
     @apply border;
     @apply w-full;
-    @apply rounded;
-    @apply shadow;
-    @apply py-2;
+    @apply py-1;
     @apply px-3;
     @apply text-secondary;
     @apply leading-tight;
     @apply mb-1;
+    @apply rounded;
 
     &:focus {
       @apply outline-none;

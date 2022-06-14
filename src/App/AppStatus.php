@@ -3,10 +3,8 @@
 namespace Protoqol\Prequel\App;
 
 use Illuminate\Database\Connection;
-use Illuminate\Support\Facades\DB;
 use Protoqol\Prequel\Connection\DatabaseConnector;
 use Protoqol\Prequel\Database\DatabaseTraverser;
-use Protoqol\Prequel\Facades\PDB;
 
 /**
  * Class AppStatus
@@ -34,7 +32,7 @@ class AppStatus
      */
     public function __construct()
     {
-        $this->traverser = new DatabaseTraverser();
+        $this->traverser  = new DatabaseTraverser();
         $this->connection = (new DatabaseConnector())->getConnection();
     }
 
@@ -67,19 +65,19 @@ class AppStatus
      */
     public function userPermissions(): array
     {
-        $grants = $this->connection->getGrants();
-        $privs = (string)array_values($grants)[0];
+        $grants      = $this->connection->getGrants();
+        $privs       = (string)array_values($grants)[0];
         $permissions = [];
 
         // If anyone seeing this has a better way of checking this, be my guest!
-        $permissions["SELECT"] = false !== strpos($privs, "SELECT");
-        $permissions["INSERT"] = false !== strpos($privs, "INSERT");
-        $permissions["UPDATE"] = false !== strpos($privs, "UPDATE");
-        $permissions["DELETE"] = false !== strpos($privs, "DELETE");
-        $permissions["FILE"] = false !== strpos($privs, "FILE");
-        $permissions["CREATE"] = false !== strpos($privs, "CREATE");
-        $permissions["DROP"] = false !== strpos($privs, "DROP");
-        $permissions["ALTER"] = false !== strpos($privs, "ALTER");
+        $permissions["SELECT"]  = false !== strpos($privs, "SELECT");
+        $permissions["INSERT"]  = false !== strpos($privs, "INSERT");
+        $permissions["UPDATE"]  = false !== strpos($privs, "UPDATE");
+        $permissions["DELETE"]  = false !== strpos($privs, "DELETE");
+        $permissions["FILE"]    = false !== strpos($privs, "FILE");
+        $permissions["CREATE"]  = false !== strpos($privs, "CREATE");
+        $permissions["DROP"]    = false !== strpos($privs, "DROP");
+        $permissions["ALTER"]   = false !== strpos($privs, "ALTER");
         $permissions["HAS_ALL"] = true;
 
         // Check if user has all needed permissions

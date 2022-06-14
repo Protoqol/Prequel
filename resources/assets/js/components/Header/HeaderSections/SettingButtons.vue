@@ -7,7 +7,7 @@
     </button>
 
     <button
-        class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+        class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-purple-100 active:bg-purple-200 rounded shadow"
         :title="trans('header.buttons.dark_mode')"
         :class="darkMode ? 'dark-mode-button-enabled' : 'dark-mode-button-disabled'"
         @click="darkModeButtonHandler">
@@ -21,7 +21,7 @@
     </button>
 
     <button
-        class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow"
+        class="mr-4 flex justify-center items-center h-10 w-10 hover:bg-purple-100 active:bg-purple-200 rounded shadow"
         :title="trans('header.buttons.refresh')"
         @click="refreshButtonHandler">
       <i class="ri-refresh-line"></i>
@@ -36,7 +36,7 @@ export default {
     return {
       sideBarStatusText: "Collapse",
       showSideBar      : false,
-      readability      : true,
+      readability      : false,
       darkMode         : false,
     };
   },
@@ -131,7 +131,7 @@ button {
   @apply shadow;
 
   &:active {
-    @apply bg-indigo-200;
+    @apply bg-purple-200;
   }
 }
 

@@ -238,7 +238,7 @@ button {
   @apply rounded;
   @apply shadow;
   @apply border-b-4;
-  @apply border-indigo-700;
+  @apply border-purple-700;
 
   transition: all .2s;
 
@@ -371,7 +371,7 @@ h2 {
             @apply mx-2;
             @apply text-center;
             @apply rounded;
-            @apply bg-indigo-300;
+            @apply bg-purple-300;
           }
         }
 

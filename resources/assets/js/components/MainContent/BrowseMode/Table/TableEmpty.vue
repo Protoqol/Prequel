@@ -127,7 +127,7 @@ export default {
       @apply justify-center;
 
       button {
-        @apply bg-indigo-500;
+        @apply bg-purple-500;
         @apply w-40;
         @apply mt-20;
         @apply text-white;
@@ -138,11 +138,11 @@ export default {
         @apply shadow;
 
         &:hover {
-          @apply bg-indigo-400;
+          @apply bg-purple-400;
         }
 
         &:active {
-          @apply bg-indigo-300;
+          @apply bg-purple-300;
         }
       }
     }

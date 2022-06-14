@@ -24,8 +24,8 @@ trait classResolver
     /**
      * Check for class existence.
      *
-     * @param string $classname
-     * @param array $namespaces
+     * @param string     $classname
+     * @param array|null $namespaces
      *
      * @return bool|string
      */

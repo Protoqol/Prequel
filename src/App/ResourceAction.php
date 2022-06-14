@@ -30,7 +30,7 @@ class ResourceAction implements GenerationInterface
     public function __construct(string $database, string $table)
     {
         $this->database = $database;
-        $this->table = $table;
+        $this->table    = $table;
     }
 
     /**
@@ -98,7 +98,7 @@ class ResourceAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
+        $arr   = explode("\\", $class);
         $count = count($arr);
 
         return $arr[$count - 1];
@@ -117,8 +117,8 @@ class ResourceAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
-        $count = count($arr);
+        $arr       = explode("\\", $class);
+        $count     = count($arr);
         $namespace = "";
 
         for ($i = 0; $i < $count; $i++) {

@@ -120,7 +120,6 @@ export default {
                 @apply py-2;
                 @apply px-2;
                 @apply w-12;
-                @apply rounded-b;
                 @apply cursor-pointer;
 
 
@@ -132,7 +131,7 @@ export default {
 
                 &:hover {
                     transition : .2s ease;
-                    @apply bg-indigo-400;
+                    @apply bg-purple-400;
                     @apply shadow-none;
                 }
             }

@@ -30,7 +30,7 @@ class ControllerAction implements GenerationInterface
     public function __construct(string $database, string $table)
     {
         $this->database = $database;
-        $this->table = $table;
+        $this->table    = $table;
     }
 
     /**
@@ -93,7 +93,7 @@ class ControllerAction implements GenerationInterface
      */
     public function getClassname()
     {
-        $arr = explode("\\", $this->getQualifiedName());
+        $arr   = explode("\\", $this->getQualifiedName());
         $count = count($arr);
 
         return $arr[$count - 1];
@@ -106,8 +106,8 @@ class ControllerAction implements GenerationInterface
      */
     public function getNamespace()
     {
-        $arr = explode("\\", $this->getQualifiedName());
-        $count = count($arr);
+        $arr       = explode("\\", $this->getQualifiedName());
+        $count     = count($arr);
         $namespace = "";
 
         for ($i = 0; $i < $count; $i++) {

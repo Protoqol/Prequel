@@ -30,7 +30,7 @@ class FactoryAction implements GenerationInterface
     public function __construct(string $database, string $table)
     {
         $this->database = $database;
-        $this->table = $table;
+        $this->table    = $table;
     }
 
     /**
@@ -61,9 +61,9 @@ class FactoryAction implements GenerationInterface
         $factoryFile = $this->generateFactoryName($this->table);
 
         if (
-        !file_exists(
-            base_path("database/factories/" . $factoryFile . ".php")
-        )
+            !file_exists(
+                base_path("database/factories/" . $factoryFile . ".php")
+            )
         ) {
             throw new Exception(
                 $factoryFile .
@@ -101,7 +101,7 @@ class FactoryAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
+        $arr   = explode("\\", $class);
         $count = count($arr);
 
         return $arr[$count - 1];
@@ -120,8 +120,8 @@ class FactoryAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
-        $count = count($arr);
+        $arr       = explode("\\", $class);
+        $count     = count($arr);
         $namespace = "";
 
         for ($i = 0; $i < $count; $i++) {

@@ -60,24 +60,6 @@ export default {
 
 
 <style lang="scss">
-    @keyframes color-rotate {
-        0% {
-            @apply border-red-300;
-        }
-        25% {
-            @apply border-indigo-500;
-        }
-        50% {
-            @apply border-blue-700;
-        }
-        75% {
-            @apply border-green-500;
-        }
-        100% {
-            @apply border-indigo-300;
-        }
-    }
-
     /**
         Header - Container
     */
@@ -87,9 +69,6 @@ export default {
         @apply justify-center;
         @apply items-center;
         @apply pt-5;
-        @apply border-t-4;
-        @apply border-indigo-500;
-        animation : color-rotate 5s linear infinite alternate;
 
         .header-flexbox {
             @apply flex;

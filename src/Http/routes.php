@@ -44,69 +44,94 @@ Route::namespace("Protoqol\Prequel\Http\Controllers")
          Route::prefix("database")->group(function () {
              // Default data retrieval
              Route::get("get/{database}/{table}", [
-                 DatabaseController::class, 'getTableData',
+                 DatabaseController::class,
+                 'getTableData',
              ]);
              Route::get("count/{database}/{table}", [
-                 DatabaseController::class, 'count',
+                 DatabaseController::class,
+                 'count',
              ]);
              Route::get("find/{database}/{table}/{column}/{type}/{value}", [
-                 DatabaseController::class, 'findInTable',
+                 DatabaseController::class,
+                 'findInTable',
              ]);
 
              // MigrationAction, run or reset
              Route::get("migrations/run", [
-                 DatabaseActionController::class, 'runMigrations',
+                 DatabaseActionController::class,
+                 'runMigrations',
              ]);
              Route::get("migrations/reset", [
-                 DatabaseActionController::class, 'resetMigrations',
+                 DatabaseActionController::class,
+                 'resetMigrations',
              ]);
 
              // Get information related to management functionality, ex. has model/factory/seeder etc.
              Route::get("info/{database}/{table}", [
-                 DatabaseActionController::class, 'getInfoAboutTable',
+                 DatabaseActionController::class,
+                 'getInfoAboutTable',
              ]);
 
              // Get default values for new row form, ex. next AI-ID, date-times etc.
              Route::get("defaults/{database}/{table}", [
-                 DatabaseActionController::class, 'getDefaultsForTable',
+                 DatabaseActionController::class,
+                 'getDefaultsForTable',
              ]);
 
              // Insert new row
              Route::post("insert/{database}/{table}", [
-                 DatabaseActionController::class, 'insertNewRow',
+                 DatabaseActionController::class,
+                 'insertNewRow',
              ]);
 
              // Controller Actions
              Route::get("controller/{database}/{table}/generate", [
-                 DatabaseActionController::class, 'generateController',
+                 DatabaseActionController::class,
+                 'generateController',
              ]);
 
              // Factory Actions
              Route::get("factory/{database}/{table}/generate", [
-                 DatabaseActionController::class, 'generateFactory',
+                 DatabaseActionController::class,
+                 'generateFactory',
              ]);
 
              // Model Actions
              Route::get("model/{database}/{table}/generate", [
-                 DatabaseActionController::class, 'generateModel',
+                 DatabaseActionController::class,
+                 'generateModel',
              ]);
 
              // Resource Actions
              Route::get("resource/{database}/{table}/generate", [
-                 DatabaseActionController::class, 'generateResource',
+                 DatabaseActionController::class,
+                 'generateResource',
              ]);
 
              // Seeder Actions
              Route::get("seeder/{database}/{table}/generate", [
-                 DatabaseActionController::class, 'generateSeeder',
+                 DatabaseActionController::class,
+                 'generateSeeder',
              ]);
              Route::get("seeder/{database}/{table}/run", [
-                 DatabaseActionController::class, 'runSeeder',
+                 DatabaseActionController::class,
+                 'runSeeder',
              ]);
 
              // Raw SQL Query
              Route::post("sql/{database}/{table}/run", [
-                 DatabaseActionController::class, 'runSql',
+                 DatabaseActionController::class,
+                 'runSql',
+             ]);
+
+             Route::post('sql/{database}/{table}/export', [
+                 DatabaseController::class,
+                 'export',
+             ]);
+
+             Route::post('sql/{database}/{table}/import', [
+                 DatabaseController::class,
+                 'import',
              ]);
          });
      });

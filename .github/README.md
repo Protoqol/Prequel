@@ -1,4 +1,4 @@
-![Prequel](assets/prequel_v1.png)
+![Prequel](/assets/prequel_v2.jpg)
 
 <p align="center">
     <a href="https://packagist.org/packages/protoqol/prequel">	
@@ -6,19 +6,6 @@
     </a>
     <a href="https://travis-ci.org/Protoqol/Prequel.svg?branch=Dev">
 	    <img src="https://travis-ci.org/Protoqol/Prequel.svg?branch=master"/>	
-    </a>
-    <a href="https://packagist.org/packages/protoqol/prequel">
-	    <img src="https://img.shields.io/badge/php-%5E7.1-lightblue.svg"/>	
-    </a>
-    <a href="https://laravel.com/">
-	    <img src="https://img.shields.io/badge/laravel->=5.6-lightblue.svg"/>	
-    </a>
-    <a href="https://github.com/badges/shields/pulse" alt="Activity">
-        <img src="https://img.shields.io/github/commit-activity/m/badges/shields.svg" />
-    </a>
-    <a href="https://discord.gg/kxkUYqX">
-        <img src="https://img.shields.io/discord/602520001123188757?logo=discord"
-            alt="Join our Discord">
     </a>
     <a href="https://twitter.com/intent/follow?screen_name=Protoqol_XYZ">
         <img src="https://img.shields.io/twitter/follow/Protoqol_XYZ.svg?label=%40Protoqol_XYZ&style=social"
@@ -35,6 +22,11 @@ Prequel is meant to be a database management tool for Laravel to replace the nee
 > Clear and concise database management
 
 ## Installation
+
+### Minimum requirements
+
+- PHP 7.2 or higher
+- laravel/framework 6.0 or higher
 
 ###### To install follow the instructions below.
 

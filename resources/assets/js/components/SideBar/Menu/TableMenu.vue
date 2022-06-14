@@ -6,8 +6,7 @@
              :title="`${database.official_name} (${database.tables.length} ${trans('general.tables')})`"
              :value="database.official_name">
 
-          <i class="ri-database-2-line"></i>
-          {{ readability ? database.pretty_name : database.official_name }}
+          > {{ readability ? database.pretty_name : database.official_name }}
 
           <span class="text-xs font-normal">
                 ({{ getNoTables(database) }})
@@ -96,30 +95,29 @@ export default {
     @apply overflow-hidden;
 
     &:nth-child(even) {
-      background: white;
+      @apply bg-gray-100;
     }
 
     &:nth-child(odd) {
-      background: transparent;
+      @apply bg-white;
     }
   }
 
   .list-header {
-    @apply bg-indigo-400;
-    @apply text-white;
+    background: var(--page-background-color);
+    @apply text-gray-400;
+    @apply text-sm;
     @apply font-normal;
     @apply border-b;
     border-color: var(--border-color);
-    @apply p-2;
-    @apply rounded-l;
-    @apply cursor-pointer;
+    @apply py-1;
+    @apply px-2;
     @apply text-left;
 
     svg {
       color: #c3cbd7;
     }
   }
-
 
   .list-sub {
     color: var(--table-item-text);
@@ -132,11 +130,11 @@ export default {
     @apply items-center;
     @apply justify-start;
     @apply cursor-pointer;
-    @apply text-sm;
+    @apply text-xs;
     @apply text-left;
 
     &:hover {
-      @apply text-indigo-500;
+      @apply text-purple-500;
     }
   }
 

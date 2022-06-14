@@ -7235,6 +7235,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PrequelLogo",
   props: ["env"],
@@ -7304,7 +7313,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       sideBarStatusText: "Collapse",
       showSideBar: false,
-      readability: true,
+      readability: false,
       darkMode: false
     };
   },
@@ -7389,7 +7398,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -8399,7 +8407,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(this.database !== this.$root.table.database || this.$root.table.table)) {
-                  _context.next = 7;
+                  _context.next = 8;
                   break;
                 }
 
@@ -8409,10 +8417,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return this.getDefaults();
 
               case 5:
-                _context.next = 7;
+                if (!this.$refs.actions) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 8;
                 return this.$refs.actions.getInfo();
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -8586,15 +8599,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _ActionInfo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActionInfo */ "./resources/assets/js/components/MainContent/ManageMode/ManageActions/ActionInfo.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Export",
   components: {
     ActionInfo: _ActionInfo__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      structure_only: false,
+      file: null,
+      resultExport: null,
+      errorExport: null,
+      resultImport: null,
+      errorImport: null
+    };
+  },
+  methods: {
+    exportTable: function exportTable(e) {
+      var _this = this;
+
+      e.preventDefault();
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post("database/sql/".concat(this.$root.table.database, "/").concat(this.$root.table.table, "/export"), {
+        structure_only: this.structure_only
+      }).then(function (res) {
+        _this.resultExport = res.data.location;
+      })["catch"](function (err) {
+        _this.errorExport = err.response.data.message;
+      });
+    }
   }
 });
 
@@ -8671,50 +8762,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
- //import MonacoEditor from 'vue-monaco'
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'RunSQL',
+  name: "RunSQL",
   components: {
     Table: _BrowseMode_Table_Table__WEBPACK_IMPORTED_MODULE_0__["default"],
     ActionInfo: _ActionInfo__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      'query': 'SELECT * FROM `##database##`.`##table##` WHERE 1 LIMIT 15;',
-      'prevQuery': '',
-      'data': [],
-      'error': false
+      "query": "SELECT * FROM `##database##`.`##table##` WHERE 1 LIMIT 15;",
+      "prevQuery": "",
+      "data": [],
+      "error": false
     };
   },
   mounted: function mounted() {
-    this.query = this.query.replace('##table##', this.$root.table.table);
-    this.query = this.query.replace('##database##', this.$root.table.database);
+    this.query = this.query.replace("##table##", this.$root.table.table);
+    this.query = this.query.replace("##database##", this.$root.table.database);
+    this.prevQuery = localStorage.getItem("latest_query");
   },
   methods: {
     runSql: function runSql() {
       var _this = this;
 
-      if (!this.query) {
-        var self = this;
-        this.$refs.sql_field.style = 'background: #ec6368; color: white;';
-        setTimeout(function () {
-          self.$refs.sql_field.style = '';
-        }, 2500);
-        return false;
-      }
-
-      var backup = this.data;
-      this.prevQuery = this.query;
       var obj = {
         query: this.query
       };
+      this.saveQuery(this.query);
       this.data = [];
       axios__WEBPACK_IMPORTED_MODULE_2___default().post("/database/sql/".concat(this.$root.table.database, "/").concat(this.$root.table.table, "/run"), obj).then(function (res) {
         _this.error = false;
@@ -8724,14 +8801,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     saveQuery: function saveQuery() {
-      localStorage.setItem('latest_query', this.query);
+      localStorage.setItem("latest_query", this.query);
     },
     getLatestQuery: function getLatestQuery() {
-      var latest = localStorage.getItem('latest_query');
+      var latest = localStorage.getItem("latest_query");
       this.query = latest ? latest : this.query;
     },
     emptyField: function emptyField() {
-      this.query = '';
+      this.query = "";
     }
   }
 });
@@ -8826,12 +8903,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -9102,10 +9173,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   data: function data() {
     return {
       /**
-      |---------------------------------------------
-      | Holds data that comes directly from the back-end.
-      |---------------------------------------------
-      */
+       |---------------------------------------------
+       | Holds data that comes directly from the back-end.
+       |---------------------------------------------
+       */
       prequel: {
         error: window.Prequel.error.error,
         // Object
@@ -9130,10 +9201,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
 
       /**
-      |---------------------------------------------
-      | Holds data about current table.
-      |---------------------------------------------
-      */
+       |---------------------------------------------
+       | Holds data about current table.
+       |---------------------------------------------
+       */
       table: {
         database: "",
         table: "",
@@ -9157,10 +9228,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
 
       /**
-      |---------------------------------------------
-      | Holds data about the view/UI.
-      |---------------------------------------------
-      */
+       |---------------------------------------------
+       | Holds data about the view/UI.
+       |---------------------------------------------
+       */
       view: {
         tab: "tab-newRow",
         modus: {
@@ -9171,7 +9242,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           mode: 0
         },
         collapsed: false,
-        readability: true,
+        readability: false,
         darkMode: false,
         welcomeShown: false,
         params: new URLSearchParams(window.location.search),
@@ -9191,8 +9262,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   methods: {
     /**
-    | Switch between query and browse mode. Only when in actual table.
-    */
+     | Switch between query and browse mode. Only when in actual table.
+     */
     switchMode: function switchMode(mode) {
       if (this.view.params.has("database") && this.view.params.has("table")) {
         this.view.modus.mode = mode;
@@ -9201,9 +9272,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | Handles config changes.
-    | Holds data like readability or side bar preferences in localStorage
-    */
+     | Handles config changes.
+     | Holds data like readability or side bar preferences in localStorage
+     */
     configHandler: function configHandler() {
       if (window.localStorage.getItem("readability")) {
         this.view.readability = window.localStorage.getItem("readability") === "true";
@@ -9219,8 +9290,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | Change page on paginator change.
-    */
+     | Change page on paginator change.
+     */
     changePage: function changePage(e) {
       this.table.pagination.currentPage = e;
       this.updateUrl();
@@ -9228,23 +9299,23 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | Handles column name click event.
-    */
+     | Handles column name click event.
+     */
     columnSelect: function columnSelect(e) {
       this.table.search.column = e.target.id;
     },
 
     /**
-    | Enhance/disable readability
-    */
+     | Enhance/disable readability
+     */
     readabilityEnhancer: function readabilityEnhancer() {
       this.view.readability = !this.view.readability;
       localStorage.setItem("readability", !this.view.readability + "");
     },
 
     /**
-    | Handle actions when sidebar collapses or expands.
-    */
+     | Handle actions when sidebar collapses or expands.
+     */
     sideBarCollapseHandler: function sideBarCollapseHandler() {
       var secsBeforeAction = 1000;
       window.localStorage.setItem("showSidebar", !this.view.collapsed + "");
@@ -9256,9 +9327,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | Open active table in menu, and set it to active. Purely an UI/UX addition.
-    | @TODO When tables with same name exist in different databases, resolve to get correct one.
-    */
+     | Open active table in menu, and set it to active. Purely an UI/UX addition.
+     | @TODO When tables with same name exist in different databases, resolve to get correct one.
+     */
     setActiveTable: function setActiveTable() {
       var _this = this;
 
@@ -9306,15 +9377,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | Search for a table in de side menu
-    */
+     | Search for a table in de side menu
+     */
     searchForTable: function searchForTable(e) {
       this.getTableData(e.target.value, false);
     },
 
     /**
-    | Check if database and table query parameters were found, and tries to select a table based on those parameters.
-    */
+     | Check if database and table query parameters were found, and tries to select a table based on those parameters.
+     */
     checkUrlParameters: function checkUrlParameters() {
       if (this.view.params.has("database") && this.view.params.has("table")) {
         if (this.view.params.has("page")) {
@@ -9335,8 +9406,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | Update url query parameters to match current database and table, only updates when table was loaded.
-    */
+     | Update url query parameters to match current database and table, only updates when table was loaded.
+     */
     updateUrl: function updateUrl() {
       this.view.params.set("mode", this.view.modus.mode === this.view.modus["enum"].BROWSE ? "browse" : "manage");
       this.view.params.set("database", this.table.database);
@@ -9361,13 +9432,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | Asynchronously get table data.
-    |
-    | @param databaseTable Should be formatted as `database.table`.
-    | @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
-    | @returns {Promise<boolean>}
-    | @TODO Shorten function.
-    */
+     | Asynchronously get table data.
+     |
+     | @param databaseTable Should be formatted as `database.table`.
+     | @param dynamicLoad Dynamically figure out databaseTable OR use databaseTable directly as provided.
+     | @returns {Promise<boolean>}
+     | @TODO Shorten function.
+     */
     getTableData: function () {
       var _getTableData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var databaseTable,
@@ -9478,8 +9549,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     }(),
 
     /**
-    | Reset table data to default values.
-    */
+     | Reset table data to default values.
+     */
     resetTableView: function resetTableView() {
       this.table.loading = true;
       this.table.current = {};
@@ -9488,10 +9559,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
 
     /**
-    | React to event emitted by Quick Find input in <Header>
-    |
-    | Only looks through currently active table.
-    */
+     | React to event emitted by Quick Find input in <Header>
+     |
+     | Only looks through currently active table.
+     */
     searchInTable: function () {
       var _searchInTable = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(_ref) {
         var column, value, queryType, result, error;
@@ -9550,9 +9621,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     }(),
 
     /**
-    * Handles and tracks pop state.
-    *
-    */
+     * Handles and tracks pop state.
+     *
+     */
     handlePopState: function handlePopState() {
       this.view.params = new URLSearchParams(window.location.search);
       this.table.pagination.currentPage = parseInt(this.view.params.get("page"));
@@ -9782,7 +9853,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TableMenu",
@@ -9846,16 +9916,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/assets/js/app.js":
+/***/ "./resources/assets/js/App.js":
 /*!************************************!*\
-  !*** ./resources/assets/js/app.js ***!
+  !*** ./resources/assets/js/App.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _components_Pages_Prequel_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Pages/Prequel.vue */ "./resources/assets/js/components/Pages/Prequel.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -9864,10 +9934,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 __webpack_require__(/*! ./bootstrap/bootstrap */ "./resources/assets/js/bootstrap/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-
+window.Prism = window.Prism || {};
+window.Prism.manual = true;
 new vue__WEBPACK_IMPORTED_MODULE_1__["default"](_objectSpread({
   el: "#prequel"
 }, _components_Pages_Prequel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]));
@@ -10003,6 +10075,8 @@ __webpack_require__(/*! ./axios */ "./resources/assets/js/bootstrap/axios.js");
 
 __webpack_require__(/*! ./functions */ "./resources/assets/js/bootstrap/functions.js");
 
+__webpack_require__(/*! ./prism */ "./resources/assets/js/bootstrap/prism.js");
+
 /***/ }),
 
 /***/ "./resources/assets/js/bootstrap/functions.js":
@@ -10065,6 +10139,509 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.trans = function (string, 
 
   return value;
 };
+
+/***/ }),
+
+/***/ "./resources/assets/js/bootstrap/prism.js":
+/*!************************************************!*\
+  !*** ./resources/assets/js/bootstrap/prism.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* PrismJS 1.28.0
+https://prismjs.com/download.html#themes=prism&languages=plsql+promql+sql */
+var _self = "undefined" != typeof window ? window : "undefined" != typeof WorkerGlobalScope && self instanceof WorkerGlobalScope ? self : {},
+    Prism = function (e) {
+  var n = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i,
+      t = 0,
+      r = {},
+      a = {
+    manual: e.Prism && e.Prism.manual,
+    disableWorkerMessageHandler: e.Prism && e.Prism.disableWorkerMessageHandler,
+    util: {
+      encode: function e(n) {
+        return n instanceof i ? new i(n.type, e(n.content), n.alias) : Array.isArray(n) ? n.map(e) : n.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\u00a0/g, " ");
+      },
+      type: function type(e) {
+        return Object.prototype.toString.call(e).slice(8, -1);
+      },
+      objId: function objId(e) {
+        return e.__id || Object.defineProperty(e, "__id", {
+          value: ++t
+        }), e.__id;
+      },
+      clone: function e(n, t) {
+        var r, i;
+
+        switch (t = t || {}, a.util.type(n)) {
+          case "Object":
+            if (i = a.util.objId(n), t[i]) return t[i];
+
+            for (var l in r = {}, t[i] = r, n) {
+              n.hasOwnProperty(l) && (r[l] = e(n[l], t));
+            }
+
+            return r;
+
+          case "Array":
+            return i = a.util.objId(n), t[i] ? t[i] : (r = [], t[i] = r, n.forEach(function (n, a) {
+              r[a] = e(n, t);
+            }), r);
+
+          default:
+            return n;
+        }
+      },
+      getLanguage: function getLanguage(e) {
+        for (; e;) {
+          var t = n.exec(e.className);
+          if (t) return t[1].toLowerCase();
+          e = e.parentElement;
+        }
+
+        return "none";
+      },
+      setLanguage: function setLanguage(e, t) {
+        e.className = e.className.replace(RegExp(n, "gi"), ""), e.classList.add("language-" + t);
+      },
+      currentScript: function currentScript() {
+        if ("undefined" == typeof document) return null;
+        if ("currentScript" in document) return document.currentScript;
+
+        try {
+          throw new Error();
+        } catch (r) {
+          var e = (/at [^(\r\n]*\((.*):[^:]+:[^:]+\)$/i.exec(r.stack) || [])[1];
+
+          if (e) {
+            var n = document.getElementsByTagName("script");
+
+            for (var t in n) {
+              if (n[t].src == e) return n[t];
+            }
+          }
+
+          return null;
+        }
+      },
+      isActive: function isActive(e, n, t) {
+        for (var r = "no-" + n; e;) {
+          var a = e.classList;
+          if (a.contains(n)) return !0;
+          if (a.contains(r)) return !1;
+          e = e.parentElement;
+        }
+
+        return !!t;
+      }
+    },
+    languages: {
+      plain: r,
+      plaintext: r,
+      text: r,
+      txt: r,
+      extend: function extend(e, n) {
+        var t = a.util.clone(a.languages[e]);
+
+        for (var r in n) {
+          t[r] = n[r];
+        }
+
+        return t;
+      },
+      insertBefore: function insertBefore(e, n, t, r) {
+        var i = (r = r || a.languages)[e],
+            l = {};
+
+        for (var o in i) {
+          if (i.hasOwnProperty(o)) {
+            if (o == n) for (var s in t) {
+              t.hasOwnProperty(s) && (l[s] = t[s]);
+            }
+            t.hasOwnProperty(o) || (l[o] = i[o]);
+          }
+        }
+
+        var u = r[e];
+        return r[e] = l, a.languages.DFS(a.languages, function (n, t) {
+          t === u && n != e && (this[n] = l);
+        }), l;
+      },
+      DFS: function e(n, t, r, i) {
+        i = i || {};
+        var l = a.util.objId;
+
+        for (var o in n) {
+          if (n.hasOwnProperty(o)) {
+            t.call(n, o, n[o], r || o);
+            var s = n[o],
+                u = a.util.type(s);
+            "Object" !== u || i[l(s)] ? "Array" !== u || i[l(s)] || (i[l(s)] = !0, e(s, t, o, i)) : (i[l(s)] = !0, e(s, t, null, i));
+          }
+        }
+      }
+    },
+    plugins: {},
+    highlightAll: function highlightAll(e, n) {
+      a.highlightAllUnder(document, e, n);
+    },
+    highlightAllUnder: function highlightAllUnder(e, n, t) {
+      var r = {
+        callback: t,
+        container: e,
+        selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
+      };
+      a.hooks.run("before-highlightall", r), r.elements = Array.prototype.slice.apply(r.container.querySelectorAll(r.selector)), a.hooks.run("before-all-elements-highlight", r);
+
+      for (var i, l = 0; i = r.elements[l++];) {
+        a.highlightElement(i, !0 === n, r.callback);
+      }
+    },
+    highlightElement: function highlightElement(n, t, r) {
+      var i = a.util.getLanguage(n),
+          l = a.languages[i];
+      a.util.setLanguage(n, i);
+      var o = n.parentElement;
+      o && "pre" === o.nodeName.toLowerCase() && a.util.setLanguage(o, i);
+      var s = {
+        element: n,
+        language: i,
+        grammar: l,
+        code: n.textContent
+      };
+
+      function u(e) {
+        s.highlightedCode = e, a.hooks.run("before-insert", s), s.element.innerHTML = s.highlightedCode, a.hooks.run("after-highlight", s), a.hooks.run("complete", s), r && r.call(s.element);
+      }
+
+      if (a.hooks.run("before-sanity-check", s), (o = s.element.parentElement) && "pre" === o.nodeName.toLowerCase() && !o.hasAttribute("tabindex") && o.setAttribute("tabindex", "0"), !s.code) return a.hooks.run("complete", s), void (r && r.call(s.element));
+      if (a.hooks.run("before-highlight", s), s.grammar) {
+        if (t && e.Worker) {
+          var c = new Worker(a.filename);
+          c.onmessage = function (e) {
+            u(e.data);
+          }, c.postMessage(JSON.stringify({
+            language: s.language,
+            code: s.code,
+            immediateClose: !0
+          }));
+        } else u(a.highlight(s.code, s.grammar, s.language));
+      } else u(a.util.encode(s.code));
+    },
+    highlight: function highlight(e, n, t) {
+      var r = {
+        code: e,
+        grammar: n,
+        language: t
+      };
+      if (a.hooks.run("before-tokenize", r), !r.grammar) throw new Error('The language "' + r.language + '" has no grammar.');
+      return r.tokens = a.tokenize(r.code, r.grammar), a.hooks.run("after-tokenize", r), i.stringify(a.util.encode(r.tokens), r.language);
+    },
+    tokenize: function tokenize(e, n) {
+      var t = n.rest;
+
+      if (t) {
+        for (var r in t) {
+          n[r] = t[r];
+        }
+
+        delete n.rest;
+      }
+
+      var a = new s();
+      return u(a, a.head, e), o(e, a, n, a.head, 0), function (e) {
+        for (var n = [], t = e.head.next; t !== e.tail;) {
+          n.push(t.value), t = t.next;
+        }
+
+        return n;
+      }(a);
+    },
+    hooks: {
+      all: {},
+      add: function add(e, n) {
+        var t = a.hooks.all;
+        t[e] = t[e] || [], t[e].push(n);
+      },
+      run: function run(e, n) {
+        var t = a.hooks.all[e];
+        if (t && t.length) for (var r, i = 0; r = t[i++];) {
+          r(n);
+        }
+      }
+    },
+    Token: i
+  };
+
+  function i(e, n, t, r) {
+    this.type = e, this.content = n, this.alias = t, this.length = 0 | (r || "").length;
+  }
+
+  function l(e, n, t, r) {
+    e.lastIndex = n;
+    var a = e.exec(t);
+
+    if (a && r && a[1]) {
+      var i = a[1].length;
+      a.index += i, a[0] = a[0].slice(i);
+    }
+
+    return a;
+  }
+
+  function o(e, n, t, r, s, g) {
+    for (var f in t) {
+      if (t.hasOwnProperty(f) && t[f]) {
+        var h = t[f];
+        h = Array.isArray(h) ? h : [h];
+
+        for (var d = 0; d < h.length; ++d) {
+          if (g && g.cause == f + "," + d) return;
+          var v = h[d],
+              p = v.inside,
+              m = !!v.lookbehind,
+              y = !!v.greedy,
+              k = v.alias;
+
+          if (y && !v.pattern.global) {
+            var x = v.pattern.toString().match(/[imsuy]*$/)[0];
+            v.pattern = RegExp(v.pattern.source, x + "g");
+          }
+
+          for (var b = v.pattern || v, w = r.next, A = s; w !== n.tail && !(g && A >= g.reach); A += w.value.length, w = w.next) {
+            var E = w.value;
+            if (n.length > e.length) return;
+
+            if (!(E instanceof i)) {
+              var P,
+                  L = 1;
+
+              if (y) {
+                if (!(P = l(b, A, e, m)) || P.index >= e.length) break;
+                var S = P.index,
+                    O = P.index + P[0].length,
+                    j = A;
+
+                for (j += w.value.length; S >= j;) {
+                  j += (w = w.next).value.length;
+                }
+
+                if (A = j -= w.value.length, w.value instanceof i) continue;
+
+                for (var C = w; C !== n.tail && (j < O || "string" == typeof C.value); C = C.next) {
+                  L++, j += C.value.length;
+                }
+
+                L--, E = e.slice(A, j), P.index -= A;
+              } else if (!(P = l(b, 0, E, m))) continue;
+
+              S = P.index;
+
+              var N = P[0],
+                  _ = E.slice(0, S),
+                  M = E.slice(S + N.length),
+                  W = A + E.length;
+
+              g && W > g.reach && (g.reach = W);
+              var z = w.prev;
+
+              if (_ && (z = u(n, z, _), A += _.length), c(n, z, L), w = u(n, z, new i(f, p ? a.tokenize(N, p) : N, k, N)), M && u(n, w, M), L > 1) {
+                var I = {
+                  cause: f + "," + d,
+                  reach: W
+                };
+                o(e, n, t, w.prev, A, I), g && I.reach > g.reach && (g.reach = I.reach);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function s() {
+    var e = {
+      value: null,
+      prev: null,
+      next: null
+    },
+        n = {
+      value: null,
+      prev: e,
+      next: null
+    };
+    e.next = n, this.head = e, this.tail = n, this.length = 0;
+  }
+
+  function u(e, n, t) {
+    var r = n.next,
+        a = {
+      value: t,
+      prev: n,
+      next: r
+    };
+    return n.next = a, r.prev = a, e.length++, a;
+  }
+
+  function c(e, n, t) {
+    for (var r = n.next, a = 0; a < t && r !== e.tail; a++) {
+      r = r.next;
+    }
+
+    n.next = r, r.prev = n, e.length -= a;
+  }
+
+  if (e.Prism = a, i.stringify = function e(n, t) {
+    if ("string" == typeof n) return n;
+
+    if (Array.isArray(n)) {
+      var r = "";
+      return n.forEach(function (n) {
+        r += e(n, t);
+      }), r;
+    }
+
+    var i = {
+      type: n.type,
+      content: e(n.content, t),
+      tag: "span",
+      classes: ["token", n.type],
+      attributes: {},
+      language: t
+    },
+        l = n.alias;
+    l && (Array.isArray(l) ? Array.prototype.push.apply(i.classes, l) : i.classes.push(l)), a.hooks.run("wrap", i);
+    var o = "";
+
+    for (var s in i.attributes) {
+      o += " " + s + '="' + (i.attributes[s] || "").replace(/"/g, "&quot;") + '"';
+    }
+
+    return "<" + i.tag + ' class="' + i.classes.join(" ") + '"' + o + ">" + i.content + "</" + i.tag + ">";
+  }, !e.document) return e.addEventListener ? (a.disableWorkerMessageHandler || e.addEventListener("message", function (n) {
+    var t = JSON.parse(n.data),
+        r = t.language,
+        i = t.code,
+        l = t.immediateClose;
+    e.postMessage(a.highlight(i, a.languages[r], r)), l && e.close();
+  }, !1), a) : a;
+  var g = a.util.currentScript();
+
+  function f() {
+    a.manual || a.highlightAll();
+  }
+
+  if (g && (a.filename = g.src, g.hasAttribute("data-manual") && (a.manual = !0)), !a.manual) {
+    var h = document.readyState;
+    "loading" === h || "interactive" === h && g && g.defer ? document.addEventListener("DOMContentLoaded", f) : window.requestAnimationFrame ? window.requestAnimationFrame(f) : window.setTimeout(f, 16);
+  }
+
+  return a;
+}(_self);
+
+ true && module.exports && (module.exports = Prism), "undefined" != typeof __webpack_require__.g && (__webpack_require__.g.Prism = Prism);
+Prism.languages.sql = {
+  comment: {
+    pattern: /(^|[^\\])(?:\/\*[\s\S]*?\*\/|(?:--|\/\/|#).*)/,
+    lookbehind: !0
+  },
+  variable: [{
+    pattern: /@(["'`])(?:\\[\s\S]|(?!\1)[^\\])+\1/,
+    greedy: !0
+  }, /@[\w.$]+/],
+  string: {
+    pattern: /(^|[^@\\])("|')(?:\\[\s\S]|(?!\2)[^\\]|\2\2)*\2/,
+    greedy: !0,
+    lookbehind: !0
+  },
+  identifier: {
+    pattern: /(^|[^@\\])`(?:\\[\s\S]|[^`\\]|``)*`/,
+    greedy: !0,
+    lookbehind: !0,
+    inside: {
+      punctuation: /^`|`$/
+    }
+  },
+  "function": /\b(?:AVG|COUNT|FIRST|FORMAT|LAST|LCASE|LEN|MAX|MID|MIN|MOD|NOW|ROUND|SUM|UCASE)(?=\s*\()/i,
+  keyword: /\b(?:ACTION|ADD|AFTER|ALGORITHM|ALL|ALTER|ANALYZE|ANY|APPLY|AS|ASC|AUTHORIZATION|AUTO_INCREMENT|BACKUP|BDB|BEGIN|BERKELEYDB|BIGINT|BINARY|BIT|BLOB|BOOL|BOOLEAN|BREAK|BROWSE|BTREE|BULK|BY|CALL|CASCADED?|CASE|CHAIN|CHAR(?:ACTER|SET)?|CHECK(?:POINT)?|CLOSE|CLUSTERED|COALESCE|COLLATE|COLUMNS?|COMMENT|COMMIT(?:TED)?|COMPUTE|CONNECT|CONSISTENT|CONSTRAINT|CONTAINS(?:TABLE)?|CONTINUE|CONVERT|CREATE|CROSS|CURRENT(?:_DATE|_TIME|_TIMESTAMP|_USER)?|CURSOR|CYCLE|DATA(?:BASES?)?|DATE(?:TIME)?|DAY|DBCC|DEALLOCATE|DEC|DECIMAL|DECLARE|DEFAULT|DEFINER|DELAYED|DELETE|DELIMITERS?|DENY|DESC|DESCRIBE|DETERMINISTIC|DISABLE|DISCARD|DISK|DISTINCT|DISTINCTROW|DISTRIBUTED|DO|DOUBLE|DROP|DUMMY|DUMP(?:FILE)?|DUPLICATE|ELSE(?:IF)?|ENABLE|ENCLOSED|END|ENGINE|ENUM|ERRLVL|ERRORS|ESCAPED?|EXCEPT|EXEC(?:UTE)?|EXISTS|EXIT|EXPLAIN|EXTENDED|FETCH|FIELDS|FILE|FILLFACTOR|FIRST|FIXED|FLOAT|FOLLOWING|FOR(?: EACH ROW)?|FORCE|FOREIGN|FREETEXT(?:TABLE)?|FROM|FULL|FUNCTION|GEOMETRY(?:COLLECTION)?|GLOBAL|GOTO|GRANT|GROUP|HANDLER|HASH|HAVING|HOLDLOCK|HOUR|IDENTITY(?:COL|_INSERT)?|IF|IGNORE|IMPORT|INDEX|INFILE|INNER|INNODB|INOUT|INSERT|INT|INTEGER|INTERSECT|INTERVAL|INTO|INVOKER|ISOLATION|ITERATE|JOIN|KEYS?|KILL|LANGUAGE|LAST|LEAVE|LEFT|LEVEL|LIMIT|LINENO|LINES|LINESTRING|LOAD|LOCAL|LOCK|LONG(?:BLOB|TEXT)|LOOP|MATCH(?:ED)?|MEDIUM(?:BLOB|INT|TEXT)|MERGE|MIDDLEINT|MINUTE|MODE|MODIFIES|MODIFY|MONTH|MULTI(?:LINESTRING|POINT|POLYGON)|NATIONAL|NATURAL|NCHAR|NEXT|NO|NONCLUSTERED|NULLIF|NUMERIC|OFF?|OFFSETS?|ON|OPEN(?:DATASOURCE|QUERY|ROWSET)?|OPTIMIZE|OPTION(?:ALLY)?|ORDER|OUT(?:ER|FILE)?|OVER|PARTIAL|PARTITION|PERCENT|PIVOT|PLAN|POINT|POLYGON|PRECEDING|PRECISION|PREPARE|PREV|PRIMARY|PRINT|PRIVILEGES|PROC(?:EDURE)?|PUBLIC|PURGE|QUICK|RAISERROR|READS?|REAL|RECONFIGURE|REFERENCES|RELEASE|RENAME|REPEAT(?:ABLE)?|REPLACE|REPLICATION|REQUIRE|RESIGNAL|RESTORE|RESTRICT|RETURN(?:ING|S)?|REVOKE|RIGHT|ROLLBACK|ROUTINE|ROW(?:COUNT|GUIDCOL|S)?|RTREE|RULE|SAVE(?:POINT)?|SCHEMA|SECOND|SELECT|SERIAL(?:IZABLE)?|SESSION(?:_USER)?|SET(?:USER)?|SHARE|SHOW|SHUTDOWN|SIMPLE|SMALLINT|SNAPSHOT|SOME|SONAME|SQL|START(?:ING)?|STATISTICS|STATUS|STRIPED|SYSTEM_USER|TABLES?|TABLESPACE|TEMP(?:ORARY|TABLE)?|TERMINATED|TEXT(?:SIZE)?|THEN|TIME(?:STAMP)?|TINY(?:BLOB|INT|TEXT)|TOP?|TRAN(?:SACTIONS?)?|TRIGGER|TRUNCATE|TSEQUAL|TYPES?|UNBOUNDED|UNCOMMITTED|UNDEFINED|UNION|UNIQUE|UNLOCK|UNPIVOT|UNSIGNED|UPDATE(?:TEXT)?|USAGE|USE|USER|USING|VALUES?|VAR(?:BINARY|CHAR|CHARACTER|YING)|VIEW|WAITFOR|WARNINGS|WHEN|WHERE|WHILE|WITH(?: ROLLUP|IN)?|WORK|WRITE(?:TEXT)?|YEAR)\b/i,
+  "boolean": /\b(?:FALSE|NULL|TRUE)\b/i,
+  number: /\b0x[\da-f]+\b|\b\d+(?:\.\d*)?|\B\.\d+\b/i,
+  operator: /[-+*\/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?|\b(?:AND|BETWEEN|DIV|ILIKE|IN|IS|LIKE|NOT|OR|REGEXP|RLIKE|SOUNDS LIKE|XOR)\b/i,
+  punctuation: /[;[\]()`,.]/
+};
+Prism.languages.plsql = Prism.languages.extend("sql", {
+  comment: {
+    pattern: /\/\*[\s\S]*?\*\/|--.*/,
+    greedy: !0
+  },
+  keyword: /\b(?:A|ACCESSIBLE|ADD|AGENT|AGGREGATE|ALL|ALTER|AND|ANY|ARRAY|AS|ASC|AT|ATTRIBUTE|AUTHID|AVG|BEGIN|BETWEEN|BFILE_BASE|BINARY|BLOB_BASE|BLOCK|BODY|BOTH|BOUND|BULK|BY|BYTE|C|CALL|CALLING|CASCADE|CASE|CHAR|CHARACTER|CHARSET|CHARSETFORM|CHARSETID|CHAR_BASE|CHECK|CLOB_BASE|CLONE|CLOSE|CLUSTER|CLUSTERS|COLAUTH|COLLECT|COLUMNS|COMMENT|COMMIT|COMMITTED|COMPILED|COMPRESS|CONNECT|CONSTANT|CONSTRUCTOR|CONTEXT|CONTINUE|CONVERT|COUNT|CRASH|CREATE|CREDENTIAL|CURRENT|CURSOR|CUSTOMDATUM|DANGLING|DATA|DATE|DATE_BASE|DAY|DECLARE|DEFAULT|DEFINE|DELETE|DESC|DETERMINISTIC|DIRECTORY|DISTINCT|DOUBLE|DROP|DURATION|ELEMENT|ELSE|ELSIF|EMPTY|END|ESCAPE|EXCEPT|EXCEPTION|EXCEPTIONS|EXCLUSIVE|EXECUTE|EXISTS|EXIT|EXTERNAL|FETCH|FINAL|FIRST|FIXED|FLOAT|FOR|FORALL|FORCE|FROM|FUNCTION|GENERAL|GOTO|GRANT|GROUP|HASH|HAVING|HEAP|HIDDEN|HOUR|IDENTIFIED|IF|IMMEDIATE|IMMUTABLE|IN|INCLUDING|INDEX|INDEXES|INDICATOR|INDICES|INFINITE|INSERT|INSTANTIABLE|INT|INTERFACE|INTERSECT|INTERVAL|INTO|INVALIDATE|IS|ISOLATION|JAVA|LANGUAGE|LARGE|LEADING|LENGTH|LEVEL|LIBRARY|LIKE|LIKE2|LIKE4|LIKEC|LIMIT|LIMITED|LOCAL|LOCK|LONG|LOOP|MAP|MAX|MAXLEN|MEMBER|MERGE|MIN|MINUS|MINUTE|MOD|MODE|MODIFY|MONTH|MULTISET|MUTABLE|NAME|NAN|NATIONAL|NATIVE|NCHAR|NEW|NOCOMPRESS|NOCOPY|NOT|NOWAIT|NULL|NUMBER_BASE|OBJECT|OCICOLL|OCIDATE|OCIDATETIME|OCIDURATION|OCIINTERVAL|OCILOBLOCATOR|OCINUMBER|OCIRAW|OCIREF|OCIREFCURSOR|OCIROWID|OCISTRING|OCITYPE|OF|OLD|ON|ONLY|OPAQUE|OPEN|OPERATOR|OPTION|OR|ORACLE|ORADATA|ORDER|ORGANIZATION|ORLANY|ORLVARY|OTHERS|OUT|OVERLAPS|OVERRIDING|PACKAGE|PARALLEL_ENABLE|PARAMETER|PARAMETERS|PARENT|PARTITION|PASCAL|PERSISTABLE|PIPE|PIPELINED|PLUGGABLE|POLYMORPHIC|PRAGMA|PRECISION|PRIOR|PRIVATE|PROCEDURE|PUBLIC|RAISE|RANGE|RAW|READ|RECORD|REF|REFERENCE|RELIES_ON|REM|REMAINDER|RENAME|RESOURCE|RESULT|RESULT_CACHE|RETURN|RETURNING|REVERSE|REVOKE|ROLLBACK|ROW|SAMPLE|SAVE|SAVEPOINT|SB1|SB2|SB4|SECOND|SEGMENT|SELECT|SELF|SEPARATE|SEQUENCE|SERIALIZABLE|SET|SHARE|SHORT|SIZE|SIZE_T|SOME|SPARSE|SQL|SQLCODE|SQLDATA|SQLNAME|SQLSTATE|STANDARD|START|STATIC|STDDEV|STORED|STRING|STRUCT|STYLE|SUBMULTISET|SUBPARTITION|SUBSTITUTABLE|SUBTYPE|SUM|SYNONYM|TABAUTH|TABLE|TDO|THE|THEN|TIME|TIMESTAMP|TIMEZONE_ABBR|TIMEZONE_HOUR|TIMEZONE_MINUTE|TIMEZONE_REGION|TO|TRAILING|TRANSACTION|TRANSACTIONAL|TRUSTED|TYPE|UB1|UB2|UB4|UNDER|UNION|UNIQUE|UNPLUG|UNSIGNED|UNTRUSTED|UPDATE|USE|USING|VALIST|VALUE|VALUES|VARIABLE|VARIANCE|VARRAY|VARYING|VIEW|VIEWS|VOID|WHEN|WHERE|WHILE|WITH|WORK|WRAPPED|WRITE|YEAR|ZONE)\b/i,
+  operator: /:=?|=>|[<>^~!]=|\.\.|\|\||\*\*|[-+*/%<>=@]/
+}), Prism.languages.insertBefore("plsql", "operator", {
+  label: {
+    pattern: /<<\s*\w+\s*>>/,
+    alias: "symbol"
+  }
+});
+!function (t) {
+  var n = ["on", "ignoring", "group_right", "group_left", "by", "without"],
+      a = ["sum", "min", "max", "avg", "group", "stddev", "stdvar", "count", "count_values", "bottomk", "topk", "quantile"].concat(n, ["offset"]);
+  t.languages.promql = {
+    comment: {
+      pattern: /(^[ \t]*)#.*/m,
+      lookbehind: !0
+    },
+    "vector-match": {
+      pattern: new RegExp("((?:" + n.join("|") + ")\\s*)\\([^)]*\\)"),
+      lookbehind: !0,
+      inside: {
+        "label-key": {
+          pattern: /\b[^,]+\b/,
+          alias: "attr-name"
+        },
+        punctuation: /[(),]/
+      }
+    },
+    "context-labels": {
+      pattern: /\{[^{}]*\}/,
+      inside: {
+        "label-key": {
+          pattern: /\b[a-z_]\w*(?=\s*(?:=|![=~]))/,
+          alias: "attr-name"
+        },
+        "label-value": {
+          pattern: /(["'`])(?:\\[\s\S]|(?!\1)[^\\])*\1/,
+          greedy: !0,
+          alias: "attr-value"
+        },
+        punctuation: /\{|\}|=~?|![=~]|,/
+      }
+    },
+    "context-range": [{
+      pattern: /\[[\w\s:]+\]/,
+      inside: {
+        punctuation: /\[|\]|:/,
+        "range-duration": {
+          pattern: /\b(?:\d+(?:[smhdwy]|ms))+\b/i,
+          alias: "number"
+        }
+      }
+    }, {
+      pattern: /(\boffset\s+)\w+/,
+      lookbehind: !0,
+      inside: {
+        "range-duration": {
+          pattern: /\b(?:\d+(?:[smhdwy]|ms))+\b/i,
+          alias: "number"
+        }
+      }
+    }],
+    keyword: new RegExp("\\b(?:" + a.join("|") + ")\\b", "i"),
+    "function": /\b[a-z_]\w*(?=\s*\()/i,
+    number: /[-+]?(?:(?:\b\d+(?:\.\d+)?|\B\.\d+)(?:e[-+]?\d+)?\b|\b(?:0x[0-9a-f]+|nan|inf)\b)/i,
+    operator: /[\^*/%+-]|==|!=|<=|<|>=|>|\b(?:and|or|unless)\b/i,
+    punctuation: /[{};()`,.[\]]/
+  };
+}(Prism);
 
 /***/ }),
 
@@ -12096,7 +12673,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#error[data-v-e925c20e] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  margin-top: 0.5rem\n}\n#error h2[data-v-e925c20e] {\n  text-align: center;\n  font-size: 1.5rem;\n  line-height: 2rem\n}\n#error p[data-v-e925c20e] {\n  margin-top: 0.5rem;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  text-align: center\n}\n#error img[data-v-e925c20e] {\n  margin-top: 1rem;\n  margin-bottom: 1rem;\n  border-radius: 0.25rem\n}\n.database-management h1[data-v-e925c20e] {\n  text-align: center;\n  color: var(--header-text-color);\n  font-weight: 400;\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  border-top-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem\n}\n.database-management .overview[data-v-e925c20e] {\n  margin-bottom: 1rem\n}\n.database-management .overview .status-cards[data-v-e925c20e] {\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  gap: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(243 244 246 / var(--tw-bg-opacity));\n  border-top-width: 1px;\n  border-bottom-width: 1px;\n  border-color: var(--border-color)\n}\n.database-management .overview .status-cards div[data-v-e925c20e], .database-management .overview .status-cards #migration-wrapper[data-v-e925c20e] {\n  width: 100%\n}\n.database-management .overview .button-wrapper[data-v-e925c20e] {\n  display: flex;\n  justify-content: center;\n  margin-top: 0.5rem;\n  margin-bottom: 0.5rem\n}\n.database-management .overview .button-wrapper a[data-v-e925c20e] {\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 700;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  border-radius: 9999px;\n  margin-left: 0.25rem;\n  margin-right: 0.25rem\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#error[data-v-e925c20e] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  margin-top: 0.5rem\n}\n#error h2[data-v-e925c20e] {\n  text-align: center;\n  font-size: 1.5rem;\n  line-height: 2rem\n}\n#error p[data-v-e925c20e] {\n  margin-top: 0.5rem;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  text-align: center\n}\n#error img[data-v-e925c20e] {\n  margin-top: 1rem;\n  margin-bottom: 1rem;\n  border-radius: 0.25rem\n}\n.database-management h1[data-v-e925c20e] {\n  text-align: center;\n  color: var(--header-text-color);\n  font-weight: 400;\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  border-top-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem\n}\n.database-management .overview[data-v-e925c20e] {\n  margin-bottom: 1rem\n}\n.database-management .overview .status-cards[data-v-e925c20e] {\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  gap: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(243 244 246 / var(--tw-bg-opacity));\n  border-top-width: 1px;\n  border-bottom-width: 1px;\n  border-color: var(--border-color)\n}\n.database-management .overview .status-cards div[data-v-e925c20e],  .database-management .overview .status-cards #migration-wrapper[data-v-e925c20e] {\n  width: 100%\n}\n.database-management .overview .button-wrapper[data-v-e925c20e] {\n  display: flex;\n  justify-content: center;\n  margin-top: 0.5rem;\n  margin-bottom: 0.5rem\n}\n.database-management .overview .button-wrapper a[data-v-e925c20e] {\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 700;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  border-radius: 9999px;\n  margin-left: 0.25rem;\n  margin-right: 0.25rem\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12192,7 +12769,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".switch-container {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n}\n.switch-container .switch {\n  display: flex;\n  flex-direction: row;\n}\n@media (min-width: 1401px) {\n.switch-container .switch {\n    margin-left: 0.5rem;\n    margin-right: 0.5rem;\n}\n}\n.switch-container .switch .tab {\n  color: var(--header-text-color);\n  max-width: 3rem;\n  transition: 0.2s ease;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  background-color: transparent;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  width: 3rem;\n  border-bottom-right-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem;\n  cursor: pointer;\n}\n.switch-container .switch .tab small {\n  z-index: 5;\n  color: var(--header-text-color);\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\n.switch-container .switch .tab:hover {\n  transition: 0.2s ease;\n  --tw-bg-opacity: 1;\n  background-color: rgb(129 140 248 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.switch-container .switch .tab-active {\n  transition: 0.2s ease;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(209 213 219 / var(--tw-text-opacity));\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.switch-container .switch .tab-active small {\n  --tw-text-opacity: 1;\n  color: rgb(209 213 219 / var(--tw-text-opacity));\n  margin-top: 0.5rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".switch-container {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n}\n.switch-container .switch {\n  display: flex;\n  flex-direction: row;\n}\n@media (min-width: 1401px) {\n.switch-container .switch {\n    margin-left: 0.5rem;\n    margin-right: 0.5rem;\n}\n}\n.switch-container .switch .tab {\n  color: var(--header-text-color);\n  max-width: 3rem;\n  transition: 0.2s ease;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  background-color: transparent;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  width: 3rem;\n  cursor: pointer;\n}\n.switch-container .switch .tab small {\n  z-index: 5;\n  color: var(--header-text-color);\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\n.switch-container .switch .tab:hover {\n  transition: 0.2s ease;\n  --tw-bg-opacity: 1;\n  background-color: rgb(192 132 252 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.switch-container .switch .tab-active {\n  transition: 0.2s ease;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(209 213 219 / var(--tw-text-opacity));\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.switch-container .switch .tab-active small {\n  --tw-text-opacity: 1;\n  color: rgb(209 213 219 / var(--tw-text-opacity));\n  margin-top: 0.5rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12216,7 +12793,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@-webkit-keyframes color-rotate-data-v-b8753452 {\n0% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(252 165 165 / var(--tw-bg-opacity));\n}\n25% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(99 102 241 / var(--tw-bg-opacity));\n}\n50% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(29 78 216 / var(--tw-bg-opacity));\n}\n75% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(34 197 94 / var(--tw-bg-opacity));\n}\n100% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(165 180 252 / var(--tw-bg-opacity));\n}\n}\n@keyframes color-rotate-data-v-b8753452 {\n0% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(252 165 165 / var(--tw-bg-opacity));\n}\n25% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(99 102 241 / var(--tw-bg-opacity));\n}\n50% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(29 78 216 / var(--tw-bg-opacity));\n}\n75% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(34 197 94 / var(--tw-bg-opacity));\n}\n100% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(165 180 252 / var(--tw-bg-opacity));\n}\n}\n#version[data-v-b8753452] {\n  position: absolute;\n  top: 10px;\n  right: 17px;\n}\n#version .notification[data-v-b8753452] {\n  animation: color-rotate-data-v-b8753452 5s linear infinite reverse;\n  top: -2px;\n  right: -13px;\n  font-size: 8px;\n  font-weight: bolder;\n  color: white;\n  width: 12px;\n  height: 12px;\n  padding: 1px;\n  position: absolute;\n  text-align: center;\n  border-radius: 9999px;\n}\n#version p[data-v-b8753452] {\n  font-size: 13px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@-webkit-keyframes color-rotate-data-v-b8753452 {\n0% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(252 165 165 / var(--tw-bg-opacity));\n}\n25% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(168 85 247 / var(--tw-bg-opacity));\n}\n50% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(29 78 216 / var(--tw-bg-opacity));\n}\n75% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(34 197 94 / var(--tw-bg-opacity));\n}\n100% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(216 180 254 / var(--tw-bg-opacity));\n}\n}\n@keyframes color-rotate-data-v-b8753452 {\n0% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(252 165 165 / var(--tw-bg-opacity));\n}\n25% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(168 85 247 / var(--tw-bg-opacity));\n}\n50% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(29 78 216 / var(--tw-bg-opacity));\n}\n75% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(34 197 94 / var(--tw-bg-opacity));\n}\n100% {\n    --tw-bg-opacity: 1;\n    background-color: rgb(216 180 254 / var(--tw-bg-opacity));\n}\n}\n#version[data-v-b8753452] {\n  position: absolute;\n  top: 10px;\n  right: 17px;\n}\n#version .notification[data-v-b8753452] {\n  animation: color-rotate-data-v-b8753452 5s linear infinite reverse;\n  top: -2px;\n  right: -13px;\n  font-size: 8px;\n  font-weight: bolder;\n  color: white;\n  width: 12px;\n  height: 12px;\n  padding: 1px;\n  position: absolute;\n  text-align: center;\n  border-radius: 9999px;\n}\n#version p[data-v-b8753452] {\n  font-size: 13px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12240,7 +12817,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@-webkit-keyframes color-rotate {\n0% {\n    --tw-border-opacity: 1;\n    border-color: rgb(252 165 165 / var(--tw-border-opacity))\n}\n25% {\n    --tw-border-opacity: 1;\n    border-color: rgb(99 102 241 / var(--tw-border-opacity))\n}\n50% {\n    --tw-border-opacity: 1;\n    border-color: rgb(29 78 216 / var(--tw-border-opacity))\n}\n75% {\n    --tw-border-opacity: 1;\n    border-color: rgb(34 197 94 / var(--tw-border-opacity))\n}\n100% {\n    --tw-border-opacity: 1;\n    border-color: rgb(165 180 252 / var(--tw-border-opacity))\n}\n}\n@keyframes color-rotate {\n0% {\n    --tw-border-opacity: 1;\n    border-color: rgb(252 165 165 / var(--tw-border-opacity))\n}\n25% {\n    --tw-border-opacity: 1;\n    border-color: rgb(99 102 241 / var(--tw-border-opacity))\n}\n50% {\n    --tw-border-opacity: 1;\n    border-color: rgb(29 78 216 / var(--tw-border-opacity))\n}\n75% {\n    --tw-border-opacity: 1;\n    border-color: rgb(34 197 94 / var(--tw-border-opacity))\n}\n100% {\n    --tw-border-opacity: 1;\n    border-color: rgb(165 180 252 / var(--tw-border-opacity))\n}\n}\n/**\n    Header - Container\n*/\n.header-container {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  padding-top: 1.25rem;\n  border-top-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(99 102 241 / var(--tw-border-opacity));\n  -webkit-animation: color-rotate 5s linear infinite alternate;\n          animation: color-rotate 5s linear infinite alternate\n  /**\n      Header - Bottom - Divider\n  */\n}\n.header-container .header-flexbox {\n  display: flex;\n  width: 83.333333%;\n  padding-bottom: 1rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color)\n  /**\n      Header - Left - Logo, Connection information\n  */\n  /**\n      Header - Middle - Search in table inputs\n  */\n  /**\n      Header - Right - Configuration buttons\n   */\n}\n.header-container .header-flexbox .header-left {\n  width: 25%\n}\n.header-container .header-flexbox .header-middle {\n  width: 50%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  margin-top: -5px\n}\n.header-container .header-flexbox .header-right {\n  width: 25%;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  align-items: center\n}\n.header-container .header-bottom {\n  display: block;\n  margin-top: 1rem;\n  width: 83.333333%;\n  border-bottom: 1px solid var(--header-bottom-border-color)\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/**\n    Header - Container\n*/\n.header-container {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  padding-top: 1.25rem\n  /**\n      Header - Bottom - Divider\n  */\n}\n.header-container .header-flexbox {\n  display: flex;\n  width: 83.333333%;\n  padding-bottom: 1rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color)\n  /**\n      Header - Left - Logo, Connection information\n  */\n  /**\n      Header - Middle - Search in table inputs\n  */\n  /**\n      Header - Right - Configuration buttons\n   */\n}\n.header-container .header-flexbox .header-left {\n  width: 25%\n}\n.header-container .header-flexbox .header-middle {\n  width: 50%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  margin-top: -5px\n}\n.header-container .header-flexbox .header-right {\n  width: 25%;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  align-items: center\n}\n.header-container .header-bottom {\n  display: block;\n  margin-top: 1rem;\n  width: 83.333333%;\n  border-bottom: 1px solid var(--header-bottom-border-color)\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12264,7 +12841,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".header-left-logo[data-v-001427a0] {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n}\n.header-left-logo .header-left-logo-image[data-v-001427a0] {\n  margin-right: 0.25rem;\n}\n.header-left-logo .header-left-logo-image img[data-v-001427a0] {\n  -moz-user-select: none;\n  -webkit-user-drag: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n.header-left-logo .header-left-logo-text[data-v-001427a0] {\n  font-size: 1.5rem;\n  line-height: 2rem;\n  letter-spacing: 1px;\n  color: var(--header-text-color);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-left-logo .header-left-logo-text[data-v-001427a0] {\n    font-weight: 700;\n}\n}\n.header-left-logo .header-left-logo-text span[data-v-001427a0] {\n  font-weight: 700;\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-left-logo .header-left-logo-text a[data-v-001427a0] {\n    display: none;\n}\n}\n@media (min-width: 1401px) {\n.header-left-logo .header-left-logo-text a[data-v-001427a0] {\n    letter-spacing: normal;\n    font-style: normal;\n    font-size: 0.75rem;\n    line-height: 1rem;\n    font-weight: 300;\n}\n}\n.header-left-connection[data-v-001427a0] {\n  margin-left: 0.5rem;\n  margin-top: 0.25rem;\n  align-self: center;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  margin-right: 0.25rem;\n  letter-spacing: 0.025em;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-left-connection[data-v-001427a0] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".cls-1[data-v-001427a0] {\n  fill: #c084fc;\n}\n.header-left-logo[data-v-001427a0] {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n}\n.header-left-logo .header-left-logo-image[data-v-001427a0] {\n  margin-right: 0.25rem;\n}\n.header-left-logo .header-left-logo-image img[data-v-001427a0] {\n  -moz-user-select: none;\n  -webkit-user-drag: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n.header-left-logo .header-left-logo-text[data-v-001427a0] {\n  font-size: 1.5rem;\n  line-height: 2rem;\n  letter-spacing: 1px;\n  color: var(--header-text-color);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-left-logo .header-left-logo-text[data-v-001427a0] {\n    font-weight: 700;\n}\n}\n.header-left-logo .header-left-logo-text span[data-v-001427a0] {\n  font-weight: 700;\n}\n.header-left-logo .header-left-logo-text a[data-v-001427a0] {\n  --tw-text-opacity: 1;\n  color: rgb(156 163 175 / var(--tw-text-opacity));\n}\n@media (min-width: 700px) and (max-width: 1400px) {\n.header-left-logo .header-left-logo-text a[data-v-001427a0] {\n    display: none;\n}\n}\n@media (min-width: 1401px) {\n.header-left-logo .header-left-logo-text a[data-v-001427a0] {\n    letter-spacing: normal;\n    font-style: normal;\n    font-size: 0.75rem;\n    line-height: 1rem;\n    font-weight: 300;\n}\n}\n.header-left-connection[data-v-001427a0] {\n  margin-left: 0.5rem;\n  margin-top: 0.25rem;\n  align-self: center;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  margin-right: 0.25rem;\n  letter-spacing: 0.025em;\n  --tw-text-opacity: 1;\n  color: rgb(156 163 175 / var(--tw-text-opacity));\n  font-size: 0.75rem;\n  line-height: 1rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12288,7 +12865,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "button[data-v-21a46efa] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 2.5rem;\n  width: 2.5rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\nbutton[data-v-21a46efa] {\n    margin-right: 0.5rem;\n}\n}\n@media (min-width: 1401px) {\nbutton[data-v-21a46efa] {\n    margin-right: 1rem;\n}\n}\nbutton[data-v-21a46efa]:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(199 210 254 / var(--tw-bg-opacity));\n}\n.dark-mode-button-enabled[data-v-21a46efa] {\n  color: #ffffff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.dark-mode-button-enabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.dark-mode-button-disabled[data-v-21a46efa] {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.dark-mode-button-disabled[data-v-21a46efa]:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.readability-button-enabled[data-v-21a46efa] {\n  color: #ffffff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.readability-button-enabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.readability-button-disabled[data-v-21a46efa] {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.readability-button-disabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.sidebar-button-enabled[data-v-21a46efa] {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.sidebar-button-enabled[data-v-21a46efa]:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.sidebar-button-disabled[data-v-21a46efa] {\n  background-color: var(--button-background-hover);\n  color: #ffffff;\n  transition: 0.5s ease;\n}\n.sidebar-button-disabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.chevron-point-left[data-v-21a46efa] {\n  transform: rotate(270deg);\n  transition: 0.5s ease;\n}\n.chevron-point-right[data-v-21a46efa] {\n  transform: rotate(90deg);\n  transition: 0.5s ease;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "button[data-v-21a46efa] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 2.5rem;\n  width: 2.5rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n@media (min-width: 700px) and (max-width: 1400px) {\nbutton[data-v-21a46efa] {\n    margin-right: 0.5rem;\n}\n}\n@media (min-width: 1401px) {\nbutton[data-v-21a46efa] {\n    margin-right: 1rem;\n}\n}\nbutton[data-v-21a46efa]:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(233 213 255 / var(--tw-bg-opacity));\n}\n.dark-mode-button-enabled[data-v-21a46efa] {\n  color: #ffffff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.dark-mode-button-enabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.dark-mode-button-disabled[data-v-21a46efa] {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.dark-mode-button-disabled[data-v-21a46efa]:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.readability-button-enabled[data-v-21a46efa] {\n  color: #ffffff;\n  background-color: var(--button-background);\n  transition: 0.5s ease;\n}\n.readability-button-enabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.readability-button-disabled[data-v-21a46efa] {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.readability-button-disabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.sidebar-button-enabled[data-v-21a46efa] {\n  color: #2d3748;\n  background-color: transparent;\n  transition: 0.5s ease;\n}\n.sidebar-button-enabled[data-v-21a46efa]:hover {\n  background-color: #667eea;\n  transition: 0.5s ease;\n}\n.sidebar-button-disabled[data-v-21a46efa] {\n  background-color: var(--button-background-hover);\n  color: #ffffff;\n  transition: 0.5s ease;\n}\n.sidebar-button-disabled[data-v-21a46efa]:hover {\n  background-color: var(--button-background-hover);\n  transition: 0.5s ease;\n}\n.chevron-point-left[data-v-21a46efa] {\n  transform: rotate(270deg);\n  transition: 0.5s ease;\n}\n.chevron-point-right[data-v-21a46efa] {\n  transform: rotate(90deg);\n  transition: 0.5s ease;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12312,7 +12889,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "h1[data-v-51a36766] {\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  font-weight: 600;\n}\nh1 span[data-v-51a36766] {\n  --tw-text-opacity: 1;\n  color: rgb(75 85 99 / var(--tw-text-opacity));\n  font-weight: 100;\n}\nh1 img[data-v-51a36766] {\n  margin-bottom: 0.25rem;\n}\nh1 .fa[data-v-51a36766] {\n  margin-right: 0.25rem;\n}\nh1 .fa[data-v-51a36766]:hover {\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n}\nlabel[data-v-51a36766] {\n  display: flex;\n  flex-direction: row;\n}\nlabel .search-column-input[data-v-51a36766] {\n  background-color: var(--input-background-color);\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 33.333333%;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\nlabel .search-column-input[data-v-51a36766]:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\nlabel .search-type-input[data-v-51a36766] {\n  margin: 0.5rem;\n  background-color: transparent;\n  font-weight: 700;\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n  background-color: var(--input-background-color);\n  color: var(--text-secondary-color);\n}\nlabel .search-value-input[data-v-51a36766] {\n  background-color: var(--input-background-color);\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 60%;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\nlabel .search-value-input[data-v-51a36766]:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\nlabel .search-get-button[data-v-51a36766] {\n  background-color: var(--button-background);\n  margin-left: 0.25rem;\n  margin-right: 0.25rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nlabel .search-get-button[data-v-51a36766]:hover {\n  background-color: var(--button-background-hover);\n}\nlabel .search-get-button[data-v-51a36766]:active {\n  background-color: var(--button-background-active);\n}\nlabel .search-reset-button[data-v-51a36766] {\n  background-color: var(--button-background-light);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nlabel .search-reset-button[data-v-51a36766]:hover {\n  background-color: var(--button-background-light-hover);\n}\nlabel .search-reset-button[data-v-51a36766]:active {\n  background-color: var(--button-background-light-active);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "h1[data-v-51a36766] {\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  font-weight: 600;\n}\nh1 span[data-v-51a36766] {\n  --tw-text-opacity: 1;\n  color: rgb(156 163 175 / var(--tw-text-opacity));\n  font-weight: 100;\n}\nh1 img[data-v-51a36766] {\n  margin-bottom: 0.25rem;\n}\nh1 .fa[data-v-51a36766] {\n  margin-right: 0.25rem;\n}\nh1 .fa[data-v-51a36766]:hover {\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n}\nlabel[data-v-51a36766] {\n  display: flex;\n  flex-direction: row;\n}\nlabel .search-column-input[data-v-51a36766] {\n  height: 2rem;\n  background-color: var(--input-background-color);\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 33.333333%;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\nlabel .search-column-input[data-v-51a36766]:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\nlabel .search-type-input[data-v-51a36766] {\n  height: 2rem;\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  background-color: transparent;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  background-color: var(--input-background-color);\n  color: var(--text-secondary-color);\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nlabel .search-value-input[data-v-51a36766] {\n  height: 2rem;\n  background-color: var(--input-background-color);\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-radius: 0.25rem;\n  width: 33.333333%;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  border-style: var(--input-border);\n}\nlabel .search-value-input[data-v-51a36766]:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\nlabel .search-get-button[data-v-51a36766] {\n  background-color: var(--button-background);\n  margin-left: 0.25rem;\n  margin-right: 0.25rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 400;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nlabel .search-get-button[data-v-51a36766]:hover {\n  background-color: var(--button-background-hover);\n}\nlabel .search-get-button[data-v-51a36766]:active {\n  background-color: var(--button-background-active);\n}\nlabel .search-reset-button[data-v-51a36766] {\n  background-color: var(--button-background-light);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 400;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nlabel .search-reset-button[data-v-51a36766]:hover {\n  background-color: var(--button-background-light-hover);\n}\nlabel .search-reset-button[data-v-51a36766]:active {\n  background-color: var(--button-background-light-active);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12360,7 +12937,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#top-horizontal-scroll {\n  transform: rotateX(180deg);\n}\n.ellipsis {\n  width: 250px;\n  max-width: 250px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  transition: all 0.5s ease;\n}\n.table-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n  transform: rotateX(180deg);\n}\n.table-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n.table-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th:hover {\n  background-color: var(--table-hover-background-color);\n}\n.table-wrapper table thead .table-th-actions {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  color: var(--text-secondary-color);\n  text-align: center;\n  cursor: pointer;\n}\n.table-wrapper table thead .table-th-actions:hover {\n  background-color: var(--table-hover-background-color);\n  border-width: 1px;\n}\n.table-wrapper table .table-row:nth-child(odd) {\n  background-color: var(--table-row-odd-background-color);\n}\n.table-wrapper table .table-row:nth-child(even) {\n  background-color: var(--table-row-even-background-color);\n}\n.table-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td:hover {\n  background-color: var(--table-hover-background-color);\n}\n.table-wrapper table .table-td-actions {\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  width: 2rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td-actions:hover {\n  background-color: var(--table-hover-background-color);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#top-horizontal-scroll {\n  transform: rotateX(180deg);\n}\n.ellipsis {\n  width: 250px;\n  max-width: 250px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  transition: all 0.5s ease;\n}\n.table-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n  transform: rotateX(180deg);\n}\n.table-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n.table-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n  cursor: pointer;\n  --tw-bg-opacity: 1;\n  background-color: rgb(243 244 246 / var(--tw-bg-opacity));\n}\n.table-wrapper table thead .table-th:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n}\n.table-wrapper table thead .table-th-actions {\n  border-width: 1px;\n  border-color: var(--column-border);\n  padding: 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  color: var(--text-secondary-color);\n  text-align: center;\n  cursor: pointer;\n  --tw-bg-opacity: 1;\n  background-color: rgb(243 244 246 / var(--tw-bg-opacity));\n}\n.table-wrapper table thead .table-th-actions:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n  border-width: 1px;\n}\n.table-wrapper table .table-row:nth-child(odd) {\n  background-color: var(--table-row-odd-background-color);\n}\n.table-wrapper table .table-row:nth-child(even) {\n  background-color: var(--table-row-even-background-color);\n}\n.table-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td:hover {\n  background-color: var(--table-hover-background-color);\n}\n.table-wrapper table .table-td-actions {\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  width: 2rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  cursor: pointer;\n  color: var(--text-secondary-color);\n}\n.table-wrapper table .table-td-actions:hover {\n  background-color: var(--table-hover-background-color);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12384,7 +12961,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#empty-table-wrapper {\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper h1 {\n  margin-top: 1rem;\n  margin-bottom: 0.5rem;\n  color: var(--header-text-color);\n  width: 100%;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview h2 {\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem;\n}\n#empty-table-wrapper .column-overview .columns-wrapper {\n  display: flex;\n  flex-direction: column;\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview .columns-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  color: var(--text-secondary-color);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper {\n  display: flex;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button {\n  --tw-bg-opacity: 1;\n  background-color: rgb(99 102 241 / var(--tw-bg-opacity));\n  width: 10rem;\n  margin-top: 5rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(129 140 248 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(165 180 252 / var(--tw-bg-opacity));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#empty-table-wrapper {\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper h1 {\n  margin-top: 1rem;\n  margin-bottom: 0.5rem;\n  color: var(--header-text-color);\n  width: 100%;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview h2 {\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem;\n}\n#empty-table-wrapper .column-overview .columns-wrapper {\n  display: flex;\n  flex-direction: column;\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview .columns-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  color: var(--text-secondary-color);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper {\n  display: flex;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button {\n  --tw-bg-opacity: 1;\n  background-color: rgb(168 85 247 / var(--tw-bg-opacity));\n  width: 10rem;\n  margin-top: 5rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(192 132 252 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(216 180 254 / var(--tw-bg-opacity));\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12432,7 +13009,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".main-content-wrapper {\n  display: block;\n  height: 100%;\n  background-color: transparent;\n  border-radius: 0.25rem;\n  margin-left: 0.25rem\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".main-content-wrapper {\n  display: block;\n  height: 100%;\n  background-color: transparent;\n  border-radius: 0.25rem;\n  margin-left: 0.25rem;\n  margin-top: 1.75rem\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12480,7 +13057,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "button[data-v-56bc11de] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  align-items: center;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(67 56 202 / var(--tw-border-opacity));\n  transition: all 0.2s;\n}\nbutton[data-v-56bc11de]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\nbutton[data-v-56bc11de]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nbutton[data-v-56bc11de]:disabled, button[disabled][data-v-56bc11de] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  cursor: default;\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(156 163 175 / var(--tw-border-opacity));\n}\n@media (min-width: 700px) and (max-width: 1500px) {\nbutton[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\nh2[data-v-56bc11de] {\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n  font-weight: 600;\n  --tw-text-opacity: 1;\n  color: rgb(31 41 55 / var(--tw-text-opacity));\n}\n.ellipseLeft[data-v-56bc11de] {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  direction: rtl;\n}\n.logger[data-v-56bc11de] {\n  margin-top: 1rem;\n  width: 100%;\n  height: 12rem;\n  overflow: auto;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(17 24 39 / var(--tw-bg-opacity));\n  color: #65ead2;\n}\n.logger[data-v-56bc11de]:last-child:after {\n  content: \">   \";\n  height: 20px;\n  margin-bottom: -4px;\n  background: #65ead2;\n  opacity: 0;\n  display: inline-block;\n  -webkit-animation: blink-data-v-56bc11de 2s linear infinite alternate;\n          animation: blink-data-v-56bc11de 2s linear infinite alternate;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.logger[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n@-webkit-keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n.button-actions[data-v-56bc11de] {\n  background-color: var(--manage-navbar-bg);\n  color: var(--text-secondary-color);\n  border-radius: 0.25rem;\n  width: 40%;\n  padding: 1.25rem;\n  margin: 0.5rem;\n  display: flex;\n  flex-direction: column;\n}\n.button-actions .button-wrapper[data-v-56bc11de] {\n  display: flex;\n  flex-direction: row;\n  width: 100%;\n}\n.button-actions .button-wrapper .buttons[data-v-56bc11de] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.button-actions .button-wrapper .buttons .action[data-v-56bc11de] {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  margin-top: 0.75rem;\n}\n.button-actions .button-wrapper .buttons .action .runnable[data-v-56bc11de], .button-actions .button-wrapper .buttons .action h3[data-v-56bc11de] {\n  margin-top: 0 !important;\n  width: 47%;\n  border-radius: 9999px;\n  margin: auto;\n  padding: 0.25rem;\n  margin-top: 1rem;\n  text-align: center;\n}\n.button-actions .button-wrapper .buttons .action .runnable input[data-v-56bc11de], .button-actions .button-wrapper .buttons .action h3 input[data-v-56bc11de] {\n  width: 2.5rem;\n  padding-left: 0.25rem;\n  padding-right: 0.25rem;\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  text-align: center;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(165 180 252 / var(--tw-bg-opacity));\n}\n.button-actions .button-wrapper .buttons .action button[data-v-56bc11de] {\n  width: 50%;\n  margin-top: 0px;\n  display: flex;\n  flex-direction: row;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  margin-left: 0px;\n}\n.button-actions .button-wrapper .buttons .action button .fa[data-v-56bc11de] {\n  width: 25%;\n}\n.button-actions .button-wrapper .buttons .action button span[data-v-56bc11de] {\n  text-align: left;\n  width: 75%;\n}\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n  width: 47%;\n  --tw-bg-opacity: 1;\n  background-color: rgb(34 197 94 / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n  width: 47%;\n  background-color: #ec6368;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "button[data-v-56bc11de] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  align-items: center;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(126 34 206 / var(--tw-border-opacity));\n  transition: all 0.2s;\n}\nbutton[data-v-56bc11de]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\nbutton[data-v-56bc11de]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nbutton[data-v-56bc11de]:disabled,  button[disabled][data-v-56bc11de] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  cursor: default;\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(156 163 175 / var(--tw-border-opacity));\n}\n@media (min-width: 700px) and (max-width: 1500px) {\nbutton[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\nh2[data-v-56bc11de] {\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n  font-weight: 600;\n  --tw-text-opacity: 1;\n  color: rgb(31 41 55 / var(--tw-text-opacity));\n}\n.ellipseLeft[data-v-56bc11de] {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  direction: rtl;\n}\n.logger[data-v-56bc11de] {\n  margin-top: 1rem;\n  width: 100%;\n  height: 12rem;\n  overflow: auto;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(17 24 39 / var(--tw-bg-opacity));\n  color: #65ead2;\n}\n.logger[data-v-56bc11de]:last-child:after {\n  content: \">   \";\n  height: 20px;\n  margin-bottom: -4px;\n  background: #65ead2;\n  opacity: 0;\n  display: inline-block;\n  -webkit-animation: blink-data-v-56bc11de 2s linear infinite alternate;\n          animation: blink-data-v-56bc11de 2s linear infinite alternate;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.logger[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n@-webkit-keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes blink-data-v-56bc11de {\n0% {\n    opacity: 1;\n}\n25% {\n    opacity: 0;\n}\n50% {\n    opacity: 1;\n}\n75% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n.button-actions[data-v-56bc11de] {\n  background-color: var(--manage-navbar-bg);\n  color: var(--text-secondary-color);\n  border-radius: 0.25rem;\n  width: 40%;\n  padding: 1.25rem;\n  margin: 0.5rem;\n  display: flex;\n  flex-direction: column;\n}\n.button-actions .button-wrapper[data-v-56bc11de] {\n  display: flex;\n  flex-direction: row;\n  width: 100%;\n}\n.button-actions .button-wrapper .buttons[data-v-56bc11de] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.button-actions .button-wrapper .buttons .action[data-v-56bc11de] {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  margin-top: 0.75rem;\n}\n.button-actions .button-wrapper .buttons .action .runnable[data-v-56bc11de], .button-actions .button-wrapper .buttons .action h3[data-v-56bc11de] {\n  margin-top: 0 !important;\n  width: 47%;\n  border-radius: 9999px;\n  margin: auto;\n  padding: 0.25rem;\n  margin-top: 1rem;\n  text-align: center;\n}\n.button-actions .button-wrapper .buttons .action .runnable input[data-v-56bc11de],  .button-actions .button-wrapper .buttons .action h3 input[data-v-56bc11de] {\n  width: 2.5rem;\n  padding-left: 0.25rem;\n  padding-right: 0.25rem;\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  text-align: center;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(216 180 254 / var(--tw-bg-opacity));\n}\n.button-actions .button-wrapper .buttons .action button[data-v-56bc11de] {\n  width: 50%;\n  margin-top: 0px;\n  display: flex;\n  flex-direction: row;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  margin-left: 0px;\n}\n.button-actions .button-wrapper .buttons .action button .fa[data-v-56bc11de] {\n  width: 25%;\n}\n.button-actions .button-wrapper .buttons .action button span[data-v-56bc11de] {\n  text-align: left;\n  width: 75%;\n}\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n  width: 47%;\n  --tw-bg-opacity: 1;\n  background-color: rgb(34 197 94 / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-green[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n  width: 47%;\n  background-color: #ec6368;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  border-radius: 0.25rem;\n  border-width: 1px;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.button-actions .button-wrapper .buttons .action .pill-red[data-v-56bc11de] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12504,7 +13081,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".new-row-tab-wrapper[data-v-9a8360b4] {\n  display: flex;\n  flex-direction: column;\n}\n.new-row-tab-wrapper .action-wrapper[data-v-9a8360b4] {\n  display: flex;\n  flex-direction: row;\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  align-items: center;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(67 56 202 / var(--tw-border-opacity));\n  transition: all 0.2s;\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4]:disabled, .new-row-tab-wrapper .action-wrapper button[disabled][data-v-9a8360b4] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  cursor: default;\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(156 163 175 / var(--tw-border-opacity));\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.new-row-tab-wrapper .action-wrapper h2[data-v-9a8360b4] {\n  color: var(--text-secondary-color);\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n  font-weight: 600;\n  margin-bottom: 0.75rem;\n  text-align: center;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form[data-v-9a8360b4] {\n  background-color: var(--manage-navbar-bg);\n  border-radius: 0.25rem;\n  width: 60%;\n  padding: 1.25rem;\n  margin: 0.5rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label[data-v-9a8360b4] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  font-weight: 600;\n  color: var(--text-secondary-color);\n  margin-bottom: 0.5rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label span[data-v-9a8360b4] {\n  width: 25%;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.new-row-tab-wrapper .action-wrapper .new-row-form label span[data-v-9a8360b4] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label small[data-v-9a8360b4] {\n  font-weight: 100;\n  text-transform: lowercase;\n  margin-left: 0.5rem;\n  width: 25%;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label input[data-v-9a8360b4] {\n  width: 50%;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n  display: block;\n  letter-spacing: 0.025em;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  margin-bottom: 0.5rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form .buttons[data-v-9a8360b4] {\n  display: flex;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form .buttons .create[data-v-9a8360b4] {\n  width: 50%;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form .buttons .new[data-v-9a8360b4] {\n  width: 50%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".new-row-tab-wrapper[data-v-9a8360b4] {\n  display: flex;\n  flex-direction: column;\n}\n.new-row-tab-wrapper .action-wrapper[data-v-9a8360b4] {\n  display: flex;\n  flex-direction: row;\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  align-items: center;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(126 34 206 / var(--tw-border-opacity));\n  transition: all 0.2s;\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4]:disabled,  .new-row-tab-wrapper .action-wrapper button[disabled][data-v-9a8360b4] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  cursor: default;\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(156 163 175 / var(--tw-border-opacity));\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.new-row-tab-wrapper .action-wrapper button[data-v-9a8360b4] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.new-row-tab-wrapper .action-wrapper h2[data-v-9a8360b4] {\n  color: var(--text-secondary-color);\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n  font-weight: 600;\n  margin-bottom: 0.75rem;\n  text-align: center;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form[data-v-9a8360b4] {\n  background-color: var(--manage-navbar-bg);\n  border-radius: 0.25rem;\n  width: 60%;\n  padding: 1.25rem;\n  margin: 0.5rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label[data-v-9a8360b4] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  font-weight: 600;\n  color: var(--text-secondary-color);\n  margin-bottom: 0.5rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label span[data-v-9a8360b4] {\n  width: 25%;\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.new-row-tab-wrapper .action-wrapper .new-row-form label span[data-v-9a8360b4] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label small[data-v-9a8360b4] {\n  font-weight: 100;\n  text-transform: lowercase;\n  margin-left: 0.5rem;\n  width: 25%;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label input[data-v-9a8360b4] {\n  width: 50%;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n  display: block;\n  letter-spacing: 0.025em;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  margin-bottom: 0.5rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form .buttons[data-v-9a8360b4] {\n  display: flex;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form .buttons .create[data-v-9a8360b4] {\n  width: 50%;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form .buttons .new[data-v-9a8360b4] {\n  width: 50%;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".new-row-tab-wrapper[data-v-8fad7d08] {\n  display: flex;\n  flex-direction: column;\n}\n.new-row-tab-wrapper .action-wrapper[data-v-8fad7d08] {\n  display: flex;\n  flex-direction: row;\n}\n.new-row-tab-wrapper .action-wrapper .result[data-v-8fad7d08] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(216 180 254 / var(--tw-bg-opacity));\n  margin: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n}\n.new-row-tab-wrapper .action-wrapper .error[data-v-8fad7d08] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(252 165 165 / var(--tw-bg-opacity));\n  margin: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-8fad7d08] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  margin-top: 0.5rem;\n  margin-bottom: 0.5rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  align-items: center;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(126 34 206 / var(--tw-border-opacity));\n  transition: all 0.2s;\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-8fad7d08]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-8fad7d08]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.new-row-tab-wrapper .action-wrapper button[data-v-8fad7d08]:disabled,  .new-row-tab-wrapper .action-wrapper button[disabled][data-v-8fad7d08] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  cursor: default;\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(156 163 175 / var(--tw-border-opacity));\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.new-row-tab-wrapper .action-wrapper button[data-v-8fad7d08] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form[data-v-8fad7d08] {\n  background-color: var(--manage-navbar-bg);\n  border-radius: 0.25rem;\n  width: 60%;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  margin: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label[data-v-8fad7d08] {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: center;\n  -moz-column-gap: 0.5rem;\n       column-gap: 0.5rem;\n  font-weight: 600;\n  color: var(--text-secondary-color);\n}\n@media (min-width: 700px) and (max-width: 1500px) {\n.new-row-tab-wrapper .action-wrapper .new-row-form label span[data-v-8fad7d08] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label small[data-v-8fad7d08] {\n  font-weight: 100;\n  text-transform: lowercase;\n  margin-left: 0.5rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form label input[data-v-8fad7d08] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n  display: block;\n  letter-spacing: 0.025em;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n}\n.new-row-tab-wrapper .action-wrapper .new-row-form .buttons[data-v-8fad7d08] {\n  height: 100%;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12527,9 +13128,8 @@ __webpack_require__.r(__webpack_exports__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Fira+Code&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "button[data-v-e0bb74ea]{\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  align-items: center;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(67 56 202 / var(--tw-border-opacity));\n  transition: all 0.2s;\n}\nbutton[data-v-e0bb74ea]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\nbutton[data-v-e0bb74ea]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nbutton[data-v-e0bb74ea]:disabled, button[disabled][data-v-e0bb74ea]{\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  cursor: default;\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(156 163 175 / var(--tw-border-opacity));\n}\n@media (min-width: 700px) and (max-width: 1500px) {\nbutton[data-v-e0bb74ea]{\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.sql-runner-wrapper[data-v-e0bb74ea]{\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: 100%;\n}\n.sql-runner-wrapper .result-wrapper[data-v-e0bb74ea] {\n  background-color: var(--manage-navbar-bg);\n  margin: 0.5rem;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  text-align: center;\n}\n.sql-runner-wrapper .result-wrapper h2[data-v-e0bb74ea] {\n  font-family: \"Fira Code\", Ubuntu, monospace !important;\n  font-variant-ligatures: no-common-ligatures;\n  padding: 0.5rem;\n  --tw-text-opacity: 1;\n  color: rgb(107 114 128 / var(--tw-text-opacity));\n  background-color: var(--manage-navbar-bg);\n}\n.sql-runner-wrapper .result-wrapper h2 code[data-v-e0bb74ea]{\n  --tw-text-opacity: 1;\n  color: rgb(17 24 39 / var(--tw-text-opacity));\n}\n.sql-runner-wrapper form[data-v-e0bb74ea]{\n  width: 100%;\n}\n.sql-runner-wrapper form .editor[data-v-e0bb74ea] {\n  height: 250px;\n  border-width: 1px;\n  margin: 0.5rem;\n  border-radius: 0.25rem;\n}\n.sql-runner-wrapper form .buttons[data-v-e0bb74ea]{\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  --tw-bg-opacity: 1;\n  background-color: rgb(209 213 219 / var(--tw-bg-opacity));\n}\n.sql-runner-wrapper form .buttons button[data-v-e0bb74ea]{\n  padding-left: 1rem;\n  padding-right: 1rem;\n  margin-bottom: 0.5rem;\n}\n.sql-runner-wrapper form label[data-v-e0bb74ea]{\n  width: 100%;\n}\n.sql-runner-wrapper form label textarea[data-v-e0bb74ea] {\n  font-family: \"Fira Code\", Ubuntu, monospace;\n  font-variant-ligatures: no-common-ligatures;\n  resize: none;\n  width: 75%;\n  height: 6rem;\n  text-align: left;\n  --tw-bg-opacity: 1;\n  background-color: rgb(209 213 219 / var(--tw-bg-opacity));\n  display: block;\n  letter-spacing: 0.025em;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  border-radius: 0.25rem;\n  margin: 0.5rem;\n  padding: 0.5rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "button[data-v-e0bb74ea] {\n  margin: auto;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  margin-top: 1rem;\n  display: flex;\n  justify-content: center;\n  background-color: var(--button-background);\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  align-items: center;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(126 34 206 / var(--tw-border-opacity));\n  transition: all 0.2s;\n}\nbutton[data-v-e0bb74ea]:hover {\n  transition: all 0.2s;\n  background-color: var(--button-background-hover);\n}\nbutton[data-v-e0bb74ea]:active {\n  transition: all 0.2s;\n  background-color: var(--button-background-active);\n  border-color: transparent;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\nbutton[data-v-e0bb74ea]:disabled,  button[disabled][data-v-e0bb74ea] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  cursor: default;\n  border-bottom-width: 4px;\n  --tw-border-opacity: 1;\n  border-color: rgb(156 163 175 / var(--tw-border-opacity));\n}\n@media (min-width: 700px) and (max-width: 1500px) {\nbutton[data-v-e0bb74ea] {\n    font-size: 0.875rem;\n    line-height: 1.25rem;\n}\n}\n.sql-runner-wrapper[data-v-e0bb74ea] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: 100%;\n}\n.sql-runner-wrapper .result-wrapper[data-v-e0bb74ea] {\n  background-color: var(--manage-navbar-bg);\n  margin: 0.5rem;\n  padding: 0.5rem;\n  border-radius: 0.25rem;\n  text-align: center;\n}\n.sql-runner-wrapper .result-wrapper h2[data-v-e0bb74ea] {\n  font-family: \"Fira Code\", Ubuntu, monospace !important;\n  font-variant-ligatures: no-common-ligatures;\n  padding: 0.5rem;\n  --tw-text-opacity: 1;\n  color: rgb(107 114 128 / var(--tw-text-opacity));\n  background-color: var(--manage-navbar-bg);\n}\n.sql-runner-wrapper .result-wrapper h2 code[data-v-e0bb74ea] {\n  --tw-text-opacity: 1;\n  color: rgb(17 24 39 / var(--tw-text-opacity));\n}\n.sql-runner-wrapper form[data-v-e0bb74ea] {\n  width: 100%;\n}\n.sql-runner-wrapper form .editor[data-v-e0bb74ea] {\n  font-family: monospace;\n  height: 250px;\n  min-height: 125px;\n  font-size: 1rem;\n  line-height: 1.5rem;\n  width: 75%;\n  padding: 0.5rem;\n  margin-left: 0.5rem;\n  margin-top: 0.5rem;\n  border-width: 1px;\n  border-radius: 0.25rem;\n}\n.sql-runner-wrapper form .buttons[data-v-e0bb74ea] {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  --tw-bg-opacity: 1;\n  background-color: rgb(209 213 219 / var(--tw-bg-opacity));\n}\n.sql-runner-wrapper form .buttons button[data-v-e0bb74ea] {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  margin-bottom: 0.5rem;\n}\n.sql-runner-wrapper form label[data-v-e0bb74ea] {\n  width: 100%;\n}\n.sql-runner-wrapper form label textarea[data-v-e0bb74ea] {\n  font-family: \"Fira Code\", Ubuntu, monospace;\n  font-variant-ligatures: no-common-ligatures;\n  resize: none;\n  width: 75%;\n  height: 6rem;\n  text-align: left;\n  --tw-bg-opacity: 1;\n  background-color: rgb(209 213 219 / var(--tw-bg-opacity));\n  display: block;\n  letter-spacing: 0.025em;\n  --tw-text-opacity: 1;\n  color: rgb(55 65 81 / var(--tw-text-opacity));\n  border-radius: 0.25rem;\n  margin: 0.5rem;\n  padding: 0.5rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12553,7 +13153,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#structure-view h1[data-v-be692694] {\n  margin-top: 1rem;\n  margin-bottom: 0.5rem;\n  color: var(--header-text-color);\n  width: 100%;\n  text-align: center\n}\n#structure-view .column-overview[data-v-be692694] {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center\n}\n#structure-view .column-overview h2[data-v-be692694] {\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem\n}\n#structure-view .column-overview .columns-wrapper[data-v-be692694] {\n  display: flex;\n  flex-direction: column;\n  transform: rotateX(180deg)\n}\n#structure-view .column-overview .columns-wrapper table[data-v-be692694] {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity))\n}\n#structure-view .column-overview .columns-wrapper table thead[data-v-be692694] {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color)\n}\n#structure-view .column-overview .columns-wrapper table thead .table-th[data-v-be692694] {\n  border-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center\n}\n#structure-view .column-overview .columns-wrapper table thead .table-th p[data-v-be692694] {\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 300;\n  color: var(--text-secondary-color);\n  margin-top: -0.25rem\n}\n#structure-view .column-overview .columns-wrapper table .table-td[data-v-be692694] {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  color: var(--text-secondary-color)\n}\n#structure-view .column-overview .buttons-wrapper[data-v-be692694] {\n  display: flex;\n  justify-content: center\n}\n#structure-view .column-overview .buttons-wrapper button[data-v-be692694] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(99 102 241 / var(--tw-bg-opacity));\n  width: 10rem;\n  margin-top: 5rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)\n}\n#structure-view .column-overview .buttons-wrapper button[data-v-be692694]:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(129 140 248 / var(--tw-bg-opacity))\n}\n#structure-view .column-overview .buttons-wrapper button[data-v-be692694]:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(165 180 252 / var(--tw-bg-opacity))\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#structure-view h1[data-v-be692694] {\n  margin-top: 1rem;\n  margin-bottom: 0.5rem;\n  color: var(--header-text-color);\n  width: 100%;\n  text-align: center\n}\n#structure-view .column-overview[data-v-be692694] {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center\n}\n#structure-view .column-overview h2[data-v-be692694] {\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem\n}\n#structure-view .column-overview .columns-wrapper[data-v-be692694] {\n  display: flex;\n  flex-direction: column;\n  transform: rotateX(180deg)\n}\n#structure-view .column-overview .columns-wrapper table[data-v-be692694] {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity))\n}\n#structure-view .column-overview .columns-wrapper table thead[data-v-be692694] {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color)\n}\n#structure-view .column-overview .columns-wrapper table thead .table-th[data-v-be692694] {\n  border-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center\n}\n#structure-view .column-overview .columns-wrapper table thead .table-th p[data-v-be692694] {\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 300;\n  color: var(--text-secondary-color);\n  margin-top: -0.25rem\n}\n#structure-view .column-overview .columns-wrapper table .table-td[data-v-be692694] {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  color: var(--text-secondary-color)\n}\n#structure-view .column-overview .buttons-wrapper[data-v-be692694] {\n  display: flex;\n  justify-content: center\n}\n#structure-view .column-overview .buttons-wrapper button[data-v-be692694] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(168 85 247 / var(--tw-bg-opacity));\n  width: 10rem;\n  margin-top: 5rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)\n}\n#structure-view .column-overview .buttons-wrapper button[data-v-be692694]:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(192 132 252 / var(--tw-bg-opacity))\n}\n#structure-view .column-overview .buttons-wrapper button[data-v-be692694]:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(216 180 254 / var(--tw-bg-opacity))\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12577,7 +13177,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".navbar-wrapper[data-v-6b7cf534] {\n  background-color: var(--manage-navbar-bg);\n  padding: 0.5rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-radius: 0.25rem;\n}\n.navbar-wrapper ul[data-v-6b7cf534] {\n  display: flex;\n  align-items: center;\n}\n.navbar-wrapper ul li[data-v-6b7cf534] {\n  margin-right: 0.75rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  cursor: pointer;\n}\n.navbar-wrapper ul li a[data-v-6b7cf534] {\n  text-align: center;\n}\n.navbar-wrapper ul li .active[data-v-6b7cf534] {\n  background-color: var(--button-background);\n  display: inline-block;\n  border-radius: 0.25rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.navbar-wrapper ul li .inactive[data-v-6b7cf534] {\n  color: var(--manage-navbar-inactive-text-color);\n  display: inline-block;\n  border-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: rgb(165 180 252 / var(--tw-border-opacity));\n  border-radius: 0.25rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n}\n.navbar-wrapper ul li .inactive[data-v-6b7cf534]:hover {\n  background-color: var(--manage-navbar-inactive-bg-hover-color);\n  --tw-border-opacity: 1;\n  border-color: rgb(199 210 254 / var(--tw-border-opacity));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".navbar-wrapper[data-v-6b7cf534] {\n  background-color: var(--manage-navbar-bg);\n  padding: 0.5rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  border-radius: 0.25rem;\n}\n.navbar-wrapper ul[data-v-6b7cf534] {\n  display: flex;\n  align-items: center;\n}\n.navbar-wrapper ul li[data-v-6b7cf534] {\n  margin-right: 0.75rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  cursor: pointer;\n}\n.navbar-wrapper ul li a[data-v-6b7cf534] {\n  text-align: center;\n}\n.navbar-wrapper ul li .active[data-v-6b7cf534] {\n  background-color: var(--button-background);\n  display: inline-block;\n  border-radius: 0.25rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n.navbar-wrapper ul li .inactive[data-v-6b7cf534] {\n  color: var(--manage-navbar-inactive-text-color);\n  display: inline-block;\n  border-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: rgb(216 180 254 / var(--tw-border-opacity));\n  border-radius: 0.25rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n}\n.navbar-wrapper ul li .inactive[data-v-6b7cf534]:hover {\n  background-color: var(--manage-navbar-inactive-bg-hover-color);\n  --tw-border-opacity: 1;\n  border-color: rgb(233 213 255 / var(--tw-border-opacity));\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12673,7 +13273,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".menu-ul[data-v-b236b072] {\n  background-color: var(--table-item-overview);\n  border-radius: 0.25rem;\n}\n.menu-ul li[data-v-b236b072] {\n  font-family: sans-serif !important;\n  font-size: 0.95rem !important;\n  font-weight: 400 !important;\n  max-width: 100%;\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n.menu-ul li[data-v-b236b072]:nth-child(even) {\n  background: white;\n}\n.menu-ul li[data-v-b236b072]:nth-child(odd) {\n  background: transparent;\n}\n.menu-ul .list-header[data-v-b236b072] {\n  --tw-bg-opacity: 1;\n  background-color: rgb(129 140 248 / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 400;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.5rem;\n  border-top-left-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem;\n  cursor: pointer;\n  text-align: left;\n}\n.menu-ul .list-header svg[data-v-b236b072] {\n  color: #c3cbd7;\n}\n.menu-ul .list-sub[data-v-b236b072] {\n  color: var(--table-item-text);\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  cursor: pointer;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: left;\n}\n.menu-ul .list-sub[data-v-b236b072]:hover {\n  --tw-text-opacity: 1;\n  color: rgb(99 102 241 / var(--tw-text-opacity));\n}\n.menu-ul .menu-li-no-content[data-v-b236b072] {\n  border-bottom-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: rgb(55 65 81 / var(--tw-border-opacity));\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  --tw-text-opacity: 1;\n  color: rgb(75 85 99 / var(--tw-text-opacity));\n  text-align: left;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".menu-ul[data-v-b236b072] {\n  background-color: var(--table-item-overview);\n  border-radius: 0.25rem;\n}\n.menu-ul li[data-v-b236b072] {\n  font-family: sans-serif !important;\n  font-size: 0.95rem !important;\n  font-weight: 400 !important;\n  max-width: 100%;\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n.menu-ul li[data-v-b236b072]:nth-child(even) {\n  --tw-bg-opacity: 1;\n  background-color: rgb(243 244 246 / var(--tw-bg-opacity));\n}\n.menu-ul li[data-v-b236b072]:nth-child(odd) {\n  --tw-bg-opacity: 1;\n  background-color: rgb(255 255 255 / var(--tw-bg-opacity));\n}\n.menu-ul .list-header[data-v-b236b072] {\n  background: var(--page-background-color);\n  --tw-text-opacity: 1;\n  color: rgb(156 163 175 / var(--tw-text-opacity));\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  font-weight: 400;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  text-align: left;\n}\n.menu-ul .list-header svg[data-v-b236b072] {\n  color: #c3cbd7;\n}\n.menu-ul .list-sub[data-v-b236b072] {\n  color: var(--table-item-text);\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  cursor: pointer;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  text-align: left;\n}\n.menu-ul .list-sub[data-v-b236b072]:hover {\n  --tw-text-opacity: 1;\n  color: rgb(168 85 247 / var(--tw-text-opacity));\n}\n.menu-ul .menu-li-no-content[data-v-b236b072] {\n  border-bottom-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: rgb(55 65 81 / var(--tw-border-opacity));\n  padding-left: 0.5rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  --tw-text-opacity: 1;\n  color: rgb(75 85 99 / var(--tw-text-opacity));\n  text-align: left;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12697,7 +13297,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".sidebar-wrapper {\n  display: inline-block;\n  min-width: 15%;\n  width: 17%;\n  --tw-bg-opacity: 1;\n  background-color: rgb(209 213 219 / var(--tw-bg-opacity));\n  border-radius: 0.25rem;\n  padding-bottom: 0.5rem\n}\n.sidebar-wrapper .table-search-input {\n  background-color: var(--input-background-color);\n  border-style: var(--input-border);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  margin-bottom: 0.25rem\n}\n.sidebar-wrapper .table-search-input:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".sidebar-wrapper {\n  display: inline-block;\n  min-width: 15%;\n  width: 17%;\n  background-color: var(--page-background-color);\n}\n.sidebar-wrapper .table-search-input {\n  border-style: var(--input-border);\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  width: 100%;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  color: var(--text-secondary-color);\n  line-height: 1.25;\n  margin-bottom: 0.25rem;\n  border-radius: 0.25rem;\n}\n.sidebar-wrapper .table-search-input:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30903,6 +31503,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Export_vue_vue_type_style_index_0_id_8fad7d08_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!../../../../../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Export_vue_vue_type_style_index_0_id_8fad7d08_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Export_vue_vue_type_style_index_0_id_8fad7d08_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/RunSQL.vue?vue&type=style&index=0&id=e0bb74ea&scoped=true&lang=scss&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/RunSQL.vue?vue&type=style&index=0&id=e0bb74ea&scoped=true&lang=scss& ***!
@@ -36539,15 +37169,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Export_vue_vue_type_template_id_8fad7d08_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Export.vue?vue&type=template&id=8fad7d08&scoped=true& */ "./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=template&id=8fad7d08&scoped=true&");
 /* harmony import */ var _Export_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Export.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Export_vue_vue_type_style_index_0_id_8fad7d08_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss& */ "./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Export_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Export_vue_vue_type_template_id_8fad7d08_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
   _Export_vue_vue_type_template_id_8fad7d08_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -37694,6 +38326,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateRow_vue_vue_type_style_index_0_id_9a8360b4_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!../../../../../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateRow.vue?vue&type=style&index=0&id=9a8360b4&scoped=true&lang=scss& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/CreateRow.vue?vue&type=style&index=0&id=9a8360b4&scoped=true&lang=scss&");
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss&":
+/*!**************************************************************************************************************************************************!*\
+  !*** ./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss& ***!
+  \**************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Export_vue_vue_type_style_index_0_id_8fad7d08_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!../../../../../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/assets/js/components/MainContent/ManageMode/ManageActions/Export.vue?vue&type=style&index=0&id=8fad7d08&scoped=true&lang=scss&");
 
 
 /***/ }),
@@ -39460,20 +40105,54 @@ var render = function () {
             _c(
               "svg",
               {
-                staticClass: "fill-purple-400",
                 attrs: {
                   xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 24 24",
+                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                  preserveAspectRatio: "xMidYMid",
                   width: "24",
                   height: "24",
+                  viewBox: "0 0 310 380",
                 },
               },
               [
-                _c("path", { attrs: { fill: "none", d: "M0 0h24v24H0z" } }),
+                _c("defs", [
+                  _c(
+                    "filter",
+                    {
+                      attrs: {
+                        id: "gradient-overlay-1",
+                        filterUnits: "userSpaceOnUse",
+                      },
+                    },
+                    [
+                      _c("feImage", {
+                        attrs: {
+                          x: "0",
+                          y: "0",
+                          width: "310",
+                          height: "380",
+                          preserveAspectRatio: "none",
+                          "xlink:href":
+                            "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjM4MCI+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjE1NSIgeTE9IjM1IiB4Mj0iMTU1IiB5Mj0iMzQ1Ij4KICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM1ZTBkOGMiLz4KICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4YjNjYjciLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIvPjwvc3ZnPg==",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("feComposite", {
+                        attrs: { operator: "in", in2: "SourceGraphic" },
+                      }),
+                      _vm._v(" "),
+                      _c("feBlend", {
+                        attrs: { in2: "SourceGraphic", result: "gradientFill" },
+                      }),
+                    ],
+                    1
+                  ),
+                ]),
                 _vm._v(" "),
                 _c("path", {
+                  staticClass: "cls-1",
                   attrs: {
-                    d: "M21 9.5v3c0 2.485-4.03 4.5-9 4.5s-9-2.015-9-4.5v-3c0 2.485 4.03 4.5 9 4.5s9-2.015 9-4.5zm-18 5c0 2.485 4.03 4.5 9 4.5s9-2.015 9-4.5v3c0 2.485-4.03 4.5-9 4.5s-9-2.015-9-4.5v-3zm9-2.5c-4.97 0-9-2.015-9-4.5S7.03 3 12 3s9 2.015 9 4.5-4.03 4.5-9 4.5z",
+                    d: "M310.000,130.001 L310.000,190.002 C310.000,239.702 240.594,280.002 155.000,280.002 C69.406,280.002 -0.000,239.702 -0.000,190.002 L-0.000,130.001 C-0.000,179.702 69.406,220.002 155.000,220.002 C240.594,220.002 310.000,179.702 310.000,130.001 L310.000,130.001 ZM-0.000,230.002 C-0.000,279.703 69.406,320.003 155.000,320.003 C240.594,320.003 310.000,279.703 310.000,230.002 L310.000,290.003 C310.000,339.703 240.594,380.004 155.000,380.004 C69.406,380.004 -0.000,339.703 -0.000,290.003 L-0.000,230.002 L-0.000,230.002 ZM155.000,180.002 C69.406,180.002 -0.000,139.701 -0.000,90.001 C-0.000,40.300 69.406,-0.000 155.000,-0.000 C240.594,-0.000 310.000,40.300 310.000,90.001 C310.000,139.701 240.594,180.002 155.000,180.002 L155.000,180.002 Z",
                   },
                 }),
               ]
@@ -39524,10 +40203,10 @@ var staticRenderFns = [
           attrs: {
             href: "https://github.com/Protoqol",
             target: "_blank",
-            title: "Creator of Prequel",
+            title: "Protoqol",
           },
         },
-        [_vm._v("PROTOQOL")]
+        [_vm._v("Protoqol")]
       ),
     ])
   },
@@ -39571,7 +40250,7 @@ var render = function () {
       "button",
       {
         staticClass:
-          "mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow",
+          "mr-4 flex justify-center items-center h-10 w-10 hover:bg-purple-100 active:bg-purple-200 rounded shadow",
         class: _vm.darkMode
           ? "dark-mode-button-enabled"
           : "dark-mode-button-disabled",
@@ -39602,7 +40281,7 @@ var render = function () {
       "button",
       {
         staticClass:
-          "mr-4 flex justify-center items-center h-10 w-10 hover:bg-indigo-100 active:bg-indigo-200 rounded shadow",
+          "mr-4 flex justify-center items-center h-10 w-10 hover:bg-purple-100 active:bg-purple-200 rounded shadow",
         attrs: { title: _vm.trans("header.buttons.refresh") },
         on: { click: _vm.refreshButtonHandler },
       },
@@ -39640,11 +40319,10 @@ var render = function () {
             ? _c(
                 "span",
                 {
-                  staticClass: "font-normal",
+                  staticClass: "font-normal text-sm",
                   attrs: { id: "header-table-message" },
                 },
                 [
-                  _c("i", { staticClass: "ri-table-line mr-1" }),
                   _vm._v("\n        " + _vm._s(_vm.activeTable) + " "),
                   _c("small", [
                     _vm._v(
@@ -39932,7 +40610,7 @@ var render = function () {
                         staticClass: "table-th",
                         class:
                           struct.Key === "PRI"
-                            ? "text-indigo-800"
+                            ? "text-purple-800"
                             : "text-tableHeader",
                         attrs: {
                           id: struct.Field,
@@ -40005,7 +40683,7 @@ var render = function () {
                             {
                               staticClass: "ellipsis table-td",
                               class: !item
-                                ? "text-gray-500 italic"
+                                ? "text-gray-200 italic"
                                 : "text-gray-700",
                               attrs: {
                                 id: item ? item : _vm.ENUM.PREQUEL_UNDEFINED,
@@ -40931,14 +41609,166 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("ActionInfo", {
-    attrs: {
-      title: "Export data from this table",
-      description: "NOT YET IMPLEMENTED",
-    },
-  })
+  return _c("div", { staticClass: "new-row-tab-wrapper" }, [
+    _c(
+      "div",
+      { staticClass: "action-wrapper" },
+      [
+        _c("ActionInfo", {
+          staticClass: "w-1/2",
+          attrs: {
+            title: "Export",
+            description: "Export this table's data and structure",
+          },
+        }),
+        _vm._v(" "),
+        _c("ActionInfo", {
+          staticClass: "w-1/2",
+          attrs: { title: "Import", description: "Import data to this table" },
+        }),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "action-wrapper" }, [
+      _c(
+        "form",
+        { staticClass: "new-row-form", on: { submit: _vm.exportTable } },
+        [
+          _c("label", { attrs: { for: "structure_only" } }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.structure_only,
+                  expression: "structure_only",
+                },
+              ],
+              attrs: {
+                type: "checkbox",
+                name: "structure_only",
+                id: "structure_only",
+              },
+              domProps: {
+                checked: Array.isArray(_vm.structure_only)
+                  ? _vm._i(_vm.structure_only, null) > -1
+                  : _vm.structure_only,
+              },
+              on: {
+                change: function ($event) {
+                  var $$a = _vm.structure_only,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.structure_only = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.structure_only = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.structure_only = $$c
+                  }
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("span", [_vm._v("Only export structure?")]),
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button",
+              attrs: { title: "Start export" },
+              on: { click: _vm.exportTable },
+            },
+            [
+              _c("i", { staticClass: "ri-arrow-left-up-fill mr-1" }),
+              _vm._v("\n        Export\n      "),
+            ]
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "form",
+        { staticClass: "new-row-form", on: { submit: _vm.exportTable } },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button",
+              attrs: { title: "Start export" },
+              on: { click: _vm.exportTable },
+            },
+            [
+              _c("i", { staticClass: "ri-arrow-right-down-fill mr-1" }),
+              _vm._v("\n        Import\n      "),
+            ]
+          ),
+        ]
+      ),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "action-wrapper" }, [
+      _c("div", { staticClass: "action-info-wrapper w-1/2" }, [
+        _vm.resultExport !== null
+          ? _c("div", { staticClass: "result" }, [
+              _vm._v("\n        SQL dump created, located in "),
+              _c("br"),
+              _vm._v(" "),
+              _c("pre", [_vm._v(_vm._s(_vm.resultExport))]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.errorExport !== null
+          ? _c("div", { staticClass: "error" }, [
+              _vm._v("\n        Something went wrong\n        "),
+              _c("pre", [_vm._v(_vm._s(_vm.errorExport))]),
+            ])
+          : _vm._e(),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "action-info-wrapper w-1/2" }, [
+        _vm.resultImport !== null
+          ? _c("div", { staticClass: "result" }, [
+              _vm._v("\n        SQL dump created, located in "),
+              _c("br"),
+              _vm._v(" "),
+              _c("pre", [_vm._v(_vm._s(_vm.resultImport))]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.errorImport !== null
+          ? _c("div", { staticClass: "error" }, [
+              _vm._v("\n        Something went wrong\n        "),
+              _c("pre", [_vm._v(_vm._s(_vm.errorImport))]),
+            ])
+          : _vm._e(),
+      ]),
+    ]),
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "file" } }, [
+      _c("input", {
+        attrs: { type: "file", accept: ".sql", name: "file", id: "file" },
+      }),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -40999,17 +41829,37 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "sql-runner-wrapper" },
+    { staticClass: "sql-runner-wrapper", attrs: { id: "highlight" } },
     [
       _c("ActionInfo", {
         attrs: {
           title: "SQL Query",
-          description:
-            "Write and run a raw SQL query || Note: Disabled for now.",
+          description: "Write and run a raw SQL query",
         },
       }),
       _vm._v(" "),
       _c("form", [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.query,
+              expression: "query",
+            },
+          ],
+          staticClass: "editor",
+          domProps: { value: _vm.query },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.query = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
         _c("div", { staticClass: "buttons" }, [
           _c(
             "button",
@@ -41047,7 +41897,7 @@ var render = function () {
                 },
               },
             },
-            [_vm._v("Empty Field")]
+            [_vm._v("Clear Query")]
           ),
         ]),
       ]),
@@ -41059,11 +41909,11 @@ var render = function () {
               { staticClass: "result-wrapper" },
               [
                 _c("h2", [
-                  _vm._v('\n                Results for "'),
+                  _vm._v('\n      Results for "'),
                   _c("code", { staticClass: "mysql" }, [
                     _vm._v(_vm._s(res.query)),
                   ]),
-                  _vm._v('"\n            '),
+                  _vm._v('"\n    '),
                 ]),
                 _vm._v(" "),
                 res && res.length !== 0
@@ -41353,9 +42203,9 @@ var render = function () {
             { class: this.activeClassName, attrs: { id: "tab-newRow" } },
             [
               _vm._v(
-                "\n                    " +
+                "\n          " +
                   _vm._s(_vm.trans("table_management.insert_new_row")) +
-                  "\n                "
+                  "\n        "
               ),
             ]
           ),
@@ -41379,9 +42229,63 @@ var render = function () {
             { class: this.inactiveClassName, attrs: { id: "tab-structure" } },
             [
               _vm._v(
-                "\n                    " +
+                "\n          " +
                   _vm._s(_vm.trans("table_management.view_structure")) +
-                  "\n                "
+                  "\n        "
+              ),
+            ]
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "li",
+        {
+          attrs: { title: _vm.trans("table_management.run_sql") },
+          on: {
+            click: function ($event) {
+              $event.preventDefault()
+              return _vm.setActiveTab($event)
+            },
+          },
+        },
+        [
+          _c(
+            "a",
+            { class: this.inactiveClassName, attrs: { id: "tab-query" } },
+            [
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.trans("table_management.run_sql")) +
+                  "\n        "
+              ),
+            ]
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "li",
+        {
+          attrs: { title: _vm.trans("table_management.export") },
+          on: {
+            click: function ($event) {
+              $event.preventDefault()
+              return _vm.setActiveTab($event)
+            },
+          },
+        },
+        [
+          _c(
+            "a",
+            { class: this.inactiveClassName, attrs: { id: "tab-export" } },
+            [
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.trans("table_management.export")) +
+                  " / " +
+                  _vm._s(_vm.trans("table_management.import")) +
+                  "\n        "
               ),
             ]
           ),
@@ -41811,9 +42715,8 @@ var render = function () {
                 },
               },
               [
-                _c("i", { staticClass: "ri-database-2-line" }),
                 _vm._v(
-                  "\n        " +
+                  "\n\n        > " +
                     _vm._s(
                       _vm.readability
                         ? database.pretty_name
@@ -54344,7 +55247,7 @@ Vue.compile = compileToFunctions;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["public/app"], () => (__webpack_require__("./resources/assets/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["public/app"], () => (__webpack_require__("./resources/assets/js/App.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["public/app"], () => (__webpack_require__("./resources/assets/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	

@@ -1,9 +1,8 @@
 <template>
   <div>
     <h1 v-if="activeTable">
-      <span v-if="!tableLoading" id="header-table-message" class="font-normal">
-          <i class="ri-table-line mr-1"></i>
-          {{ activeTable }} <small>({{ numberOfRecords }} {{ trans('header.records') }})</small>
+      <span v-if="!tableLoading" id="header-table-message" class="font-normal text-sm">
+          {{ activeTable }} <small>({{ numberOfRecords }} {{ trans("header.records") }})</small>
       </span>
       <img v-else width="20" height="20" :src="$root.prequel.asset.loader" alt="Loading table data...">
     </h1>
@@ -31,11 +30,11 @@
              @keyup.esc="resetInputs">
 
       <button class="search-get-button" :title="trans('header.buttons.get.title')" @click="searchHandler">
-        {{ trans('header.buttons.get.text') }}
+        {{ trans("header.buttons.get.text") }}
       </button>
       <button class="search-reset-button" :title="trans('header.buttons.reset.title')"
               @click="resetHandler">
-        {{ trans('header.buttons.reset.text') }}
+        {{ trans("header.buttons.reset.text") }}
       </button>
     </label>
   </div>
@@ -150,7 +149,7 @@ h1 {
   @apply font-semibold;
 
   span {
-    @apply text-gray-600;
+    @apply text-gray-400;
     @apply font-thin;
   }
 
@@ -172,13 +171,13 @@ label {
   @apply flex-row;
 
   .search-column-input {
+    @apply h-8;
     @apply bg-input;
     @apply shadow;
     @apply appearance-none;
     @apply border;
     @apply rounded;
     @apply w-1/3;
-    @apply py-2;
     @apply px-3;
     @apply text-secondary;
     @apply leading-tight;
@@ -190,22 +189,25 @@ label {
   }
 
   .search-type-input {
-    @apply m-2;
+    @apply h-8;
+    @apply mx-2;
     @apply bg-transparent;
-    @apply font-bold ;
-    @apply text-lg;
+    @apply text-sm;
     @apply bg-input;
     @apply text-secondary;
+    @apply rounded;
+    @apply shadow;
+
   }
 
   .search-value-input {
+    @apply h-8;
     @apply bg-input;
     @apply shadow;
     @apply appearance-none;
     @apply border;
     @apply rounded;
-    @apply w-3/5;
-    @apply py-2;
+    @apply w-1/3;
     @apply px-3 ;
     @apply text-secondary;
     @apply leading-tight;
@@ -220,7 +222,7 @@ label {
     background-color: var(--button-background);
     @apply mx-1;
     @apply text-white;
-    @apply font-semibold;
+    @apply font-normal;
     @apply py-1;
     @apply px-3;
     @apply rounded;
@@ -238,7 +240,7 @@ label {
   .search-reset-button {
     background-color: var(--button-background-light);
     @apply text-white;
-    @apply font-semibold;
+    @apply font-normal;
     @apply py-1;
     @apply px-2;
     @apply rounded;

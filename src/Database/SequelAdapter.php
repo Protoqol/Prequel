@@ -61,7 +61,7 @@ class SequelAdapter
      * @return string
      * @throws Exception
      */
-    public function showDatabases()
+    public function showDatabases(): string
     {
         switch ($this->databaseType) {
             case "mysql":
@@ -83,7 +83,7 @@ class SequelAdapter
      * @return string
      * @throws Exception
      */
-    public function showTablesFrom(string $databaseName)
+    public function showTablesFrom(string $databaseName): string
     {
         switch ($this->databaseType) {
             case "mysql":

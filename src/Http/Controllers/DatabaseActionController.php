@@ -33,11 +33,16 @@ class DatabaseActionController extends Controller
      */
     public function getDefaultsForTable(Request $request): array
     {
+        try {
+            $instance = PDB::create($request->database, $request->table)
+                           ->builder()
+                           ->max('id');
+        } catch (Exception $e) {
+            $instance = null;
+        }
+
         return [
-            "id"           =>
-                (int)PDB::create($request->database, $request->table)
-                        ->builder()
-                        ->count() + 1,
+            "id"           => isset($instance) ? $instance + 1 : 1,
             "current_date" => Carbon::now()->format("Y-m-d\TH:i"),
         ];
     }
@@ -55,13 +60,12 @@ class DatabaseActionController extends Controller
     {
         return [
             "controller" =>
-                (new ControllerAction($database, $table))->getQualifiedName() ??
-                false,
+                (new ControllerAction($database, $table))->getQualifiedName() ?? false,
             "resource"   => (new ResourceAction(
                 $database,
                 $table
             ))->getQualifiedName(),
-            "model"      => (new ModelAction($database, $table))->getQualifiedName(),
+            "model"      => (new ModelAction($database, $table))->getQualifiedName() ?? false,
             "seeder"     => (new SeederAction(
                 $database,
                 $table
@@ -82,14 +86,8 @@ class DatabaseActionController extends Controller
      */
     public function insertNewRow(Request $request): array
     {
-        try {
-            // PDB::create($request->database, $request->table)->builder()->insert($request->post('data'));
-        } catch (Exception $e) {
-            dd($e);
-        }
-
         return [
-            "success" => (bool)(new DatabaseAction(
+            "success" => (new DatabaseAction(
                 $request->database,
                 $request->table
             ))->insertNewRow($request->post("data")),
@@ -196,9 +194,9 @@ class DatabaseActionController extends Controller
      * @param string $database
      * @param string $table
      *
-     * @return int
+     * @return string
      */
-    public function generateModel(string $database, string $table): int
+    public function generateModel(string $database, string $table): string
     {
         return (new ModelAction($database, $table))->generate();
     }

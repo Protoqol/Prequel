@@ -31,7 +31,7 @@
                     <p>Fake data</p>
               </button>-->
           <button class="create" type="submit">
-              <i class="ri-save-3-line mr-1"></i>
+            <i class="ri-save-3-line mr-1"></i>
             Save row
           </button>
         </div>
@@ -79,7 +79,9 @@ export default {
         this.table = this.$root.table.table;
 
         await this.getDefaults();
-        await this.$refs.actions.getInfo();
+        if (this.$refs.actions) {
+          await this.$refs.actions.getInfo();
+        }
       }
     },
 
@@ -242,7 +244,7 @@ export default {
       @apply rounded;
       @apply shadow;
       @apply border-b-4;
-      @apply border-indigo-700;
+      @apply border-purple-700;
 
       transition: all .2s;
 
@@ -337,6 +339,4 @@ export default {
     }
   }
 }
-
-
 </style>

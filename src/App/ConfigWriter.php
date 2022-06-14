@@ -27,8 +27,8 @@ class ConfigWriter
      * Write to config file
      *
      * @param string $filePath
-     * @param array $newValues
-     * @param bool $useValidation
+     * @param array  $newValues
+     * @param bool   $useValidation
      *
      * @return string
      */
@@ -36,8 +36,7 @@ class ConfigWriter
         string $filePath,
         array $newValues,
         bool $useValidation = true
-    ): string
-    {
+    ): string {
         $contents = file_get_contents($filePath);
 
         try {
@@ -54,8 +53,7 @@ class ConfigWriter
         string $contents,
         array $newValues,
         bool $useValidation = true
-    ): string
-    {
+    ): string {
         $contents = $this->parseContent($contents, $newValues);
 
         if (!$useValidation) {
@@ -110,15 +108,14 @@ class ConfigWriter
         string $contents,
         string $path,
         $value
-    ): string
-    {
-        $result = $contents;
-        $items = explode(".", $path);
-        $key = array_pop($items);
+    ): string {
+        $result       = $contents;
+        $items        = explode(".", $path);
+        $key          = array_pop($items);
         $replaceValue = $this->writeValueToPhp($value);
 
-        $count = 0;
-        $patterns = [];
+        $count      = 0;
+        $patterns   = [];
         $patterns[] = $this->buildStringExpression($key, $items);
         $patterns[] = $this->buildStringExpression($key, $items, '"');
         $patterns[] = $this->buildConstantExpression($key, $items);
@@ -184,8 +181,7 @@ class ConfigWriter
         string $targetKey,
         array $arrayItems = [],
         string $quoteChar = "'"
-    ): string
-    {
+    ): string {
         $expression = [];
 
         // Opening expression for array items ($1)
@@ -210,8 +206,7 @@ class ConfigWriter
     protected function buildConstantExpression(
         string $targetKey,
         array $arrayItems = []
-    ): string
-    {
+    ): string {
         $expression = [];
 
         // Opening expression for array items ($1)
@@ -233,8 +228,7 @@ class ConfigWriter
     protected function buildArrayExpression(
         string $targetKey,
         array $arrayItems = []
-    ): string
-    {
+    ): string {
         $expression = [];
 
         // Opening expression for array items ($1)
