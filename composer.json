@@ -1,56 +1,62 @@
 {
-    "name": "protoqol/prequel",
-    "description": "Clear and concise database management.",
-    "version": "1.23.0",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Quinten Schorsij",
-            "email": "quinten@protoqol.xyz"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "php": "^7.2.5|^8.0",
-        "laravel/framework": "^6.0|^7.0|^8.0|^9.0",
-        "ext-pdo": "*",
-        "ext-json": "*"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Protoqol\\Prequel\\PrequelServiceProvider"
-            ]
-        }
-    },
-    "require-dev": {
-        "orchestra/testbench": "^3.7",
-        "phpmd/phpmd": "^2.6"
-    },
-    "autoload": {
-        "psr-4": {
-            "Protoqol\\Prequel\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Protoqol\\Prequel\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "phpins": [
-            "./vendor/bin/phpinsights"
-        ],
-        "phpmd": [
-            "phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
-        ],
-        "test": [
-            "phpunit"
-        ]
-    },
-    "scripts-descriptions": {
-        "phpins": "Runs nunomaduro's PHPInsights. This gives you a report about the current code quality.",
-        "test": "Runs the default PHPUnit test suite configured in phpunit.xml"
+  "name": "protoqol/prequel",
+  "description": "Clear and concise database management.",
+  "version": "1.23.0",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Quinten Schorsij",
+      "email": "quinten@protoqol.xyz"
     }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.2.5|^8.0",
+    "laravel/framework": "^6.0|^7.0|^8.0|^9.0",
+    "ext-pdo": "*",
+    "ext-json": "*"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Protoqol\\Prequel\\PrequelServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^3.7",
+    "phpmd/phpmd": "^2.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Protoqol\\Prequel\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Protoqol\\Prequel\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "phpins": [
+      "./vendor/bin/phpinsights"
+    ],
+    "phpmd": [
+      "phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
+    ],
+    "test": [
+      "phpunit"
+    ]
+  },
+  "scripts-descriptions": {
+    "phpins": "Runs nunomaduro's PHPInsights. This gives you a report about the current code quality.",
+    "test": "Runs the default PHPUnit test suite configured in phpunit.xml"
+  },
+  "funding": [
+    {
+      "type": "paypal",
+      "url": "https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=TJS5BKNE3JGW8"
+    }
+  ]
 }
