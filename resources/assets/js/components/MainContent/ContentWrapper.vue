@@ -53,6 +53,6 @@ export default {
   background-color: transparent;
   @apply rounded;
   @apply ml-1;
-  @apply mt-7;
+  @apply mt-3;
 }
 </style>

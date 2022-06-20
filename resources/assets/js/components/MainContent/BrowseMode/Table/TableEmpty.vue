@@ -1,7 +1,7 @@
 <template>
     <div id="empty-table-wrapper">
         <h1>
-            {{ trans('table_empty.no_results') }}
+            No data found in this table.
         </h1>
         <div class="column-overview">
             <div class="columns-wrapper">
@@ -64,7 +64,7 @@ export default {
   transform: rotateX(180deg);
 
   h1 {
-    @apply mt-4;
+    @apply mt-2;
     @apply mb-2;
     color: var(--header-text-color);
     @apply w-full;

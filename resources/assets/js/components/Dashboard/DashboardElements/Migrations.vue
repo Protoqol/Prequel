@@ -1,7 +1,7 @@
 <template>
   <div id="migration-wrapper">
     <h1>
-      {{ trans('general.migrations') }} ({{ migrations.pending }}/{{ migrations.total }})
+      Migrations ({{ migrations.pending }}/{{ migrations.total }})
     </h1>
     <button :title="migrations.pending === 0 ? trans('dashboard.migrations.no_run_migrations') :
             trans('dashboard.migrations.run_migrations', {'number': migrations.pending})"

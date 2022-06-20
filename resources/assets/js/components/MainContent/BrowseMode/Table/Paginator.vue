@@ -40,7 +40,7 @@ export default {
         @apply w-full;
         @apply flex;
         @apply justify-center;
-        @apply mb-2;
+        @apply my-1;
 
         .pagination {
             @apply flex;
@@ -53,13 +53,14 @@ export default {
         .page-item {
             @apply px-2;
             @apply cursor-pointer;
+
             &:hover {
                 @apply text-gray-500;
             }
         }
 
         .page-item-active {
-            @apply text-blue-400;
+            @apply text-purple-400;
         }
 
         .buttons {
@@ -71,10 +72,6 @@ export default {
             @apply text-gray-800;
             @apply font-bold;
             @apply shadow;
-
-            &:hover {
-                @apply bg-blue-200;
-            }
 
             &:active {
                 @apply shadow-none;

@@ -9457,7 +9457,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                 dynamicLoad = _args.length > 1 && _args[1] !== undefined ? _args[1] : true;
                 updateUrlHistory = _args.length > 2 && _args[2] !== undefined ? _args[2] : true;
 
-                if (!(!databaseTable.target && dynamicLoad)) {
+                if (!(!databaseTable && dynamicLoad)) {
                   _context.next = 5;
                   break;
                 }
@@ -9853,6 +9853,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TableMenu",
@@ -9861,6 +9862,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ["tableData", "tableFlat", "readability"],
   methods: {
+    resetSearch: function resetSearch() {
+      console.log("Click");
+    },
+
     /**
      * Get number of tables
      * @param db
@@ -12721,7 +12726,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".status[data-v-65ed4caa] {\n  flex: 1 1 0%;\n  width: 10rem;\n  background-color: white;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  border-left-width: 1px;\n  border-right-width: 1px;\n  border-color: var(--border-color);\n}\n.status h1[data-v-65ed4caa] {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n  text-align: left;\n  margin-left: 0.5rem;\n  color: var(--header-text-color);\n}\n.status h2[data-v-65ed4caa] {\n  color: var(--text-secondary-color);\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n  margin-top: 1rem;\n  text-align: center;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".status[data-v-65ed4caa] {\n  flex: 1 1 0%;\n  width: 10rem;\n  background-color: white;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  border-left-width: 1px;\n  border-right-width: 1px;\n  white-space: nowrap;\n  border-color: var(--border-color)\n}\n.status h1[data-v-65ed4caa] {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n  text-align: left;\n  margin-left: 0.5rem;\n  --tw-text-opacity: 1;\n  color: rgb(75 85 99 / var(--tw-text-opacity))\n}\n.status h2[data-v-65ed4caa] {\n  --tw-text-opacity: 1;\n  color: rgb(156 163 175 / var(--tw-text-opacity));\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n  margin-top: 1rem;\n  text-align: center\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12745,7 +12750,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#badge[data-v-2fabf4e2] {\n  color: var(--text-secondary-color-invert);\n}\n#badge .badge-neutral[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(147 197 253 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 500;\n  margin-right: 0.75rem;\n}\n#badge .badge-average[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(253 186 116 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}\n#badge .badge-warning[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(253 186 116 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}\n#badge .badge-critical[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(252 165 165 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}\n#badge .badge-good[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(134 239 172 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#badge[data-v-2fabf4e2] {\n  color: var(--text-secondary-color-invert);\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-end;\n}\n#badge .badge-neutral[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(147 197 253 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 500;\n  margin-right: 0.75rem;\n}\n#badge .badge-average[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(253 186 116 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}\n#badge .badge-warning[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(253 186 116 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}\n#badge .badge-critical[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(252 165 165 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}\n#badge .badge-good[data-v-2fabf4e2] {\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: rgb(134 239 172 / var(--tw-bg-opacity));\n  text-transform: uppercase;\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 700;\n  margin-right: 0.75rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12817,7 +12822,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/**\n    Header - Container\n*/\n.header-container {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  padding-top: 1.25rem\n  /**\n      Header - Bottom - Divider\n  */\n}\n.header-container .header-flexbox {\n  display: flex;\n  width: 83.333333%;\n  padding-bottom: 1rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color)\n  /**\n      Header - Left - Logo, Connection information\n  */\n  /**\n      Header - Middle - Search in table inputs\n  */\n  /**\n      Header - Right - Configuration buttons\n   */\n}\n.header-container .header-flexbox .header-left {\n  width: 25%\n}\n.header-container .header-flexbox .header-middle {\n  width: 50%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  margin-top: -5px\n}\n.header-container .header-flexbox .header-right {\n  width: 25%;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  align-items: center\n}\n.header-container .header-bottom {\n  display: block;\n  margin-top: 1rem;\n  width: 83.333333%;\n  border-bottom: 1px solid var(--header-bottom-border-color)\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/**\n    Header - Container\n*/\n.header-container {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  padding-top: 1rem;\n  border-bottom-width: 1px;\n  border-color: var(--border-color)\n  /**\n      Header - Bottom - Divider\n  */\n}\n.header-container .header-flexbox {\n  display: flex;\n  width: 83.333333%;\n  padding-bottom: 1rem\n  /**\n      Header - Left - Logo, Connection information\n  */\n  /**\n      Header - Middle - Search in table inputs\n  */\n  /**\n      Header - Right - Configuration buttons\n   */\n}\n.header-container .header-flexbox .header-left {\n  width: 25%\n}\n.header-container .header-flexbox .header-middle {\n  width: 50%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  margin-top: -5px\n}\n.header-container .header-flexbox .header-right {\n  width: 25%;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  align-items: center\n}\n.header-container .header-bottom {\n  display: block;\n  margin-top: 1rem;\n  width: 83.333333%;\n  border-bottom: 1px solid var(--header-bottom-border-color)\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12913,7 +12918,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".paginator-wrapper {\n  width: 100%;\n  display: flex;\n  justify-content: center;\n  margin-bottom: 0.5rem\n}\n.paginator-wrapper .pagination {\n  display: flex\n}\n.paginator-wrapper li {\n  color: var(--text-secondary-color)\n}\n.paginator-wrapper .page-item {\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  cursor: pointer\n}\n.paginator-wrapper .page-item:hover {\n  --tw-text-opacity: 1;\n  color: rgb(107 114 128 / var(--tw-text-opacity))\n}\n.paginator-wrapper .page-item-active {\n  --tw-text-opacity: 1;\n  color: rgb(96 165 250 / var(--tw-text-opacity))\n}\n.paginator-wrapper .buttons {\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  padding-top: 0px;\n  padding-bottom: 0px;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  background-color: var(--input-background-color);\n  --tw-text-opacity: 1;\n  color: rgb(31 41 55 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)\n}\n.paginator-wrapper .buttons:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(191 219 254 / var(--tw-bg-opacity))\n}\n.paginator-wrapper .buttons:active {\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".paginator-wrapper {\n  width: 100%;\n  display: flex;\n  justify-content: center;\n  margin-top: 0.25rem;\n  margin-bottom: 0.25rem\n}\n.paginator-wrapper .pagination {\n  display: flex\n}\n.paginator-wrapper li {\n  color: var(--text-secondary-color)\n}\n.paginator-wrapper .page-item {\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  cursor: pointer\n}\n.paginator-wrapper .page-item:hover {\n  --tw-text-opacity: 1;\n  color: rgb(107 114 128 / var(--tw-text-opacity))\n}\n.paginator-wrapper .page-item-active {\n  --tw-text-opacity: 1;\n  color: rgb(192 132 252 / var(--tw-text-opacity))\n}\n.paginator-wrapper .buttons {\n  margin-left: 0.5rem;\n  margin-right: 0.5rem;\n  padding-top: 0px;\n  padding-bottom: 0px;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  background-color: var(--input-background-color);\n  --tw-text-opacity: 1;\n  color: rgb(31 41 55 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)\n}\n.paginator-wrapper .buttons:active {\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12961,7 +12966,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#empty-table-wrapper {\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper h1 {\n  margin-top: 1rem;\n  margin-bottom: 0.5rem;\n  color: var(--header-text-color);\n  width: 100%;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview h2 {\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem;\n}\n#empty-table-wrapper .column-overview .columns-wrapper {\n  display: flex;\n  flex-direction: column;\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview .columns-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  color: var(--text-secondary-color);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper {\n  display: flex;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button {\n  --tw-bg-opacity: 1;\n  background-color: rgb(168 85 247 / var(--tw-bg-opacity));\n  width: 10rem;\n  margin-top: 5rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(192 132 252 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(216 180 254 / var(--tw-bg-opacity));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#empty-table-wrapper {\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper h1 {\n  margin-top: 0.5rem;\n  margin-bottom: 0.5rem;\n  color: var(--header-text-color);\n  width: 100%;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview h2 {\n  --tw-text-opacity: 1;\n  color: rgb(0 0 0 / var(--tw-text-opacity));\n  font-weight: 700;\n  --tw-bg-opacity: 1;\n  background-color: rgb(156 163 175 / var(--tw-bg-opacity));\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem;\n}\n#empty-table-wrapper .column-overview .columns-wrapper {\n  display: flex;\n  flex-direction: column;\n  transform: rotateX(180deg);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table {\n  width: 100%;\n  border-radius: 0.25rem;\n  --tw-bg-opacity: 1;\n  background-color: rgb(229 231 235 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead {\n  border-bottom-width: 1px;\n  border-color: var(--border-color);\n  border-radius: 0.25rem;\n  background-color: var(--table-column-background-color);\n}\n#empty-table-wrapper .column-overview .columns-wrapper table thead .table-th {\n  border-width: 1px;\n  border-color: var(--border-color);\n  padding: 0.25rem;\n  white-space: nowrap;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  margin-left: 2.5rem;\n  margin-right: 2.5rem;\n  text-align: center;\n}\n#empty-table-wrapper .column-overview .columns-wrapper table .table-td {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  text-align: center;\n  color: var(--text-secondary-color);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper {\n  display: flex;\n  justify-content: center;\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button {\n  --tw-bg-opacity: 1;\n  background-color: rgb(168 85 247 / var(--tw-bg-opacity));\n  width: 10rem;\n  margin-top: 5rem;\n  --tw-text-opacity: 1;\n  color: rgb(255 255 255 / var(--tw-text-opacity));\n  font-weight: 600;\n  padding-top: 0.25rem;\n  padding-bottom: 0.25rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  border-radius: 0.25rem;\n  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:hover {\n  --tw-bg-opacity: 1;\n  background-color: rgb(192 132 252 / var(--tw-bg-opacity));\n}\n#empty-table-wrapper .column-overview .buttons-wrapper button:active {\n  --tw-bg-opacity: 1;\n  background-color: rgb(216 180 254 / var(--tw-bg-opacity));\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13009,7 +13014,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".main-content-wrapper {\n  display: block;\n  height: 100%;\n  background-color: transparent;\n  border-radius: 0.25rem;\n  margin-left: 0.25rem;\n  margin-top: 1.75rem\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".main-content-wrapper {\n  display: block;\n  height: 100%;\n  background-color: transparent;\n  border-radius: 0.25rem;\n  margin-left: 0.25rem;\n  margin-top: 0.75rem\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13201,7 +13206,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".slide-fade-enter-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}\n.main-content {\n  width: 100%;\n  display: flex;\n  justify-content: center;\n}\n.main-content .wrapper {\n  display: flex;\n  width: 98%;\n}\n.main-content .wrapper .table-wrapper {\n  /*@apply overflow-x-scroll;*/\n}\n.main-content .main-content-collapsed {\n  width: 100%;\n  max-width: 100%;\n  transition: 1s ease;\n}\n.main-content .main-content-expanded {\n  width: 81%;\n  max-width: 81%;\n  transition: 1s ease;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".slide-fade-enter-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.2s ease;\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}\n.main-content {\n  width: 100%;\n  display: flex;\n  justify-content: center;\n}\n.main-content .wrapper {\n  display: flex;\n  width: 98%;\n}\n.main-content .wrapper .table-wrapper {\n  /*@apply overflow-x-scroll;*/\n  width: 100%;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39732,9 +39737,7 @@ var render = function () {
   return _c("div", { attrs: { id: "migration-wrapper" } }, [
     _c("h1", [
       _vm._v(
-        "\n    " +
-          _vm._s(_vm.trans("general.migrations")) +
-          " (" +
+        "\n    Migrations (" +
           _vm._s(_vm.migrations.pending) +
           "/" +
           _vm._s(_vm.migrations.total) +
@@ -39833,15 +39836,12 @@ var render = function () {
   return _c("div", { staticClass: "status" }, [
     _c(
       "h1",
-      [
-        _vm._v("\n        " + _vm._s(_vm.header) + "\n        "),
-        _vm._t("default"),
-      ],
+      [_vm._v("\n    " + _vm._s(_vm.header) + "\n    "), _vm._t("default")],
       2
     ),
     _vm._v(" "),
     _c("h2", [
-      _vm._v(" " + _vm._s(_vm.value) + "\n        "),
+      _vm._v(" " + _vm._s(_vm.value) + "\n    "),
       _vm.unit ? _c("small", [_vm._v("/ " + _vm._s(_vm.unit))]) : _vm._e(),
     ]),
   ])
@@ -40781,11 +40781,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "empty-table-wrapper" } }, [
-    _c("h1", [
-      _vm._v(
-        "\n        " + _vm._s(_vm.trans("table_empty.no_results")) + "\n    "
-      ),
-    ]),
+    _c("h1", [_vm._v("\n        No data found in this table.\n    ")]),
     _vm._v(" "),
     _c("div", { staticClass: "column-overview" }, [
       _c("div", { staticClass: "columns-wrapper" }, [
@@ -42423,22 +42419,6 @@ var render = function () {
         },
       }),
       _vm._v(" "),
-      _vm.table.currentActiveName.length !== 0 &&
-      !_vm.prequel.error &&
-      _vm.view.modus.mode === _vm.view.modus.enum.BROWSE
-        ? _c("Paginator", {
-            attrs: {
-              currentPage: _vm.table.pagination.currentPage,
-              numberOfPages: _vm.table.pagination.numberOfPages,
-            },
-            on: {
-              pageChange: function ($event) {
-                return _vm.changePage($event)
-              },
-            },
-          })
-        : _c("div", { staticClass: "block w-1 h-1 my-2" }),
-      _vm._v(" "),
       !_vm.prequel.error
         ? _c("div", { staticClass: "main-content" }, [
             _c(
@@ -42471,27 +42451,51 @@ var render = function () {
                   1
                 ),
                 _vm._v(" "),
-                _c("MainContent", {
-                  staticClass: "table-wrapper",
-                  class: _vm.view.collapsed
-                    ? "main-content-collapsed"
-                    : "main-content-expanded",
-                  attrs: {
-                    mode: _vm.view.modus.mode,
-                    readability: _vm.view.readability,
-                    loading: _vm.table.loading,
-                    "welcome-shown": _vm.view.welcomeShown,
-                    "table-load-error": _vm.table.error.loadError,
-                    "table-error-detailed": _vm.table.error.loadErrorMessage,
-                    data: _vm.table.data,
-                    structure: _vm.table.structure,
-                  },
-                  on: {
-                    columnSelect: function ($event) {
-                      return _vm.columnSelect($event)
-                    },
-                  },
-                }),
+                _c(
+                  "div",
+                  { staticClass: "flex flex-col w-full" },
+                  [
+                    _vm.table.currentActiveName.length !== 0 &&
+                    !_vm.prequel.error &&
+                    _vm.view.modus.mode === _vm.view.modus.enum.BROWSE
+                      ? _c("Paginator", {
+                          attrs: {
+                            currentPage: _vm.table.pagination.currentPage,
+                            numberOfPages: _vm.table.pagination.numberOfPages,
+                          },
+                          on: {
+                            pageChange: function ($event) {
+                              return _vm.changePage($event)
+                            },
+                          },
+                        })
+                      : _c("div", { staticClass: "block w-1 h-1 my-2" }),
+                    _vm._v(" "),
+                    _c("MainContent", {
+                      staticClass: "table-wrapper",
+                      class: _vm.view.collapsed
+                        ? "main-content-collapsed"
+                        : "main-content-expanded",
+                      attrs: {
+                        mode: _vm.view.modus.mode,
+                        readability: _vm.view.readability,
+                        loading: _vm.table.loading,
+                        "welcome-shown": _vm.view.welcomeShown,
+                        "table-load-error": _vm.table.error.loadError,
+                        "table-error-detailed":
+                          _vm.table.error.loadErrorMessage,
+                        data: _vm.table.data,
+                        structure: _vm.table.structure,
+                      },
+                      on: {
+                        columnSelect: function ($event) {
+                          return _vm.columnSelect($event)
+                        },
+                      },
+                    }),
+                  ],
+                  1
+                ),
               ],
               1
             ),
@@ -42716,7 +42720,7 @@ var render = function () {
               },
               [
                 _vm._v(
-                  "\n\n        > " +
+                  "\n\n        " +
                     _vm._s(
                       _vm.readability
                         ? database.pretty_name
@@ -42745,6 +42749,7 @@ var render = function () {
                 placeholder: _vm.trans("side_bar.look_for_table"),
               },
               on: {
+                click: _vm.resetSearch,
                 keyup: function ($event) {
                   if (
                     !$event.type.indexOf("key") &&

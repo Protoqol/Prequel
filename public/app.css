@@ -559,11 +559,14 @@ video {
 .h-10 {
   height: 2.5rem;
 }
-.w-1 {
-  width: 0.25rem;
-}
 .w-1\/5 {
   width: 20%;
+}
+.w-full {
+  width: 100%;
+}
+.w-1 {
+  width: 0.25rem;
 }
 .w-10 {
   width: 2.5rem;
@@ -591,6 +594,9 @@ video {
 }
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.flex-col {
+  flex-direction: column;
 }
 .items-center {
   align-items: center;

@@ -29,14 +29,6 @@
             @collapseSideBar="sideBarCollapseHandler"
             @refresh="getTableData(`${table.database}.${table.table}`, false, true)"/>
 
-    <Paginator
-        v-if="table.currentActiveName.length !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"
-        :currentPage="table.pagination.currentPage"
-        :numberOfPages="table.pagination.numberOfPages"
-        @pageChange="changePage($event)"/>
-
-    <div v-else class="block w-1 h-1 my-2"></div>
-
     <div v-if="!prequel.error" class="main-content">
       <div class="wrapper">
         <transition name="slide-fade" mode="in-out">
@@ -48,18 +40,26 @@
                    @searchingForTable="searchForTable($event)"
                    @tableSelect="getTableData($event)"/>
         </transition>
+        <div class="flex flex-col w-full">
+          <Paginator
+              v-if="table.currentActiveName.length !== 0 && !prequel.error && view.modus.mode === view.modus.enum.BROWSE"
+              :currentPage="table.pagination.currentPage"
+              :numberOfPages="table.pagination.numberOfPages"
+              @pageChange="changePage($event)"/>
 
-        <MainContent class="table-wrapper"
-                     :class="view.collapsed ? 'main-content-collapsed' : 'main-content-expanded'"
-                     :mode="view.modus.mode"
-                     :readability="view.readability"
-                     :loading="table.loading"
-                     :welcome-shown="view.welcomeShown"
-                     :table-load-error="table.error.loadError"
-                     :table-error-detailed="table.error.loadErrorMessage"
-                     :data="table.data"
-                     :structure="table.structure"
-                     @columnSelect="columnSelect($event)"/>
+          <div v-else class="block w-1 h-1 my-2"></div>
+          <MainContent class="table-wrapper"
+                       :class="view.collapsed ? 'main-content-collapsed' : 'main-content-expanded'"
+                       :mode="view.modus.mode"
+                       :readability="view.readability"
+                       :loading="table.loading"
+                       :welcome-shown="view.welcomeShown"
+                       :table-load-error="table.error.loadError"
+                       :table-error-detailed="table.error.loadErrorMessage"
+                       :data="table.data"
+                       :structure="table.structure"
+                       @columnSelect="columnSelect($event)"/>
+        </div>
       </div>
     </div>
 
@@ -351,7 +351,7 @@ export default {
         dynamicLoad      = true,
         updateUrlHistory = true) {
 
-      if (!databaseTable.target && dynamicLoad) {
+      if (!databaseTable && dynamicLoad) {
         return false;
       }
 
@@ -498,19 +498,8 @@ $break-md: 1400px;
 
     .table-wrapper {
       /*@apply overflow-x-scroll;*/
+      @apply w-full;
     }
-  }
-
-  .main-content-collapsed {
-    width: 100%;
-    max-width: 100%;
-    transition: 1s ease;
-  }
-
-  .main-content-expanded {
-    width: 81%;
-    max-width: 81%;
-    transition: 1s ease;
   }
 }
 </style>

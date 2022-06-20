@@ -78,7 +78,7 @@
          * components/MainContent/BrowseMode/Table/TableEmpty.vue
          */
         'table_empty'      => [
-            'no_results' => 'This query did not yield any result',
+            'no_results' => 'purple-id not yield any result',
             'col_key'    => 'Column Key',
             'col_field'  => 'Column Field',
             'col_def'    => 'Column Default',

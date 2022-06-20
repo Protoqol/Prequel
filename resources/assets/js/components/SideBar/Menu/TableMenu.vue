@@ -6,7 +6,7 @@
              :title="`${database.official_name} (${database.tables.length} ${trans('general.tables')})`"
              :value="database.official_name">
 
-          > {{ readability ? database.pretty_name : database.official_name }}
+          {{ readability ? database.pretty_name : database.official_name }}
 
           <span class="text-xs font-normal">
                 ({{ getNoTables(database) }})
@@ -18,6 +18,7 @@
                type="text"
                list="tableSearch"
                autocomplete="on"
+               @click="resetSearch"
                @keyup.enter="$emit('searchingForTable', $event)"
                :placeholder="trans('side_bar.look_for_table')">
 
@@ -44,7 +45,7 @@
         </li>
         <li v-if="database.tables.length === 0"
             class="menu-li-no-content">
-          {{ trans('table_menu.empty_table') }}
+          {{ trans("table_menu.empty_table") }}
         </li>
       </Accordion>
     </ul>
@@ -60,6 +61,10 @@ export default {
   props     : ["tableData", "tableFlat", "readability"],
 
   methods: {
+
+    resetSearch: function () {
+      console.log("Click");
+    },
 
     /**
      * Get number of tables
