@@ -21,6 +21,13 @@ Prequel is meant to be a database management tool for Laravel to replace the nee
 
 > Clear and concise database management
 
+### Want to help keep open-source sustainable?
+
+You can help by contributing to the code or donating using the button below!
+Both are highly appreciated and contribute directly to keeping open-source free and sustainable!
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TJS5BKNE3JGW8)
+
 ## Installation
 
 ### Minimum requirements
