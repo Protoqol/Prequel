@@ -39,10 +39,7 @@ class PrequelServiceProvider extends ServiceProvider
             return new DatabaseController($app[PrequelDatabaseRequest::class]);
         });
 
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . "/config/prequel.php",
-            "prequel"
-        );
+        $this->mergeConfigFrom(dirname(__DIR__) . "/config/prequel.php", "prequel");
     }
 
     /**
@@ -56,35 +53,17 @@ class PrequelServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__ . "/Http/routes.php");
 
-        $this->loadTranslationsFrom(
-            dirname(__DIR__) . "/resources/lang/",
-            "Prequel"
-        );
+        $this->loadTranslationsFrom(dirname(__DIR__) . "/resources/lang/", "Prequel");
 
-        $this->publishes(
-            [
-                dirname(__DIR__) . "/resources/lang" => resource_path(
-                    "lang/vendor/prequel"
-                ),
-            ],
-            "prequel-lang"
-        );
+        $this->publishes([
+            dirname(__DIR__) . "/resources/lang" => resource_path(
+                "lang/vendor/prequel"
+            ),
+        ], "prequel-lang");
 
-        $this->publishes(
-            [
-                dirname(__DIR__) . "/config/prequel.php" => config_path(
-                    "prequel.php"
-                ),
-            ],
-            "prequel-config"
-        );
+        $this->publishes([dirname(__DIR__) . "/config/prequel.php" => config_path("prequel.php"),], "prequel-config");
 
-        $this->publishes(
-            [
-                dirname(__DIR__) . "/public" => public_path("vendor/prequel"),
-            ],
-            "prequel-assets"
-        );
+        $this->publishes([dirname(__DIR__) . "/public" => public_path("vendor/prequel"),], "prequel-assets");
 
         if ($this->app->runningInConsole()) {
             $this->commands([

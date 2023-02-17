@@ -44,7 +44,7 @@ class UpdateCommand extends Command
 
         $this->comment("Updating Prequel Service Provider...");
         $this->callSilent("vendor:publish", [
-            "--provider" => "Protoqol\Prequel\PrequelServiceProvider",
+            "--provider" => \Protoqol\Prequel\PrequelServiceProvider::class,
             "--force"    => true,
         ]);
 

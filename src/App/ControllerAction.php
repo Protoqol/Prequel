@@ -24,8 +24,8 @@ class ControllerAction implements GenerationInterface
     /**
      * ControllerAction constructor.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function __construct(string $database, string $table)
     {
@@ -36,10 +36,10 @@ class ControllerAction implements GenerationInterface
     /**
      * Generate controller
      *
-     * @return mixed
+     * @return string
      * @throws Exception
      */
-    public function generate()
+    public function generate(): string
     {
         Artisan::call("make:controller", [
             "name" => $this->generateControllerName($this->table),
@@ -47,7 +47,7 @@ class ControllerAction implements GenerationInterface
 
         $this->dumpAutoload();
 
-        return (string)$this->getQualifiedName();
+        return (string) $this->getQualifiedName();
     }
 
     /**
@@ -56,7 +56,7 @@ class ControllerAction implements GenerationInterface
      * @return string
      * @throws Exception
      */
-    private function checkAndGetControllerName()
+    private function checkAndGetControllerName(): string
     {
         $controllerClass =
             "App\\Http\\Controllers\\" .
@@ -114,7 +114,7 @@ class ControllerAction implements GenerationInterface
             if ($i === $count - 1) {
                 break;
             }
-            $namespace .= (string)$arr[$i] . "\\";
+            $namespace .= (string) $arr[$i] . "\\";
         }
 
         return $namespace;

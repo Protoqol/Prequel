@@ -2,6 +2,7 @@
 
 namespace Protoqol\Prequel\Http\Controllers;
 
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -19,10 +20,11 @@ class PrequelController extends Controller
      * Get first entry data
      *
      * @return Renderable
+     * @throws Exception
      */
     public function index(): Renderable
     {
-        $databaseData = (object)app(DatabaseTraverser::class)->getAll();
+        $databaseData = (object) app(DatabaseTraverser::class)->getAll();
 
         return view("Prequel::main", [
             "env"  => [
@@ -40,7 +42,7 @@ class PrequelController extends Controller
             "lang" => Lang::get(
                 "Prequel::lang",
                 [],
-                (string)config("prequel.locale")
+                (string) config("prequel.locale")
             ),
         ]);
     }
@@ -48,7 +50,7 @@ class PrequelController extends Controller
     /**
      * Auto update Prequel.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return array
      */

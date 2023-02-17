@@ -21,18 +21,18 @@ class PrequelDB extends Model
     protected $builder, $dbConnection;
 
     /**
-     * @param string $database Database name
-     * @param string $table Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return PrequelDB
      */
-    public function create(string $database, string $table)
+    public function create(string $database, string $table): self
     {
         $this->dbConnection = (new DatabaseConnector())->getConnection(
             $database
         );
-        $tableName = $this->dbConnection->formatTableName($database, $table);
-        $this->builder = new Builder(
+        $tableName          = $this->dbConnection->formatTableName($database, $table);
+        $this->builder      = new Builder(
             $this->dbConnection,
             $this->dbConnection->getGrammar(),
             $this->dbConnection->getProcessor()
@@ -46,17 +46,17 @@ class PrequelDB extends Model
     /**
      * @return Builder
      */
-    public function builder()
+    public function builder(): Builder
     {
         return $this->builder;
     }
 
     /**
-     * @param array $queries
+     * @param  array  $queries
      *
      * @return array
      */
-    public function statement(array $queries)
+    public function statement(array $queries): array
     {
         $queryResponse = [];
 

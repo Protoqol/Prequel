@@ -5,4 +5,3 @@ window.Swal = require("sweetalert2");
 require("./sweetalertMixins");
 require("./axios");
 require("./functions");
-require("./prism");

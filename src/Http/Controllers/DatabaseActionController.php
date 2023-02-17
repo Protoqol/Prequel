@@ -27,7 +27,7 @@ class DatabaseActionController extends Controller
     /**
      * Get defaults for 'Insert new row' action form inputs.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return array
      */
@@ -50,8 +50,8 @@ class DatabaseActionController extends Controller
     /**
      * Check and return all Laravel specific assets for table (Model, Seeder, Controller etc.).
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return array
      * @throws Exception
@@ -80,7 +80,7 @@ class DatabaseActionController extends Controller
     /**
      * Insert row in table.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return array
      */
@@ -97,7 +97,7 @@ class DatabaseActionController extends Controller
     /**
      * Run raw SQL query.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return array|Query
      */
@@ -107,8 +107,8 @@ class DatabaseActionController extends Controller
     }
 
     /**
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function import(string $database, string $table)
     {
@@ -116,8 +116,8 @@ class DatabaseActionController extends Controller
     }
 
     /**
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function export(string $database, string $table)
     {
@@ -137,8 +137,8 @@ class DatabaseActionController extends Controller
     /**
      * Run pending migrations.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return int
      */
@@ -150,8 +150,8 @@ class DatabaseActionController extends Controller
     /**
      * Reset latest migrations.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return int
      */
@@ -163,8 +163,8 @@ class DatabaseActionController extends Controller
     /**
      * Generate controller.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return mixed
      * @throws Exception
@@ -177,8 +177,8 @@ class DatabaseActionController extends Controller
     /**
      * Generate factory.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return int|string
      * @throws Exception
@@ -191,8 +191,8 @@ class DatabaseActionController extends Controller
     /**
      * Generate model.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return string
      */
@@ -204,8 +204,8 @@ class DatabaseActionController extends Controller
     /**
      * Generate resource.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return mixed
      * @throws Exception
@@ -218,10 +218,10 @@ class DatabaseActionController extends Controller
     /**
      * Generate seeder.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
-     * @return int|string
+     * @return string
      * @throws Exception
      */
     public function generateSeeder(string $database, string $table)
@@ -232,8 +232,8 @@ class DatabaseActionController extends Controller
     /**
      * Run seeder.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return int
      * @throws Exception

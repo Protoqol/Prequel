@@ -35,8 +35,8 @@ class MigrationAction implements GenerationInterface
     /**
      * ControllerAction constructor.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function __construct(string $database, string $table)
     {

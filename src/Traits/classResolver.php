@@ -11,9 +11,9 @@ trait classResolver
      *
      * @return int
      */
-    public function dumpAutoload()
+    public function dumpAutoload(): int
     {
-        $out = [];
+        $out    = [];
         $return = 0;
 
         exec("cd " . base_path() . " && composer dump-autoload", $out, $return);
@@ -24,8 +24,8 @@ trait classResolver
     /**
      * Check for class existence.
      *
-     * @param string     $classname
-     * @param array|null $namespaces
+     * @param  string  $classname
+     * @param  array|null  $namespaces
      *
      * @return bool|string
      */
@@ -49,43 +49,40 @@ trait classResolver
      * Resolve and return configured suffixes from the config.
      * Returns object with suffix and namespace or an empty string.
      *
-     * @param string $generator ex. 'model', 'controller', 'resource' etc.
+     * @param  string  $generator  ex. 'model', 'controller', 'resource' etc.
      *
      * @return object
      */
-    public function configNamespaceResolver(string $generator)
+    public function configNamespaceResolver(string $generator): object
     {
-        $config = config("prequel.suffixes")[$generator];
-        $exploded = explode("\\", $config);
-        $suffix = end($exploded);
+        $config    = config("prequel.suffixes")[$generator];
+        $exploded  = explode("\\", $config);
+        $suffix    = end($exploded);
         $namespace = $suffix
             ? substr($config, 0, 0 - strlen($suffix))
             : $config;
 
-        return (object)[
-            "suffix"    => $suffix,
-            "namespace" => $namespace,
-        ];
+        return (object) compact('suffix', 'namespace');
     }
 
     /**
      * Transform table name to a SingularStudlyClassName.
      *
-     * @param string $classname
+     * @param  string  $classname
      *
      * @return string
      */
-    public function generateClassName(string $classname)
+    public function generateClassName(string $classname): string
     {
         return Str::studly(Str::singular($classname));
     }
 
     /**
-     * @param $classname
+     * @param  string  $classname
      *
      * @return string
      */
-    public function generateControllerName(string $classname)
+    public function generateControllerName(string $classname): string
     {
         $config = $this->configNamespaceResolver("controller");
 
@@ -95,11 +92,11 @@ trait classResolver
     }
 
     /**
-     * @param $classname
+     * @param  string  $classname
      *
      * @return string
      */
-    public function generateFactoryName(string $classname)
+    public function generateFactoryName(string $classname): string
     {
         $config = $this->configNamespaceResolver("factory");
 
@@ -109,11 +106,11 @@ trait classResolver
     }
 
     /**
-     * @param $classname
+     * @param  string  $classname
      *
      * @return string
      */
-    public function generateModelName(string $classname)
+    public function generateModelName(string $classname): string
     {
         $config = $this->configNamespaceResolver("model");
 
@@ -124,11 +121,11 @@ trait classResolver
     }
 
     /**
-     * @param $classname
+     * @param  string  $classname
      *
      * @return string
      */
-    public function generateResourceName(string $classname)
+    public function generateResourceName(string $classname): string
     {
         $config = $this->configNamespaceResolver("resource");
 
@@ -138,11 +135,11 @@ trait classResolver
     }
 
     /**
-     * @param $classname
+     * @param  string  $classname
      *
      * @return string
      */
-    public function generateSeederName(string $classname)
+    public function generateSeederName(string $classname): string
     {
         $config = $this->configNamespaceResolver("seeder");
 

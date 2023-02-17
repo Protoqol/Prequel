@@ -24,8 +24,8 @@ class SeederAction implements GenerationInterface
     /**
      * ControllerAction constructor.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function __construct(string $database, string $table)
     {
@@ -36,9 +36,9 @@ class SeederAction implements GenerationInterface
     /**
      * Generate seeder.
      *
-     * @return int|string
+     * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         Artisan::call("make:seeder", [
             "name" => $this->generateClassName($this->table) . "Seeder",
@@ -46,7 +46,7 @@ class SeederAction implements GenerationInterface
 
         $this->dumpAutoload();
 
-        return (string)$this->getQualifiedName();
+        return (string) $this->getQualifiedName();
     }
 
     /**
@@ -86,7 +86,7 @@ class SeederAction implements GenerationInterface
     /**
      * Get fully qualified class name
      *
-     * @return mixed
+     * @return false|string
      */
     public function getQualifiedName()
     {
@@ -137,7 +137,7 @@ class SeederAction implements GenerationInterface
             if ($i === $count - 1) {
                 break;
             }
-            $namespace .= (string)$arr[$i] . "\\";
+            $namespace .= $arr[$i] . "\\";
         }
 
         return $namespace;

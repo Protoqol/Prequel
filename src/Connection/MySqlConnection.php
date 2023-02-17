@@ -28,7 +28,7 @@ class MySqlConnection extends Connection
      *
      * @return MySqlConnection
      */
-    public function getConnection(): MySqlConnection
+    public function getConnection(): self
     {
         return $this;
     }
@@ -43,7 +43,7 @@ class MySqlConnection extends Connection
         $connection = config("prequel.database.connection");
 
         if (!Str::contains($connection, ['mysql', 'pgsql'])) {
-            $connection = config("database.connections.$connection.driver");
+            $connection = config("database.connections.{$connection}.driver");
         }
 
         $host     = config("prequel.database.host");
@@ -79,7 +79,7 @@ class MySqlConnection extends Connection
      */
     public function getGrants(): array
     {
-        return (array)$this->connection->select(
+        return (array) $this->connection->select(
             "SHOW GRANTS FOR CURRENT_USER();"
         )[0];
     }
@@ -128,8 +128,8 @@ class MySqlConnection extends Connection
     }
 
     /**
-     * @param string $database Database name
-     * @param string $table    Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return string
      */
@@ -139,8 +139,8 @@ class MySqlConnection extends Connection
     }
 
     /**
-     * @param string $database Database name
-     * @param string $table    Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return array
      */
@@ -150,18 +150,18 @@ class MySqlConnection extends Connection
     }
 
     /**
-     * @param string $database Database name
-     * @param string $table    Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return array
      */
     public function getTableData(string $database, string $table): array
     {
-        return $this->connection->select("SELECT * FROM `$database`.`$table`");
+        return $this->connection->select("SELECT * FROM `{$database}`.`{$table}`");
     }
 
     /**
-     * @param string $database
+     * @param  string  $database
      *
      * @return array
      * @throws Exception

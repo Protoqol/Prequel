@@ -12,7 +12,7 @@ class DatabaseConnector
     public $connection;
 
     /**
-     * @param null $database Database name
+     * @param  null  $database  Database name
      *
      * @return mixed
      */
@@ -32,7 +32,7 @@ class DatabaseConnector
         }
 
         if (!isset($className)) {
-            $presumedCustomConnectionName = config("database.connections.$presumed.driver");
+            $presumedCustomConnectionName = config("database.connections.{$presumed}.driver");
 
             switch ($presumedCustomConnectionName) {
                 case "mysql":

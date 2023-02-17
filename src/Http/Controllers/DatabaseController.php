@@ -59,7 +59,7 @@ class DatabaseController extends Controller
     /**
      * DatabaseActionController's constructor
      *
-     * @param Request|PrequelDatabaseRequest $request
+     * @param  Request|PrequelDatabaseRequest  $request
      */
     public function __construct($request)
     {
@@ -135,9 +135,9 @@ class DatabaseController extends Controller
      */
     public function findInTable()
     {
-        $column    = (string)Route::current()->parameter("column");
-        $queryType = (string)Route::current()->parameter("type");
-        $value     = (string)Route::current()->parameter("value");
+        $column    = (string) Route::current()->parameter("column");
+        $queryType = (string) Route::current()->parameter("type");
+        $value     = (string) Route::current()->parameter("value");
         $value     = $queryType === "LIKE" ? "%" . $value . "%" : $value;
 
         return PDB::create($this->databaseName, $this->tableName)
@@ -175,9 +175,9 @@ class DatabaseController extends Controller
     /**
      * Export table.
      *
-     * @param Request $request
-     * @param string  $database
-     * @param string  $table
+     * @param  Request  $request
+     * @param  string  $database
+     * @param  string  $table
      *
      * @return JsonResponse
      */

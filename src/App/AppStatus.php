@@ -21,18 +21,10 @@ class AppStatus
     private $connection;
 
     /**
-     * Holds database traverser instance.
-     *
-     * @var DatabaseTraverser $traverser
-     */
-    private $traverser;
-
-    /**
      * AppStatus constructor.
      */
     public function __construct()
     {
-        $this->traverser  = new DatabaseTraverser();
         $this->connection = (new DatabaseConnector())->getConnection();
     }
 
@@ -66,22 +58,22 @@ class AppStatus
     public function userPermissions(): array
     {
         $grants      = $this->connection->getGrants();
-        $privs       = (string)array_values($grants)[0];
+        $privs       = (string) array_values($grants)[0];
         $permissions = [];
 
         // If anyone seeing this has a better way of checking this, be my guest!
-        $permissions["SELECT"]  = false !== strpos($privs, "SELECT");
-        $permissions["INSERT"]  = false !== strpos($privs, "INSERT");
-        $permissions["UPDATE"]  = false !== strpos($privs, "UPDATE");
-        $permissions["DELETE"]  = false !== strpos($privs, "DELETE");
-        $permissions["FILE"]    = false !== strpos($privs, "FILE");
-        $permissions["CREATE"]  = false !== strpos($privs, "CREATE");
-        $permissions["DROP"]    = false !== strpos($privs, "DROP");
-        $permissions["ALTER"]   = false !== strpos($privs, "ALTER");
+        $permissions["SELECT"]  = strpos($privs, "SELECT") !== false;
+        $permissions["INSERT"]  = strpos($privs, "INSERT") !== false;
+        $permissions["UPDATE"]  = strpos($privs, "UPDATE") !== false;
+        $permissions["DELETE"]  = strpos($privs, "DELETE") !== false;
+        $permissions["FILE"]    = strpos($privs, "FILE") !== false;
+        $permissions["CREATE"]  = strpos($privs, "CREATE") !== false;
+        $permissions["DROP"]    = strpos($privs, "DROP") !== false;
+        $permissions["ALTER"]   = strpos($privs, "ALTER") !== false;
         $permissions["HAS_ALL"] = true;
 
         // Check if user has all needed permissions
-        foreach ($permissions as $key => $val) {
+        foreach ($permissions as $val) {
             if ($val === false) {
                 $permissions["HAS_ALL"] = false;
             }

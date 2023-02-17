@@ -42,7 +42,7 @@ class DatabaseTraverser
     /**
      * DatabaseTraverser constructor.
      *
-     * @param string|null $databaseType
+     * @param  string|null  $databaseType
      */
     public function __construct(?string $databaseType = null)
     {
@@ -64,7 +64,7 @@ class DatabaseTraverser
         $collection          = [];
         $flatTableCollection = [];
 
-        $databaseFQN    = config('prequel.database.database', env('DB_DATABASE'));
+        $databaseFQN    = config('prequel.database.database');
         $databasePretty = $this->prettifyName($databaseFQN);
 
         $collection[$databasePretty] = [
@@ -83,16 +83,13 @@ class DatabaseTraverser
             }
         }
 
-        return [
-            "collection"          => $collection,
-            "flatTableCollection" => $flatTableCollection,
-        ];
+        return compact('collection', 'flatTableCollection');
     }
 
     /**
      * Tries to find matching model for the given table.
      *
-     * @param string|null $tableName
+     * @param  string|null  $tableName
      *
      * @return array|bool Array acts as a tuple containing the actual model and its namespace.
      */
@@ -130,9 +127,9 @@ class DatabaseTraverser
     /**
      * Get information about a specific column
      *
-     * @param string $database Database name
-     * @param string $table    Table name
-     * @param array  $column   Column name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
+     * @param  array  $column  Column name
      *
      * @return array
      */
@@ -158,14 +155,14 @@ class DatabaseTraverser
             ->get()
             ->toArray();
 
-        return Arr::flatten((array)$result);
+        return Arr::flatten((array) $result);
     }
 
     /**
      * Get table structure
      *
-     * @param string $database Database name
-     * @param string $table    Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return array*
      */
@@ -175,8 +172,8 @@ class DatabaseTraverser
     }
 
     /**
-     * @param string $database Database name
-     * @param string $table    Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return array*
      */
@@ -188,7 +185,7 @@ class DatabaseTraverser
     /**
      * Get all tables from database
      *
-     * @param string $database Database name
+     * @param  string  $database  Database name
      *
      * @return array
      * @throws Exception
@@ -238,7 +235,7 @@ class DatabaseTraverser
      *       'String': Mixed (single value)
      *  -----------------
      *
-     * @param array $arr Query results
+     * @param  array  $arr  Query results
      *
      * @return array
      */
@@ -252,7 +249,7 @@ class DatabaseTraverser
                     continue;
                 }
 
-                $arrayValue = Arr::first((array)$value);
+                $arrayValue = Arr::first((array) $value);
 
                 $normalised[$i]["name"] = [
                     "official" => $arrayValue,
@@ -267,7 +264,7 @@ class DatabaseTraverser
     /**
      * Prettify names, meaning: remove special characters; capitalise each word.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -281,7 +278,6 @@ class DatabaseTraverser
 
             if ($iterator !== count($words) - 1) {
                 $prettyName .= " ";
-                continue;
             }
         }
 

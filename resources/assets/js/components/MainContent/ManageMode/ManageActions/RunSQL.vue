@@ -2,7 +2,7 @@
   <div id="highlight" class="sql-runner-wrapper">
     <ActionInfo title="SQL Query" description="Write and run a raw SQL query"/>
     <form>
-      <textarea class="editor" v-model="query"></textarea>
+      <textarea class="editor" v-model="query"/>
 
       <div class="buttons">
         <button @click.prevent="runSql">Run SQL</button>
@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import Table      from "../../BrowseMode/Table/Table";
-import ActionInfo from "./ActionInfo";
-import api        from "axios";
+import Table        from "../../BrowseMode/Table/Table";
+import ActionInfo   from "./ActionInfo";
+import api          from "axios";
 
 export default {
   name      : "RunSQL",

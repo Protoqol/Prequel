@@ -1,34 +1,36 @@
 {
-  "private": true,
-  "scripts": {
-    "build-assets": "cross-env NODE_ENV=development npx mix build --mix-config=build-config/webpack.mix.js",
-    "watch-assets": "npx mix watch --mix-config=build-config/webpack.mix.js"
+  "private"        : true,
+  "scripts"        : {
+    "build-assets": "cross-env NODE_ENV=production npx mix build --mix-config=build-config/webpack.mix.js",
+    "watch-assets": "cross-env NODE_ENV=development npx mix watch --mix-config=build-config/webpack.mix.js"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.2.37",
-    "autoprefixer": "^10.4.7",
-    "axios": "^0.27",
-    "browser-sync": "^2.27.10",
+    "@vue/compiler-sfc"          : "^3.2.37",
+    "autoprefixer"               : "^10.4.7",
+    "axios"                      : "^0.27",
+    "browser-sync"               : "^2.27.10",
     "browser-sync-webpack-plugin": "^2.3.0",
-    "cross-env": "^5.2.1",
-    "laravel-mix": "^6.0.43",
-    "lodash": "^4.17.21",
-    "postcss": "^8.4.14",
-    "postcss-import": "^12.0.1",
-    "prettier": "^2.2.1",
-    "resolve-url-loader": "^2.3.1",
-    "sass": "^1.52",
-    "sass-loader": "^11.0.0",
-    "tailwindcss": "^3.1.2",
-    "vue": "^2.6.12",
-    "vue-loader": "^15.9.8",
-    "vue-template-compiler": "^2.6.12",
-    "webpack-cli": "^4.9.2"
+    "cross-env"                  : "^5.2.1",
+    "lodash"                     : "^4.17.21",
+    "prettier"                   : "^2.2.1",
+    "resolve-url-loader"         : "^5.0.0",
+    "tailwindcss"                : "^3.1.2",
+    "vue"                        : "^2.6.12",
+    "vue-loader"                 : "^15.9.8",
+    "vue-template-compiler"      : "^2.6.12",
+    "webpack-cli"                : "^4.9.2",
+    "axios-request-handler"      : "^1.0.4",
+    "vuejs-paginate"             : "^2.1.0",
+    "sweetalert2"                : "11.4.38",
+    "webpack"                    : "^5.69.1",
+    "laravel-mix"                : "^6.0.43",
+    "laravel-mix-purgecss"       : "^6.0.0",
+    "laravel-mix-tailwind"       : "^0.1.2",
+    "postcss"                    : "^8.4.14",
+    "postcss-import"             : "^12.0.1",
+    "sass"                       : "^1.52",
+    "sass-loader"                : "^11.0.0"
   },
-  "dependencies": {
-    "axios-request-handler": "^1.0.4",
-    "sweetalert2": "^11.4.0",
-    "vuejs-paginate": "^2.1.0",
-    "webpack": "^5.69.1"
+  "dependencies"   : {
   }
 }

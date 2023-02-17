@@ -22,7 +22,7 @@ class SequelAdapter
     /**
      * SequelAdapter constructor.
      *
-     * @param string $databaseType
+     * @param  string  $databaseType
      */
     public function __construct(string $databaseType)
     {
@@ -37,7 +37,7 @@ class SequelAdapter
      * @return string
      * @throws Exception
      */
-    public function showTables()
+    public function showTables(): string
     {
         switch ($this->databaseType) {
             case "mysql":
@@ -78,7 +78,7 @@ class SequelAdapter
     }
 
     /**
-     * @param string $databaseName
+     * @param  string  $databaseName
      *
      * @return string
      * @throws Exception

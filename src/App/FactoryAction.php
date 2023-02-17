@@ -24,8 +24,8 @@ class FactoryAction implements GenerationInterface
     /**
      * ControllerAction constructor.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function __construct(string $database, string $table)
     {
@@ -36,10 +36,10 @@ class FactoryAction implements GenerationInterface
     /**
      * Generate factory.
      *
-     * @return int|string
+     * @return string
      * @throws Exception
      */
-    public function generate()
+    public function generate(): string
     {
         Artisan::call("make:factory", [
             "name" => $this->generateFactoryName($this->table),
@@ -47,7 +47,7 @@ class FactoryAction implements GenerationInterface
 
         $this->dumpAutoload();
 
-        return (string)$this->getQualifiedName();
+        return (string) $this->getQualifiedName();
     }
 
     /**
@@ -56,19 +56,12 @@ class FactoryAction implements GenerationInterface
      * @return string
      * @throws Exception
      */
-    public function checkAndGetFactoryName()
+    public function checkAndGetFactoryName(): string
     {
         $factoryFile = $this->generateFactoryName($this->table);
 
-        if (
-            !file_exists(
-                base_path("database/factories/" . $factoryFile . ".php")
-            )
-        ) {
-            throw new Exception(
-                $factoryFile .
-                " could not be found or your factory does not follow naming convention"
-            );
+        if (!file_exists(base_path("database/factories/" . $factoryFile . ".php"))) {
+            throw new Exception($factoryFile . " could not be found or your factory does not follow naming convention");
         }
 
         return $factoryFile;
@@ -128,7 +121,7 @@ class FactoryAction implements GenerationInterface
             if ($i === $count - 1) {
                 break;
             }
-            $namespace .= (string)$arr[$i] . "\\";
+            $namespace .= $arr[$i] . "\\";
         }
 
         return $namespace;

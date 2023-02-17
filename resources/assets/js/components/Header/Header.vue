@@ -3,7 +3,8 @@
     <div class="header-flexbox">
       <PrequelLogo class="header-left" :env="env"/>
 
-      <TableFilter v-if="!error.error" class="header-middle"
+      <TableFilter v-if="!error.error"
+                   class="header-middle"
                    :activeTable="activeTable"
                    :showFilter="showFilter"
                    :tableLoading="tableLoading"
