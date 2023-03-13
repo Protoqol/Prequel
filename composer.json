@@ -13,7 +13,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7.2.5|^8.0",
-        "laravel/framework": "^6.0|^7.0|^8.0|^9.0",
+        "laravel/framework": "^6.0|^7.0|^8.0|^9.0|^10",
         "ext-pdo": "*",
         "ext-json": "*"
     },
