@@ -1,7 +1,6 @@
 {
     "name": "protoqol/prequel",
     "description": "Clear and concise database management.",
-    "version": "1.23.1",
     "type": "library",
     "license": "MIT",
     "authors": [
