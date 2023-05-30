@@ -183,7 +183,7 @@ class DatabaseController extends Controller
      */
     public function export(Request $request, string $database, string $table): JsonResponse
     {
-        $structure = $request->input("structure_only", true) ? "--no-data" : "";
+        $structure = $request->input("structure_only", false) ? "--no-data" : "";
 
         $host   = config('prequel.database.host');
         $user   = config('prequel.database.username');
@@ -198,7 +198,7 @@ class DatabaseController extends Controller
             mkdir($dir);
         }
 
-        $dir .= "/$fileName";
+        $dir .= DIRECTORY_SEPARATOR . $fileName;
 
         exec(
             "mysqldump {$structure} --user={$user} --password={$pass} --host={$host} {$database} {$table} --result-file={$dir}",

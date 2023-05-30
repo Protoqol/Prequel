@@ -8,7 +8,6 @@
         <h2>
             {{ errorDetailed.detailed }}
         </h2>
-        <hr>
         <!--   This if condition is horrible, I know that @TODO     -->
         <div v-if="errorDetailed.detailed !== trans('error_page.disabled')">
             <h3>

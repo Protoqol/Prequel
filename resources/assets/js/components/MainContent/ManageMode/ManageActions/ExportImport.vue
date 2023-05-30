@@ -21,7 +21,7 @@
         <label for="file">
           <input type="file" accept=".sql" name="file" id="file">
         </label>
-        <button class="button" @click="exportTable" title="Start export">
+        <button class="button" @click="importTable" title="Start export">
           <i class="ri-arrow-right-down-fill mr-1"></i>
           Import
         </button>
@@ -31,7 +31,7 @@
     <div class="action-wrapper">
       <div class="action-info-wrapper w-1/2">
         <div class="result" v-if="resultExport !== null">
-          SQL dump created, located in <br>
+          <span class="font-semibold">Database dump creation started, the export will be available in</span><br>
           <pre>{{ resultExport }}</pre>
         </div>
         <div class="error" v-if="errorExport !== null">
@@ -41,7 +41,7 @@
       </div>
       <div class="action-info-wrapper w-1/2">
         <div class="result" v-if="resultImport !== null">
-          SQL dump created, located in <br>
+          <span class="font-semibold">Database dump creation started, the export will be available in</span><br>
           <pre>{{ resultImport }}</pre>
         </div>
         <div class="error" v-if="errorImport !== null">
@@ -58,13 +58,13 @@ import ActionInfo from "./ActionInfo";
 import axios      from "axios";
 
 export default {
-  name      : "Export",
+  name      : "ExportImport",
   components: {ActionInfo},
   data() {
     return {
       structure_only: false,
       file          : null,
-      resultExport  : null,
+      resultExport  : "C:\\Code\\Laravel\\storage\\prequel\\database.sql",
       errorExport   : null,
       resultImport  : null,
       errorImport   : null,
@@ -77,9 +77,28 @@ export default {
       axios.post(`database/sql/${this.$root.table.database}/${this.$root.table.table}/export`, {
         structure_only: this.structure_only,
       }).then(res => {
-        this.resultExport = res.data.location;
+        if (res.data.status !== 0) {
+          this.resultExport = res.data.location;
+        } else {
+          this.errorExport = "Could not export, check if dumping utility is available.";
+        }
       }).catch(err => {
         this.errorExport = err.response.data.message;
+      });
+    },
+    importTable(e) {
+      e.preventDefault();
+
+      axios.post(`database/sql/${this.$root.table.database}/${this.$root.table.table}/import`, {
+        file: this.file,
+      }).then(res => {
+        if (res.data.status !== 0) {
+          this.resultImport = res.data.location;
+        } else {
+          this.errorImport = "Could not import, check if dumping utility is available.";
+        }
+      }).catch(err => {
+        this.errorImport = err.response.data.message;
       });
     },
   },

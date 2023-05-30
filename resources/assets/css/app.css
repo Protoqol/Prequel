@@ -4,19 +4,19 @@
 
 :root {
     --scroll-track: rgb(245, 245, 245);
-    --scroll-bar: rgb(170, 145, 189);
+    --scroll-bar: rgb(111, 127, 255);
     --main-content: rgb(255, 255, 255);
     --column-border: rgba(0, 0, 0, 0);
     --table-item-overview: rgba(0, 0, 0, 0);
     --table-item-text: rgb(113, 128, 150);
     --list-header-text: rgb(74, 85, 104);
     --border-color: rgb(226, 232, 240);
-    --button-background: rgb(192, 132, 252);
-    --button-background-hover: rgb(190, 143, 238);
-    --button-background-active: rgb(196, 161, 232);
-    --button-background-light: rgb(176, 142, 210);
-    --button-background-light-hover: rgb(196, 161, 232);
-    --button-background-light-active: rgb(196, 161, 232);
+    --button-background: rgb(111, 127, 255);
+    --button-background-hover: rgb(135, 149, 255);
+    --button-background-active: rgb(94, 113, 252);
+    --button-background-light: rgb(134, 148, 253);
+    --button-background-light-hover: rgb(144, 157, 255);
+    --button-background-light-active: rgb(117, 132, 255);
 
     --manage-navbar-bg: rgb(247, 250, 252);
     --manage-navbar-inactive-text-color: rgb(163, 191, 250);
@@ -40,19 +40,19 @@
 
 .theme-dark {
     --scroll-track: rgb(28, 28, 28);
-    --scroll-bar: rgb(170, 145, 189);
+    --scroll-bar: rgb(111, 127, 255);
     --main-content: rgb(66, 66, 66);
     --column-border: rgb(74, 85, 104);
     --table-item-overview: rgb(45, 45, 45);
     --table-item-text: rgb(161, 178, 205);
     --list-header-text: rgb(212, 223, 230);
     --border-color: rgb(84, 84, 84);
-    --button-background: rgb(192, 132, 252);
-    --button-background-hover: rgb(190, 143, 238);
-    --button-background-active: rgb(196, 161, 232);
-    --button-background-light: rgb(196, 161, 232);
-    --button-background-light-hover: rgb(196, 161, 232);
-    --button-background-light-active: rgb(196, 161, 232);
+    --button-background: rgb(111, 127, 255);
+    --button-background-hover: rgb(135, 149, 255);
+    --button-background-active: rgb(94, 113, 252);
+    --button-background-light: rgb(134, 148, 253);
+    --button-background-light-hover: rgb(144, 157, 255);
+    --button-background-light-active: rgb(117, 132, 255);
 
     --manage-navbar-bg: rgb(103, 103, 103);
     --manage-navbar-inactive-text-color: rgb(208, 208, 208);
