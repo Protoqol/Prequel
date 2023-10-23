@@ -90,7 +90,7 @@ class Authorised
     {
         return (object)[
             "enabled"  =>
-                config("prequel.enabled") && config("app.env") !== "production",
+                config("prequel.enabled") && (config("app.env") !== "production" || config("prequel.production_enabled")),
             "detailed" => "Prequel has been disabled.",
         ];
     }

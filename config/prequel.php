@@ -14,6 +14,17 @@ return [
     */
 
     'enabled' => env('PREQUEL_ENABLED', true),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Prequel Production Master Switch : boolean
+    |--------------------------------------------------------------------------
+    |
+    | Manually enable Prequel in production. This setting should not be enabled!
+    |
+    */
+
+    'production_enabled' => env('PREQUEL_PRODUCTION_ENABLED', false),
 
 
     /*
