@@ -26,6 +26,7 @@ class DatabaseConnector
                 $className = "PostgresConnection";
                 break;
             default:
+                $className = "MySqlConnection";
                 break;
         }
 
