@@ -19,12 +19,12 @@ class Authorised
      * Handle an incoming request.
      * Checks if Prequel is enabled and has a valid database connection.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (!$this->configurationCheck()->enabled) {
             return response("", 404);
@@ -47,7 +47,7 @@ class Authorised
                     "lang"           => Lang::get(
                         "Prequel::lang",
                         [],
-                        (string)config("prequel.locale")
+                        (string) config("prequel.locale")
                     ),
                 ],
                 503
@@ -62,23 +62,22 @@ class Authorised
      *
      * @return object
      */
-    private function databaseConnectionCheck()
+    private function databaseConnectionCheck(): object
     {
         try {
-            $conn = (new DatabaseConnector())->getConnection();
+            $conn       = (new DatabaseConnector())->getConnection();
             $connection = [
-                "connected" => (bool)$conn->getPdo(),
+                "connected" => (bool) $conn->getPdo(),
                 "detailed"  => $conn->getPdo(),
             ];
         } catch (Exception $exception) {
-            dd($exception);
             $connection = [
                 "connected" => false,
                 "detailed"  => "Could not create a valid database connection.",
             ];
         }
 
-        return (object)$connection;
+        return (object) $connection;
     }
 
     /**
@@ -86,11 +85,10 @@ class Authorised
      *
      * @return object
      */
-    private function configurationCheck()
+    private function configurationCheck(): object
     {
-        return (object)[
-            "enabled"  =>
-                config("prequel.enabled") && config("app.env") !== "production",
+        return (object) [
+            "enabled"  => config("prequel.enabled") && config("app.env") !== "production",
             "detailed" => "Prequel has been disabled.",
         ];
     }

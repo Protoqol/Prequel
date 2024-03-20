@@ -1,5 +1,26 @@
 ## Latest stable version: Prequel v1.22.4
 
+### Prequel v2.0.0
+
+#### Features
+
+- Import / export of table - note that it's only table level.
+- Query log
+- Raw SQL queries can now be run.
+- Direct table editing.
+
+#### Fixes
+
+- Custom database connection name causes error.
+
+#### Changes
+
+- Prequel now defaults to only showing 1 database (the one defined in prequel.php config or DB_DATABASE).
+- UI Improvements
+-
+
+---
+
 ### Prequel v1.22.4
 
 ##### Definitive for next release
@@ -19,11 +40,11 @@
 - [FEATURE] PostgresSQL support
 - [FEATURE] i18n, Prequel is now multilingual!
 - [FEATURE] Management-mode (5)
-  - Insert row
-  - Laravel specific actions (generating assets)
-  - View structure
-  - Write and run raw SQL within the Monaco Editor (same as the vscode editor)
-  - Monaco editor for writing queries
+    - Insert row
+    - Laravel specific actions (generating assets)
+    - View structure
+    - Write and run raw SQL within the Monaco Editor (same as the vscode editor)
+    - Monaco editor for writing queries
 - [FEATURE] Define your own suffix and namespace/directory when generating assets with the Laravel actions in config
 - [FEATURE] Auto updater for Prequel
 
@@ -68,9 +89,9 @@
 - [FEATURE] Commands to install and update Prequel.
 - [FEATURE] Homepage now acts as a status page, keeping track of various things.
 - [FEATURE] Setting up separate browsing and managing modes.
-  - Added tab switch in the top-left to switch between Browse and Manage modes.
-  - Added new default query parameter that contains the current mode.
-  - Further functionality to be added.
+    - Added tab switch in the top-left to switch between Browse and Manage modes.
+    - Added new default query parameter that contains the current mode.
+    - Further functionality to be added.
 - [FEATURE] Prequel now uses it's own database instance with the config defined in `config/prequel.php::database`
 - [FEATURE] Pagination feature by @aaronsaray (see #26)
 

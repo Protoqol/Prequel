@@ -26,7 +26,7 @@ export default {
             @apply bg-red-300;
         }
         25% {
-            @apply bg-indigo-500;
+            @apply bg-purple-500;
         }
         50% {
             @apply bg-blue-700;
@@ -35,7 +35,7 @@ export default {
             @apply bg-green-500;
         }
         100% {
-            @apply bg-indigo-300;
+            @apply bg-purple-300;
         }
     }
 

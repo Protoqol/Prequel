@@ -1,7 +1,7 @@
 <template>
     <div id="empty-table-wrapper">
         <h1>
-            {{ trans('table_empty.no_results') }}
+            No data found in this table.
         </h1>
         <div class="column-overview">
             <div class="columns-wrapper">
@@ -64,7 +64,7 @@ export default {
   transform: rotateX(180deg);
 
   h1 {
-    @apply mt-4;
+    @apply mt-2;
     @apply mb-2;
     color: var(--header-text-color);
     @apply w-full;
@@ -127,7 +127,7 @@ export default {
       @apply justify-center;
 
       button {
-        @apply bg-indigo-500;
+        @apply bg-purple-500;
         @apply w-40;
         @apply mt-20;
         @apply text-white;
@@ -138,11 +138,11 @@ export default {
         @apply shadow;
 
         &:hover {
-          @apply bg-indigo-400;
+          @apply bg-purple-400;
         }
 
         &:active {
-          @apply bg-indigo-300;
+          @apply bg-purple-300;
         }
       }
     }

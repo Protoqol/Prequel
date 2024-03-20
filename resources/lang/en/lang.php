@@ -1,7 +1,7 @@
 <?php
-    
+
     return [
-        
+
         /*
          * General
          */
@@ -15,7 +15,7 @@
             'length'     => 'Length',
             'tables'     => 'tables',
         ],
-        
+
         /**
          * components/Pages/PrequelError.vue
          */
@@ -26,7 +26,7 @@
             'no_suggestions'     => 'Prequel could not suggest any fixes.',
             'disabled'           => 'Prequel has been disabled.',
         ],
-        
+
         /**
          * components/Elements/SwitchMode.vue
          */
@@ -40,7 +40,7 @@
                 'text'  => 'Manage',
             ],
         ],
-        
+
         /**
          * components/Header/Header.vue
          */
@@ -63,7 +63,7 @@
                 ],
             ],
         ],
-        
+
         /**
          * components/MainContent/BrowseMode/Table/Table.vue
          */
@@ -73,19 +73,19 @@
             'item_empty'    => 'Nothing here',
             'nothing'       => 'Nothing here',
         ],
-        
+
         /**
          * components/MainContent/BrowseMode/Table/TableEmpty.vue
          */
         'table_empty'      => [
-            'no_results' => 'This query did not yield any result',
+            'no_results' => 'purple-id not yield any result',
             'col_key'    => 'Column Key',
             'col_field'  => 'Column Field',
             'col_def'    => 'Column Default',
             'col_type'   => 'Column Type',
             'not_set'    => 'Not Set',
         ],
-        
+
         /**
          * components/MainContent/BrowseMode/Table/TableStatus.vue
          */
@@ -95,21 +95,21 @@
             'could_not_resolve'   => 'Could not resolve error',
             'prequel_suggestions' => 'Prequel suggests looking at the following points',
         ],
-        
+
         /**
          * components/SideBar/SideBarWrapper.vue
          */
         'side_bar'         => [
-            'look_for_table' => 'Look for table...',
+            'look_for_table' => 'Search for table...',
         ],
-        
+
         /**
          * components/SideBar/Menu/TableMenu.vue
          */
         'table_menu'       => [
             'empty_table' => 'This database does not contain any tables',
         ],
-        
+
         /**
          * components/Dashboard/Dashboard.vue
          */
@@ -148,7 +148,7 @@
                 'unit'   => 'seconds',
             ],
         ],
-        
+
         /**
          * components/MainContent/ManageMode/ManageTable.vue
          */

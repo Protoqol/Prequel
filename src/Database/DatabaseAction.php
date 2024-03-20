@@ -19,17 +19,17 @@ class DatabaseAction
     /**
      * DatabaseAction constructor.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function __construct(string $database, string $table)
     {
         $this->database = $database;
-        $this->table = $table;
+        $this->table    = $table;
     }
 
     // @TODO MOVE TO PDB::CLASS FACADE
-    public function insertNewRow(array $data)
+    public function insertNewRow(array $data): bool
     {
         return DB::table($this->database . "." . $this->table)->insert($data);
     }

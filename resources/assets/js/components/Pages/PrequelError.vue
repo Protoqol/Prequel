@@ -2,13 +2,12 @@
     <!--    @TODO Better error resolving/suggestions -->
     <div class="prequel-error">
         <h1>
-            <font-awesome-icon icon="exclamation-triangle"></font-awesome-icon>
+            <i class="ri-alarm-warning-line"></i>
             {{ trans('error_page.oops') }}
         </h1>
         <h2>
             {{ errorDetailed.detailed }}
         </h2>
-        <hr>
         <!--   This if condition is horrible, I know that @TODO     -->
         <div v-if="errorDetailed.detailed !== trans('error_page.disabled')">
             <h3>

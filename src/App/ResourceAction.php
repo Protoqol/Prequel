@@ -24,13 +24,13 @@ class ResourceAction implements GenerationInterface
     /**
      * ControllerAction constructor.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function __construct(string $database, string $table)
     {
         $this->database = $database;
-        $this->table = $table;
+        $this->table    = $table;
     }
 
     /**
@@ -46,7 +46,7 @@ class ResourceAction implements GenerationInterface
 
         $this->dumpAutoload();
 
-        return (string)$this->getQualifiedName();
+        return (string) $this->getQualifiedName();
     }
 
     /**
@@ -55,7 +55,7 @@ class ResourceAction implements GenerationInterface
      * @return string
      * @throws Exception
      */
-    private function checkAndGetResourceName()
+    private function checkAndGetResourceName(): string
     {
         $resourceClass =
             "App\\Http\\Resources\\" .
@@ -74,7 +74,7 @@ class ResourceAction implements GenerationInterface
     /**
      * Get fully qualified class name
      *
-     * @return mixed
+     * @return false|string
      */
     public function getQualifiedName()
     {
@@ -98,7 +98,7 @@ class ResourceAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
+        $arr   = explode("\\", $class);
         $count = count($arr);
 
         return $arr[$count - 1];
@@ -117,15 +117,15 @@ class ResourceAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
-        $count = count($arr);
+        $arr       = explode("\\", $class);
+        $count     = count($arr);
         $namespace = "";
 
         for ($i = 0; $i < $count; $i++) {
             if ($i === $count - 1) {
                 break;
             }
-            $namespace .= (string)$arr[$i] . "\\";
+            $namespace .= $arr[$i] . "\\";
         }
 
         return $namespace;

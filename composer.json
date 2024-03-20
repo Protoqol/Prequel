@@ -51,5 +51,11 @@
     "scripts-descriptions": {
         "phpins": "Runs nunomaduro's PHPInsights. This gives you a report about the current code quality.",
         "test": "Runs the default PHPUnit test suite configured in phpunit.xml"
-    }
+    },
+    "funding": [
+        {
+            "type": "paypal",
+            "url": "https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=TJS5BKNE3JGW8"
+        }
+    ]
 }

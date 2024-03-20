@@ -42,7 +42,7 @@ class InstallCommand extends Command
     {
         $this->comment("Publishing Prequel Service Provider...");
         $this->callSilent("vendor:publish", [
-            "--provider" => "Protoqol\Prequel\PrequelServiceProvider",
+            "--provider" => \Protoqol\Prequel\PrequelServiceProvider::class,
         ]);
 
         $this->comment("Publishing Prequel Assets...");

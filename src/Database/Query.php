@@ -33,13 +33,13 @@ class Query
     /**
      * Query constructor.
      *
-     * @param Request $request
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {
         $this->database = $request->database;
-        $this->table = $request->table;
-        $this->queries = $this->collector($request->all("query"));
+        $this->table    = $request->table;
+        $this->queries  = $this->collector($request->all("query"));
     }
 
     /**
@@ -47,19 +47,19 @@ class Query
      *
      * @return array
      */
-    public function get()
+    public function get(): array
     {
         $arr = [];
 
         $iteration = 0;
         foreach ($this->queries as $query) {
-            $query = trim($query);
-            $type = $this->getType($query);
+            $query   = trim($query);
+            $type    = $this->getType($query);
             $results =
                 $type === "dql"
                     ? Arr::collapse($this->run($query))
                     : [[$this->run($query)]];
-            $rows = $this->getRows($results, $type === "dql");
+            $rows    = $this->getRows($results, $type === "dql");
 
             $arr[$iteration] = [
                 "query"   => $query,
@@ -77,7 +77,7 @@ class Query
     /**
      * Run query
      *
-     * @param $query
+     * @param  string  $query
      *
      * @return mixed
      */
@@ -97,16 +97,16 @@ class Query
     /**
      * Collect array with all queries
      *
-     * @param array $queryString
+     * @param  array  $queryString
      *
      * @return array
      */
-    private function collector(array $queryString)
+    private function collector(array $queryString): array
     {
         $queries = explode(";", $queryString["query"]);
 
         foreach ($queries as $key => $query) {
-            if (!$query || empty($query) || $query === "") {
+            if (empty($query)) {
                 unset($queries[$key]);
             }
         }
@@ -117,14 +117,14 @@ class Query
     /**
      * Get simple query type
      *
-     * @param string $query
+     * @param  string  $query
      *
      * @return bool|string
      */
     private function getType(string $query)
     {
-        $str = strtolower($query);
-        $types = (object)[
+        $str   = strtolower($query);
+        $types = (object) [
             "ddl" => ["create", "alter", "rename", "drop", "truncate"],
             "dml" => ["insert", "delete", "update", "lock", "merge"],
             "dcl" => ["grant", "revoke"],
@@ -148,12 +148,12 @@ class Query
     /**
      * Get key names of results
      *
-     * @param array $results
-     * @param bool $select
+     * @param  array  $results
+     * @param  bool  $select
      *
-     * @return array|bool
+     * @return array
      */
-    private function getRows(array $results, bool $select = true)
+    private function getRows(array $results, bool $select = true): array
     {
         $keys = [];
 
@@ -165,8 +165,8 @@ class Query
             ];
         }
 
-        if ($select && $results && !empty($results)) {
-            $sample = (array)$results[0];
+        if ($select && !empty($results)) {
+            $sample = (array) $results[0];
 
             foreach ($sample as $key => $value) {
                 $keys[] = [
@@ -178,17 +178,5 @@ class Query
         }
 
         return $keys;
-    }
-
-    /**
-     * Check if valid SQL @TODO
-     *
-     * @param string $query
-     *
-     * @return bool
-     */
-    private function isValid(string $query)
-    {
-        return true;
     }
 }

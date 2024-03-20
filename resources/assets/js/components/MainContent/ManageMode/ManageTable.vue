@@ -5,8 +5,7 @@
             <CreateRow v-if="activeTab === 'tab-newRow'" :structure="structure"/>
             <ViewStructure v-if="activeTab === 'tab-structure'" :structure="structure"/>
             <RunSQL v-if="activeTab === 'tab-query'"/>
-            <Import v-if="activeTab === 'tab-import'"/>
-            <Export v-if="activeTab === 'tab-export'"/>
+            <ExportImport v-if="activeTab === 'tab-export'"/>
         </div>
     </div>
 </template>
@@ -16,12 +15,11 @@ import ManageNavbar  from "./ManageNavbar";
 import CreateRow     from "./ManageActions/CreateRow";
 import RunSQL        from "./ManageActions/RunSQL";
 import ViewStructure from "./ManageActions/ViewStructure";
-import Import        from "./ManageActions/Import";
-import Export        from "./ManageActions/Export";
+import ExportImport        from "./ManageActions/ExportImport";
 
 export default {
     name      : "ManageTable",
-    components: { Export, Import, ViewStructure, RunSQL, CreateRow, ManageNavbar },
+    components: { ExportImport, ViewStructure, RunSQL, CreateRow, ManageNavbar },
     props     : ["data", "structure"],
 
     data () {

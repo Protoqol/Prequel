@@ -24,21 +24,21 @@ class SeederAction implements GenerationInterface
     /**
      * ControllerAction constructor.
      *
-     * @param string $database
-     * @param string $table
+     * @param  string  $database
+     * @param  string  $table
      */
     public function __construct(string $database, string $table)
     {
         $this->database = $database;
-        $this->table = $table;
+        $this->table    = $table;
     }
 
     /**
      * Generate seeder.
      *
-     * @return int|string
+     * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         Artisan::call("make:seeder", [
             "name" => $this->generateClassName($this->table) . "Seeder",
@@ -46,7 +46,7 @@ class SeederAction implements GenerationInterface
 
         $this->dumpAutoload();
 
-        return (string)$this->getQualifiedName();
+        return (string) $this->getQualifiedName();
     }
 
     /**
@@ -55,7 +55,7 @@ class SeederAction implements GenerationInterface
      * @return int
      * @throws Exception
      */
-    public function run()
+    public function run(): int
     {
         return Artisan::call("db:seed", [
             "--class"    => $this->checkAndGetSeederName(),
@@ -69,24 +69,24 @@ class SeederAction implements GenerationInterface
      * @return string
      * @throws Exception
      */
-    private function checkAndGetSeederName()
+    private function checkAndGetSeederName(): string
     {
         $seederClass = $this->generateSeederName($this->table);
 
-        if (!$this->classExists($seederClass)) {
+        if (!$this->classExists("Database\\Seeders\\" . $seederClass)) {
             throw new Exception(
                 $seederClass .
                 " could not be found or your seeder does not follow naming convention"
             );
         }
 
-        return $seederClass;
+        return "Database\\Seeders\\" . $seederClass;
     }
 
     /**
      * Get fully qualified class name
      *
-     * @return mixed
+     * @return false|string
      */
     public function getQualifiedName()
     {
@@ -110,7 +110,7 @@ class SeederAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
+        $arr   = explode("\\", $class);
         $count = count($arr);
 
         return $arr[$count - 1];
@@ -129,15 +129,15 @@ class SeederAction implements GenerationInterface
             return false;
         }
 
-        $arr = explode("\\", $class);
-        $count = count($arr);
+        $arr       = explode("\\", $class);
+        $count     = count($arr);
         $namespace = "";
 
         for ($i = 0; $i < $count; $i++) {
             if ($i === $count - 1) {
                 break;
             }
-            $namespace .= (string)$arr[$i] . "\\";
+            $namespace .= $arr[$i] . "\\";
         }
 
         return $namespace;

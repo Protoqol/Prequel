@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "sourceMap": true,
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "stripInternal": true,
+    "outDir": "../public",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "../node_modules"
+  ],
+  "files": [
+    "../resources/assets/js/App.ts"
+  ]
+}

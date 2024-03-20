@@ -4,11 +4,11 @@ namespace Protoqol\Prequel\Http\Controllers;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use Protoqol\Prequel\App\AppStatus;
-use Protoqol\Prequel\App\MigrationAction;
 use Protoqol\Prequel\Connection\DatabaseConnector;
 use Protoqol\Prequel\Database\DatabaseTraverser;
 use Protoqol\Prequel\Facades\PDB;
@@ -59,7 +59,7 @@ class DatabaseController extends Controller
     /**
      * DatabaseActionController's constructor
      *
-     * @param Request|PrequelDatabaseRequest $request
+     * @param  Request|PrequelDatabaseRequest  $request
      */
     public function __construct($request)
     {
@@ -135,9 +135,9 @@ class DatabaseController extends Controller
      */
     public function findInTable()
     {
-        $column    = (string)Route::current()->parameter("column");
-        $queryType = (string)Route::current()->parameter("type");
-        $value     = (string)Route::current()->parameter("value");
+        $column    = (string) Route::current()->parameter("column");
+        $queryType = (string) Route::current()->parameter("type");
+        $value     = (string) Route::current()->parameter("value");
         $value     = $queryType === "LIKE" ? "%" . $value . "%" : $value;
 
         return PDB::create($this->databaseName, $this->tableName)
@@ -173,22 +173,53 @@ class DatabaseController extends Controller
     }
 
     /**
-     * Run pending migrations.
+     * Export table.
      *
-     * @return int
+     * @param  Request  $request
+     * @param  string  $database
+     * @param  string  $table
+     *
+     * @return JsonResponse
      */
-    public function runMigrations(): int
+    public function export(Request $request, string $database, string $table): JsonResponse
     {
-        return (new MigrationAction())->run();
+        $structure = $request->input("structure_only", false) ? "--no-data" : "";
+
+        $host   = config('prequel.database.host');
+        $user   = config('prequel.database.username');
+        $pass   = config('prequel.database.password');
+        $output = [];
+        $code   = null;
+
+        $fileName = "{$database}.sql";
+        $dir      = storage_path("prequel");
+
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+
+        $dir .= DIRECTORY_SEPARATOR . $fileName;
+
+        exec(
+            "mysqldump {$structure} --user={$user} --password={$pass} --host={$host} {$database} {$table} --result-file={$dir}",
+            $output,
+            $code
+        );
+
+        return response()->json([
+            'status'   => $code,
+            'location' => $dir,
+        ]);
     }
 
     /**
-     * Reset latest migrations.
-     *
-     * @return int
+     * @return void
      */
-    public function resetMigrations(): int
+    public function import(Request $request, string $database, string $table)
     {
-        return (new MigrationAction())->reset();
+        $database = $request->input('database');
+        $table    = $request->input('table');
+        $file     = $request->file('import_file');
+        //
     }
 }

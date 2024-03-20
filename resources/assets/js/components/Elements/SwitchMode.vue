@@ -2,11 +2,11 @@
     <div class="switch-container">
         <div class="switch">
             <div id="0" class="tab" :title="trans('switch_mode.browse.title')" @click="browseSwitchHandler">
-                <font-awesome-icon icon="eye"/>
+                <i class="ri-eye-line"></i>
                 <small>{{trans('switch_mode.browse.text')}}</small>
             </div>
             <div id="1" class="tab" :title="trans('switch_mode.manage.title')" @click="querySwitchHandler">
-                <font-awesome-icon icon="wrench"/>
+                <i class="ri-pencil-fill"></i>
                 <small>{{trans('switch_mode.manage.text')}}</small>
             </div>
         </div>
@@ -120,7 +120,6 @@ export default {
                 @apply py-2;
                 @apply px-2;
                 @apply w-12;
-                @apply rounded-b;
                 @apply cursor-pointer;
 
 
@@ -132,7 +131,7 @@ export default {
 
                 &:hover {
                     transition : .2s ease;
-                    @apply bg-indigo-400;
+                    @apply bg-purple-400;
                     @apply shadow-none;
                 }
             }

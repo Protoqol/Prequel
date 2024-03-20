@@ -16,7 +16,7 @@ class PostgresConnection extends Connection
     /**
      * PostgresConnection constructor.
      *
-     * @param null $database
+     * @param  null  $database
      */
     public function __construct($database = null)
     {
@@ -27,7 +27,7 @@ class PostgresConnection extends Connection
     /**
      * @return PostgresConnection
      */
-    public function getConnection()
+    public function getConnection(): self
     {
         return $this;
     }
@@ -35,18 +35,18 @@ class PostgresConnection extends Connection
     /**
      * Called getCustomPdo() so it doesn't override the Connection::getPdo function.
      *
-     * @param mixed $database Database name
+     * @param  mixed  $database  Database name
      *
      * @return PDO
      */
-    public function getPdo($database = null)
+    public function getPdo($database = null): PDO
     {
         $connection = config("prequel.database.connection");
-        $host = config("prequel.database.host");
-        $port = config("prequel.database.port");
-        $database = $database ? $database : config("prequel.database.database");
+        $host       = config("prequel.database.host");
+        $port       = config("prequel.database.port");
+        $database   = $database ? $database : config("prequel.database.database");
 
-        $dsn =
+        $dsn  =
             $connection .
             ":dbname=" .
             $database .
@@ -65,9 +65,9 @@ class PostgresConnection extends Connection
      *
      * @return array
      */
-    public function getGrants()
+    public function getGrants(): array
     {
-        return (array)$this->select(
+        return (array) $this->select(
             "SELECT grantee, privilege_type FROM information_schema.role_table_grants;"
         )[0];
     }
@@ -75,7 +75,7 @@ class PostgresConnection extends Connection
     /**
      * @return PostgresGrammar
      */
-    public function getGrammar()
+    public function getGrammar(): PostgresGrammar
     {
         return new PostgresGrammar();
     }
@@ -83,7 +83,7 @@ class PostgresConnection extends Connection
     /**
      * @return PostgresProcessor
      */
-    public function getProcessor()
+    public function getProcessor(): PostgresProcessor
     {
         return new PostgresProcessor();
     }
@@ -95,22 +95,18 @@ class PostgresConnection extends Connection
      */
     public function getServerInfo(): array
     {
-        $query =
-            "select extract(epoch from current_timestamp - pg_postmaster_start_time())";
-        $serverInfoArray = [
-            "UPTIME" => intval(
-                $this->getPdo()
-                    ->query($query)
-                    ->fetch()[0]
-            ),
-        ];
+        $query = "select extract(epoch from current_timestamp - pg_postmaster_start_time())";
 
-        return $serverInfoArray;
+        return [
+            "UPTIME" => (int) $this->getPdo()
+                                   ->query($query)
+                                   ->fetch()[0],
+        ];
     }
 
     /**
-     * @param string $database Database name
-     * @param string $table Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return string
      */
@@ -120,15 +116,15 @@ class PostgresConnection extends Connection
     }
 
     /**
-     * @param string $database Database name
-     * @param string $table Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return array
      */
     public function getTableStructure(string $database, string $table): array
     {
-        $columns = [];
-        $connection = (new DatabaseConnector())->getConnection($database);
+        $columns      = [];
+        $connection   = (new DatabaseConnector())->getConnection($database);
         $temp_columns = $connection->select(
             "SELECT column_name as field, data_type as type, is_nullable as null, column_default as default FROM information_schema.columns WHERE table_schema='" .
             config("database.connections.pgsql.schema") .
@@ -136,7 +132,7 @@ class PostgresConnection extends Connection
             $table .
             "'"
         );
-        $index = $connection->select(
+        $index        = $connection->select(
             "SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '" .
             $table .
             "'::regclass AND i.indisprimary;"
@@ -144,7 +140,7 @@ class PostgresConnection extends Connection
 
         foreach ($temp_columns as $key => $array) {
             if (count($index) > 0 && $array->field === $index[0]->attname) {
-                $array->key = "PRI";
+                $array->key     = "PRI";
                 $array->default = null;
             }
             foreach ($array as $column_key => $value) {
@@ -156,21 +152,21 @@ class PostgresConnection extends Connection
     }
 
     /**
-     * @param string $database Database name
-     * @param string $table Table name
+     * @param  string  $database  Database name
+     * @param  string  $table  Table name
      *
      * @return array
      */
     public function getTableData(string $database, string $table): array
     {
         $connection = (new DatabaseConnector())->getConnection($database);
-        $data = $connection->select("SELECT * FROM " . $table);
+        $data       = $connection->select("SELECT * FROM " . $table);
 
         return $data;
     }
 
     /**
-     * @param string $database
+     * @param  string  $database
      *
      * @return array
      * @throws Exception
@@ -182,13 +178,13 @@ class PostgresConnection extends Connection
         $databaseQueries = new SequelAdapter(
             config("prequel.database.connection")
         );
-        $connection = (new DatabaseConnector())->getConnection($database);
-        $tempTables = $connection->select(
+        $connection      = (new DatabaseConnector())->getConnection($database);
+        $tempTables      = $connection->select(
             $databaseQueries->showTablesFrom($database)
         );
 
         for ($i = 0; $i < count($tempTables); $i++) {
-            array_push($tables, $tempTables[$i]);
+            $tables[] = $tempTables[$i];
         }
 
         return $tables;

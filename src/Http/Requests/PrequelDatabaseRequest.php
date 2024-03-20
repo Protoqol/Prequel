@@ -23,7 +23,7 @@ class PrequelDatabaseRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -33,7 +33,7 @@ class PrequelDatabaseRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             "database"      => "string",
@@ -47,13 +47,13 @@ class PrequelDatabaseRequest extends FormRequest
      *
      * @return Validator
      */
-    public function getValidatorInstance()
+    public function getValidatorInstance(): Validator
     {
         $request = $this->validationData();
 
         try {
             $request["database"] = $this->route("database");
-            $request["table"] = $this->route("table");
+            $request["table"]    = $this->route("table");
 
             $request["qualifiedName"] =
                 $request["database"] . "." . $request["table"];
@@ -75,7 +75,7 @@ class PrequelDatabaseRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             "database.required"      => "Database name is required",
